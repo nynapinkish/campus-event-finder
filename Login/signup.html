@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Organizer Sign Up — myUTM Campus Event Finder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#8B0000;--red2:#6d0000;
+  --white:#fff;--border:#e0e0e0;
+  --text:#333;--muted:#666;--light:#aaa;
+  --gold:#e8a020;--blue:#2a6db5;
+  --green:#1a5c38;--green-light:#e8f5ed;
+}
+body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;position:relative;overflow-x:hidden}
+
+.bg{
+  position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 140% 80% at 85% 105%,rgba(255,160,160,.3) 0%,transparent 50%),
+    radial-gradient(ellipse 70% 70% at 15% 15%,rgba(80,0,0,.7) 0%,transparent 55%),
+    radial-gradient(ellipse 110% 110% at 50% 50%,#7d1a2e 0%,#4d0a18 45%,#280308 100%);
+}
+.bg::after{
+  content:'';position:absolute;inset:0;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+.page{position:relative;z-index:1;flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+
+.card{background:#fff;width:100%;max-width:460px;border-radius:2px;overflow:hidden;box-shadow:0 10px 50px rgba(0,0,0,.4)}
+
+/* Top */
+.card-top{padding:32px 44px 26px;text-align:center;border-bottom:1px solid #eee}
+.sign-in-text{font-size:20px;font-weight:300;color:#444;letter-spacing:.5px;margin-bottom:6px}
+.sign-in-sub{font-size:12.5px;color:var(--light);margin-bottom:18px}
+
+.logo-dots{display:flex;justify-content:center;align-items:center;gap:2px;margin-bottom:6px}
+.logo-dots span{border-radius:50%;background:var(--gold)}
+.logo-dots span:nth-child(1){width:4px;height:4px;opacity:.5}
+.logo-dots span:nth-child(2){width:5px;height:5px;opacity:.65}
+.logo-dots span:nth-child(3){width:7px;height:7px;opacity:.85}
+.logo-dots span:nth-child(4){width:9px;height:9px}
+.logo-dots span:nth-child(5){width:7px;height:7px;opacity:.85}
+.logo-dots span:nth-child(6){width:5px;height:5px;opacity:.65}
+.logo-dots span:nth-child(7){width:4px;height:4px;opacity:.5}
+
+.wordmark{display:inline-flex;align-items:baseline;line-height:1;margin-bottom:4px}
+.wm-my{color:var(--gold);font-size:22px;font-weight:700;font-style:italic}
+.wm-utm{color:#1a1a1a;font-size:22px;font-weight:900;letter-spacing:-.5px}
+.wm-portal{color:var(--gold);font-size:22px;font-weight:300}
+.tagline{font-size:9px;color:#bbb;letter-spacing:3.5px;display:block;text-transform:lowercase;margin-top:3px}
+
+/* Form */
+.card-body{padding:26px 44px 24px}
+
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:7px}
+.form-input{
+  width:100%;border:1px solid var(--border);border-radius:2px;
+  padding:11px 14px;font-family:'Open Sans',sans-serif;font-size:14px;
+  color:var(--text);background:#fff;outline:none;
+  transition:border-color .15s,box-shadow .15s;
+}
+.form-input:focus{border-color:#bbb;box-shadow:0 0 0 3px rgba(0,0,0,.05)}
+.form-input.error{border-color:#c0392b}
+.form-input::placeholder{color:#ddd}
+.form-error{font-size:12px;color:#c0392b;margin-top:4px;display:none}
+.form-error.show{display:block}
+
+.pw-wrap{position:relative}
+.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--light);font-size:14px;padding:2px}
+
+.btn-signup{
+  width:100%;background:var(--red);color:#fff;border:none;
+  font-family:'Open Sans',sans-serif;font-size:14px;font-weight:600;
+  padding:12px;border-radius:2px;cursor:pointer;transition:background .18s;
+  margin-top:20px;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-signup:hover{background:var(--red2)}
+.btn-signup:disabled{opacity:.6;cursor:not-allowed}
+
+.btn-spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.alert{border-radius:2px;padding:10px 14px;font-size:12.5px;margin-bottom:14px;display:none;align-items:center;gap:8px}
+.alert.show{display:flex}
+.alert-error{background:#fef2f2;border:1px solid #fca5a5;color:#c0392b}
+.alert-success{background:var(--green-light);border:1px solid var(--green);color:var(--green)}
+
+/* Divider */
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0 0}
+.divider-line{flex:1;height:1px;background:var(--border)}
+.divider-text{font-size:12px;color:var(--light)}
+
+.login-link{text-align:center;font-size:13px;color:var(--muted);margin-top:14px}
+.login-link a{color:var(--red);font-weight:600;text-decoration:none}
+.login-link a:hover{text-decoration:underline}
+
+/* Success screen */
+.success-screen{display:none;padding:40px 44px;text-align:center}
+.success-screen.show{display:block}
+.success-icon-big{font-size:52px;margin-bottom:14px}
+.success-title{font-size:18px;font-weight:700;color:var(--green);margin-bottom:8px}
+.success-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:24px}
+.btn-go-login{
+  display:inline-block;background:var(--red);color:#fff;border:none;
+  font-family:'Open Sans',sans-serif;font-size:14px;font-weight:600;
+  padding:11px 32px;border-radius:2px;cursor:pointer;transition:background .18s;
+  text-decoration:none;
+}
+.btn-go-login:hover{background:var(--red2)}
+
+.footer{position:relative;z-index:1;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.4)}
+.footer-links{display:flex;gap:6px;align-items:center}
+.footer-links a{font-size:12px;color:rgba(255,255,255,.4);text-decoration:none}
+.footer-links a:hover{color:rgba(255,255,255,.8)}
+.footer-links .sep{color:rgba(255,255,255,.2);font-size:11px}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="page">
+  <div class="card">
+
+    <!-- Branding -->
+    <div class="card-top">
+      <div class="logo-dots">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <div class="wordmark">
+        <span class="wm-my">my</span><span class="wm-utm">UTM</span><span class="wm-portal">Portal</span>
+      </div>
+      <span class="tagline">your digital lifestyle</span>
+      <div style="margin-top:16px">
+        <div class="sign-in-text">📋 Organizer Sign Up</div>
+        <div class="sign-in-sub">Create your organizer account to manage events</div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="card-body" id="formSection">
+
+      <div class="alert alert-error" id="errorAlert">
+        ⚠️ <span id="errorMsg">Something went wrong.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Full Name <span style="color:var(--red)">*</span></label>
+        <input class="form-input" id="nameInput" type="text" placeholder="e.g. Ahmad Faris bin Razali"/>
+        <span class="form-error" id="err-name">Please enter your full name.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email Address <span style="color:var(--red)">*</span></label>
+        <input class="form-input" id="emailInput" type="email" placeholder="e.g. faris@utm.my"/>
+        <span class="form-error" id="err-email">Please enter a valid email.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password <span style="color:var(--red)">*</span></label>
+        <div class="pw-wrap">
+          <input class="form-input" id="pwInput" type="password" placeholder="Min. 6 characters"/>
+          <button class="pw-toggle" onclick="togglePw('pwInput','togglePw1')" type="button" id="togglePw1">👁</button>
+        </div>
+        <span class="form-error" id="err-pw">Password must be at least 6 characters.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirm Password <span style="color:var(--red)">*</span></label>
+        <div class="pw-wrap">
+          <input class="form-input" id="pw2Input" type="password" placeholder="Re-enter password"/>
+          <button class="pw-toggle" onclick="togglePw('pw2Input','togglePw2')" type="button" id="togglePw2">👁</button>
+        </div>
+        <span class="form-error" id="err-pw2">Passwords do not match.</span>
+      </div>
+
+      <button class="btn-signup" id="signupBtn" onclick="doSignup()">
+        <span id="btnText">Create Account</span>
+        <span class="btn-spinner" id="btnSpinner"></span>
+      </button>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-text">already have an account?</div>
+        <div class="divider-line"></div>
+      </div>
+      <div class="login-link">
+        <a href="login.html">← Back to Login</a>
+      </div>
+
+    </div>
+
+    <!-- Success Screen -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon-big">✅</div>
+      <div class="success-title">Account Created!</div>
+      <div class="success-sub">
+        Your organizer account has been registered successfully.<br>
+        You can now log in with your email and password.
+      </div>
+      <a class="btn-go-login" href="login.html">Go to Login →</a>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-copy">Copyright © 2025 Universiti Teknologi Malaysia</div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <span class="sep">·</span>
+    <a href="#">Terms & Conditions</a>
+  </div>
+</footer>
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, get, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAdOAZOl2j5HOShAUN4Hz2vdxvkV9K5Rqw",
+    authDomain: "utm-event-finder.firebaseapp.com",
+    databaseURL: "https://utm-event-finder-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "utm-event-finder",
+    storageBucket: "utm-event-finder.firebasestorage.app",
+    messagingSenderId: "939898985875",
+    appId: "1:939898985875:web:996880347433637bd41c66"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  window.doSignup = async function() {
+    // Clear errors
+    ['name','email','pw','pw2'].forEach(f => {
+      document.getElementById('err-' + f).classList.remove('show');
+    });
+    ['nameInput','emailInput','pwInput','pw2Input'].forEach(id => {
+      document.getElementById(id).classList.remove('error');
+    });
+    document.getElementById('errorAlert').classList.remove('show');
+
+    const name  = document.getElementById('nameInput').value.trim();
+    const email = document.getElementById('emailInput').value.trim();
+    const pw    = document.getElementById('pwInput').value;
+    const pw2   = document.getElementById('pw2Input').value;
+
+    let ok = true;
+
+    if (!name) {
+      document.getElementById('nameInput').classList.add('error');
+      document.getElementById('err-name').classList.add('show');
+      ok = false;
+    }
+    if (!email || !email.includes('@')) {
+      document.getElementById('emailInput').classList.add('error');
+      document.getElementById('err-email').classList.add('show');
+      ok = false;
+    }
+    if (!pw || pw.length < 6) {
+      document.getElementById('pwInput').classList.add('error');
+      document.getElementById('err-pw').classList.add('show');
+      ok = false;
+    }
+    if (pw !== pw2) {
+      document.getElementById('pw2Input').classList.add('error');
+      document.getElementById('err-pw2').classList.add('show');
+      ok = false;
+    }
+    if (!ok) return;
+
+    setLoading(true);
+
+    try {
+      // Check if email already exists
+      const snap = await get(ref(db, 'users'));
+      if (snap.exists()) {
+        let duplicate = false;
+        snap.forEach(child => {
+          const u = child.val();
+          if (u.email === email && u.role === 'organizer') duplicate = true;
+        });
+        if (duplicate) {
+          document.getElementById('errorMsg').textContent = 'This email is already registered. Please log in.';
+          document.getElementById('errorAlert').classList.add('show');
+          document.getElementById('emailInput').classList.add('error');
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Save to Firebase
+      await push(ref(db, 'users'), {
+        name:      name,
+        email:     email,
+        password:  pw,
+        role:      'organizer',
+        createdAt: new Date().toISOString()
+      });
+
+      // Show success
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('successScreen').classList.add('show');
+
+    } catch (err) {
+      console.error('Signup error:', err);
+      document.getElementById('errorMsg').textContent = 'Failed to create account. Please check your connection.';
+      document.getElementById('errorAlert').classList.add('show');
+      setLoading(false);
+    }
+  };
+
+  function setLoading(on) {
+    const btn = document.getElementById('signupBtn');
+    const txt = document.getElementById('btnText');
+    const sp  = document.getElementById('btnSpinner');
+    btn.disabled = on;
+    txt.textContent = on ? 'Creating account...' : 'Create Account';
+    sp.style.display = on ? 'inline-block' : 'none';
+  }
+</script>
+
+<script>
+  function togglePw(inputId, btnId) {
+    const pw  = document.getElementById(inputId);
+    const btn = document.getElementById(btnId);
+    if (pw.type === 'password') { pw.type = 'text'; btn.textContent = '🙈'; }
+    else { pw.type = 'password'; btn.textContent = '👁'; }
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Enter') doSignup(); });
+</script>
+</body>
+</html>

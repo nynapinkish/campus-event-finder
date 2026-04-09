@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>myUTM Portal — Campus Event Finder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --orange:#F5A623;--orange2:#d4881a;
+      --red-badge:#e53935;
+      --navy:#1a237e;--dark:#1c1c2e;
+      --white:#fff;--border:#e0e0e0;
+      --text:#222;--muted:#666;--light:#aaa;
+      --bg:#eef0f3;
+      --radius:12px;
+      --shadow:0 2px 8px rgba(0,0,0,0.10);
+      --shadow-md:0 4px 16px rgba(0,0,0,0.12);
+    }
+    body{font-family:'Roboto',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+    .top-band{
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.18) 60%, rgba(238,240,243,0.95) 100%),
+        url("https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=1600&auto=format&fit=crop&q=80") center top/cover no-repeat;
+      position:relative;
+    }
+    .top-band::before{
+      content:'';position:absolute;inset:0;z-index:0;
+      background:
+        linear-gradient(to bottom,rgba(0,0,0,.24) 0%,rgba(0,0,0,.14) 60%,rgba(238,240,243,1) 100%),
+        linear-gradient(150deg,#2d5a27 0%,#1a3d1a 35%,#0d2b0d 65%,#1a3520 100%);
+      opacity:.55;
+    }
+    .top-band > *{position:relative;z-index:1;}
+
+    /* NAVBAR */
+    .navbar{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:200;}
+    .nav-logo{display:flex;flex-direction:column}
+    .logo-row{display:flex;align-items:baseline;line-height:1}
+    .l-my{color:var(--orange);font-size:19px;font-weight:300;font-style:italic}
+    .l-utm{color:#fff;font-size:19px;font-weight:700}
+    .l-portal{color:var(--orange);font-size:19px;font-weight:400}
+    .l-tag{color:var(--orange2);font-size:8px;letter-spacing:2.5px;display:block;margin-top:1px}
+    .nav-ticker{position:absolute;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.82);font-size:12.5px;white-space:nowrap;pointer-events:none;}
+    .nav-right{display:flex;align-items:center;gap:12px}
+    .nav-icon{background:none;border:none;color:rgba(255,255,255,.72);font-size:17px;cursor:pointer;padding:4px;transition:color .15s}
+    .nav-icon:hover{color:#fff}
+    .nav-uname{color:rgba(255,255,255,.82);font-size:13px}
+    .nav-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#7c4dff,#e040fb);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;cursor:pointer;border:2px solid rgba(255,255,255,.25)}
+
+    /* QUICK ICONS */
+    .qi-row{display:flex;justify-content:center;gap:6px;padding:16px 20px 0;flex-wrap:wrap;}
+    .qi-card{background:var(--white);border-radius:var(--radius);border:none;padding:14px 12px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:110px;cursor:pointer;box-shadow:var(--shadow);transition:all .2s;font-family:'Roboto',sans-serif;}
+    .qi-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+    .qi-icon-wrap{width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:26px;}
+    .cap-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--orange),var(--orange2));-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 17l-7-3.82z'/%3E%3C/svg%3E") center/contain no-repeat;}
+    .qi-label{font-size:12px;color:var(--text);font-weight:400;text-align:center;line-height:1.25}
+
+    /* MAIN GRID */
+    .main-grid{display:flex;align-items:flex-start;gap:10px;padding:12px 10px 32px;max-width:1540px;margin:0 auto;}
+
+    /* SIDEBAR */
+    .sidebar{width:255px;flex-shrink:0;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;padding:16px 0 12px;}
+    .sb-head{padding:0 16px 12px;border-bottom:1px solid #f0f0f0;margin-bottom:8px}
+    .sb-title{font-size:15px;font-weight:500;color:var(--text)}
+    .sb-sub{font-size:12px;color:var(--light);margin-top:1px}
+    .cat-blk{margin-bottom:4px}
+    .cat-hdr{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;transition:background .15s;user-select:none;}
+    .cat-hdr:hover{background:#fafafa}
+    .cat-hdr-ico{font-size:15px}
+    .cat-hdr-name{font-size:13.5px;font-weight:600;color:#c0392b;flex:1}
+    .cat-hdr-chev{font-size:10px;color:var(--light);transition:transform .2s}
+    .cat-blk.open .cat-hdr-chev{transform:rotate(180deg)}
+    .cat-items{display:none;padding:2px 0 4px}
+    .cat-blk.open .cat-items{display:block}
+    .cat-link{display:flex;align-items:center;justify-content:space-between;padding:6px 16px 6px 38px;font-size:13px;color:var(--text);cursor:pointer;transition:color .15s;border:none;background:none;width:100%;text-align:left;font-family:'Roboto',sans-serif;position:relative;}
+    .cat-link::before{content:'•';position:absolute;left:24px;color:var(--light);font-size:11px}
+    .cat-link:hover{color:var(--navy)}
+    .cat-link.active{color:var(--navy);font-weight:500}
+    .new-badge{background:var(--red-badge);color:#fff;font-size:9px;font-weight:700;padding:1px 7px;border-radius:3px;text-transform:uppercase}
+    .cnt-badge{background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:1px 7px;border-radius:10px}
+
+    /* CARDS */
+    .cards-wrap{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;gap:10px;}
+    .card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;padding:18px 20px;}
+    .card-title{font-size:17px;font-weight:500;color:var(--text);margin-bottom:3px}
+    .card-sub{font-size:12.5px;color:var(--light);margin-bottom:14px}
+    .card-more{font-size:13px;color:var(--muted);cursor:pointer;float:right;margin-top:-34px}
+    .card-more:hover{color:var(--navy)}
+
+    .news-card{grid-column:1;grid-row:1}
+    .news-img-box{width:100%;height:165px;border-radius:8px;overflow:hidden;margin-bottom:12px;background:#ddd;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;}
+    .news-img-box img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+    .news-date{font-size:13px;color:var(--muted);margin-bottom:4px}
+    .news-date b{font-weight:500;color:var(--text)}
+
+    .events-card{grid-column:1;grid-row:2}
+    .ev-item{display:flex;align-items:flex-start;gap:10px;cursor:pointer;transition:background .15s;border-radius:6px;padding:8px 5px;border-bottom:1px solid #f5f5f5;}
+    .ev-item:last-child{border-bottom:none}
+    .ev-item:hover{background:#f7f9ff}
+    .ev-dot{width:8px;height:8px;border-radius:50%;background:var(--orange);flex-shrink:0;margin-top:5px}
+    .ev-date-s{font-size:11.5px;color:var(--muted);margin-bottom:2px}
+    .ev-title-s{font-size:13px;font-weight:500;color:var(--text);line-height:1.3}
+    .ev-loc-s{font-size:11px;color:var(--light);margin-top:2px}
+    .ev-tag-s{display:inline-block;font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;padding:1px 7px;border-radius:3px;margin-top:3px}
+    .tag-academic{background:#e3f2fd;color:#1565c0}
+    .tag-sports{background:#e8f5e9;color:#2e7d32}
+    .tag-cultural{background:#fce4ec;color:#880e4f}
+    .tag-career{background:#fff8e1;color:#e65100}
+    .tag-volunteer{background:#ede7f6;color:#4527a0}
+
+    /* Empty state */
+    .ev-empty{text-align:center;padding:24px 0;color:var(--light);font-size:13px}
+    .ev-empty-icon{font-size:32px;margin-bottom:8px}
+
+    .timetable-card{grid-column:2;grid-row:1}
+    .tt-empty{text-align:center;padding:28px 0;color:var(--light);font-size:13px}
+    .tt-empty .tt-icon{font-size:34px;margin-bottom:8px}
+
+    .charity-card{grid-column:2;grid-row:2}
+    .charity-img-box{width:100%;border-radius:8px;overflow:hidden;background:linear-gradient(160deg,#0a1628,#1a2d5a,#0d1f47);padding:18px;color:#fff;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;position:relative;}
+    .charity-circle{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:4px;}
+    .charity-logo-text{font-size:11px;font-weight:700;letter-spacing:.5px;color:rgba(255,255,255,.7)}
+    .charity-main-title{font-size:13px;font-weight:700;line-height:1.4;color:#fff}
+    .charity-amount{font-size:18px;font-weight:700;color:var(--orange)}
+    .charity-sub{font-size:10.5px;color:rgba(255,255,255,.65);line-height:1.5}
+    .charity-list{text-align:left;font-size:10.5px;color:rgba(255,255,255,.7);line-height:1.8;margin-top:2px}
+    .charity-list li{list-style:none;padding-left:10px;position:relative}
+    .charity-list li::before{content:'•';position:absolute;left:0;color:var(--orange)}
+    .charity-btn{background:var(--red-badge);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:11px;font-weight:700;padding:7px 20px;border-radius:20px;cursor:pointer;margin-top:6px;letter-spacing:.3px;}
+    .charity-footer{font-size:9.5px;color:rgba(255,255,255,.45);margin-top:4px;font-style:italic}
+
+    .circular-card{grid-column:1;grid-row:3}
+    .circ-list{list-style:none;padding:0}
+    .circ-list li{display:flex;align-items:baseline;gap:8px;padding:6px 0;border-bottom:1px solid #f5f5f5;font-size:13px;color:var(--navy);cursor:pointer;}
+    .circ-list li:last-child{border-bottom:none}
+    .circ-list li:hover{text-decoration:underline}
+    .circ-num{font-size:12px;font-weight:600;color:var(--orange);flex-shrink:0;width:18px}
+
+    .ai-card{grid-column:2;grid-row:3}
+    .sent-row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px}
+    .sent-bar{height:6px;border-radius:4px;background:#eee;overflow:hidden;margin-bottom:10px}
+    .sent-fill{height:100%;border-radius:4px;transition:width .8s ease}
+    .fp{background:#43a047}.fn{background:#fb8c00}.fg{background:#e53935}
+    .sent-note{font-size:11px;color:var(--light);text-align:center;margin-top:6px}
+    .dash-btn{display:block;width:100%;background:var(--navy);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:12.5px;font-weight:500;padding:9px;border-radius:7px;cursor:pointer;margin-top:14px;transition:background .15s}
+    .dash-btn:hover{background:#283593}
+
+    /* RIGHT COL */
+    .right-col{width:270px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;}
+    .seasonal-card{background:linear-gradient(160deg,#5c6b4a 0%,#4a5a3a 30%,#3a4a2c 60%,#2e3d22 100%);border-radius:var(--radius);box-shadow:var(--shadow);min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:32px 20px;color:rgba(255,255,255,.8);text-align:center;}
+    .seasonal-icon{font-size:40px;opacity:.8}
+    .seasonal-arabic{font-size:38px;font-weight:300;color:rgba(255,255,255,.72);line-height:1.2;font-style:italic}
+    .seasonal-eng{font-size:12px;font-style:italic;color:rgba(255,255,255,.45);letter-spacing:.5px}
+
+    .ar-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+    .ar-card-head{padding:14px 16px 0}
+    .ar-card-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px}
+    .ar-card-sub{font-size:11.5px;color:var(--light);margin-bottom:12px}
+    .ar-inner{background:linear-gradient(135deg,#1a237e,#283593);padding:14px 16px 16px;}
+    .ar-desc{font-size:11.5px;color:rgba(255,255,255,.72);line-height:1.5;margin-bottom:12px}
+    .ar-phone-mini{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.2);border-radius:10px;height:68px;display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:11px;position:relative;overflow:hidden;}
+    .ar-scan-line{position:absolute;left:0;right:0;height:1.5px;background:rgba(74,222,128,.75);animation:scan 2.2s ease-in-out infinite}
+    @keyframes scan{0%{top:15%}50%{top:85%}100%{top:15%}}
+    .ar-pin{display:flex;flex-direction:column;align-items:center;gap:3px;animation:pfloat 2s ease-in-out infinite}
+    .ar-pin:nth-child(2){animation-delay:.5s}
+    .ar-pin:nth-child(3){animation-delay:1s}
+    @keyframes pfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+    .pin-dot{width:9px;height:9px;background:#ef5350;border:2px solid rgba(255,255,255,.7);border-radius:50%}
+    .pin-lbl{font-size:8px;background:rgba(255,255,255,.15);padding:1px 5px;border-radius:3px;white-space:nowrap;color:#fff}
+    .ar-launch{width:100%;background:#fff;color:#1a237e;border:none;font-family:'Roboto',sans-serif;font-size:12.5px;font-weight:600;padding:8px;border-radius:5px;cursor:pointer}
+    .ar-launch:hover{opacity:.88}
+
+    .prev-tab{position:fixed;right:0;top:50%;transform:translateY(-50%) rotate(180deg);background:#c0392b;color:#fff;font-size:10px;font-weight:600;letter-spacing:1px;padding:10px 6px;border-radius:4px 0 0 4px;writing-mode:vertical-rl;cursor:pointer;z-index:50;}
+
+    /* MODAL */
+    .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;align-items:center;justify-content:center;padding:20px}
+    .overlay.open{display:flex}
+    .modal{background:var(--white);border-radius:14px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;animation:mIn .2s ease}
+    @keyframes mIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+    .m-nav{background:var(--dark);padding:13px 18px;display:flex;align-items:center;justify-content:space-between;border-radius:14px 14px 0 0}
+    .m-nav-title{color:#fff;font-size:14px;font-weight:500}
+    .m-close{background:none;border:none;color:rgba(255,255,255,.65);cursor:pointer;font-size:16px;padding:2px 8px}
+    .m-close:hover{color:#fff}
+    .m-body{padding:20px}
+    .m-cat{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:3px 10px;border-radius:3px;display:inline-block;margin-bottom:10px}
+    .m-title{font-size:20px;font-weight:600;margin-bottom:14px;line-height:1.3}
+    .m-tbl{width:100%;border-collapse:collapse;margin-bottom:14px}
+    .m-tbl td{padding:7px 0;font-size:13px;border-bottom:1px solid #eee}
+    .m-tbl td:first-child{color:var(--light);width:90px}
+    .m-tbl td:last-child{color:var(--text);font-weight:500}
+    .m-desc{font-size:13px;line-height:1.7;color:var(--muted);margin-bottom:18px;padding:13px;background:#f9f9f9;border-radius:8px}
+    .m-actions{display:flex;gap:9px}
+    .btn-prim{flex:1;background:var(--navy);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:14px;font-weight:500;padding:12px;border-radius:8px;cursor:pointer;transition:background .15s}
+    .btn-prim:hover{background:#283593}
+    .btn-prim:disabled{opacity:.4;cursor:not-allowed}
+    .btn-out{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Roboto',sans-serif;font-size:14px;padding:12px 18px;border-radius:8px;cursor:pointer}
+    .btn-out:hover{border-color:var(--navy);color:var(--navy)}
+
+    .spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--navy);border-radius:50%;animation:spin .7s linear infinite;margin:18px auto;display:block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+
+<div class="prev-tab">previous version</div>
+
+<div class="top-band">
+  <nav class="navbar">
+    <div class="nav-logo">
+      <div class="logo-row">
+        <span class="l-my">my</span><span class="l-utm">UTM</span><span class="l-portal">Portal</span>
+      </div>
+      <span class="l-tag">your digital lifestyle</span>
+    </div>
+    <div class="nav-ticker">ASNB CELIK MADANI 2025 UNTUK SEMUA PELAJAR UTM</div>
+    <div class="nav-right">
+      <button class="nav-icon">⊞</button>
+      <button class="nav-icon">🔲</button>
+      <span class="nav-uname">study@UTM</span>
+      <div class="nav-avatar">NH</div>
+    </div>
+  </nav>
+
+  <div class="qi-row">
+    <button class="qi-card" onclick="window.location.href='homepage.html'">
+      <div class="qi-icon-wrap"><div class="cap-icon"></div></div>
+      <span class="qi-label">Student Portal</span>
+    </button>
+    <button class="qi-card" onclick="window.location.href='events.html'">
+      <div class="qi-icon-wrap"><div class="cap-icon"></div></div>
+      <span class="qi-label">UTMACAD</span>
+    </button>
+    <button class="qi-card">
+      <div class="qi-icon-wrap"><div class="cap-icon"></div></div>
+      <span class="qi-label">E-Learning</span>
+    </button>
+    <button class="qi-card" onclick="window.location.href='events.html'">
+      <div class="qi-icon-wrap"><div class="cap-icon"></div></div>
+      <span class="qi-label">Course Registration</span>
+    </button>
+    <button class="qi-card" onclick="window.location.href='events.html'">
+      <div class="qi-icon-wrap"><div class="cap-icon"></div></div>
+      <span class="qi-label">Activity</span>
+    </button>
+    <button class="qi-card">
+      <div class="qi-icon-wrap" style="font-size:26px">🏷️</div>
+      <span class="qi-label">ePelekat 2.0</span>
+    </button>
+    <button class="qi-card">
+      <div class="qi-icon-wrap" style="font-size:26px">💰</div>
+      <span class="qi-label">UTMFundraising</span>
+    </button>
+    <button class="qi-card">
+      <div class="qi-icon-wrap" style="font-size:26px">🖥️</div>
+      <span class="qi-label">ICT Services</span>
+    </button>
+  </div>
+</div>
+
+<div class="main-grid">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-head">
+      <div class="sb-title">Systems &amp; Apps</div>
+      <div class="sb-sub">List by category</div>
+    </div>
+    <div class="cat-blk open" id="blk-ac">
+      <div class="cat-hdr" onclick="tog('blk-ac')">
+        <span class="cat-hdr-ico">🎓</span>
+        <span class="cat-hdr-name">Academic</span>
+        <span class="cat-hdr-chev">▲</span>
+      </div>
+      <div class="cat-items">
+        <button class="cat-link" onclick="goEv('all')">Event Finder <span class="new-badge">new</span></button>
+        <button class="cat-link">Course Registration</button>
+        <button class="cat-link">E-Learning</button>
+        <button class="cat-link active">ePortfolio</button>
+        <button class="cat-link" onclick="goEv('all')">Student Portal</button>
+        <button class="cat-link">Academic Award</button>
+        <button class="cat-link">ODL</button>
+        <button class="cat-link">MOOCs</button>
+        <button class="cat-link">OCW</button>
+        <button class="cat-link">E-Prints</button>
+        <button class="cat-link">UTMSAT</button>
+        <button class="cat-link">APEL.C</button>
+        <button class="cat-link">UTMLab</button>
+      </div>
+    </div>
+    <div class="cat-blk" id="blk-de">
+      <div class="cat-hdr" onclick="tog('blk-de')">
+        <span class="cat-hdr-ico">✨</span>
+        <span class="cat-hdr-name">Digital Experience</span>
+        <span class="cat-hdr-chev">▼</span>
+      </div>
+      <div class="cat-items">
+        <button class="cat-link" onclick="goEv('all')">Event Finder <span class="cnt-badge" id="cnt-all">–</span></button>
+        <button class="cat-link">ICT Services</button>
+        <button class="cat-link">ePelekat</button>
+      </div>
+    </div>
+    <div class="cat-blk" id="blk-sp">
+      <div class="cat-hdr" onclick="tog('blk-sp')">
+        <span class="cat-hdr-ico">⚽</span>
+        <span class="cat-hdr-name">Sports &amp; Recreation</span>
+        <span class="cat-hdr-chev">▼</span>
+      </div>
+      <div class="cat-items">
+        <button class="cat-link" onclick="goEv('sports')">Sports Events <span class="cnt-badge" id="cnt-sports">–</span></button>
+        <button class="cat-link">Sports Complex</button>
+      </div>
+    </div>
+    <div class="cat-blk" id="blk-cu">
+      <div class="cat-hdr" onclick="tog('blk-cu')">
+        <span class="cat-hdr-ico">🎭</span>
+        <span class="cat-hdr-name">Culture &amp; Society</span>
+        <span class="cat-hdr-chev">▼</span>
+      </div>
+      <div class="cat-items">
+        <button class="cat-link" onclick="goEv('cultural')">Cultural Events <span class="cnt-badge" id="cnt-cultural">–</span></button>
+        <button class="cat-link" onclick="goEv('volunteer')">Volunteer <span class="cnt-badge" id="cnt-vol">–</span></button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENT CARDS -->
+  <div class="cards-wrap">
+
+    <!-- NEWS -->
+    <div class="card news-card">
+      <div class="card-title">News</div>
+      <div class="card-sub">Latest news</div>
+      <div class="news-img-box">
+        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&auto=format&fit=crop&q=80" alt="UTM News" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div style="display:none;align-items:center;justify-content:center;font-size:52px;width:100%;height:100%">🏫</div>
+      </div>
+      <div class="news-date"><b>14 Mar 2026</b>, Komuniti Penyayang Bermula dari Rumah</div>
+      <div style="text-align:right;margin-top:12px">
+        <a class="card-more" style="float:none">more..</a>
+      </div>
+    </div>
+
+    <!-- TIMETABLE -->
+    <div class="card timetable-card">
+      <div class="card-title">Timetable</div>
+      <div class="card-sub">Today's schedule</div>
+      <div class="tt-empty">
+        <div class="tt-icon">📅</div>
+        No classes scheduled for today.
+      </div>
+    </div>
+
+    <!-- EVENTS — loaded from Firebase -->
+    <div class="card events-card">
+      <div class="card-title">Events</div>
+      <div class="card-sub">Latest events</div>
+      <div id="evPreview"><span class="spinner"></span></div>
+      <div style="text-align:right;margin-top:10px">
+        <a class="card-more" style="float:none;cursor:pointer" onclick="goEv('all')">more..</a>
+      </div>
+    </div>
+
+    <!-- CHARITY -->
+    <div class="card charity-card">
+      <div class="card-title">Charity</div>
+      <a class="card-more">more..</a>
+      <div style="margin-top:10px">
+        <div class="charity-img-box">
+          <div class="charity-circle">🕌</div>
+          <div class="charity-logo-text">🏛 UTM</div>
+          <div class="charity-main-title">SUMBANGAN DANA IHYA'<br>RAMADAN 2026M/1447H</div>
+          <div class="charity-amount">RM 156,000.00</div>
+          <div class="charity-sub">Sumbangan anda amat dialu-alukan bagi menghidupkan<br>program Ihya' Ramadan 1447H</div>
+          <ul class="charity-list">
+            <li>Jamuan Iftar Sepanjang Ramadan</li>
+            <li>Qiam Malam Dan Sahur</li>
+            <li>Solat Terawih</li>
+            <li>Tadarus</li>
+            <li>Bubur Lambuk</li>
+          </ul>
+          <button class="charity-btn">DONATE NOW</button>
+          <div class="charity-footer">Menginovasi Penyelesaian Lestari</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACADEMIC & CIRCULAR -->
+    <div class="card circular-card">
+      <div class="card-title">Academic &amp; Circular</div>
+      <div class="card-sub" style="margin-bottom:12px"></div>
+      <ol class="circ-list">
+        <li><span class="circ-num">1.</span>Latest Academic Circular</li>
+        <li><span class="circ-num">2.</span>Diploma Calendar</li>
+        <li><span class="circ-num">3.</span>Undergraduate Calendar</li>
+        <li><span class="circ-num">4.</span>Postgraduate Calendar</li>
+        <li><span class="circ-num">5.</span>Campus Event Finder User Guide</li>
+      </ol>
+    </div>
+
+    <!-- AI FEEDBACK — loaded from Firebase -->
+    <div class="card ai-card">
+      <div class="card-title">AI Feedback Analysis</div>
+      <div class="card-sub">Latest sentiment results</div>
+      <div class="sent-row"><span>😊 Positive</span><span id="pct-pos">–%</span></div>
+      <div class="sent-bar"><div class="sent-fill fp" id="bar-pos" style="width:0%"></div></div>
+      <div class="sent-row"><span>😐 Neutral</span><span id="pct-neu">–%</span></div>
+      <div class="sent-bar"><div class="sent-fill fn" id="bar-neu" style="width:0%"></div></div>
+      <div class="sent-row"><span>😞 Negative</span><span id="pct-neg">–%</span></div>
+      <div class="sent-bar"><div class="sent-fill fg" id="bar-neg" style="width:0%"></div></div>
+      <div class="sent-note" id="sent-note">Loading feedback data...</div>
+      <button class="dash-btn" onclick="window.location.href='../Admin/admin.html'">View Full Dashboard →</button>
+    </div>
+
+  </div>
+
+  <!-- RIGHT COL -->
+  <div class="right-col">
+    <div class="seasonal-card">
+      <div class="seasonal-icon">🌙</div>
+      <div class="seasonal-arabic">رمضان</div>
+      <div class="seasonal-eng">let this month heal you</div>
+    </div>
+    <div class="ar-card">
+      <div class="ar-card-head">
+        <div class="ar-card-title">AR Event Map</div>
+        <div class="ar-card-sub">Augmented Reality</div>
+      </div>
+      <div class="ar-inner">
+        <div class="ar-desc">Scan UTM campus map to see real-time event pins in 3D augmented reality.</div>
+        <div class="ar-phone-mini">
+          <div class="ar-scan-line"></div>
+          <div class="ar-pin"><div class="pin-dot"></div><div class="pin-lbl">AI Fair</div></div>
+          <div class="ar-pin"><div class="pin-dot"></div><div class="pin-lbl">UTM Run</div></div>
+          <div class="ar-pin"><div class="pin-dot"></div><div class="pin-lbl">Culture</div></div>
+        </div>
+        <button class="ar-launch">📱 Launch AR Viewer</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="handleOv(event)">
+  <div class="modal">
+    <div class="m-nav">
+      <span class="m-nav-title">Event Details</span>
+      <button class="m-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="m-body">
+      <span class="m-cat" id="mCat"></span>
+      <div class="m-title" id="mTitle"></div>
+      <table class="m-tbl">
+        <tr><td>📅 Date</td><td id="mDate"></td></tr>
+        <tr><td>🕐 Time</td><td id="mTime"></td></tr>
+        <tr><td>📍 Venue</td><td id="mLoc"></td></tr>
+        <tr><td>🏛️ Faculty</td><td id="mFac"></td></tr>
+        <tr><td>👥 Slots left</td><td id="mSlots"></td></tr>
+      </table>
+      <div class="m-desc" id="mDesc"></div>
+      <div class="m-actions">
+        <button class="btn-prim" id="mReg">Register Now</button>
+        <button class="btn-out" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ FIREBASE — fully connected, no sample data -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAdOAZOl2j5HOShAUN4Hz2vdxvkV9K5Rqw",
+    authDomain: "utm-event-finder.firebaseapp.com",
+    databaseURL: "https://utm-event-finder-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "utm-event-finder",
+    storageBucket: "utm-event-finder.firebasestorage.app",
+    messagingSenderId: "939898985875",
+    appId: "1:939898985875:web:996880347433637bd41c66"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // ── Load Events ──
+  onValue(ref(db, 'events'), (snap) => {
+    const data = snap.val();
+    if (data) {
+      window.allEv = Object.entries(data)
+        .map(([id, v]) => ({ id, ...v }))
+        .filter(e => e.status === 'approved');
+    } else {
+      window.allEv = [];
+    }
+    renderEvents();
+    updateCounts();
+  });
+
+  // ── Load Feedback & calculate sentiment ──
+  onValue(ref(db, 'feedback'), (snap) => {
+    const data = snap.val();
+    if (!data) {
+      document.getElementById('sent-note').textContent = 'No feedback data yet.';
+      return;
+    }
+    const all = Object.values(data);
+    const total = all.length;
+    const pos = all.filter(f => f.sentiment === 'positive').length;
+    const neu = all.filter(f => f.sentiment === 'neutral').length;
+    const neg = all.filter(f => f.sentiment === 'negative').length;
+
+    const pPos = Math.round((pos/total)*100);
+    const pNeu = Math.round((neu/total)*100);
+    const pNeg = Math.round((neg/total)*100);
+
+    document.getElementById('pct-pos').textContent = pPos + '%';
+    document.getElementById('pct-neu').textContent = pNeu + '%';
+    document.getElementById('pct-neg').textContent = pNeg + '%';
+    document.getElementById('bar-pos').style.width = pPos + '%';
+    document.getElementById('bar-neu').style.width = pNeu + '%';
+    document.getElementById('bar-neg').style.width = pNeg + '%';
+    document.getElementById('sent-note').textContent =
+      `Based on ${total} feedback submissions · AI by Google ML Kit`;
+  });
+
+  // ── Render Events Preview ──
+  window.renderEvents = function() {
+    const list = (window.allEv || []).slice(0, 3);
+    const container = document.getElementById('evPreview');
+    if (list.length === 0) {
+      container.innerHTML = `
+        <div class="ev-empty">
+          <div class="ev-empty-icon">📭</div>
+          No approved events yet.
+        </div>`;
+      return;
+    }
+    container.innerHTML = list.map(ev => `
+      <div class="ev-item" onclick="openModal('${ev.id}')">
+        <div class="ev-dot"></div>
+        <div>
+          <div class="ev-date-s">${ev.date || '–'}</div>
+          <div class="ev-title-s">${ev.title || 'Untitled'}</div>
+          <div class="ev-loc-s">📍 ${ev.location || '–'}</div>
+          <span class="ev-tag-s tag-${ev.category || 'academic'}">${cap(ev.category)}</span>
+        </div>
+      </div>`).join('');
+  };
+
+  // ── Update Sidebar Counts ──
+  window.updateCounts = function() {
+    const evs = window.allEv || [];
+    document.getElementById('cnt-all').textContent = evs.length;
+    document.getElementById('cnt-sports').textContent = evs.filter(e => e.category === 'sports').length;
+    document.getElementById('cnt-cultural').textContent = evs.filter(e => e.category === 'cultural').length;
+    document.getElementById('cnt-vol').textContent = evs.filter(e => e.category === 'volunteer').length;
+  };
+
+  // ── Open Modal ──
+  window.openModal = function(id) {
+    const ev = (window.allEv || []).find(e => e.id === id);
+    if (!ev) return;
+    document.getElementById('mCat').textContent = cap(ev.category);
+    document.getElementById('mCat').className = 'm-cat tag-' + (ev.category || 'academic');
+    document.getElementById('mTitle').textContent = ev.title;
+    document.getElementById('mDate').textContent = ev.date || '–';
+    document.getElementById('mTime').textContent = ev.time || '–';
+    document.getElementById('mLoc').textContent = ev.location || '–';
+    document.getElementById('mFac').textContent = ev.faculty || '–';
+    document.getElementById('mSlots').textContent =
+      ev.slotsLeft > 0 ? ev.slotsLeft + ' remaining' : 'Full';
+    document.getElementById('mDesc').textContent = ev.description || '–';
+    const btn = document.getElementById('mReg');
+    btn.disabled = ev.slotsLeft <= 0;
+    btn.onclick = () => {
+      const p = new URLSearchParams({
+        id: ev.id, title: ev.title,
+        date: ev.date, location: ev.location, time: ev.time
+      });
+      window.location.href = 'register.html?' + p;
+    };
+    document.getElementById('overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+</script>
+
+<script>
+  function tog(id) { document.getElementById(id).classList.toggle('open'); }
+  function goEv(cat) { window.location.href = 'events.html' + (cat && cat !== 'all' ? '?cat=' + cat : ''); }
+  function closeModal() { document.getElementById('overlay').classList.remove('open'); document.body.style.overflow = ''; }
+  function handleOv(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
+  function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+</script>
+
+</body>
+</html>
