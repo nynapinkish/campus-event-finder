@@ -27,13 +27,11 @@
 
 body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;display:flex;flex-direction:column}
 
-/* ── TOP BAR ── */
 .topbar{background:var(--red);height:38px;display:flex;align-items:center;justify-content:flex-end;padding:0 24px;gap:20px}
 .topbar a{color:rgba(255,255,255,.8);font-size:12.5px;text-decoration:none}
 .topbar a:hover{color:#fff}
 .topbar-sep{color:rgba(255,255,255,.3);font-size:11px}
 
-/* ── HEADER ── */
 .header{background:#fff;border-bottom:4px solid var(--red);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:80px}
 .header-logo{display:flex;align-items:center;gap:16px;text-decoration:none}
 .logo-img{width:60px;height:60px;border-radius:50%;background:var(--red);border:2px solid #c8982a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px}
@@ -50,13 +48,11 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .user-pill{display:flex;align-items:center;gap:8px;background:#f5f5f5;border:1px solid var(--border);border-radius:20px;padding:5px 14px 5px 5px;font-size:13px;color:var(--muted);cursor:pointer}
 .user-av{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
 
-/* ── SECTION NAV ── */
 .section-nav{background:#1f1f1f;padding:0 24px;display:flex;gap:0}
 .sn-item{color:rgba(255,255,255,.6);font-size:13px;padding:10px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
 .sn-item:hover{color:#fff}
 .sn-item.active{color:#fff;border-bottom-color:#c8982a}
 
-/* ── PAGE TITLE BAR ── */
 .page-title-bar{background:#fff;border-bottom:1px solid var(--border);padding:18px 24px}
 .ptb-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--light);margin-bottom:5px}
 .ptb-breadcrumb a{color:var(--muted);text-decoration:none;cursor:pointer}
@@ -64,10 +60,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .ptb-breadcrumb span{color:var(--light)}
 .ptb-title{font-size:20px;font-weight:700;color:var(--text)}
 
-/* ── MAIN LAYOUT ── */
 .wrap{max-width:1100px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start;flex:1}
 
-/* ── FORM CARD ── */
 .form-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden}
 .form-card.hide{display:none}
 .form-card-head{background:var(--red);padding:14px 20px;display:flex;align-items:center;gap:10px}
@@ -76,13 +70,11 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .form-card-head-sub{font-size:12px;color:rgba(255,255,255,.65);margin-left:auto}
 .form-body{padding:24px}
 
-/* section divider */
 .form-section{margin-bottom:26px}
 .form-section:last-child{margin-bottom:0}
 .form-section-title{font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.8px;padding-bottom:9px;border-bottom:1px solid var(--border);margin-bottom:18px;display:flex;align-items:center;gap:7px}
 .form-section-title span{font-size:15px}
 
-/* form controls */
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 .form-row.full{grid-template-columns:1fr}
 .form-group{display:flex;flex-direction:column;gap:5px}
@@ -99,7 +91,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .form-input.error,.form-select.error,.form-textarea.error{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.08)}
 .form-error.show{display:block}
 
-/* ── STAR RATING ── */
 .star-section{margin-bottom:16px}
 .star-label{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:8px;display:block}
 .star-label .req{color:var(--red)}
@@ -110,33 +101,24 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .star-error{font-size:11.5px;color:#c0392b;margin-top:6px;display:none}
 .star-error.show{display:block}
 
-/* ── ASPECT RATINGS ── */
 .aspect-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
 .aspect-lbl{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:6px;display:block}
 .aspect-stars{display:flex;gap:4px}
 .aspect-star{background:none;border:none;font-size:20px;cursor:pointer;color:#ddd;transition:color .1s,transform .1s;padding:1px;line-height:1}
 .aspect-star:hover,.aspect-star.active{color:#c8982a;transform:scale(1.1)}
 
-/* ── WOULD RECOMMEND ── */
 .recommend-row{display:flex;gap:10px;margin-top:4px;flex-wrap:wrap}
-.rec-btn{
-  padding:8px 20px;font-size:13px;font-weight:600;
-  border:1.5px solid var(--border);border-radius:3px;
-  background:#fff;color:var(--muted);cursor:pointer;
-  font-family:'Open Sans',sans-serif;transition:all .15s;
-}
+.rec-btn{padding:8px 20px;font-size:13px;font-weight:600;border:1.5px solid var(--border);border-radius:3px;background:#fff;color:var(--muted);cursor:pointer;font-family:'Open Sans',sans-serif;transition:all .15s;}
 .rec-btn:hover{border-color:var(--red);color:var(--red)}
 .rec-btn.active-yes{background:var(--green);border-color:var(--green);color:#fff}
 .rec-btn.active-no{background:#c0392b;border-color:#c0392b;color:#fff}
 .rec-btn.active-maybe{background:var(--gold);border-color:var(--gold);color:#fff}
 
-/* ── CHAR COUNTER ── */
 .textarea-wrap{position:relative}
 .char-counter{position:absolute;bottom:8px;right:10px;font-size:11px;color:var(--light)}
 .char-counter.warn{color:#e67e22}
 .char-counter.over{color:#c0392b}
 
-/* ── FORM ACTIONS ── */
 .form-actions{display:flex;align-items:center;gap:12px;padding-top:4px}
 .btn-submit{background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px 32px;border-radius:3px;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:8px}
 .btn-submit:hover{background:var(--red2)}
@@ -144,7 +126,11 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .btn-cancel:hover{border-color:var(--red);color:var(--red)}
 .form-actions-note{font-size:12px;color:var(--light);margin-left:auto}
 
-/* ── SUCCESS SCREEN ── */
+/* Loading state */
+.loading-box{background:#fff;border:1px solid var(--border);border-radius:4px;padding:60px 20px;text-align:center;color:var(--muted)}
+.spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
 .success-screen{display:none;background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;text-align:center}
 .success-screen.show{display:block}
 
@@ -155,7 +141,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 
 .success-body{padding:28px 24px}
 
-/* AI Sentiment result */
 .sentiment-result{border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:22px}
 .sr-head{background:#f5f5f5;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
 .sr-head-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
@@ -195,14 +180,12 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .ss-val{font-weight:600;color:var(--text)}
 
 .success-note{font-size:12.5px;color:var(--muted);line-height:1.6;background:#f9f9f9;border-radius:3px;padding:12px 14px;margin-bottom:22px;text-align:left}
-
 .success-actions{display:flex;gap:10px}
 .btn-back{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:3px;cursor:pointer;transition:background .15s}
 .btn-back:hover{background:var(--red2)}
 .btn-another{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 16px;border-radius:3px;cursor:pointer;transition:all .15s}
 .btn-another:hover{border-color:var(--red);color:var(--red)}
 
-/* ── RIGHT PANEL ── */
 .right-panel{display:flex;flex-direction:column;gap:14px}
 
 .event-summary{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;border-top:3px solid var(--red)}
@@ -221,7 +204,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .es-ic{width:15px;text-align:center;flex-shrink:0;opacity:.6;margin-top:1px}
 .es-val{color:var(--text);font-weight:500}
 
-/* AI info box */
 .ai-box{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;border-top:3px solid var(--gold)}
 .ai-box-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
 .ai-box-icon{font-size:15px}
@@ -238,7 +220,10 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .info-list-item{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:var(--muted);line-height:1.45}
 .info-list-ic{flex-shrink:0;margin-top:1px}
 
-/* ── FOOTER ── */
+/* Event not found */
+.not-found-box{background:#fff;border:1px solid var(--border);border-radius:4px;padding:60px 20px;text-align:center;color:var(--muted)}
+.not-found-box h3{font-size:16px;color:var(--text);margin-bottom:8px}
+
 .footer{background:#1f1f1f;padding:36px 24px 28px;margin-top:auto}
 .footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px}
 .fi-brand-utm{font-size:22px;font-weight:700;color:#fff;line-height:1;margin-bottom:6px}
@@ -257,7 +242,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
   <a href="#">UTM Kuala Lumpur</a>
   <span class="topbar-sep">|</span>
@@ -266,7 +250,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   <a href="#">Contact Us</a>
 </div>
 
-<!-- HEADER -->
 <header class="header">
   <a class="header-logo" href="#">
     <div class="logo-img">
@@ -289,13 +272,12 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   </nav>
   <div class="header-right">
     <div class="user-pill">
-      <div class="user-av">NH</div>
-      study@UTM
+      <div class="user-av" id="headerAvatar">?</div>
+      <span id="headerName">—</span>
     </div>
   </div>
 </header>
 
-<!-- SECTION NAV -->
 <div class="section-nav">
   <div class="sn-item active">Campus Events</div>
   <div class="sn-item">Student Life</div>
@@ -304,7 +286,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   <div class="sn-item">Facilities</div>
 </div>
 
-<!-- PAGE TITLE BAR -->
 <div class="page-title-bar">
   <div class="ptb-breadcrumb">
     <a href="campus_events_utm_v3.html">Home</a>
@@ -318,14 +299,24 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   <div class="ptb-title" id="dynPageTitle">Event Feedback</div>
 </div>
 
-<!-- MAIN -->
 <div class="wrap">
-
-  <!-- FORM COLUMN -->
   <div>
+    <!-- Loading -->
+    <div class="loading-box" id="loadingBox">
+      <div class="spinner"></div>
+      <p>Loading event details...</p>
+    </div>
+
+    <!-- Event not found -->
+    <div class="not-found-box" id="notFoundBox" style="display:none">
+      <h3>⚠️ Event Not Found</h3>
+      <p>The event you are looking for does not exist.</p>
+      <br>
+      <a href="campus_events_utm_v3.html" style="color:var(--red)">← Back to Events</a>
+    </div>
 
     <!-- FEEDBACK FORM -->
-    <div class="form-card" id="formCard">
+    <div class="form-card" id="formCard" style="display:none">
       <div class="form-card-head">
         <span class="form-card-head-icon">💬</span>
         <span class="form-card-head-title">Post-Event Feedback Form</span>
@@ -333,10 +324,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
       </div>
       <div class="form-body">
 
-        <!-- SECTION 1: Attendee Info -->
         <div class="form-section">
           <div class="form-section-title"><span>👤</span> Attendee Information</div>
-
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Full Name <span class="req">*</span></label>
@@ -349,7 +338,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
               <span class="form-error" id="err-matrix">Please enter your matrix number.</span>
             </div>
           </div>
-
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">UTM Email Address <span class="req">*</span></label>
@@ -372,7 +360,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
               </select>
             </div>
           </div>
-
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Event Attended <span class="req">*</span></label>
@@ -385,10 +372,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           </div>
         </div>
 
-        <!-- SECTION 2: Overall Rating -->
         <div class="form-section">
           <div class="form-section-title"><span>⭐</span> Overall Event Rating</div>
-
           <div class="star-section">
             <span class="star-label">How would you rate this event overall? <span class="req">*</span></span>
             <div class="star-row">
@@ -403,11 +388,9 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           </div>
         </div>
 
-        <!-- SECTION 3: Aspect Ratings -->
         <div class="form-section">
           <div class="form-section-title"><span>📊</span> Rate Specific Aspects</div>
           <div class="aspect-grid">
-
             <div class="aspect-item">
               <span class="aspect-lbl">Event Organisation</span>
               <div class="aspect-stars" id="aspect-organisation">
@@ -418,7 +401,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
                 <button class="aspect-star" data-aspect="organisation" data-val="5" onclick="setAspect('organisation',5)">★</button>
               </div>
             </div>
-
             <div class="aspect-item">
               <span class="aspect-lbl">Content & Programme</span>
               <div class="aspect-stars" id="aspect-content">
@@ -429,7 +411,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
                 <button class="aspect-star" data-aspect="content" data-val="5" onclick="setAspect('content',5)">★</button>
               </div>
             </div>
-
             <div class="aspect-item">
               <span class="aspect-lbl">Venue & Facilities</span>
               <div class="aspect-stars" id="aspect-venue">
@@ -440,7 +421,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
                 <button class="aspect-star" data-aspect="venue" data-val="5" onclick="setAspect('venue',5)">★</button>
               </div>
             </div>
-
             <div class="aspect-item">
               <span class="aspect-lbl">Speakers / Facilitators</span>
               <div class="aspect-stars" id="aspect-speaker">
@@ -451,7 +431,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
                 <button class="aspect-star" data-aspect="speaker" data-val="5" onclick="setAspect('speaker',5)">★</button>
               </div>
             </div>
-
             <div class="aspect-item">
               <span class="aspect-lbl">Time Management</span>
               <div class="aspect-stars" id="aspect-time">
@@ -462,7 +441,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
                 <button class="aspect-star" data-aspect="time" data-val="5" onclick="setAspect('time',5)">★</button>
               </div>
             </div>
-
             <div class="aspect-item">
               <span class="aspect-lbl">Registration Process</span>
               <div class="aspect-stars" id="aspect-registration">
@@ -473,50 +451,43 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
                 <button class="aspect-star" data-aspect="registration" data-val="5" onclick="setAspect('registration',5)">★</button>
               </div>
             </div>
-
           </div>
         </div>
 
-        <!-- SECTION 4: Written Feedback (AI Analysis) -->
         <div class="form-section">
-          <div class="form-section-title"><span>🤖</span> Written Feedback <span style="font-size:10px;font-weight:400;color:var(--gold);text-transform:none;letter-spacing:0">— Analysed by AI (Google ML Kit)</span></div>
-
+          <div class="form-section-title"><span>🤖</span> Written Feedback <span style="font-size:10px;font-weight:400;color:var(--gold);text-transform:none;letter-spacing:0">— Analysed by AI</span></div>
           <div class="form-row full">
             <div class="form-group">
               <label class="form-label">What did you like most about this event? <span class="req">*</span></label>
               <div class="textarea-wrap">
-                <textarea class="form-textarea" id="liked" placeholder="e.g. The speakers were very knowledgeable and the content was well-structured..." oninput="countChars('liked','likedCount',300)"></textarea>
+                <textarea class="form-textarea" id="liked" placeholder="e.g. The speakers were very knowledgeable..." oninput="countChars('liked','likedCount',300)"></textarea>
                 <span class="char-counter" id="likedCount">0 / 300</span>
               </div>
               <span class="form-error" id="err-liked">Please share what you liked about the event.</span>
             </div>
           </div>
-
           <div class="form-row full">
             <div class="form-group">
               <label class="form-label">What could be improved for future events?</label>
               <div class="textarea-wrap">
-                <textarea class="form-textarea" id="improve" placeholder="e.g. The session ran a bit over time, and the seating arrangement could be improved..." oninput="countChars('improve','improveCount',300)"></textarea>
+                <textarea class="form-textarea" id="improve" placeholder="e.g. The session ran a bit over time..." oninput="countChars('improve','improveCount',300)"></textarea>
                 <span class="char-counter" id="improveCount">0 / 300</span>
               </div>
             </div>
           </div>
-
           <div class="form-row full">
             <div class="form-group">
               <label class="form-label">Any additional comments or suggestions?</label>
               <div class="textarea-wrap">
-                <textarea class="form-textarea" id="additional" placeholder="Share any other thoughts, suggestions or recommendations..." oninput="countChars('additional','additionalCount',300)" style="min-height:80px"></textarea>
+                <textarea class="form-textarea" id="additional" placeholder="Share any other thoughts..." oninput="countChars('additional','additionalCount',300)" style="min-height:80px"></textarea>
                 <span class="char-counter" id="additionalCount">0 / 300</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- SECTION 5: Recommendation & Attendance -->
         <div class="form-section">
           <div class="form-section-title"><span>📢</span> Recommendation</div>
-
           <div class="form-row full">
             <div class="form-group">
               <label class="form-label">Would you recommend this event to other UTM students? <span class="req">*</span></label>
@@ -528,7 +499,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
               <span class="form-error" id="err-recommend">Please select an option.</span>
             </div>
           </div>
-
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Would you attend this event again?</label>
@@ -554,17 +524,15 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           </div>
         </div>
 
-        <!-- ACTIONS -->
         <div class="form-actions">
           <button class="btn-submit" onclick="submitFeedback()">Submit Feedback →</button>
           <button class="btn-cancel" onclick="window.location.href='campus_events_utm_v3.html'">Cancel</button>
           <span class="form-actions-note">Feedback is analysed by AI to improve future events.</span>
         </div>
-
       </div>
     </div>
 
-    <!-- SUCCESS + AI RESULT SCREEN -->
+    <!-- SUCCESS SCREEN -->
     <div class="success-screen" id="successScreen">
       <div class="success-head">
         <div class="success-icon">✓</div>
@@ -572,22 +540,19 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
         <div class="success-head-sub">Thank you. Your feedback has been recorded and analysed.</div>
       </div>
       <div class="success-body">
-
-        <!-- AI Sentiment Result -->
         <div class="sentiment-result">
           <div class="sr-head">
-            <span class="sr-head-label">🤖 AI Analysis Result — Google ML Kit</span>
+            <span class="sr-head-label">🤖 AI Analysis Result</span>
             <span class="sr-head-badge" id="sentimentBadge"></span>
           </div>
           <div class="sr-body">
             <div class="sr-sentiment-row">
               <span class="sr-emoji" id="sentimentEmoji"></span>
-              <div class="sr-sentiment-text">
+              <div>
                 <div class="sr-sentiment-label" id="sentimentLabel"></div>
                 <div class="sr-sentiment-desc" id="sentimentDesc"></div>
               </div>
             </div>
-
             <div class="sr-bars">
               <div class="sr-bar-row">
                 <span class="sr-bar-lbl">Positive</span>
@@ -605,15 +570,12 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
                 <span class="sr-bar-pct" id="pctNeg"></span>
               </div>
             </div>
-
             <div class="sr-keywords">
               <div class="sr-kw-label">Extracted Keywords</div>
               <div class="sr-kw-tags" id="kwTags"></div>
             </div>
           </div>
         </div>
-
-        <!-- Summary -->
         <div class="success-summary">
           <div class="ss-title">Feedback Summary</div>
           <div class="ss-row"><span class="ss-label">Name</span><span class="ss-val" id="sName">—</span></div>
@@ -622,24 +584,17 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           <div class="ss-row"><span class="ss-label">Overall Rating</span><span class="ss-val" id="sRating">—</span></div>
           <div class="ss-row"><span class="ss-label">Recommendation</span><span class="ss-val" id="sRecommend">—</span></div>
         </div>
-
-        <div class="success-note">
-          Your feedback has been saved to Firebase and will be reviewed by the event organiser. The AI sentiment analysis results will be used to improve future campus events at UTM.
-        </div>
-
+        <div class="success-note">Your feedback has been saved to Supabase and will be reviewed by the event organiser.</div>
         <div class="success-actions">
           <button class="btn-back" onclick="window.location.href='campus_events_utm_v3.html'">← Back to Event Finder</button>
           <button class="btn-another" onclick="resetForm()">Submit Another Feedback</button>
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- RIGHT PANEL -->
   <div class="right-panel">
-
-    <!-- Event Summary -->
     <div class="event-summary">
       <div class="es-head">
         <div class="es-head-label">Feedback for</div>
@@ -653,64 +608,47 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
         <div class="es-row"><span class="es-ic">🏛️</span><span class="es-val" id="esFaculty">—</span></div>
       </div>
     </div>
-
-    <!-- AI Info -->
     <div class="ai-box">
       <div class="ai-box-head">
         <span class="ai-box-icon">🤖</span>
         <span class="ai-box-title">How AI Analyses Your Feedback</span>
       </div>
       <div class="ai-box-body">
-        <div class="ai-box-text">Your written feedback is processed by Google ML Kit using Natural Language Processing (NLP) to:</div>
+        <div class="ai-box-text">Your written feedback is processed using NLP to:</div>
         <div class="ai-steps">
           <div class="ai-step"><div class="ai-step-num">1</div>Classify sentiment as Positive, Neutral, or Negative</div>
           <div class="ai-step"><div class="ai-step-num">2</div>Extract relevant keywords from your comments</div>
-          <div class="ai-step"><div class="ai-step-num">3</div>Store results in Firebase for organiser review</div>
+          <div class="ai-step"><div class="ai-step-num">3</div>Store results in Supabase for organiser review</div>
           <div class="ai-step"><div class="ai-step-num">4</div>Help improve future events through data-driven insights</div>
         </div>
       </div>
     </div>
-
-    <!-- Tips -->
     <div class="info-box">
       <div class="info-box-title">Tips for Better Feedback</div>
       <div class="info-list">
-        <div class="info-list-item"><span class="info-list-ic">✏️</span>Be specific — mention particular sessions, speakers, or activities.</div>
+        <div class="info-list-item"><span class="info-list-ic">✏️</span>Be specific — mention particular sessions or speakers.</div>
         <div class="info-list-item"><span class="info-list-ic">⚖️</span>Be balanced — share both positives and areas to improve.</div>
         <div class="info-list-item"><span class="info-list-ic">🎯</span>Be constructive — suggest practical improvements.</div>
-        <div class="info-list-item"><span class="info-list-ic">🔒</span>Your feedback is confidential and used only to improve events.</div>
+        <div class="info-list-item"><span class="info-list-ic">🔒</span>Your feedback is confidential.</div>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
     <div>
       <div class="fi-brand-utm">UTM</div>
       <div class="fi-brand-full">Universiti Teknologi Malaysia</div>
-      <div class="fi-brand-text">AI-Driven Campus Event Finder for UTM Students with Augmented Reality.</div>
-    </div>
-    <div>
-      <div class="fi-head">Information About</div>
-      <div class="fi-links">
-        <a href="#">Department of DVC (Students Affairs)</a>
-        <a href="#">Department of DVC (Research & Innovation)</a>
-        <a href="#">Department of DVC (Academic & International)</a>
-        <a href="#">Department of DVC (Development)</a>
-      </div>
+      <div class="fi-brand-text">AI-Driven Campus Event Finder for UTM Students.</div>
     </div>
     <div>
       <div class="fi-head">Quicklinks</div>
       <div class="fi-links">
         <a href="#">myUTM Portal</a>
         <a href="#">Staff Directory</a>
-        <a href="#">Scholarship & Financial Aids</a>
         <a href="#">Career@UTM</a>
         <a href="#">UTM Alumni</a>
-        <a href="#">Brand Guidelines</a>
       </div>
     </div>
     <div>
@@ -720,8 +658,14 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
         <a href="#">utm.my</a>
         <a href="#">Facebook</a>
         <a href="#">Instagram</a>
-        <a href="#">YouTube</a>
-        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div>
+      <div class="fi-head">Legal</div>
+      <div class="fi-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Disclaimer</a>
       </div>
     </div>
   </div>
@@ -730,7 +674,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     <div class="footer-bottom-links">
       <a href="#">Privacy Policy</a>
       <a href="#">Terms of Use</a>
-      <a href="#">Disclaimer</a>
     </div>
   </div>
 </footer>
@@ -742,253 +685,288 @@ const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-/* ── EVENT DATA ── */
-const EVENTS=[
-  {id:'1',title:'AI Research Fair & Showcase 2025',category:'academic',date:'12 Jun 2025',time:'9:00 AM – 5:00 PM',location:'Faculty of Computing, UTM Skudai',faculty:'Faculty of Computing',emoji:'🤖'},
-  {id:'2',title:'UTM Run 2025',category:'sports',date:'20 Jun 2025',time:'6:00 AM – 10:00 AM',location:'UTM Sports Complex, Skudai',faculty:'All Faculties',emoji:'🏃'},
-  {id:'3',title:'Cultural Night Extravaganza 2025',category:'cultural',date:'28 Jun 2025',time:'7:00 PM – 11:00 PM',location:'Dewan Sultan Iskandar, UTM',faculty:'All Faculties',emoji:'🎭'},
-  {id:'4',title:'Career Bootcamp: Tech Industry',category:'career',date:'5 Jul 2025',time:'10:00 AM – 4:00 PM',location:'FC Building, Room A1-01',faculty:'Faculty of Computing',emoji:'💼'},
-  {id:'5',title:'Hackathon UTM 2025',category:'academic',date:'18–19 Jul 2025',time:'8:00 AM (24-hour)',location:'Student Innovation Centre, UTM',faculty:'Faculty of Computing',emoji:'💡'},
-  {id:'6',title:'Blood Donation Drive — UTM Cares',category:'volunteer',date:'10 Jul 2025',time:'9:00 AM – 3:00 PM',location:'Pusat Kesihatan UTM, Skudai',faculty:'All Faculties',emoji:'❤️'},
-  {id:'7',title:'Faculty of Computing Open Day',category:'academic',date:'25 Jun 2025',time:'9:00 AM – 4:00 PM',location:'Faculty of Computing, UTM Skudai',faculty:'Faculty of Computing',emoji:'🏫'},
-  {id:'8',title:'UTM Badminton Championship',category:'sports',date:'2 Jul 2025',time:'8:00 AM – 6:00 PM',location:'UTM Sports Hall, Skudai',faculty:'All Faculties',emoji:'🏸'},
-  {id:'9',title:'Photography & Visual Arts Workshop',category:'cultural',date:'15 Jul 2025',time:'2:00 PM – 5:00 PM',location:'MPH Kolej Tun Razak, UTM',faculty:'All Faculties',emoji:'📷'},
-  {id:'10',title:'Industry Talk: AI & Future of Work',category:'career',date:'8 Jul 2025',time:'2:00 PM – 4:30 PM',location:'Auditorium, Faculty of Computing',faculty:'Faculty of Computing',emoji:'🎤'},
-  {id:'11',title:'Community Tree Planting — Green UTM',category:'volunteer',date:'22 Jun 2025',time:'7:30 AM – 12:00 PM',location:'UTM Botanical Garden, Skudai',faculty:'All Faculties',emoji:'🌱'},
-  {id:'12',title:'International Food Festival UTM',category:'cultural',date:'30 Jun 2025',time:'11:00 AM – 8:00 PM',location:'Stadium Bola Sepak UTM, Skudai',faculty:'All Faculties',emoji:'🍜'}
-];
-
-const badgeClass={academic:'badge-academic',sports:'badge-sports',cultural:'badge-cultural',career:'badge-career',volunteer:'badge-volunteer'};
+const badgeClass = {academic:'badge-academic',sports:'badge-sports',cultural:'badge-cultural',career:'badge-career',volunteer:'badge-volunteer'};
 
 /* ── STATE ── */
-let overallRating=0;
-let recommendVal='';
-let currentEvent=null;
-const aspectRatings={organisation:0,content:0,venue:0,speaker:0,time:0,registration:0};
+let overallRating = 0;
+let recommendVal  = '';
+let currentEvent  = null;
+const aspectRatings = {organisation:0,content:0,venue:0,speaker:0,time:0,registration:0};
 
-/* ── LOAD EVENT ── */
-function loadEvent(){
-  const id=new URLSearchParams(window.location.search).get('id')||'1';
-  const ev=EVENTS.find(e=>e.id===id)||EVENTS[0];
-  currentEvent=ev;
-  document.getElementById('dynPageTitle').textContent='Feedback — '+ev.title;
-  document.getElementById('eventName').value=ev.title;
-  document.getElementById('eventDate').value=ev.date;
-  document.getElementById('esTitle').textContent=ev.title;
-  document.getElementById('esBadge').textContent=cap(ev.category);
-  document.getElementById('esBadge').className='es-badge '+badgeClass[ev.category];
-  document.getElementById('esDate').textContent=ev.date;
-  document.getElementById('esTime').textContent=ev.time;
-  document.getElementById('esLocation').textContent=ev.location;
-  document.getElementById('esFaculty').textContent=ev.faculty;
-  return ev;
+/* ── INIT: load session + event from Supabase ── */
+async function init() {
+  // Check session
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    window.location.href = '/Login/login.html';
+    return;
+  }
+
+  // Get user info
+  const { data: user } = await sb.from('users')
+    .select('*')
+    .eq('email', session.user.email)
+    .single();
+
+  if (user) {
+    const avatar = (user.name || '').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+    document.getElementById('headerAvatar').textContent = avatar || '?';
+    document.getElementById('headerName').textContent   = user.matrix || user.name || session.user.email;
+
+    // Prefill attendee fields from user profile
+    if (user.name)   document.getElementById('fullName').value = user.name;
+    if (user.matrix) document.getElementById('matrix').value   = user.matrix;
+    if (user.email)  document.getElementById('email').value    = session.user.email;
+  }
+
+  // Get event_id from URL
+  const eventId = new URLSearchParams(window.location.search).get('id');
+
+  if (!eventId) {
+    document.getElementById('loadingBox').style.display   = 'none';
+    document.getElementById('notFoundBox').style.display  = 'block';
+    return;
+  }
+
+  // ── FETCH EVENT FROM SUPABASE ── (no more hardcoded array)
+  const { data: ev, error } = await sb
+    .from('events')
+    .select('*')
+    .eq('id', eventId)
+    .single();
+
+  document.getElementById('loadingBox').style.display = 'none';
+
+  if (error || !ev) {
+    document.getElementById('notFoundBox').style.display = 'block';
+    return;
+  }
+
+  currentEvent = ev;
+
+  // Populate page title & breadcrumb
+  document.getElementById('dynPageTitle').textContent = 'Feedback — ' + ev.title;
+
+  // Populate form readonly fields
+  document.getElementById('eventName').value = ev.title || '';
+  document.getElementById('eventDate').value = ev.date  || '';
+
+  // Populate right panel event summary
+  document.getElementById('esTitle').textContent    = ev.title    || '–';
+  document.getElementById('esBadge').textContent    = cap(ev.category);
+  document.getElementById('esBadge').className      = 'es-badge ' + (badgeClass[ev.category] || '');
+  document.getElementById('esDate').textContent     = ev.date     || '–';
+  document.getElementById('esTime').textContent     = ev.time     || '–';
+  document.getElementById('esLocation').textContent = ev.location || '–';
+  document.getElementById('esFaculty').textContent  = ev.faculty  || '–';
+
+  // Show form
+  document.getElementById('formCard').style.display = 'block';
+
+  // Blur validation
+  document.querySelectorAll('.form-input:not(.readonly),.form-textarea').forEach(el => {
+    el.addEventListener('blur', () => {
+      if (el.value.trim()) {
+        el.classList.remove('error');
+        const err = document.getElementById('err-' + el.id);
+        if (err) err.classList.remove('show');
+      }
+    });
+  });
 }
 
 /* ── STAR RATING ── */
-const starDescs=['','Poor — Needs significant improvement','Fair — Below expectations','Good — Met expectations','Very Good — Exceeded expectations','Excellent — Outstanding event!'];
-function setRating(val){
-  overallRating=val;
-  document.querySelectorAll('.star-btn').forEach(b=>{
-    b.classList.toggle('active',parseInt(b.dataset.val)<=val);
+const starDescs = ['','Poor — Needs significant improvement','Fair — Below expectations','Good — Met expectations','Very Good — Exceeded expectations','Excellent — Outstanding event!'];
+
+function setRating(val) {
+  overallRating = val;
+  document.querySelectorAll('.star-btn').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.val) <= val);
   });
-  document.getElementById('starDesc').textContent=starDescs[val];
+  document.getElementById('starDesc').textContent = starDescs[val];
   document.getElementById('err-rating').classList.remove('show');
 }
 
 /* ── ASPECT STARS ── */
-function setAspect(aspect,val){
-  aspectRatings[aspect]=val;
-  document.querySelectorAll(`[data-aspect="${aspect}"]`).forEach(b=>{
-    b.classList.toggle('active',parseInt(b.dataset.val)<=val);
+function setAspect(aspect, val) {
+  aspectRatings[aspect] = val;
+  document.querySelectorAll(`[data-aspect="${aspect}"]`).forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.val) <= val);
   });
 }
 
 /* ── CHAR COUNTER ── */
-function countChars(id,counterId,max){
-  const len=document.getElementById(id).value.length;
-  const el=document.getElementById(counterId);
-  el.textContent=len+' / '+max;
-  el.className='char-counter'+(len>max*0.9?' warn':'')+(len>=max?' over':'');
+function countChars(id, counterId, max) {
+  const len = document.getElementById(id).value.length;
+  const el  = document.getElementById(counterId);
+  el.textContent = len + ' / ' + max;
+  el.className   = 'char-counter' + (len > max * 0.9 ? ' warn' : '') + (len >= max ? ' over' : '');
 }
 
 /* ── RECOMMEND ── */
-function setRecommend(val){
-  recommendVal=val;
-  document.getElementById('rec-yes').className='rec-btn'+(val==='yes'?' active-yes':'');
-  document.getElementById('rec-maybe').className='rec-btn'+(val==='maybe'?' active-maybe':'');
-  document.getElementById('rec-no').className='rec-btn'+(val==='no'?' active-no':'');
+function setRecommend(val) {
+  recommendVal = val;
+  document.getElementById('rec-yes').className   = 'rec-btn' + (val === 'yes'   ? ' active-yes'   : '');
+  document.getElementById('rec-maybe').className = 'rec-btn' + (val === 'maybe' ? ' active-maybe' : '');
+  document.getElementById('rec-no').className    = 'rec-btn' + (val === 'no'    ? ' active-no'    : '');
   document.getElementById('err-recommend').classList.remove('show');
 }
 
-/* ── AI SENTIMENT (local simulation — boleh replace dengan real API kalau ada) ── */
-function analyseSentiment(){
-  const liked=document.getElementById('liked').value.toLowerCase();
-  const improve=document.getElementById('improve').value.toLowerCase();
-  const additional=document.getElementById('additional').value.toLowerCase();
-  const combined=liked+' '+improve+' '+additional;
+/* ── AI SENTIMENT (local NLP simulation) ── */
+function analyseSentiment() {
+  const liked      = document.getElementById('liked').value.toLowerCase();
+  const improve    = document.getElementById('improve').value.toLowerCase();
+  const additional = document.getElementById('additional').value.toLowerCase();
+  const combined   = liked + ' ' + improve + ' ' + additional;
 
-  const posWords=['great','excellent','amazing','good','helpful','informative','well','enjoyed','love','fantastic','wonderful','organised','clear','engaging','professional','knowledgeable','interesting','best','satisfied','happy'];
-  const negWords=['poor','bad','boring','disorganised','late','unclear','disappointed','waste','terrible','confusing','crowded','noisy','long','slow','difficult','problem','issue','complaint'];
+  const posWords = ['great','excellent','amazing','good','helpful','informative','well','enjoyed','love','fantastic','wonderful','organised','clear','engaging','professional','knowledgeable','interesting','best','satisfied','happy'];
+  const negWords = ['poor','bad','boring','disorganised','late','unclear','disappointed','waste','terrible','confusing','crowded','noisy','long','slow','difficult','problem','issue','complaint'];
 
-  let posScore=0,negScore=0;
-  posWords.forEach(w=>{if(combined.includes(w))posScore++;});
-  negWords.forEach(w=>{if(combined.includes(w))negScore++;});
+  let posScore = 0, negScore = 0;
+  posWords.forEach(w => { if (combined.includes(w)) posScore++; });
+  negWords.forEach(w => { if (combined.includes(w)) negScore++; });
 
-  if(overallRating>=4)posScore+=2;
-  else if(overallRating<=2)negScore+=2;
+  if (overallRating >= 4) posScore += 2;
+  else if (overallRating <= 2) negScore += 2;
 
-  const total=Math.max(posScore+negScore,1);
-  let posP=Math.round((posScore/total)*100);
-  let negP=Math.round((negScore/total)*100);
-  let neuP=100-posP-negP;
-  if(neuP<0){neuP=0;posP=100-negP;}
+  const total = Math.max(posScore + negScore, 1);
+  let posP = Math.round((posScore / total) * 100);
+  let negP = Math.round((negScore / total) * 100);
+  let neuP = 100 - posP - negP;
+  if (neuP < 0) { neuP = 0; posP = 100 - negP; }
 
-  if(posScore===0&&negScore===0){
-    posP=overallRating>=4?60:overallRating>=3?40:20;
-    neuP=overallRating>=4?30:overallRating>=3?40:40;
-    negP=100-posP-neuP;
+  if (posScore === 0 && negScore === 0) {
+    posP = overallRating >= 4 ? 60 : overallRating >= 3 ? 40 : 20;
+    neuP = overallRating >= 4 ? 30 : overallRating >= 3 ? 40 : 40;
+    negP = 100 - posP - neuP;
   }
 
-  let sentiment,emoji,desc,badgeCls;
-  if(posP>=50){sentiment='positive';emoji='😊';desc='The student expressed a generally positive experience.';badgeCls='badge-positive';}
-  else if(negP>=40){sentiment='negative';emoji='😔';desc='The student raised concerns that need attention.';badgeCls='badge-negative';}
-  else{sentiment='neutral';emoji='😐';desc='The student had a mixed or neutral experience.';badgeCls='badge-neutral';}
+  let sentiment, emoji, desc, badgeCls;
+  if (posP >= 50)      { sentiment='positive'; emoji='😊'; desc='The student expressed a generally positive experience.'; badgeCls='badge-positive'; }
+  else if (negP >= 40) { sentiment='negative'; emoji='😔'; desc='The student raised concerns that need attention.';       badgeCls='badge-negative'; }
+  else                 { sentiment='neutral';  emoji='😐'; desc='The student had a mixed or neutral experience.';         badgeCls='badge-neutral';  }
 
-  const allPositiveKw=posWords.filter(w=>combined.includes(w)).slice(0,4);
-  const allNegativeKw=negWords.filter(w=>combined.includes(w)).slice(0,3);
+  const allPositiveKw = posWords.filter(w => combined.includes(w)).slice(0, 4);
+  const allNegativeKw = negWords.filter(w => combined.includes(w)).slice(0, 3);
 
-  return {posP,neuP,negP,sentiment,emoji,desc,badgeCls,allPositiveKw,allNegativeKw};
+  return { posP, neuP, negP, sentiment, emoji, desc, badgeCls, allPositiveKw, allNegativeKw };
 }
 
 /* ── VALIDATE ── */
-function validate(){
-  let ok=true;
-  const required=[
-    {id:'fullName',err:'err-fullName'},
-    {id:'matrix',  err:'err-matrix'},
-    {id:'email',   err:'err-email'},
-    {id:'liked',   err:'err-liked'},
+function validate() {
+  let ok = true;
+  const required = [
+    { id:'fullName', err:'err-fullName' },
+    { id:'matrix',   err:'err-matrix'   },
+    { id:'email',    err:'err-email'    },
+    { id:'liked',    err:'err-liked'    },
   ];
-  required.forEach(({id,err})=>{
-    const el=document.getElementById(id);
-    const er=document.getElementById(err);
-    if(!el.value.trim()){el.classList.add('error');er.classList.add('show');ok=false;}
-    else{el.classList.remove('error');er.classList.remove('show');}
+  required.forEach(({ id, err }) => {
+    const el = document.getElementById(id);
+    const er = document.getElementById(err);
+    if (!el.value.trim()) { el.classList.add('error'); er.classList.add('show'); ok = false; }
+    else                  { el.classList.remove('error'); er.classList.remove('show'); }
   });
-  if(!overallRating){document.getElementById('err-rating').classList.add('show');ok=false;}
-  if(!recommendVal){document.getElementById('err-recommend').classList.add('show');ok=false;}
+  if (!overallRating) { document.getElementById('err-rating').classList.add('show');    ok = false; }
+  if (!recommendVal)  { document.getElementById('err-recommend').classList.add('show'); ok = false; }
   return ok;
 }
 
 /* ── SUBMIT — SAVE TO SUPABASE ── */
-async function submitFeedback(){
-  if(!validate()) return;
+async function submitFeedback() {
+  if (!validate()) return;
 
-  const ai=analyseSentiment();
+  const ai = analyseSentiment();
 
-  // Data object untuk insert ke Supabase 'feedback' table
-  const feedbackData={
-    event_id:       currentEvent?.id || null,
-    event_title:    document.getElementById('eventName').value,
-    full_name:      document.getElementById('fullName').value.trim(),
-    matrix_number:  document.getElementById('matrix').value.trim().toUpperCase(),
-    email:          document.getElementById('email').value.trim(),
-    faculty:        document.getElementById('faculty').value,
-    overall_rating: overallRating,
+  const feedbackData = {
+    event_id:            currentEvent?.id   || null,
+    event_title:         document.getElementById('eventName').value,
+    full_name:           document.getElementById('fullName').value.trim(),
+    matrix_number:       document.getElementById('matrix').value.trim().toUpperCase(),
+    email:               document.getElementById('email').value.trim(),
+    faculty:             document.getElementById('faculty').value,
+    overall_rating:      overallRating,
     aspect_organisation: aspectRatings.organisation || null,
     aspect_content:      aspectRatings.content      || null,
     aspect_venue:        aspectRatings.venue         || null,
     aspect_speaker:      aspectRatings.speaker       || null,
     aspect_time:         aspectRatings.time          || null,
     aspect_registration: aspectRatings.registration  || null,
-    comment_liked:      document.getElementById('liked').value.trim(),
-    comment_improve:    document.getElementById('improve').value.trim(),
-    comment_additional: document.getElementById('additional').value.trim(),
-    recommend:          recommendVal,
-    attend_again:       document.getElementById('attendAgain').value || null,
-    heard_from:         document.getElementById('heardFrom').value   || null,
-    sentiment:          ai.sentiment,
-    sentiment_positive: ai.posP,
-    sentiment_neutral:  ai.neuP,
-    sentiment_negative: ai.negP,
-    keywords:           [...ai.allPositiveKw, ...ai.allNegativeKw],
+    comment_liked:       document.getElementById('liked').value.trim(),
+    comment_improve:     document.getElementById('improve').value.trim(),
+    comment_additional:  document.getElementById('additional').value.trim(),
+    recommend:           recommendVal,
+    attend_again:        document.getElementById('attendAgain').value || null,
+    heard_from:          document.getElementById('heardFrom').value   || null,
+    sentiment:           ai.sentiment,
+    sentiment_positive:  ai.posP,
+    sentiment_neutral:   ai.neuP,
+    sentiment_negative:  ai.negP,
+    keywords:            [...ai.allPositiveKw, ...ai.allNegativeKw],
   };
 
-  // Insert ke Supabase
   const { error } = await sb.from('feedback').insert([feedbackData]);
 
-  if(error){
+  if (error) {
     alert('Failed to submit feedback. Please try again.\n\n' + error.message);
     return;
   }
 
   // Populate success screen
-  document.getElementById('sName').textContent=feedbackData.full_name;
-  document.getElementById('sMatrix').textContent=feedbackData.matrix_number;
-  document.getElementById('sEvent').textContent=feedbackData.event_title;
-  document.getElementById('sRating').textContent='★'.repeat(overallRating)+'☆'.repeat(5-overallRating)+' ('+overallRating+'/5)';
-  document.getElementById('sRecommend').textContent=recommendVal==='yes'?'Yes, definitely':recommendVal==='maybe'?'Maybe':'No';
+  document.getElementById('sName').textContent    = feedbackData.full_name;
+  document.getElementById('sMatrix').textContent  = feedbackData.matrix_number;
+  document.getElementById('sEvent').textContent   = feedbackData.event_title;
+  document.getElementById('sRating').textContent  = '★'.repeat(overallRating) + '☆'.repeat(5 - overallRating) + ' (' + overallRating + '/5)';
+  document.getElementById('sRecommend').textContent = recommendVal === 'yes' ? 'Yes, definitely' : recommendVal === 'maybe' ? 'Maybe' : 'No';
 
-  // AI result display
-  document.getElementById('sentimentBadge').textContent=cap(ai.sentiment);
-  document.getElementById('sentimentBadge').className='sr-head-badge '+ai.badgeCls;
-  document.getElementById('sentimentEmoji').textContent=ai.emoji;
-  document.getElementById('sentimentLabel').textContent=cap(ai.sentiment)+' Sentiment';
-  document.getElementById('sentimentDesc').textContent=ai.desc;
+  // AI result
+  document.getElementById('sentimentBadge').textContent = cap(ai.sentiment);
+  document.getElementById('sentimentBadge').className   = 'sr-head-badge ' + ai.badgeCls;
+  document.getElementById('sentimentEmoji').textContent = ai.emoji;
+  document.getElementById('sentimentLabel').textContent = cap(ai.sentiment) + ' Sentiment';
+  document.getElementById('sentimentDesc').textContent  = ai.desc;
 
-  setTimeout(()=>{
-    document.getElementById('barPos').style.width=ai.posP+'%';
-    document.getElementById('barNeu').style.width=ai.neuP+'%';
-    document.getElementById('barNeg').style.width=ai.negP+'%';
-    document.getElementById('pctPos').textContent=ai.posP+'%';
-    document.getElementById('pctNeu').textContent=ai.neuP+'%';
-    document.getElementById('pctNeg').textContent=ai.negP+'%';
-  },200);
+  setTimeout(() => {
+    document.getElementById('barPos').style.width = ai.posP + '%';
+    document.getElementById('barNeu').style.width = ai.neuP + '%';
+    document.getElementById('barNeg').style.width = ai.negP + '%';
+    document.getElementById('pctPos').textContent = ai.posP + '%';
+    document.getElementById('pctNeu').textContent = ai.neuP + '%';
+    document.getElementById('pctNeg').textContent = ai.negP + '%';
+  }, 200);
 
-  const kwContainer=document.getElementById('kwTags');
-  kwContainer.innerHTML='';
-  ai.allPositiveKw.forEach(w=>{const t=document.createElement('span');t.className='kw-tag pos';t.textContent=w;kwContainer.appendChild(t);});
-  ai.allNegativeKw.forEach(w=>{const t=document.createElement('span');t.className='kw-tag neg';t.textContent=w;kwContainer.appendChild(t);});
-  if(kwContainer.children.length===0){const t=document.createElement('span');t.className='kw-tag';t.textContent='general feedback';kwContainer.appendChild(t);}
+  const kwContainer = document.getElementById('kwTags');
+  kwContainer.innerHTML = '';
+  ai.allPositiveKw.forEach(w => { const t = document.createElement('span'); t.className = 'kw-tag pos'; t.textContent = w; kwContainer.appendChild(t); });
+  ai.allNegativeKw.forEach(w => { const t = document.createElement('span'); t.className = 'kw-tag neg'; t.textContent = w; kwContainer.appendChild(t); });
+  if (!kwContainer.children.length) { const t = document.createElement('span'); t.className = 'kw-tag'; t.textContent = 'general feedback'; kwContainer.appendChild(t); }
 
   document.getElementById('formCard').classList.add('hide');
   document.getElementById('successScreen').classList.add('show');
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /* ── RESET ── */
-function resetForm(){
-  overallRating=0;recommendVal='';
-  Object.keys(aspectRatings).forEach(k=>aspectRatings[k]=0);
-  document.querySelectorAll('.star-btn,.aspect-star').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.rec-btn').forEach(b=>b.className='rec-btn');
-  document.getElementById('starDesc').textContent='Tap a star to rate';
-  document.querySelectorAll('.form-input:not(.readonly),.form-select,.form-textarea').forEach(el=>{
-    if(!el.readOnly){if(el.tagName==='SELECT')el.selectedIndex=0;else el.value='';}
+function resetForm() {
+  overallRating = 0; recommendVal = '';
+  Object.keys(aspectRatings).forEach(k => aspectRatings[k] = 0);
+  document.querySelectorAll('.star-btn,.aspect-star').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.rec-btn').forEach(b => b.className = 'rec-btn');
+  document.getElementById('starDesc').textContent = 'Tap a star to rate';
+  document.querySelectorAll('.form-input:not(.readonly),.form-select,.form-textarea').forEach(el => {
+    if (!el.readOnly) { if (el.tagName === 'SELECT') el.selectedIndex = 0; else el.value = ''; }
     el.classList.remove('error');
   });
-  document.querySelectorAll('.form-error').forEach(e=>e.classList.remove('show'));
-  ['likedCount','improveCount','additionalCount'].forEach(id=>{document.getElementById(id).textContent='0 / 300';});
+  document.querySelectorAll('.form-error').forEach(e => e.classList.remove('show'));
+  ['likedCount','improveCount','additionalCount'].forEach(id => { document.getElementById(id).textContent = '0 / 300'; });
   document.getElementById('formCard').classList.remove('hide');
   document.getElementById('successScreen').classList.remove('show');
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function cap(s){return s?s[0].toUpperCase()+s.slice(1):'';}
+function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
 
-window.addEventListener('DOMContentLoaded',()=>{
-  loadEvent();
-  document.querySelectorAll('.form-input:not(.readonly),.form-textarea').forEach(el=>{
-    el.addEventListener('blur',()=>{
-      if(el.value.trim()){
-        el.classList.remove('error');
-        const err=document.getElementById('err-'+el.id);
-        if(err)err.classList.remove('show');
-      }
-    });
-  });
-});
-
+window.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>

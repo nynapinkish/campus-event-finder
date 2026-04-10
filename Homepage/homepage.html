@@ -36,7 +36,6 @@
     }
     .top-band > *{position:relative;z-index:1;}
 
-    /* NAVBAR */
     .navbar{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:200;}
     .nav-logo{display:flex;flex-direction:column}
     .logo-row{display:flex;align-items:baseline;line-height:1}
@@ -51,7 +50,6 @@
     .nav-uname{color:rgba(255,255,255,.82);font-size:13px}
     .nav-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#7c4dff,#e040fb);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;cursor:pointer;border:2px solid rgba(255,255,255,.25)}
 
-    /* QUICK ICONS */
     .qi-row{display:flex;justify-content:center;gap:6px;padding:16px 20px 0;flex-wrap:wrap;}
     .qi-card{background:var(--white);border-radius:var(--radius);border:none;padding:14px 12px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:110px;cursor:pointer;box-shadow:var(--shadow);transition:all .2s;font-family:'Roboto',sans-serif;}
     .qi-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
@@ -59,10 +57,8 @@
     .cap-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--orange),var(--orange2));-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 17l-7-3.82z'/%3E%3C/svg%3E") center/contain no-repeat;}
     .qi-label{font-size:12px;color:var(--text);font-weight:400;text-align:center;line-height:1.25}
 
-    /* MAIN GRID */
     .main-grid{display:flex;align-items:flex-start;gap:10px;padding:12px 10px 32px;max-width:1540px;margin:0 auto;}
 
-    /* SIDEBAR */
     .sidebar{width:255px;flex-shrink:0;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;padding:16px 0 12px;}
     .sb-head{padding:0 16px 12px;border-bottom:1px solid #f0f0f0;margin-bottom:8px}
     .sb-title{font-size:15px;font-weight:500;color:var(--text)}
@@ -83,7 +79,6 @@
     .new-badge{background:var(--red-badge);color:#fff;font-size:9px;font-weight:700;padding:1px 7px;border-radius:3px;text-transform:uppercase}
     .cnt-badge{background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:1px 7px;border-radius:10px}
 
-    /* CARDS */
     .cards-wrap{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;gap:10px;}
     .card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;padding:18px 20px;}
     .card-title{font-size:17px;font-weight:500;color:var(--text);margin-bottom:3px}
@@ -112,7 +107,6 @@
     .tag-career{background:#fff8e1;color:#e65100}
     .tag-volunteer{background:#ede7f6;color:#4527a0}
 
-    /* Empty state */
     .ev-empty{text-align:center;padding:24px 0;color:var(--light);font-size:13px}
     .ev-empty-icon{font-size:32px;margin-bottom:8px}
 
@@ -149,7 +143,6 @@
     .dash-btn{display:block;width:100%;background:var(--navy);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:12.5px;font-weight:500;padding:9px;border-radius:7px;cursor:pointer;margin-top:14px;transition:background .15s}
     .dash-btn:hover{background:#283593}
 
-    /* RIGHT COL */
     .right-col{width:270px;flex-shrink:0;display:flex;flex-direction:column;gap:10px;}
     .seasonal-card{background:linear-gradient(160deg,#5c6b4a 0%,#4a5a3a 30%,#3a4a2c 60%,#2e3d22 100%);border-radius:var(--radius);box-shadow:var(--shadow);min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:32px 20px;color:rgba(255,255,255,.8);text-align:center;}
     .seasonal-icon{font-size:40px;opacity:.8}
@@ -176,7 +169,6 @@
 
     .prev-tab{position:fixed;right:0;top:50%;transform:translateY(-50%) rotate(180deg);background:#c0392b;color:#fff;font-size:10px;font-weight:600;letter-spacing:1px;padding:10px 6px;border-radius:4px 0 0 4px;writing-mode:vertical-rl;cursor:pointer;z-index:50;}
 
-    /* MODAL */
     .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;align-items:center;justify-content:center;padding:20px}
     .overlay.open{display:flex}
     .modal{background:var(--white);border-radius:14px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;animation:mIn .2s ease}
@@ -220,8 +212,8 @@
     <div class="nav-right">
       <button class="nav-icon">⊞</button>
       <button class="nav-icon">🔲</button>
-      <span class="nav-uname">study@UTM</span>
-      <div class="nav-avatar">NH</div>
+      <span class="nav-uname" id="navUname">—</span>
+      <div class="nav-avatar" id="navAvatar">?</div>
     </div>
   </nav>
 
@@ -263,7 +255,6 @@
 
 <div class="main-grid">
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-head">
       <div class="sb-title">Systems &amp; Apps</div>
@@ -327,24 +318,18 @@
     </div>
   </aside>
 
-  <!-- CONTENT CARDS -->
   <div class="cards-wrap">
 
-    <!-- NEWS -->
     <div class="card news-card">
       <div class="card-title">News</div>
       <div class="card-sub">Latest news</div>
       <div class="news-img-box">
-        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&auto=format&fit=crop&q=80" alt="UTM News" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div style="display:none;align-items:center;justify-content:center;font-size:52px;width:100%;height:100%">🏫</div>
+        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&auto=format&fit=crop&q=80" alt="UTM News" onerror="this.style.display='none'"/>
       </div>
       <div class="news-date"><b>14 Mar 2026</b>, Komuniti Penyayang Bermula dari Rumah</div>
-      <div style="text-align:right;margin-top:12px">
-        <a class="card-more" style="float:none">more..</a>
-      </div>
+      <div style="text-align:right;margin-top:12px"><a class="card-more" style="float:none">more..</a></div>
     </div>
 
-    <!-- TIMETABLE -->
     <div class="card timetable-card">
       <div class="card-title">Timetable</div>
       <div class="card-sub">Today's schedule</div>
@@ -354,7 +339,6 @@
       </div>
     </div>
 
-    <!-- EVENTS — loaded from Firebase -->
     <div class="card events-card">
       <div class="card-title">Events</div>
       <div class="card-sub">Latest events</div>
@@ -364,7 +348,6 @@
       </div>
     </div>
 
-    <!-- CHARITY -->
     <div class="card charity-card">
       <div class="card-title">Charity</div>
       <a class="card-more">more..</a>
@@ -374,7 +357,7 @@
           <div class="charity-logo-text">🏛 UTM</div>
           <div class="charity-main-title">SUMBANGAN DANA IHYA'<br>RAMADAN 2026M/1447H</div>
           <div class="charity-amount">RM 156,000.00</div>
-          <div class="charity-sub">Sumbangan anda amat dialu-alukan bagi menghidupkan<br>program Ihya' Ramadan 1447H</div>
+          <div class="charity-sub">Sumbangan anda amat dialu-alukan bagi menghidupkan program Ihya' Ramadan 1447H</div>
           <ul class="charity-list">
             <li>Jamuan Iftar Sepanjang Ramadan</li>
             <li>Qiam Malam Dan Sahur</li>
@@ -388,7 +371,6 @@
       </div>
     </div>
 
-    <!-- ACADEMIC & CIRCULAR -->
     <div class="card circular-card">
       <div class="card-title">Academic &amp; Circular</div>
       <div class="card-sub" style="margin-bottom:12px"></div>
@@ -401,23 +383,26 @@
       </ol>
     </div>
 
-    <!-- AI FEEDBACK — loaded from Firebase -->
+    <!-- AI FEEDBACK CARD — data from Supabase -->
     <div class="card ai-card">
       <div class="card-title">AI Feedback Analysis</div>
       <div class="card-sub">Latest sentiment results</div>
-      <div class="sent-row"><span>😊 Positive</span><span id="pct-pos">–%</span></div>
-      <div class="sent-bar"><div class="sent-fill fp" id="bar-pos" style="width:0%"></div></div>
-      <div class="sent-row"><span>😐 Neutral</span><span id="pct-neu">–%</span></div>
-      <div class="sent-bar"><div class="sent-fill fn" id="bar-neu" style="width:0%"></div></div>
-      <div class="sent-row"><span>😞 Negative</span><span id="pct-neg">–%</span></div>
-      <div class="sent-bar"><div class="sent-fill fg" id="bar-neg" style="width:0%"></div></div>
-      <div class="sent-note" id="sent-note">Loading feedback data...</div>
+      <div id="sentimentLoading" style="text-align:center;padding:16px 0;color:#aaa;font-size:13px">Loading...</div>
+      <div id="sentimentContent" style="display:none">
+        <div class="sent-row"><span>😊 Positive</span><span id="pct-pos">–%</span></div>
+        <div class="sent-bar"><div class="sent-fill fp" id="bar-pos" style="width:0%"></div></div>
+        <div class="sent-row"><span>😐 Neutral</span><span id="pct-neu">–%</span></div>
+        <div class="sent-bar"><div class="sent-fill fn" id="bar-neu" style="width:0%"></div></div>
+        <div class="sent-row"><span>😞 Negative</span><span id="pct-neg">–%</span></div>
+        <div class="sent-bar"><div class="sent-fill fg" id="bar-neg" style="width:0%"></div></div>
+        <div class="sent-note" id="sent-note"></div>
+      </div>
+      <div id="sentimentEmpty" style="display:none;text-align:center;padding:16px 0;color:#aaa;font-size:13px">No feedback data yet.</div>
       <button class="dash-btn" onclick="window.location.href='../Admin/admin.html'">View Full Dashboard →</button>
     </div>
 
   </div>
 
-  <!-- RIGHT COL -->
   <div class="right-col">
     <div class="seasonal-card">
       <div class="seasonal-icon">🌙</div>
@@ -484,23 +469,28 @@ async function initHomepage() {
     return;
   }
 
-  const email = session.user.email;
-
-  // Get user data dari table users
+  // Get user data
   const { data: user } = await sb.from('users')
     .select('*')
-    .eq('email', email)
+    .eq('email', session.user.email)
     .single();
 
-  // Update navbar
-  const name   = user?.name   || email;
+  const name   = user?.name   || session.user.email;
   const matrix = user?.matrix || '';
   const avatar = name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
 
-  document.querySelector('.nav-uname').textContent = matrix || name;
-  document.querySelector('.nav-avatar').textContent = avatar;
+  document.getElementById('navUname').textContent = matrix || name;
+  document.getElementById('navAvatar').textContent = avatar;
 
-  // Load events dari Supabase
+  // Load events & sentiment in parallel
+  await Promise.all([
+    loadEvents(),
+    loadSentiment()
+  ]);
+}
+
+/* ── LOAD EVENTS FROM SUPABASE ── */
+async function loadEvents() {
   const { data: events } = await sb
     .from('events')
     .select('*')
@@ -510,31 +500,48 @@ async function initHomepage() {
   window.allEv = events || [];
   renderEvents();
   updateCounts();
+}
 
-  // Load feedback sentiment
-  const { data: feedbacks } = await sb
-    .from('registrations')
-    .select('dietary');
-  // Note: kalau you ada feedback table, tukar ke table tu
+/* ── LOAD SENTIMENT FROM SUPABASE feedback table ── */
+async function loadSentiment() {
+  const { data: feedbacks, error } = await sb
+    .from('feedback')
+    .select('sentiment, sentiment_positive, sentiment_neutral, sentiment_negative, overall_rating');
 
-  document.getElementById('sent-note').textContent = 'Live from Supabase';
-  document.getElementById('pct-pos').textContent = '71%';
-  document.getElementById('pct-neu').textContent = '19%';
-  document.getElementById('pct-neg').textContent = '10%';
-  document.getElementById('bar-pos').style.width = '71%';
-  document.getElementById('bar-neu').style.width = '19%';
-  document.getElementById('bar-neg').style.width = '10%';
+  document.getElementById('sentimentLoading').style.display = 'none';
+
+  if (error || !feedbacks || feedbacks.length === 0) {
+    document.getElementById('sentimentEmpty').style.display = 'block';
+    return;
+  }
+
+  // Calculate averages from real data
+  const total   = feedbacks.length;
+  const avgPos  = Math.round(feedbacks.reduce((a, f) => a + (f.sentiment_positive || 0), 0) / total);
+  const avgNeu  = Math.round(feedbacks.reduce((a, f) => a + (f.sentiment_neutral  || 0), 0) / total);
+  const avgNeg  = Math.round(feedbacks.reduce((a, f) => a + (f.sentiment_negative || 0), 0) / total);
+  const avgRate = (feedbacks.reduce((a, f) => a + (f.overall_rating || 0), 0) / total).toFixed(1);
+
+  document.getElementById('pct-pos').textContent  = avgPos + '%';
+  document.getElementById('pct-neu').textContent  = avgNeu + '%';
+  document.getElementById('pct-neg').textContent  = avgNeg + '%';
+  document.getElementById('sent-note').textContent = `Based on ${total} feedback • Avg rating: ${avgRate}/5`;
+
+  document.getElementById('sentimentContent').style.display = 'block';
+
+  // Animate bars after short delay
+  setTimeout(() => {
+    document.getElementById('bar-pos').style.width = avgPos + '%';
+    document.getElementById('bar-neu').style.width = avgNeu + '%';
+    document.getElementById('bar-neg').style.width = avgNeg + '%';
+  }, 200);
 }
 
 window.renderEvents = function() {
-  const list = (window.allEv || []).slice(0, 3);
+  const list      = (window.allEv || []).slice(0, 3);
   const container = document.getElementById('evPreview');
   if (!list.length) {
-    container.innerHTML = `
-      <div class="ev-empty">
-        <div class="ev-empty-icon">📭</div>
-        No approved events yet.
-      </div>`;
+    container.innerHTML = `<div class="ev-empty"><div class="ev-empty-icon">📭</div>No approved events yet.</div>`;
     return;
   }
   container.innerHTML = list.map(ev => `
@@ -551,39 +558,57 @@ window.renderEvents = function() {
 
 window.updateCounts = function() {
   const evs = window.allEv || [];
-  document.getElementById('cnt-all').textContent     = evs.length;
-  document.getElementById('cnt-sports').textContent  = evs.filter(e => e.category === 'sports').length;
+  document.getElementById('cnt-all').textContent      = evs.length;
+  document.getElementById('cnt-sports').textContent   = evs.filter(e => e.category === 'sports').length;
   document.getElementById('cnt-cultural').textContent = evs.filter(e => e.category === 'cultural').length;
-  document.getElementById('cnt-vol').textContent     = evs.filter(e => e.category === 'volunteer').length;
+  document.getElementById('cnt-vol').textContent      = evs.filter(e => e.category === 'volunteer').length;
 };
 
 window.openModal = function(id) {
   const ev = (window.allEv || []).find(e => e.id === id);
   if (!ev) return;
-  document.getElementById('mCat').textContent    = cap(ev.category);
-  document.getElementById('mCat').className      = 'm-cat tag-' + (ev.category || 'academic');
-  document.getElementById('mTitle').textContent  = ev.title;
-  document.getElementById('mDate').textContent   = ev.date     || '–';
-  document.getElementById('mTime').textContent   = ev.time     || '–';
-  document.getElementById('mLoc').textContent    = ev.location || '–';
-  document.getElementById('mFac').textContent    = ev.faculty  || '–';
-  document.getElementById('mSlots').textContent  = ev.slots_left > 0 ? ev.slots_left + ' remaining' : 'Full';
-  document.getElementById('mDesc').textContent   = ev.description || '–';
+  document.getElementById('mCat').textContent   = cap(ev.category);
+  document.getElementById('mCat').className     = 'm-cat tag-' + (ev.category || 'academic');
+  document.getElementById('mTitle').textContent = ev.title;
+  document.getElementById('mDate').textContent  = ev.date     || '–';
+  document.getElementById('mTime').textContent  = ev.time     || '–';
+  document.getElementById('mLoc').textContent   = ev.location || '–';
+  document.getElementById('mFac').textContent   = ev.faculty  || '–';
+  document.getElementById('mSlots').textContent = ev.slots_left > 0 ? ev.slots_left + ' remaining' : 'Full';
+  document.getElementById('mDesc').textContent  = ev.description || '–';
   const btn = document.getElementById('mReg');
   btn.disabled = ev.slots_left <= 0;
-  btn.onclick = () => {
-    const p = new URLSearchParams({
-      id: ev.id, title: ev.title,
-      date: ev.date, location: ev.location, time: ev.time
-    });
+  btn.onclick  = () => {
+    const p = new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
     window.location.href = '../Events/register.html?' + p;
   };
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 };
 
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOv(e) {
+  if (e.target === document.getElementById('overlay')) closeModal();
+}
+
+function goEv(cat) {
+  window.location.href = '../Events/campus_events_utm_v3.html' + (cat !== 'all' ? '?cat=' + cat : '');
+}
+
+function tog(id) {
+  const blk = document.getElementById(id);
+  blk.classList.toggle('open');
+  const chev = blk.querySelector('.cat-hdr-chev');
+  if (chev) chev.textContent = blk.classList.contains('open') ? '▲' : '▼';
+}
+
+function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+
 initHomepage();
 </script>
-
 </body>
 </html>
