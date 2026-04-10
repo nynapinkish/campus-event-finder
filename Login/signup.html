@@ -214,106 +214,111 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
-  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  async function doSignup() {
-    ['name','email','pw','pw2'].forEach(f => {
-      document.getElementById('err-' + f).classList.remove('show');
+async function doSignup() {
+  ['name','email','pw','pw2'].forEach(f => {
+    document.getElementById('err-' + f).classList.remove('show');
+  });
+  ['nameInput','emailInput','pwInput','pw2Input'].forEach(id => {
+    document.getElementById(id).classList.remove('error');
+  });
+  document.getElementById('errorAlert').classList.remove('show');
+
+  const name  = document.getElementById('nameInput').value.trim();
+  const email = document.getElementById('emailInput').value.trim();
+  const pw    = document.getElementById('pwInput').value;
+  const pw2   = document.getElementById('pw2Input').value;
+
+  let ok = true;
+  if (!name) {
+    document.getElementById('nameInput').classList.add('error');
+    document.getElementById('err-name').classList.add('show');
+    ok = false;
+  }
+  if (!email || !email.includes('@')) {
+    document.getElementById('emailInput').classList.add('error');
+    document.getElementById('err-email').classList.add('show');
+    ok = false;
+  }
+  if (!pw || pw.length < 6) {
+    document.getElementById('pwInput').classList.add('error');
+    document.getElementById('err-pw').classList.add('show');
+    ok = false;
+  }
+  if (pw !== pw2) {
+    document.getElementById('pw2Input').classList.add('error');
+    document.getElementById('err-pw2').classList.add('show');
+    ok = false;
+  }
+  if (!ok) return;
+
+  setLoading(true);
+
+  try {
+    // 1. Register dalam Supabase Auth
+    const { data: signUpData, error: signUpError } = await sb.auth.signUp({
+      email,
+      password: pw,
+      options: {
+        data: { name, role: 'organizer' }
+      }
     });
-    ['nameInput','emailInput','pwInput','pw2Input'].forEach(id => {
-      document.getElementById(id).classList.remove('error');
-    });
-    document.getElementById('errorAlert').classList.remove('show');
 
-    const name  = document.getElementById('nameInput').value.trim();
-    const email = document.getElementById('emailInput').value.trim();
-    const pw    = document.getElementById('pwInput').value;
-    const pw2   = document.getElementById('pw2Input').value;
-
-    let ok = true;
-
-    if (!name) {
-      document.getElementById('nameInput').classList.add('error');
-      document.getElementById('err-name').classList.add('show');
-      ok = false;
-    }
-    if (!email || !email.includes('@')) {
-      document.getElementById('emailInput').classList.add('error');
-      document.getElementById('err-email').classList.add('show');
-      ok = false;
-    }
-    if (!pw || pw.length < 6) {
-      document.getElementById('pwInput').classList.add('error');
-      document.getElementById('err-pw').classList.add('show');
-      ok = false;
-    }
-    if (pw !== pw2) {
-      document.getElementById('pw2Input').classList.add('error');
-      document.getElementById('err-pw2').classList.add('show');
-      ok = false;
-    }
-    if (!ok) return;
-
-    setLoading(true);
-
-    try {
-      // Check duplicate email
-      const { data: existing } = await sb
-        .from('users')
-        .select('id')
-        .eq('email', email)
-        .eq('role', 'organizer')
-        .single();
-
-      if (existing) {
+    if (signUpError) {
+      // Email dah wujud dalam Auth
+      if (signUpError.message.includes('already registered')) {
         document.getElementById('errorMsg').textContent = 'This email is already registered. Please log in.';
         document.getElementById('errorAlert').classList.add('show');
         document.getElementById('emailInput').classList.add('error');
         setLoading(false);
         return;
       }
-
-      // Insert new organizer
-      const { error } = await sb.from('users').insert({
-        name:       name,
-        email:      email,
-        password:   pw,
-        role:       'organizer',
-        created_at: new Date().toISOString()
-      });
-
-      if (error) throw error;
-
-      document.getElementById('formSection').style.display = 'none';
-      document.getElementById('successScreen').classList.add('show');
-
-    } catch (err) {
-      console.error('Signup error:', err);
-      document.getElementById('errorMsg').textContent = 'Failed to create account. Please check your connection.';
-      document.getElementById('errorAlert').classList.add('show');
-      setLoading(false);
+      throw signUpError;
     }
-  }
 
-  function setLoading(on) {
-    const btn = document.getElementById('signupBtn');
-    const txt = document.getElementById('btnText');
-    const sp  = document.getElementById('btnSpinner');
-    btn.disabled = on;
-    txt.textContent = on ? 'Creating account...' : 'Create Account';
-    sp.style.display = on ? 'inline-block' : 'none';
-  }
+    // 2. Insert ke table users
+    const { error: insertError } = await sb.from('users').insert({
+      name,
+      email,
+      role:       'organizer',
+      created_at: new Date().toISOString()
+    });
 
-  function togglePw(inputId, btnId) {
-    const pw  = document.getElementById(inputId);
-    const btn = document.getElementById(btnId);
-    if (pw.type === 'password') { pw.type = 'text'; btn.textContent = '🙈'; }
-    else { pw.type = 'password'; btn.textContent = '👁'; }
-  }
+    if (insertError) throw insertError;
 
-  document.addEventListener('keydown', e => { if (e.key === 'Enter') doSignup(); });
+    // 3. Tunjuk success screen
+    document.getElementById('formSection').style.display = 'none';
+    document.getElementById('successScreen').classList.add('show');
+
+  } catch (err) {
+    console.error('Signup error:', err);
+    document.getElementById('errorMsg').textContent = 'Failed to create account. Please check your connection.';
+    document.getElementById('errorAlert').classList.add('show');
+    setLoading(false);
+  }
+}
+
+function setLoading(on) {
+  const btn = document.getElementById('signupBtn');
+  const txt = document.getElementById('btnText');
+  const sp  = document.getElementById('btnSpinner');
+  btn.disabled = on;
+  txt.textContent = on ? 'Creating account...' : 'Create Account';
+  sp.style.display = on ? 'inline-block' : 'none';
+}
+
+function togglePw(inputId, btnId) {
+  const pw  = document.getElementById(inputId);
+  const btn = document.getElementById(btnId);
+  if (pw.type === 'password') { pw.type = 'text'; btn.textContent = '🙈'; }
+  else { pw.type = 'password'; btn.textContent = '👁'; }
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Enter') doSignup(); });
+
 </script>
 </body>
 </html>

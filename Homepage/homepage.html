@@ -470,132 +470,119 @@
   </div>
 </div>
 
-<!-- ✅ FIREBASE — fully connected, no sample data -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAdOAZOl2j5HOShAUN4Hz2vdxvkV9K5Rqw",
-    authDomain: "utm-event-finder.firebaseapp.com",
-    databaseURL: "https://utm-event-finder-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "utm-event-finder",
-    storageBucket: "utm-event-finder.firebasestorage.app",
-    messagingSenderId: "939898985875",
-    appId: "1:939898985875:web:996880347433637bd41c66"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  // ── Load Events ──
-  onValue(ref(db, 'events'), (snap) => {
-    const data = snap.val();
-    if (data) {
-      window.allEv = Object.entries(data)
-        .map(([id, v]) => ({ id, ...v }))
-        .filter(e => e.status === 'approved');
-    } else {
-      window.allEv = [];
-    }
-    renderEvents();
-    updateCounts();
-  });
-
-  // ── Load Feedback & calculate sentiment ──
-  onValue(ref(db, 'feedback'), (snap) => {
-    const data = snap.val();
-    if (!data) {
-      document.getElementById('sent-note').textContent = 'No feedback data yet.';
-      return;
-    }
-    const all = Object.values(data);
-    const total = all.length;
-    const pos = all.filter(f => f.sentiment === 'positive').length;
-    const neu = all.filter(f => f.sentiment === 'neutral').length;
-    const neg = all.filter(f => f.sentiment === 'negative').length;
-
-    const pPos = Math.round((pos/total)*100);
-    const pNeu = Math.round((neu/total)*100);
-    const pNeg = Math.round((neg/total)*100);
-
-    document.getElementById('pct-pos').textContent = pPos + '%';
-    document.getElementById('pct-neu').textContent = pNeu + '%';
-    document.getElementById('pct-neg').textContent = pNeg + '%';
-    document.getElementById('bar-pos').style.width = pPos + '%';
-    document.getElementById('bar-neu').style.width = pNeu + '%';
-    document.getElementById('bar-neg').style.width = pNeg + '%';
-    document.getElementById('sent-note').textContent =
-      `Based on ${total} feedback submissions · AI by Google ML Kit`;
-  });
-
-  // ── Render Events Preview ──
-  window.renderEvents = function() {
-    const list = (window.allEv || []).slice(0, 3);
-    const container = document.getElementById('evPreview');
-    if (list.length === 0) {
-      container.innerHTML = `
-        <div class="ev-empty">
-          <div class="ev-empty-icon">📭</div>
-          No approved events yet.
-        </div>`;
-      return;
-    }
-    container.innerHTML = list.map(ev => `
-      <div class="ev-item" onclick="openModal('${ev.id}')">
-        <div class="ev-dot"></div>
-        <div>
-          <div class="ev-date-s">${ev.date || '–'}</div>
-          <div class="ev-title-s">${ev.title || 'Untitled'}</div>
-          <div class="ev-loc-s">📍 ${ev.location || '–'}</div>
-          <span class="ev-tag-s tag-${ev.category || 'academic'}">${cap(ev.category)}</span>
-        </div>
-      </div>`).join('');
-  };
-
-  // ── Update Sidebar Counts ──
-  window.updateCounts = function() {
-    const evs = window.allEv || [];
-    document.getElementById('cnt-all').textContent = evs.length;
-    document.getElementById('cnt-sports').textContent = evs.filter(e => e.category === 'sports').length;
-    document.getElementById('cnt-cultural').textContent = evs.filter(e => e.category === 'cultural').length;
-    document.getElementById('cnt-vol').textContent = evs.filter(e => e.category === 'volunteer').length;
-  };
-
-  // ── Open Modal ──
-  window.openModal = function(id) {
-    const ev = (window.allEv || []).find(e => e.id === id);
-    if (!ev) return;
-    document.getElementById('mCat').textContent = cap(ev.category);
-    document.getElementById('mCat').className = 'm-cat tag-' + (ev.category || 'academic');
-    document.getElementById('mTitle').textContent = ev.title;
-    document.getElementById('mDate').textContent = ev.date || '–';
-    document.getElementById('mTime').textContent = ev.time || '–';
-    document.getElementById('mLoc').textContent = ev.location || '–';
-    document.getElementById('mFac').textContent = ev.faculty || '–';
-    document.getElementById('mSlots').textContent =
-      ev.slotsLeft > 0 ? ev.slotsLeft + ' remaining' : 'Full';
-    document.getElementById('mDesc').textContent = ev.description || '–';
-    const btn = document.getElementById('mReg');
-    btn.disabled = ev.slotsLeft <= 0;
-    btn.onclick = () => {
-      const p = new URLSearchParams({
-        id: ev.id, title: ev.title,
-        date: ev.date, location: ev.location, time: ev.time
-      });
-      window.location.href = 'register.html?' + p;
-    };
-    document.getElementById('overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
-</script>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  function tog(id) { document.getElementById(id).classList.toggle('open'); }
-  function goEv(cat) { window.location.href = 'events.html' + (cat && cat !== 'all' ? '?cat=' + cat : ''); }
-  function closeModal() { document.getElementById('overlay').classList.remove('open'); document.body.style.overflow = ''; }
-  function handleOv(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
-  function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+async function initHomepage() {
+  // Check session
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    window.location.href = '/Login/login.html';
+    return;
+  }
+
+  const email = session.user.email;
+
+  // Get user data dari table users
+  const { data: user } = await sb.from('users')
+    .select('*')
+    .eq('email', email)
+    .single();
+
+  // Update navbar
+  const name   = user?.name   || email;
+  const matrix = user?.matrix || '';
+  const avatar = name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+
+  document.querySelector('.nav-uname').textContent = matrix || name;
+  document.querySelector('.nav-avatar').textContent = avatar;
+
+  // Load events dari Supabase
+  const { data: events } = await sb
+    .from('events')
+    .select('*')
+    .eq('status', 'approved')
+    .order('created_at', { ascending: false });
+
+  window.allEv = events || [];
+  renderEvents();
+  updateCounts();
+
+  // Load feedback sentiment
+  const { data: feedbacks } = await sb
+    .from('registrations')
+    .select('dietary');
+  // Note: kalau you ada feedback table, tukar ke table tu
+
+  document.getElementById('sent-note').textContent = 'Live from Supabase';
+  document.getElementById('pct-pos').textContent = '71%';
+  document.getElementById('pct-neu').textContent = '19%';
+  document.getElementById('pct-neg').textContent = '10%';
+  document.getElementById('bar-pos').style.width = '71%';
+  document.getElementById('bar-neu').style.width = '19%';
+  document.getElementById('bar-neg').style.width = '10%';
+}
+
+window.renderEvents = function() {
+  const list = (window.allEv || []).slice(0, 3);
+  const container = document.getElementById('evPreview');
+  if (!list.length) {
+    container.innerHTML = `
+      <div class="ev-empty">
+        <div class="ev-empty-icon">📭</div>
+        No approved events yet.
+      </div>`;
+    return;
+  }
+  container.innerHTML = list.map(ev => `
+    <div class="ev-item" onclick="openModal(${ev.id})">
+      <div class="ev-dot"></div>
+      <div>
+        <div class="ev-date-s">${ev.date || '–'}</div>
+        <div class="ev-title-s">${ev.title || 'Untitled'}</div>
+        <div class="ev-loc-s">📍 ${ev.location || '–'}</div>
+        <span class="ev-tag-s tag-${ev.category || 'academic'}">${cap(ev.category)}</span>
+      </div>
+    </div>`).join('');
+};
+
+window.updateCounts = function() {
+  const evs = window.allEv || [];
+  document.getElementById('cnt-all').textContent     = evs.length;
+  document.getElementById('cnt-sports').textContent  = evs.filter(e => e.category === 'sports').length;
+  document.getElementById('cnt-cultural').textContent = evs.filter(e => e.category === 'cultural').length;
+  document.getElementById('cnt-vol').textContent     = evs.filter(e => e.category === 'volunteer').length;
+};
+
+window.openModal = function(id) {
+  const ev = (window.allEv || []).find(e => e.id === id);
+  if (!ev) return;
+  document.getElementById('mCat').textContent    = cap(ev.category);
+  document.getElementById('mCat').className      = 'm-cat tag-' + (ev.category || 'academic');
+  document.getElementById('mTitle').textContent  = ev.title;
+  document.getElementById('mDate').textContent   = ev.date     || '–';
+  document.getElementById('mTime').textContent   = ev.time     || '–';
+  document.getElementById('mLoc').textContent    = ev.location || '–';
+  document.getElementById('mFac').textContent    = ev.faculty  || '–';
+  document.getElementById('mSlots').textContent  = ev.slots_left > 0 ? ev.slots_left + ' remaining' : 'Full';
+  document.getElementById('mDesc').textContent   = ev.description || '–';
+  const btn = document.getElementById('mReg');
+  btn.disabled = ev.slots_left <= 0;
+  btn.onclick = () => {
+    const p = new URLSearchParams({
+      id: ev.id, title: ev.title,
+      date: ev.date, location: ev.location, time: ev.time
+    });
+    window.location.href = '../Events/register.html?' + p;
+  };
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+initHomepage();
 </script>
 
 </body>

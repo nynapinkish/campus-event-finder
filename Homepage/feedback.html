@@ -735,7 +735,13 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+/* ── SUPABASE SETUP ── */
+const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
 /* ── EVENT DATA ── */
 const EVENTS=[
   {id:'1',title:'AI Research Fair & Showcase 2025',category:'academic',date:'12 Jun 2025',time:'9:00 AM – 5:00 PM',location:'Faculty of Computing, UTM Skudai',faculty:'Faculty of Computing',emoji:'🤖'},
@@ -757,12 +763,14 @@ const badgeClass={academic:'badge-academic',sports:'badge-sports',cultural:'badg
 /* ── STATE ── */
 let overallRating=0;
 let recommendVal='';
+let currentEvent=null;
 const aspectRatings={organisation:0,content:0,venue:0,speaker:0,time:0,registration:0};
 
 /* ── LOAD EVENT ── */
 function loadEvent(){
   const id=new URLSearchParams(window.location.search).get('id')||'1';
   const ev=EVENTS.find(e=>e.id===id)||EVENTS[0];
+  currentEvent=ev;
   document.getElementById('dynPageTitle').textContent='Feedback — '+ev.title;
   document.getElementById('eventName').value=ev.title;
   document.getElementById('eventDate').value=ev.date;
@@ -812,7 +820,7 @@ function setRecommend(val){
   document.getElementById('err-recommend').classList.remove('show');
 }
 
-/* ── AI SENTIMENT SIMULATION ── */
+/* ── AI SENTIMENT (local simulation — boleh replace dengan real API kalau ada) ── */
 function analyseSentiment(){
   const liked=document.getElementById('liked').value.toLowerCase();
   const improve=document.getElementById('improve').value.toLowerCase();
@@ -823,10 +831,9 @@ function analyseSentiment(){
   const negWords=['poor','bad','boring','disorganised','late','unclear','disappointed','waste','terrible','confusing','crowded','noisy','long','slow','difficult','problem','issue','complaint'];
 
   let posScore=0,negScore=0;
-  posWords.forEach(w=>{if(combined.includes(w))posScore++});
-  negWords.forEach(w=>{if(combined.includes(w))negScore++});
+  posWords.forEach(w=>{if(combined.includes(w))posScore++;});
+  negWords.forEach(w=>{if(combined.includes(w))negScore++;});
 
-  // Factor in overall star rating
   if(overallRating>=4)posScore+=2;
   else if(overallRating<=2)negScore+=2;
 
@@ -836,7 +843,6 @@ function analyseSentiment(){
   let neuP=100-posP-negP;
   if(neuP<0){neuP=0;posP=100-negP;}
 
-  // If no words matched, default to neutral-positive
   if(posScore===0&&negScore===0){
     posP=overallRating>=4?60:overallRating>=3?40:20;
     neuP=overallRating>=4?30:overallRating>=3?40:40;
@@ -844,11 +850,10 @@ function analyseSentiment(){
   }
 
   let sentiment,emoji,desc,badgeCls;
-  if(posP>=50){sentiment='Positive';emoji='😊';desc='The student expressed a generally positive experience.';badgeCls='badge-positive';}
-  else if(negP>=40){sentiment='Negative';emoji='😔';desc='The student raised concerns that need attention.';badgeCls='badge-negative';}
-  else{sentiment='Neutral';emoji='😐';desc='The student had a mixed or neutral experience.';badgeCls='badge-neutral';}
+  if(posP>=50){sentiment='positive';emoji='😊';desc='The student expressed a generally positive experience.';badgeCls='badge-positive';}
+  else if(negP>=40){sentiment='negative';emoji='😔';desc='The student raised concerns that need attention.';badgeCls='badge-negative';}
+  else{sentiment='neutral';emoji='😐';desc='The student had a mixed or neutral experience.';badgeCls='badge-neutral';}
 
-  // Extract keywords
   const allPositiveKw=posWords.filter(w=>combined.includes(w)).slice(0,4);
   const allNegativeKw=negWords.filter(w=>combined.includes(w)).slice(0,3);
 
@@ -875,27 +880,62 @@ function validate(){
   return ok;
 }
 
-/* ── SUBMIT ── */
-function submitFeedback(){
+/* ── SUBMIT — SAVE TO SUPABASE ── */
+async function submitFeedback(){
   if(!validate()) return;
 
   const ai=analyseSentiment();
 
+  // Data object untuk insert ke Supabase 'feedback' table
+  const feedbackData={
+    event_id:       currentEvent?.id || null,
+    event_title:    document.getElementById('eventName').value,
+    full_name:      document.getElementById('fullName').value.trim(),
+    matrix_number:  document.getElementById('matrix').value.trim().toUpperCase(),
+    email:          document.getElementById('email').value.trim(),
+    faculty:        document.getElementById('faculty').value,
+    overall_rating: overallRating,
+    aspect_organisation: aspectRatings.organisation || null,
+    aspect_content:      aspectRatings.content      || null,
+    aspect_venue:        aspectRatings.venue         || null,
+    aspect_speaker:      aspectRatings.speaker       || null,
+    aspect_time:         aspectRatings.time          || null,
+    aspect_registration: aspectRatings.registration  || null,
+    comment_liked:      document.getElementById('liked').value.trim(),
+    comment_improve:    document.getElementById('improve').value.trim(),
+    comment_additional: document.getElementById('additional').value.trim(),
+    recommend:          recommendVal,
+    attend_again:       document.getElementById('attendAgain').value || null,
+    heard_from:         document.getElementById('heardFrom').value   || null,
+    sentiment:          ai.sentiment,
+    sentiment_positive: ai.posP,
+    sentiment_neutral:  ai.neuP,
+    sentiment_negative: ai.negP,
+    keywords:           [...ai.allPositiveKw, ...ai.allNegativeKw],
+  };
+
+  // Insert ke Supabase
+  const { error } = await sb.from('feedback').insert([feedbackData]);
+
+  if(error){
+    alert('Failed to submit feedback. Please try again.\n\n' + error.message);
+    return;
+  }
+
   // Populate success screen
-  document.getElementById('sName').textContent=document.getElementById('fullName').value;
-  document.getElementById('sMatrix').textContent=document.getElementById('matrix').value.toUpperCase();
-  document.getElementById('sEvent').textContent=document.getElementById('eventName').value;
+  document.getElementById('sName').textContent=feedbackData.full_name;
+  document.getElementById('sMatrix').textContent=feedbackData.matrix_number;
+  document.getElementById('sEvent').textContent=feedbackData.event_title;
   document.getElementById('sRating').textContent='★'.repeat(overallRating)+'☆'.repeat(5-overallRating)+' ('+overallRating+'/5)';
   document.getElementById('sRecommend').textContent=recommendVal==='yes'?'Yes, definitely':recommendVal==='maybe'?'Maybe':'No';
 
-  // AI result
-  document.getElementById('sentimentBadge').textContent=ai.sentiment;
+  // AI result display
+  document.getElementById('sentimentBadge').textContent=cap(ai.sentiment);
   document.getElementById('sentimentBadge').className='sr-head-badge '+ai.badgeCls;
   document.getElementById('sentimentEmoji').textContent=ai.emoji;
-  document.getElementById('sentimentLabel').textContent=ai.sentiment+' Sentiment';
+  document.getElementById('sentimentLabel').textContent=cap(ai.sentiment)+' Sentiment';
   document.getElementById('sentimentDesc').textContent=ai.desc;
 
-  // Animate bars after short delay
   setTimeout(()=>{
     document.getElementById('barPos').style.width=ai.posP+'%';
     document.getElementById('barNeu').style.width=ai.neuP+'%';
@@ -905,18 +945,11 @@ function submitFeedback(){
     document.getElementById('pctNeg').textContent=ai.negP+'%';
   },200);
 
-  // Keywords
   const kwContainer=document.getElementById('kwTags');
   kwContainer.innerHTML='';
-  ai.allPositiveKw.forEach(w=>{
-    const t=document.createElement('span');t.className='kw-tag pos';t.textContent=w;kwContainer.appendChild(t);
-  });
-  ai.allNegativeKw.forEach(w=>{
-    const t=document.createElement('span');t.className='kw-tag neg';t.textContent=w;kwContainer.appendChild(t);
-  });
-  if(kwContainer.children.length===0){
-    const t=document.createElement('span');t.className='kw-tag';t.textContent='general feedback';kwContainer.appendChild(t);
-  }
+  ai.allPositiveKw.forEach(w=>{const t=document.createElement('span');t.className='kw-tag pos';t.textContent=w;kwContainer.appendChild(t);});
+  ai.allNegativeKw.forEach(w=>{const t=document.createElement('span');t.className='kw-tag neg';t.textContent=w;kwContainer.appendChild(t);});
+  if(kwContainer.children.length===0){const t=document.createElement('span');t.className='kw-tag';t.textContent='general feedback';kwContainer.appendChild(t);}
 
   document.getElementById('formCard').classList.add('hide');
   document.getElementById('successScreen').classList.add('show');
@@ -941,7 +974,7 @@ function resetForm(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function cap(s){return s?s[0].toUpperCase()+s.slice(1):''}
+function cap(s){return s?s[0].toUpperCase()+s.slice(1):'';}
 
 window.addEventListener('DOMContentLoaded',()=>{
   loadEvent();
@@ -955,6 +988,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     });
   });
 });
+
 </script>
 </body>
 </html>

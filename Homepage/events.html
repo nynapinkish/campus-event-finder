@@ -395,218 +395,251 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
-  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  const session = JSON.parse(sessionStorage.getItem('utm_user') || '{}');
-  if (session.avatar) document.getElementById('headerAvatar').textContent = session.avatar;
-  if (session.name || session.matrix) document.getElementById('headerName').textContent = session.name || session.matrix || '—';
+let curCat = 'all', curQ = '';
+let currentUser = null;
 
-  const badgeClass = {
-    academic:'badge-academic', sports:'badge-sports',
-    cultural:'badge-cultural', career:'badge-career', volunteer:'badge-volunteer'
-  };
+const badgeClass = {
+  academic:'badge-academic', sports:'badge-sports',
+  cultural:'badge-cultural', career:'badge-career', volunteer:'badge-volunteer'
+};
 
-  let curCat = 'all', curQ = '';
-
-  async function init() {
-    // Load my registrations
-    let myEventIds = new Set();
-    if (session.matrix) {
-      const { data: regs } = await sb
-        .from('registrations')
-        .select('event_id')
-        .ilike('matric_no', session.matrix);
-      if (regs) regs.forEach(r => myEventIds.add(r.event_id));
-    }
-
-    // Load events
-    const { data: events, error } = await sb
-      .from('events')
-      .select('*')
-      .eq('status', 'approved')
-      .order('created_at', { ascending: false });
-
-    if (error || !events) {
-      document.getElementById('evGrid').innerHTML =
-        '<div class="state-box"><h3>⚠️ Failed to load events</h3><p>Check your internet connection.</p></div>';
-      return;
-    }
-
-    window.EVENTS = events.map(e => ({ ...e, registered: myEventIds.has(e.id) }));
-    boot();
+async function init() {
+  // Check session
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    window.location.href = '/Login/login.html';
+    return;
   }
 
-  function boot() {
-    const evs = window.EVENTS || [];
-    const total = evs.length;
-    const open  = evs.filter(e => e.slots_left > 0).length;
-    const slots = evs.reduce((a, e) => a + (e.slots_left || 0), 0);
+  // Get user data
+  const { data: user } = await sb.from('users')
+    .select('*')
+    .eq('email', session.user.email)
+    .single();
 
-    document.getElementById('statTotal').textContent = total;
-    document.getElementById('statOpen').textContent  = open;
-    document.getElementById('statSlots').textContent = slots >= 1000 ? (slots/1000).toFixed(1)+'k' : slots;
+  currentUser = user;
 
-    ['all','academic','sports','cultural','career','volunteer'].forEach(c => {
-      const el = document.getElementById('fc-' + c);
-      if (el) el.textContent = c === 'all' ? total : evs.filter(e => e.category === c).length;
-    });
-
-    render();
+  if (user?.avatar || user?.name) {
+    document.getElementById('headerAvatar').textContent =
+      (user.name || '').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+    document.getElementById('headerName').textContent =
+      user.matrix || user.name || session.user.email;
   }
 
-  function render() {
-    const evs  = window.EVENTS || [];
-    const list = evs.filter(e => {
-      const mc = curCat === 'all' || e.category === curCat;
-      const ms = !curQ ||
-        (e.title||'').toLowerCase().includes(curQ) ||
-        (e.location||'').toLowerCase().includes(curQ) ||
-        (e.faculty||'').toLowerCase().includes(curQ);
-      return mc && ms;
-    });
-
-    document.getElementById('evMeta').textContent =
-      list.length + ' event' + (list.length !== 1 ? 's' : '') + ' found · Live from Supabase';
-
-    if (!list.length) {
-      document.getElementById('evGrid').innerHTML =
-        '<div class="state-box"><h3>No events found</h3><p>Try a different filter or search term.</p></div>';
-      return;
-    }
-
-    document.getElementById('evGrid').innerHTML = list.map((ev, i) => {
-      const pct  = ev.slots > 0 ? Math.round((ev.slots_left / ev.slots) * 100) : 0;
-      const full = ev.slots_left <= 0;
-      const low  = !full && pct <= 20;
-      const fc   = full ? '#dc2626' : low ? '#e67e22' : '#1a5c38';
-      const emoji = ev.emoji || '📌';
-      const isReg = !!ev.registered;
-
-      return `
-        <div class="ev-card cat-${ev.category||'academic'}${isReg ? ' is-registered' : ''}"
-             style="animation-delay:${i*.04}s"
-             onclick="openModal(${ev.id})">
-          <div class="ev-card-body">
-            ${isReg ? `<div class="registered-ribbon">✓ Registered</div>` : ''}
-            <div class="ev-card-top">
-              <span class="ev-badge ${badgeClass[ev.category]||'badge-academic'}">${cap(ev.category)}</span>
-              <span class="ev-emoji">${emoji}</span>
-            </div>
-            <div class="ev-title">${ev.title||'Untitled Event'}</div>
-            <div class="ev-meta">
-              <div class="ev-meta-row"><span class="ev-meta-ic">📅</span>${ev.date||'–'}</div>
-              <div class="ev-meta-row"><span class="ev-meta-ic">🕐</span>${ev.time||'–'}</div>
-              <div class="ev-meta-row"><span class="ev-meta-ic">📍</span>${ev.location||'–'}</div>
-            </div>
-            <div class="ev-card-foot">
-              ${isReg
-                ? `<div class="ev-slots"><div class="ev-slots-txt ok"><b>You're in!</b> Registration confirmed</div><div class="ev-bar"><div class="ev-bar-fill" style="width:${pct}%;background:${fc}"></div></div></div>`
-                : full
-                  ? `<span class="full-tag">Registration Full</span>`
-                  : `<div class="ev-slots"><div class="ev-slots-txt ${low?'':'ok'}"><b>${ev.slots_left}</b> slots remaining</div><div class="ev-bar"><div class="ev-bar-fill" style="width:${pct}%;background:${fc}"></div></div></div>`
-              }
-              <button
-                class="ev-btn${isReg ? ' registered' : full ? ' outline' : ''}"
-                onclick="event.stopPropagation();${isReg ? `viewTicket(${ev.id})` : full ? `openModal(${ev.id})` : `goRegister(${ev.id})`}">
-                ${isReg ? '🎟 View Ticket' : full ? 'View Details' : 'Register'}
-              </button>
-            </div>
-          </div>
-        </div>`;
-    }).join('');
+  // Load my registrations
+  let myEventIds = new Set();
+  if (user?.matrix) {
+    const { data: regs } = await sb
+      .from('registrations')
+      .select('event_id')
+      .ilike('matric_no', user.matrix);
+    if (regs) regs.forEach(r => myEventIds.add(r.event_id));
   }
 
-  function setCat(c, btn) {
-    curCat = c;
-    document.querySelectorAll('.ct-btn').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-    render();
+  // Load events
+  const { data: events, error } = await sb
+    .from('events')
+    .select('*')
+    .eq('status', 'approved')
+    .order('created_at', { ascending: false });
+
+  if (error || !events) {
+    document.getElementById('evGrid').innerHTML =
+      '<div class="state-box"><h3>⚠️ Failed to load events</h3><p>Check your internet connection.</p></div>';
+    return;
   }
 
-  function setCatSb(c, btn) {
-    curCat = c;
-    document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+  window.EVENTS = events.map(e => ({ ...e, registered: myEventIds.has(e.id) }));
+  boot();
+}
+
+function boot() {
+  const evs = window.EVENTS || [];
+  const total = evs.length;
+  const open  = evs.filter(e => e.slots_left > 0).length;
+  const slots = evs.reduce((a, e) => a + (e.slots_left || 0), 0);
+
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statOpen').textContent  = open;
+  document.getElementById('statSlots').textContent = slots >= 1000 ? (slots/1000).toFixed(1)+'k' : slots;
+
+  ['all','academic','sports','cultural','career','volunteer'].forEach(c => {
+    const el = document.getElementById('fc-' + c);
+    if (el) el.textContent = c === 'all' ? total : evs.filter(e => e.category === c).length;
+  });
+
+  // Check URL param for category
+  const urlCat = new URLSearchParams(window.location.search).get('cat');
+  if (urlCat) {
+    curCat = urlCat;
     document.querySelectorAll('.ct-btn').forEach(b => {
-      const t = b.textContent.trim().toLowerCase();
-      b.classList.toggle('active', c === 'all' ? t === 'all events' : t === c);
+      b.classList.toggle('active', b.textContent.trim().toLowerCase() === urlCat);
     });
-    render();
+    document.querySelectorAll('.sb-item').forEach(b => {
+      const t = b.querySelector('.sb-item-left')?.textContent?.trim().toLowerCase() || '';
+      b.classList.toggle('active', t === urlCat);
+    });
   }
 
-  function filterEvents() {
-    curQ = document.getElementById('searchInput').value.toLowerCase().trim();
-    render();
+  render();
+}
+
+function render() {
+  const evs  = window.EVENTS || [];
+  const list = evs.filter(e => {
+    const mc = curCat === 'all' || e.category === curCat;
+    const ms = !curQ ||
+      (e.title||'').toLowerCase().includes(curQ) ||
+      (e.location||'').toLowerCase().includes(curQ) ||
+      (e.faculty||'').toLowerCase().includes(curQ);
+    return mc && ms;
+  });
+
+  document.getElementById('evMeta').textContent =
+    list.length + ' event' + (list.length !== 1 ? 's' : '') + ' found · Live from Supabase';
+
+  if (!list.length) {
+    document.getElementById('evGrid').innerHTML =
+      '<div class="state-box"><h3>No events found</h3><p>Try a different filter or search term.</p></div>';
+    return;
   }
 
-  function openModal(id) {
-    const ev = (window.EVENTS||[]).find(e => e.id === id);
-    if (!ev) return;
+  document.getElementById('evGrid').innerHTML = list.map((ev, i) => {
+    const pct  = ev.slots > 0 ? Math.round((ev.slots_left / ev.slots) * 100) : 0;
+    const full = ev.slots_left <= 0;
+    const low  = !full && pct <= 20;
+    const fc   = full ? '#dc2626' : low ? '#e67e22' : '#1a5c38';
+    const emoji = ev.emoji || '📌';
     const isReg = !!ev.registered;
 
-    document.getElementById('mBadge').textContent  = cap(ev.category);
-    document.getElementById('mBadge').className    = 'm-cat-badge ev-badge ' + (badgeClass[ev.category]||'badge-academic');
-    document.getElementById('mTitle').textContent  = ev.title||'–';
-    document.getElementById('mDate').textContent   = ev.date||'–';
-    document.getElementById('mTime').textContent   = ev.time||'–';
-    document.getElementById('mLoc').textContent    = ev.location||'–';
-    document.getElementById('mFac').textContent    = ev.faculty||'–';
-    document.getElementById('mSlots').textContent  = ev.slots_left > 0 ? ev.slots_left + ' slots remaining' : 'Registration Full';
-    document.getElementById('mOrg').textContent    = ev.organizer_name||'–';
-    document.getElementById('mDesc').textContent   = ev.description||'–';
+    return `
+      <div class="ev-card cat-${ev.category||'academic'}${isReg ? ' is-registered' : ''}"
+           style="animation-delay:${i*.04}s"
+           onclick="openModal(${ev.id})">
+        <div class="ev-card-body">
+          ${isReg ? `<div class="registered-ribbon">✓ Registered</div>` : ''}
+          <div class="ev-card-top">
+            <span class="ev-badge ${badgeClass[ev.category]||'badge-academic'}">${cap(ev.category)}</span>
+            <span class="ev-emoji">${emoji}</span>
+          </div>
+          <div class="ev-title">${ev.title||'Untitled Event'}</div>
+          <div class="ev-meta">
+            <div class="ev-meta-row"><span class="ev-meta-ic">📅</span>${ev.date||'–'}</div>
+            <div class="ev-meta-row"><span class="ev-meta-ic">🕐</span>${ev.time||'–'}</div>
+            <div class="ev-meta-row"><span class="ev-meta-ic">📍</span>${ev.location||'–'}</div>
+          </div>
+          <div class="ev-card-foot">
+            ${isReg
+              ? `<div class="ev-slots"><div class="ev-slots-txt ok"><b>You're in!</b> Registration confirmed</div><div class="ev-bar"><div class="ev-bar-fill" style="width:${pct}%;background:${fc}"></div></div></div>`
+              : full
+                ? `<span class="full-tag">Registration Full</span>`
+                : `<div class="ev-slots"><div class="ev-slots-txt ${low?'':'ok'}"><b>${ev.slots_left}</b> slots remaining</div><div class="ev-bar"><div class="ev-bar-fill" style="width:${pct}%;background:${fc}"></div></div></div>`
+            }
+            <button
+              class="ev-btn${isReg ? ' registered' : full ? ' outline' : ''}"
+              onclick="event.stopPropagation();${isReg ? `viewTicket(${ev.id})` : full ? `openModal(${ev.id})` : `goRegister(${ev.id})`}">
+              ${isReg ? '🎟 View Ticket' : full ? 'View Details' : 'Register'}
+            </button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
 
-    document.getElementById('mRegisteredNote').classList.toggle('show', isReg);
+function setCat(c, btn) {
+  curCat = c;
+  document.querySelectorAll('.ct-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  render();
+}
 
-    const btn = document.getElementById('mReg');
-    if (isReg) {
-      btn.textContent = '🎟 View My Ticket';
-      btn.className   = 'm-btn-reg registered';
-      btn.disabled    = false;
-      btn.onclick     = () => { closeModal(); viewTicket(ev.id); };
-    } else if (ev.slots_left <= 0) {
-      btn.textContent = 'Registration Closed';
-      btn.className   = 'm-btn-reg';
-      btn.disabled    = true;
-      btn.onclick     = null;
-    } else {
-      btn.textContent = 'Register Now';
-      btn.className   = 'm-btn-reg';
-      btn.disabled    = false;
-      btn.onclick     = () => goRegister(ev.id);
-    }
+function setCatSb(c, btn) {
+  curCat = c;
+  document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ct-btn').forEach(b => {
+    const t = b.textContent.trim().toLowerCase();
+    b.classList.toggle('active', c === 'all' ? t === 'all events' : t === c);
+  });
+  render();
+}
 
-    document.getElementById('overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
+function filterEvents() {
+  curQ = document.getElementById('searchInput').value.toLowerCase().trim();
+  render();
+}
+
+function openModal(id) {
+  const ev = (window.EVENTS||[]).find(e => e.id === id);
+  if (!ev) return;
+  const isReg = !!ev.registered;
+
+  document.getElementById('mBadge').textContent  = cap(ev.category);
+  document.getElementById('mBadge').className    = 'm-cat-badge ev-badge ' + (badgeClass[ev.category]||'badge-academic');
+  document.getElementById('mTitle').textContent  = ev.title||'–';
+  document.getElementById('mDate').textContent   = ev.date||'–';
+  document.getElementById('mTime').textContent   = ev.time||'–';
+  document.getElementById('mLoc').textContent    = ev.location||'–';
+  document.getElementById('mFac').textContent    = ev.faculty||'–';
+  document.getElementById('mSlots').textContent  = ev.slots_left > 0 ? ev.slots_left + ' slots remaining' : 'Registration Full';
+  document.getElementById('mOrg').textContent    = ev.organizer_name||'–';
+  document.getElementById('mDesc').textContent   = ev.description||'–';
+
+  document.getElementById('mRegisteredNote').classList.toggle('show', isReg);
+
+  const btn = document.getElementById('mReg');
+  if (isReg) {
+    btn.textContent = '🎟 View My Ticket';
+    btn.className   = 'm-btn-reg registered';
+    btn.disabled    = false;
+    btn.onclick     = () => { closeModal(); viewTicket(ev.id); };
+  } else if (ev.slots_left <= 0) {
+    btn.textContent = 'Registration Closed';
+    btn.className   = 'm-btn-reg';
+    btn.disabled    = true;
+    btn.onclick     = null;
+  } else {
+    btn.textContent = 'Register Now';
+    btn.className   = 'm-btn-reg';
+    btn.disabled    = false;
+    btn.onclick     = () => goRegister(ev.id);
   }
 
-  function goRegister(id) {
-    const ev = (window.EVENTS||[]).find(e => e.id === id);
-    if (!ev) return;
-    const p = new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
-    window.location.href = 'register.html?' + p;
-  }
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
 
-  function viewTicket(id) {
-    const ev = (window.EVENTS||[]).find(e => e.id === id);
-    if (!ev) return;
-    const p = new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
-    window.location.href = 'register.html?' + p;
-  }
+function goRegister(id) {
+  const ev = (window.EVENTS||[]).find(e => e.id === id);
+  if (!ev) return;
+  const p = new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
+  window.location.href = 'register.html?' + p;
+}
 
-  function closeModal() {
-    document.getElementById('overlay').classList.remove('open');
-    document.body.style.overflow = '';
-  }
+function viewTicket(id) {
+  const ev = (window.EVENTS||[]).find(e => e.id === id);
+  if (!ev) return;
+  const p = new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
+  window.location.href = 'register.html?' + p;
+}
 
-  function handleOv(e) {
-    if (e.target === document.getElementById('overlay')) closeModal();
-  }
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
 
-  function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+function handleOv(e) {
+  if (e.target === document.getElementById('overlay')) closeModal();
+}
 
-  init();
+function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+
+init();
+
 </script>
 </body>
 </html>

@@ -560,289 +560,307 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
-  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  const params  = new URLSearchParams(window.location.search);
-  const eventId = parseInt(params.get('id'));
-  const session = JSON.parse(sessionStorage.getItem('utm_user') || '{}');
+const params  = new URLSearchParams(window.location.search);
+const eventId = parseInt(params.get('id'));
+let currentUser = null;
 
-  const badgeClass = {
-    academic:'badge-academic', sports:'badge-sports',
-    cultural:'badge-cultural', career:'badge-career', volunteer:'badge-volunteer'
-  };
+const badgeClass = {
+  academic:'badge-academic', sports:'badge-sports',
+  cultural:'badge-cultural', career:'badge-career', volunteer:'badge-volunteer'
+};
 
-  if (session.avatar) document.getElementById('headerAvatar').textContent = session.avatar;
-  if (session.matrix || session.email) document.getElementById('headerName').textContent = session.matrix || session.email;
-
-  function fillField(id, val, isSelect) {
-    if (!val) return;
-    const el = document.getElementById(id);
-    if (!el) return;
-    if (isSelect) {
-      for (const opt of el.options) {
-        if (opt.value === val || opt.text === val) { el.value = opt.value; break; }
-      }
-    } else {
-      el.value = val;
-    }
-    el.classList.add('autofilled');
+async function init() {
+  // Check session
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    window.location.href = '/Login/login.html';
+    return;
   }
 
-  function lockMatrix() {
-    if (!session.matrix) return;
+  // Get user data dari Supabase
+  const { data: user } = await sb.from('users')
+    .select('*')
+    .eq('email', session.user.email)
+    .single();
+
+  currentUser = user;
+
+  // Update header
+  if (user) {
+    const avatar = (user.name || '').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+    document.getElementById('headerAvatar').textContent = avatar;
+    document.getElementById('headerName').textContent   = user.matrix || user.name || session.user.email;
+  }
+
+  if (!eventId) {
+    document.getElementById('loadingBox').innerHTML = '<p style="color:#c0392b">⚠️ No event ID. <a href="events.html">← Back</a></p>';
+    return;
+  }
+
+  // Check if already registered
+  if (user?.matrix) {
+    const { data: existing } = await sb
+      .from('registrations')
+      .select('*')
+      .eq('event_id', eventId)
+      .ilike('matric_no', user.matrix)
+      .single();
+
+    if (existing) {
+      const { data: ev } = await sb.from('events').select('*').eq('id', eventId).single();
+      if (ev) populateEventUI(ev);
+      renderTicket({
+        refNum:      existing.ref_num,
+        emoji:       ev?.emoji || '🎟',
+        category:    ev?.category || '',
+        title:       existing.event_title || ev?.title || '–',
+        studentName: existing.student_name,
+        matricNo:    existing.matric_no,
+        date:        ev?.date || '–',
+        role:        existing.role || 'Participant',
+        location:    ev?.location || '–',
+      });
+      return;
+    }
+  }
+
+  // Load event
+  const { data: ev } = await sb.from('events').select('*').eq('id', eventId).single();
+  if (!ev) {
+    document.getElementById('loadingBox').innerHTML = '<p style="color:#c0392b">⚠️ Event not found. <a href="events.html">← Back</a></p>';
+    return;
+  }
+
+  window.currentEvent = ev;
+  populateEventUI(ev);
+  document.getElementById('eventName').value = ev.title || '';
+  document.getElementById('formCard').style.display = 'block';
+
+  // Lock matrix dari session
+  if (user?.matrix) {
     const mx = document.getElementById('matrix');
-    mx.value = session.matrix;
+    mx.value   = user.matrix;
     mx.readOnly = true;
     mx.classList.add('readonly');
     document.getElementById('matrixLockBadge').style.display = 'inline-flex';
   }
 
-  async function prefillFromSupabase() {
-    if (!session.matrix) return;
-    const { data } = await sb
-      .from('registrations')
-      .select('*')
-      .ilike('matric_no', session.matrix)
-      .order('registered_at', { ascending: false })
-      .limit(1)
-      .single();
+  // Prefill dari registrasi lepas
+  await prefillFromSupabase(user?.matrix);
+}
 
-    if (!data) return;
+async function prefillFromSupabase(matrix) {
+  if (!matrix) return;
+  const { data } = await sb
+    .from('registrations')
+    .select('*')
+    .ilike('matric_no', matrix)
+    .order('registered_at', { ascending: false })
+    .limit(1)
+    .single();
 
-    if (data.student_name && data.student_name.toUpperCase() !== session.matrix.toUpperCase()) fillField('fullName', data.student_name);
-    fillField('email',     data.email);
-    fillField('phone',     data.phone);
-    fillField('gender',    data.gender,       true);
-    fillField('nationality', data.nationality, true);
-    fillField('faculty',   data.faculty,      true);
-    fillField('programme', data.programme);
-    fillField('year',      data.year_of_study, true);
-    fillField('semester',  data.semester,      true);
-    fillField('ecName',    data.ec_name);
-    fillField('ecPhone',   data.ec_phone);
-    fillField('ecEmail',   data.ec_email);
-    if (data.ec_relation) fillField('ecRelation', data.ec_relation, true);
-    if (data.tshirt_size) fillField('tshirt', data.tshirt_size, true);
-    if (data.dietary) {
-      const r = document.querySelector(`input[name="diet"][value="${data.dietary}"]`);
-      if (r) r.checked = true;
-    }
-    document.getElementById('autofillBanner').classList.add('show');
+  if (!data) return;
+
+  if (data.student_name && data.student_name.toUpperCase() !== matrix.toUpperCase()) fillField('fullName', data.student_name);
+  fillField('email',       data.email);
+  fillField('phone',       data.phone);
+  fillField('gender',      data.gender,        true);
+  fillField('nationality', data.nationality,   true);
+  fillField('faculty',     data.faculty,       true);
+  fillField('programme',   data.programme);
+  fillField('year',        data.year_of_study, true);
+  fillField('semester',    data.semester,      true);
+  fillField('ecName',      data.ec_name);
+  fillField('ecPhone',     data.ec_phone);
+  fillField('ecEmail',     data.ec_email);
+  if (data.ec_relation) fillField('ecRelation', data.ec_relation, true);
+  if (data.tshirt_size)  fillField('tshirt',    data.tshirt_size,  true);
+  if (data.dietary) {
+    const r = document.querySelector(`input[name="diet"][value="${data.dietary}"]`);
+    if (r) r.checked = true;
   }
+  document.getElementById('autofillBanner').classList.add('show');
+}
 
-  function populateEventUI(ev) {
-    document.getElementById('dynEventTitle').textContent = ev.title || '—';
-    document.getElementById('pepEmoji').textContent      = ev.emoji || '📅';
-    document.getElementById('pepCat').textContent        = cap(ev.category);
-    document.getElementById('pepCat').className          = 'pep-cat ' + (badgeClass[ev.category] || '');
-    document.getElementById('pepTitle').textContent      = ev.title || '—';
-    document.getElementById('ppDate').textContent        = ev.date     || '—';
-    document.getElementById('ppTime').textContent        = ev.time     || '—';
-    document.getElementById('ppLocation').textContent    = ev.location || '—';
-    document.getElementById('esTitle').textContent       = ev.title    || '—';
-    document.getElementById('esBadge').textContent       = cap(ev.category);
-    document.getElementById('esBadge').className         = 'es-badge ' + (badgeClass[ev.category] || '');
-    document.getElementById('esDate').textContent        = ev.date     || '—';
-    document.getElementById('esTime').textContent        = ev.time     || '—';
-    document.getElementById('esLocation').textContent    = ev.location || '—';
-    document.getElementById('esSlotsCount').textContent  = (ev.slots_left || 0) + ' remaining';
-    const pct = ev.slots > 0 ? Math.round((ev.slots_left / ev.slots) * 100) : 0;
-    document.getElementById('esSlotsBar').style.width    = pct + '%';
-    document.getElementById('loadingBox').style.display  = 'none';
+function fillField(id, val, isSelect) {
+  if (!val) return;
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (isSelect) {
+    for (const opt of el.options) {
+      if (opt.value === val || opt.text === val) { el.value = opt.value; break; }
+    }
+  } else {
+    el.value = val;
   }
+  el.classList.add('autofilled');
+}
 
-  async function init() {
-    if (!eventId) {
-      document.getElementById('loadingBox').innerHTML = '<p style="color:#c0392b">⚠️ No event ID. <a href="events.html">← Back</a></p>';
-      return;
-    }
+function populateEventUI(ev) {
+  document.getElementById('dynEventTitle').textContent = ev.title || '–';
+  document.getElementById('pepEmoji').textContent      = ev.emoji || '📅';
+  document.getElementById('pepCat').textContent        = cap(ev.category);
+  document.getElementById('pepCat').className          = 'pep-cat ' + (badgeClass[ev.category] || '');
+  document.getElementById('pepTitle').textContent      = ev.title || '–';
+  document.getElementById('ppDate').textContent        = ev.date     || '–';
+  document.getElementById('ppTime').textContent        = ev.time     || '–';
+  document.getElementById('ppLocation').textContent    = ev.location || '–';
+  document.getElementById('esTitle').textContent       = ev.title    || '–';
+  document.getElementById('esBadge').textContent       = cap(ev.category);
+  document.getElementById('esBadge').className         = 'es-badge ' + (badgeClass[ev.category] || '');
+  document.getElementById('esDate').textContent        = ev.date     || '–';
+  document.getElementById('esTime').textContent        = ev.time     || '–';
+  document.getElementById('esLocation').textContent    = ev.location || '–';
+  document.getElementById('esSlotsCount').textContent  = (ev.slots_left || 0) + ' remaining';
+  const pct = ev.slots > 0 ? Math.round((ev.slots_left / ev.slots) * 100) : 0;
+  document.getElementById('esSlotsBar').style.width    = pct + '%';
+  document.getElementById('loadingBox').style.display  = 'none';
+}
 
-    // Check if already registered
-    if (session.matrix) {
-      const { data: existing } = await sb
-        .from('registrations')
-        .select('*')
-        .eq('event_id', eventId)
-        .ilike('matric_no', session.matrix)
-        .single();
+window.submitForm = async function() {
+  if (!validate()) return;
 
-      if (existing) {
-        // Load event for UI
-        const { data: ev } = await sb.from('events').select('*').eq('id', eventId).single();
-        if (ev) populateEventUI(ev);
+  const ev = window.currentEvent;
+  if (!ev) { alert('Event data not loaded yet.'); return; }
 
-        renderTicket({
-          refNum:      existing.ref_num,
-          emoji:       ev?.emoji || '🎟',
-          category:    ev?.category || '',
-          title:       existing.event_title || ev?.title || '—',
-          studentName: existing.student_name,
-          matricNo:    existing.matric_no,
-          date:        ev?.date || '—',
-          role:        existing.role || 'Participant',
-          location:    ev?.location || '—',
-        });
-        return;
-      }
-    }
+  document.getElementById('savingOverlay').classList.add('show');
+  document.getElementById('submitBtn').disabled = true;
 
-    // Load event
-    const { data: ev } = await sb.from('events').select('*').eq('id', eventId).single();
-    if (!ev) {
-      document.getElementById('loadingBox').innerHTML = '<p style="color:#c0392b">⚠️ Event not found. <a href="events.html">← Back</a></p>';
-      return;
-    }
+  const diet   = document.querySelector('input[name="diet"]:checked')?.value || 'none';
+  const refNum = 'UTM-' + Math.random().toString(36).substr(2,6).toUpperCase();
 
-    window.currentEvent = ev;
-    populateEventUI(ev);
-    document.getElementById('eventName').value = ev.title || '';
-    document.getElementById('formCard').style.display = 'block';
-    lockMatrix();
-    await prefillFromSupabase();
-  }
-
-  window.submitForm = async function() {
-    if (!validate()) return;
-
-    const ev = window.currentEvent;
-    if (!ev) { alert('Event data not loaded yet.'); return; }
-
-    document.getElementById('savingOverlay').classList.add('show');
-    document.getElementById('submitBtn').disabled = true;
-
-    const diet   = document.querySelector('input[name="diet"]:checked')?.value || 'none';
-    const refNum = 'UTM-' + Math.random().toString(36).substr(2, 6).toUpperCase();
-
-    const regData = {
-      event_id:    eventId,
-      event_title: ev.title,
-      ref_num:     refNum,
-      registered_at: new Date().toISOString(),
-      status:      'confirmed',
-      student_name:  document.getElementById('fullName').value.trim(),
-      matric_no:     document.getElementById('matrix').value.trim().toUpperCase(),
-      email:         document.getElementById('email').value.trim(),
-      phone:         document.getElementById('phone').value.trim(),
-      gender:        document.getElementById('gender').value,
-      nationality:   document.getElementById('nationality').value,
-      faculty:       document.getElementById('faculty').value,
-      programme:     document.getElementById('programme').value.trim(),
-      year_of_study: document.getElementById('year').value,
-      semester:      document.getElementById('semester').value,
-      role:          document.getElementById('role').value,
-      tshirt_size:   document.getElementById('tshirt').value,
-      dietary:       diet,
-      special_req:   document.getElementById('special').value.trim(),
-      heard_from:    document.getElementById('heardFrom').value,
-      ec_name:       document.getElementById('ecName').value.trim(),
-      ec_relation:   document.getElementById('ecRelation').value,
-      ec_phone:      document.getElementById('ecPhone').value.trim(),
-      ec_email:      document.getElementById('ecEmail').value.trim(),
-      agree_terms:   document.getElementById('agreeTerms').checked,
-      agree_photo:   document.getElementById('agreePhoto').checked,
-      agree_reminder: document.getElementById('agreeReminder').checked,
-    };
-
-    try {
-      // Save registration
-      const { error } = await sb.from('registrations').insert(regData);
-      if (error) throw error;
-
-      // Decrement slots_left
-      if ((ev.slots_left || 0) > 0) {
-        await sb.from('events').update({ slots_left: ev.slots_left - 1 }).eq('id', eventId);
-      }
-
-      document.getElementById('savingOverlay').classList.remove('show');
-      renderTicket({
-        refNum,
-        emoji:       ev.emoji || '🎟',
-        category:    ev.category,
-        title:       ev.title,
-        studentName: regData.student_name,
-        matricNo:    regData.matric_no,
-        date:        ev.date,
-        role:        regData.role || 'Participant',
-        location:    ev.location,
-      });
-
-    } catch (err) {
-      console.error('Supabase save error:', err);
-      document.getElementById('savingOverlay').classList.remove('show');
-      document.getElementById('submitBtn').disabled = false;
-      alert('⚠️ Failed to save registration. Please check your connection and try again.');
-    }
+  const regData = {
+    event_id:      eventId,
+    event_title:   ev.title,
+    ref_num:       refNum,
+    registered_at: new Date().toISOString(),
+    status:        'confirmed',
+    student_name:  document.getElementById('fullName').value.trim(),
+    matric_no:     document.getElementById('matrix').value.trim().toUpperCase(),
+    email:         document.getElementById('email').value.trim(),
+    phone:         document.getElementById('phone').value.trim(),
+    gender:        document.getElementById('gender').value,
+    nationality:   document.getElementById('nationality').value,
+    faculty:       document.getElementById('faculty').value,
+    programme:     document.getElementById('programme').value.trim(),
+    year_of_study: document.getElementById('year').value,
+    semester:      document.getElementById('semester').value,
+    role:          document.getElementById('role').value,
+    tshirt_size:   document.getElementById('tshirt').value,
+    dietary:       diet,
+    special_req:   document.getElementById('special').value.trim(),
+    heard_from:    document.getElementById('heardFrom').value,
+    ec_name:       document.getElementById('ecName').value.trim(),
+    ec_relation:   document.getElementById('ecRelation').value,
+    ec_phone:      document.getElementById('ecPhone').value.trim(),
+    ec_email:      document.getElementById('ecEmail').value.trim(),
+    agree_terms:   document.getElementById('agreeTerms').checked,
+    agree_photo:   document.getElementById('agreePhoto').checked,
+    agree_reminder: document.getElementById('agreeReminder').checked,
   };
 
-  function renderTicket(t) {
-    document.getElementById('refNum').textContent     = t.refNum;
-    document.getElementById('refNumNote').textContent = t.refNum;
-    document.getElementById('tEmoji').textContent     = t.emoji;
-    document.getElementById('tCat').textContent       = cap(t.category);
-    document.getElementById('tEventName').textContent = t.title;
-    document.getElementById('tName').textContent      = t.studentName;
-    document.getElementById('tMatrix').textContent    = t.matricNo;
-    document.getElementById('tDate').textContent      = t.date;
-    document.getElementById('tRole').textContent      = t.role;
-    document.getElementById('tVenue').textContent     = t.location;
-    document.getElementById('tRef').textContent       = t.refNum;
+  try {
+    const { error } = await sb.from('registrations').insert(regData);
+    if (error) throw error;
 
-    const bc = document.getElementById('barcodeLines');
-    bc.innerHTML = '';
-    [28,14,22,10,28,18,8,24,16,28,12,20,28,8,18,24,10,28,16,14].forEach(h => {
-      const s = document.createElement('span');
-      s.style.height = h + 'px';
-      bc.appendChild(s);
+    // Decrement slots_left
+    if ((ev.slots_left || 0) > 0) {
+      await sb.from('events').update({ slots_left: ev.slots_left - 1 }).eq('id', eventId);
+    }
+
+    document.getElementById('savingOverlay').classList.remove('show');
+    renderTicket({
+      refNum,
+      emoji:       ev.emoji || '🎟',
+      category:    ev.category,
+      title:       ev.title,
+      studentName: regData.student_name,
+      matricNo:    regData.matric_no,
+      date:        ev.date,
+      role:        regData.role || 'Participant',
+      location:    ev.location,
     });
 
-    document.getElementById('formCard').classList.add('hide');
-    document.getElementById('autofillBanner').style.display = 'none';
-    document.getElementById('loadingBox').style.display = 'none';
-    document.getElementById('successScreen').classList.add('show');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch (err) {
+    console.error('Supabase save error:', err);
+    document.getElementById('savingOverlay').classList.remove('show');
+    document.getElementById('submitBtn').disabled = false;
+    alert('⚠️ Failed to save registration. Please try again.');
   }
+};
 
-  function validate() {
-    const required = [
-      {id:'fullName', err:'err-fullName'},
-      {id:'matrix',   err:'err-matrix'},
-      {id:'email',    err:'err-email'},
-      {id:'phone',    err:'err-phone'},
-      {id:'gender',   err:'err-gender'},
-      {id:'faculty',  err:'err-faculty'},
-      {id:'programme',err:'err-programme'},
-      {id:'year',     err:'err-year'},
-      {id:'role',     err:'err-role'},
-      {id:'ecName',   err:'err-ecName'},
-      {id:'ecPhone',  err:'err-ecPhone'},
-    ];
-    let ok = true;
-    required.forEach(({id, err}) => {
-      const el = document.getElementById(id);
-      const er = document.getElementById(err);
-      if (!el || !el.value.trim()) {
-        el?.classList.add('error');
-        er?.classList.add('show');
-        ok = false;
-      } else {
-        el.classList.remove('error');
-        er?.classList.remove('show');
-      }
-    });
-    if (!document.getElementById('agreeTerms')?.checked) {
-      document.getElementById('err-terms')?.classList.add('show');
+function renderTicket(t) {
+  document.getElementById('refNum').textContent     = t.refNum;
+  document.getElementById('refNumNote').textContent = t.refNum;
+  document.getElementById('tEmoji').textContent     = t.emoji;
+  document.getElementById('tCat').textContent       = cap(t.category);
+  document.getElementById('tEventName').textContent = t.title;
+  document.getElementById('tName').textContent      = t.studentName;
+  document.getElementById('tMatrix').textContent    = t.matricNo;
+  document.getElementById('tDate').textContent      = t.date;
+  document.getElementById('tRole').textContent      = t.role;
+  document.getElementById('tVenue').textContent     = t.location;
+  document.getElementById('tRef').textContent       = t.refNum;
+
+  const bc = document.getElementById('barcodeLines');
+  bc.innerHTML = '';
+  [28,14,22,10,28,18,8,24,16,28,12,20,28,8,18,24,10,28,16,14].forEach(h => {
+    const s = document.createElement('span');
+    s.style.height = h + 'px';
+    bc.appendChild(s);
+  });
+
+  document.getElementById('formCard').classList.add('hide');
+  document.getElementById('autofillBanner').style.display = 'none';
+  document.getElementById('loadingBox').style.display     = 'none';
+  document.getElementById('successScreen').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function validate() {
+  const required = [
+    {id:'fullName', err:'err-fullName'},
+    {id:'matrix',   err:'err-matrix'},
+    {id:'email',    err:'err-email'},
+    {id:'phone',    err:'err-phone'},
+    {id:'gender',   err:'err-gender'},
+    {id:'faculty',  err:'err-faculty'},
+    {id:'programme',err:'err-programme'},
+    {id:'year',     err:'err-year'},
+    {id:'role',     err:'err-role'},
+    {id:'ecName',   err:'err-ecName'},
+    {id:'ecPhone',  err:'err-ecPhone'},
+  ];
+  let ok = true;
+  required.forEach(({id, err}) => {
+    const el = document.getElementById(id);
+    const er = document.getElementById(err);
+    if (!el || !el.value.trim()) {
+      el?.classList.add('error');
+      er?.classList.add('show');
       ok = false;
     } else {
-      document.getElementById('err-terms')?.classList.remove('show');
+      el.classList.remove('error');
+      er?.classList.remove('show');
     }
-    return ok;
+  });
+  if (!document.getElementById('agreeTerms')?.checked) {
+    document.getElementById('err-terms')?.classList.add('show');
+    ok = false;
+  } else {
+    document.getElementById('err-terms')?.classList.remove('show');
   }
+  return ok;
+}
 
-  function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
 
-  init();
+init();
+
 </script>
 </body>
 </html>
