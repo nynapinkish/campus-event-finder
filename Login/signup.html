@@ -31,10 +31,7 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
 }
 
 .page{position:relative;z-index:1;flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
-
 .card{background:#fff;width:100%;max-width:460px;border-radius:2px;overflow:hidden;box-shadow:0 10px 50px rgba(0,0,0,.4)}
-
-/* Top */
 .card-top{padding:32px 44px 26px;text-align:center;border-bottom:1px solid #eee}
 .sign-in-text{font-size:20px;font-weight:300;color:#444;letter-spacing:.5px;margin-bottom:6px}
 .sign-in-sub{font-size:12.5px;color:var(--light);margin-bottom:18px}
@@ -55,9 +52,7 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
 .wm-portal{color:var(--gold);font-size:22px;font-weight:300}
 .tagline{font-size:9px;color:#bbb;letter-spacing:3.5px;display:block;text-transform:lowercase;margin-top:3px}
 
-/* Form */
 .card-body{padding:26px 44px 24px}
-
 .form-group{margin-bottom:16px}
 .form-label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:7px}
 .form-input{
@@ -92,7 +87,6 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
 .alert-error{background:#fef2f2;border:1px solid #fca5a5;color:#c0392b}
 .alert-success{background:var(--green-light);border:1px solid var(--green);color:var(--green)}
 
-/* Divider */
 .divider{display:flex;align-items:center;gap:12px;margin:18px 0 0}
 .divider-line{flex:1;height:1px;background:var(--border)}
 .divider-text{font-size:12px;color:var(--light)}
@@ -101,7 +95,6 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
 .login-link a{color:var(--red);font-weight:600;text-decoration:none}
 .login-link a:hover{text-decoration:underline}
 
-/* Success screen */
 .success-screen{display:none;padding:40px 44px;text-align:center}
 .success-screen.show{display:block}
 .success-icon-big{font-size:52px;margin-bottom:14px}
@@ -130,7 +123,6 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
 <div class="page">
   <div class="card">
 
-    <!-- Branding -->
     <div class="card-top">
       <div class="logo-dots">
         <span></span><span></span><span></span><span></span>
@@ -146,7 +138,6 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
       </div>
     </div>
 
-    <!-- Form -->
     <div class="card-body" id="formSection">
 
       <div class="alert alert-error" id="errorAlert">
@@ -199,7 +190,6 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
 
     </div>
 
-    <!-- Success Screen -->
     <div class="success-screen" id="successScreen">
       <div class="success-icon-big">✅</div>
       <div class="success-title">Account Created!</div>
@@ -222,26 +212,13 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
   </div>
 </footer>
 
-<!-- Firebase -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, get, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAdOAZOl2j5HOShAUN4Hz2vdxvkV9K5Rqw",
-    authDomain: "utm-event-finder.firebaseapp.com",
-    databaseURL: "https://utm-event-finder-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "utm-event-finder",
-    storageBucket: "utm-event-finder.firebasestorage.app",
-    messagingSenderId: "939898985875",
-    appId: "1:939898985875:web:996880347433637bd41c66"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  window.doSignup = async function() {
-    // Clear errors
+  async function doSignup() {
     ['name','email','pw','pw2'].forEach(f => {
       document.getElementById('err-' + f).classList.remove('show');
     });
@@ -282,33 +259,33 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
     setLoading(true);
 
     try {
-      // Check if email already exists
-      const snap = await get(ref(db, 'users'));
-      if (snap.exists()) {
-        let duplicate = false;
-        snap.forEach(child => {
-          const u = child.val();
-          if (u.email === email && u.role === 'organizer') duplicate = true;
-        });
-        if (duplicate) {
-          document.getElementById('errorMsg').textContent = 'This email is already registered. Please log in.';
-          document.getElementById('errorAlert').classList.add('show');
-          document.getElementById('emailInput').classList.add('error');
-          setLoading(false);
-          return;
-        }
+      // Check duplicate email
+      const { data: existing } = await sb
+        .from('users')
+        .select('id')
+        .eq('email', email)
+        .eq('role', 'organizer')
+        .single();
+
+      if (existing) {
+        document.getElementById('errorMsg').textContent = 'This email is already registered. Please log in.';
+        document.getElementById('errorAlert').classList.add('show');
+        document.getElementById('emailInput').classList.add('error');
+        setLoading(false);
+        return;
       }
 
-      // Save to Firebase
-      await push(ref(db, 'users'), {
-        name:      name,
-        email:     email,
-        password:  pw,
-        role:      'organizer',
-        createdAt: new Date().toISOString()
+      // Insert new organizer
+      const { error } = await sb.from('users').insert({
+        name:       name,
+        email:      email,
+        password:   pw,
+        role:       'organizer',
+        created_at: new Date().toISOString()
       });
 
-      // Show success
+      if (error) throw error;
+
       document.getElementById('formSection').style.display = 'none';
       document.getElementById('successScreen').classList.add('show');
 
@@ -318,7 +295,7 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
       document.getElementById('errorAlert').classList.add('show');
       setLoading(false);
     }
-  };
+  }
 
   function setLoading(on) {
     const btn = document.getElementById('signupBtn');
@@ -328,15 +305,14 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
     txt.textContent = on ? 'Creating account...' : 'Create Account';
     sp.style.display = on ? 'inline-block' : 'none';
   }
-</script>
 
-<script>
   function togglePw(inputId, btnId) {
     const pw  = document.getElementById(inputId);
     const btn = document.getElementById(btnId);
     if (pw.type === 'password') { pw.type = 'text'; btn.textContent = '🙈'; }
     else { pw.type = 'password'; btn.textContent = '👁'; }
   }
+
   document.addEventListener('keydown', e => { if (e.key === 'Enter') doSignup(); });
 </script>
 </body>

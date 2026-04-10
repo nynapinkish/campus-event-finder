@@ -90,7 +90,6 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
 .login-alert{background:#fef2f2;border:1px solid #fca5a5;border-radius:2px;padding:10px 14px;font-size:12.5px;color:#c0392b;margin-bottom:14px;display:none;align-items:center;gap:8px}
 .login-alert.show{display:flex}
 
-/* signup link for organizer */
 .signup-hint{text-align:center;font-size:12.5px;color:var(--muted);margin-top:14px;display:none}
 .signup-hint a{color:var(--red);font-weight:600;text-decoration:none}
 .signup-hint a:hover{text-decoration:underline}
@@ -189,26 +188,35 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
   </div>
 </footer>
 
-<!-- Firebase -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, get, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAdOAZOl2j5HOShAUN4Hz2vdxvkV9K5Rqw",
-    authDomain: "utm-event-finder.firebaseapp.com",
-    databaseURL: "https://utm-event-finder-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "utm-event-finder",
-    storageBucket: "utm-event-finder.firebasestorage.app",
-    messagingSenderId: "939898985875",
-    appId: "1:939898985875:web:996880347433637bd41c66"
+  let currentRole = 'student';
+
+  const roleConfig = {
+    student:   { idLabel: 'Matrix No.',    placeholder: 'e.g. B23CS0068', signupHint: false },
+    organizer: { idLabel: 'Email Address', placeholder: 'e.g. faris@utm.my', signupHint: true  },
+    admin:     { idLabel: 'Admin ID',      placeholder: 'Enter admin ID', signupHint: false }
   };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+  function switchRole(role) {
+    currentRole = role;
+    const cfg = roleConfig[role];
+    document.querySelectorAll('.role-pill').forEach(p => p.classList.remove('active'));
+    document.getElementById('pill-' + role).classList.add('active');
+    document.getElementById('idLabel').textContent = cfg.idLabel;
+    document.getElementById('emailInput').placeholder = cfg.placeholder;
+    document.getElementById('emailInput').value = '';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('signupHint').classList.toggle('show', cfg.signupHint);
+    clearErrors();
+    document.getElementById('loginAlert').classList.remove('show');
+  }
 
-  // ── Expose login function to global scope ──
-  window.doLogin = async function() {
+  async function doLogin() {
     clearErrors();
     document.getElementById('loginAlert').classList.remove('show');
 
@@ -230,7 +238,7 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
 
     try {
       // ── ADMIN — hardcoded ──
-      if (window.currentRole === 'admin') {
+      if (currentRole === 'admin') {
         if (id === 'admin' && pw === 'admin') {
           saveSession({ name: 'Administrator', role: 'Admin', email: 'admin', avatar: 'AD', matrix: '' });
           window.location.href = '/Admin/admin.html';
@@ -241,11 +249,8 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
         return;
       }
 
-      // ── STUDENT — validate format, auto-create if not exist ──
-      if (window.currentRole === 'student') {
-
-        // 1. Validate matrix format: 1 letter + 2 digits + 2 letters + 4 digits
-        // e.g. B23CS0068, A20DW0068
+      // ── STUDENT ──
+      if (currentRole === 'student') {
         const matrixFormat = /^[A-Za-z]\d{2}[A-Za-z]{2}\d{4}$/;
         if (!matrixFormat.test(id)) {
           showError('Invalid Matrix No. format. Example: B23CS0068');
@@ -255,64 +260,59 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
 
         const matrixUpper = id.toUpperCase();
 
-        // 2. Check Firebase — ada tak student ni?
-        const snap = await get(ref(db, 'users'));
-        let match = null;
+        // Check if student exists in Supabase
+        const { data: existing } = await sb
+          .from('users')
+          .select('*')
+          .eq('role', 'student')
+          .ilike('matrix', matrixUpper)
+          .single();
 
-        if (snap.exists()) {
-          snap.forEach(child => {
-            const u = child.val();
-            if (u.role === 'student' &&
-                (u.matrix || '').toUpperCase() === matrixUpper) {
-              match = { ...u, uid: child.key };
-            }
-          });
-        }
-
-        if (match) {
-          // Student dah ada dalam Firebase — semak password
-          if (match.password !== pw) {
+        if (existing) {
+          // Student exists — check password
+          if (existing.password !== pw) {
             showError('Incorrect password for this Matrix No.');
             setLoading(false);
             return;
           }
         } else {
-          // Student belum ada — auto-create dengan password yang dimasukkan
-          await push(ref(db, 'users'), {
-            matrix:    matrixUpper,
-            password:  pw,
-            role:      'student',
-            name:      matrixUpper,
-            email:     '',
-            createdAt: new Date().toISOString()
+          // Auto-create student
+          await sb.from('users').insert({
+            matrix:     matrixUpper,
+            password:   pw,
+            role:       'student',
+            name:       matrixUpper,
+            email:      '',
+            created_at: new Date().toISOString()
           });
         }
 
         saveSession({
-          name:   match?.name || matrixUpper,
+          name:   existing?.name || matrixUpper,
           role:   'Student',
-          email:  match?.email || '',
-          avatar: avatarFrom(match?.name || matrixUpper),
+          email:  existing?.email || '',
+          avatar: avatarFrom(existing?.name || matrixUpper),
           matrix: matrixUpper
         });
         window.location.href = '/Homepage/homepage.html';
         return;
       }
 
-      // ── ORGANIZER — fetch from Firebase users ──
-      if (window.currentRole === 'organizer') {
-        const snap = await get(ref(db, 'users'));
-        if (!snap.exists()) { showError('No accounts found. Please sign up first.'); setLoading(false); return; }
+      // ── ORGANIZER ──
+      if (currentRole === 'organizer') {
+        const { data: match } = await sb
+          .from('users')
+          .select('*')
+          .eq('role', 'organizer')
+          .eq('email', id)
+          .eq('password', pw)
+          .single();
 
-        let match = null;
-        snap.forEach(child => {
-          const u = child.val();
-          if (u.role === 'organizer' && u.email === id && u.password === pw) {
-            match = { ...u, uid: child.key };
-          }
-        });
-
-        if (!match) { showError('Invalid email or password. <a href="signup.html" style="color:var(--red)">Sign up?</a>'); setLoading(false); return; }
+        if (!match) {
+          showError('Invalid email or password. <a href="signup.html" style="color:var(--red)">Sign up?</a>');
+          setLoading(false);
+          return;
+        }
 
         saveSession({
           name:   match.name  || id,
@@ -330,7 +330,7 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
       showError('Connection error. Please try again.');
       setLoading(false);
     }
-  };
+  }
 
   function saveSession(data) {
     sessionStorage.setItem('utm_user', JSON.stringify(data));
@@ -355,36 +355,6 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
     btn.classList.toggle('loading', on);
     txt.textContent = on ? 'Logging in...' : 'Login';
     sp.style.display = on ? 'inline-block' : 'none';
-  }
-</script>
-
-<script>
-  let currentRole = 'student';
-  window.currentRole = 'student';
-
-  const roleConfig = {
-    student:   { idLabel: 'Matrix No.',    signupHint: false },
-    organizer: { idLabel: 'Email Address', signupHint: true  },
-    admin:     { idLabel: 'Admin ID',      signupHint: false }
-  };
-
-  function switchRole(role) {
-    currentRole = role;
-    window.currentRole = role;
-    const cfg = roleConfig[role];
-
-    document.querySelectorAll('.role-pill').forEach(p => p.classList.remove('active'));
-    document.getElementById('pill-' + role).classList.add('active');
-    document.getElementById('idLabel').textContent = cfg.idLabel;
-    document.getElementById('emailInput').value = '';
-    document.getElementById('pwInput').value = '';
-    document.getElementById('emailInput').placeholder = cfg.idLabel;
-
-    // Show/hide signup hint for organizer
-    document.getElementById('signupHint').classList.toggle('show', cfg.signupHint);
-
-    clearErrors();
-    document.getElementById('loginAlert').classList.remove('show');
   }
 
   function togglePw() {

@@ -100,8 +100,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .ev-card.cat-cultural{border-top:3px solid var(--red)}
 .ev-card.cat-career{border-top:3px solid #b35900}
 .ev-card.cat-volunteer{border-top:3px solid #5b2b91}
-
-/* Registered card — slight green tint */
 .ev-card.is-registered{border-color:#b7dfca;background:#fafffe;}
 .ev-card.is-registered .ev-card-body{position:relative}
 .registered-ribbon{position:absolute;top:0;right:0;background:var(--green);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 0 4px;}
@@ -130,21 +128,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .ev-btn:hover{background:var(--red2)}
 .ev-btn.outline{background:none;color:var(--red);border:1px solid rgba(139,0,0,.4)}
 .ev-btn.outline:hover{background:var(--red);color:#fff}
-
-/* Registered button — greyed, still clickable */
-.ev-btn.registered{
-  background:#e8f5ed;
-  color:var(--green);
-  border:1.5px solid #b7dfca;
-  font-weight:700;
-  cursor:pointer;
-}
-.ev-btn.registered:hover{
-  background:var(--green);
-  color:#fff;
-  border-color:var(--green);
-}
-
+.ev-btn.registered{background:#e8f5ed;color:var(--green);border:1.5px solid #b7dfca;font-weight:700;cursor:pointer;}
+.ev-btn.registered:hover{background:var(--green);color:#fff;border-color:var(--green);}
 .full-tag{font-size:11px;font-weight:700;color:#c0392b;background:#fef2f2;padding:3px 8px;border-radius:3px;border:1px solid #fca5a5;}
 
 .state-box{grid-column:1/-1;text-align:center;padding:64px 20px;color:var(--muted);}
@@ -188,7 +173,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .m-btn-reg{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:3px;cursor:pointer;transition:background .15s;}
 .m-btn-reg:hover{background:var(--red2)}
 .m-btn-reg:disabled{opacity:.4;cursor:not-allowed}
-/* Registered state in modal */
 .m-btn-reg.registered{background:var(--green);opacity:1;cursor:pointer;}
 .m-btn-reg.registered:hover{background:#134a2c}
 .m-registered-note{background:var(--green-light);border:1px solid #b7dfca;border-radius:3px;padding:10px 14px;font-size:12.5px;color:var(--green);margin-bottom:14px;display:none;align-items:center;gap:8px;font-weight:500;}
@@ -326,7 +310,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     <div class="ev-toolbar">
       <div class="ev-toolbar-left">
         <h2>Upcoming Events</h2>
-        <p id="evMeta">Loading events from Firebase...</p>
+        <p id="evMeta">Loading events from Supabase...</p>
       </div>
     </div>
     <div class="ev-grid" id="evGrid">
@@ -340,23 +324,13 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     <div>
       <div class="fi-brand-utm">UTM</div>
       <div class="fi-brand-full">Universiti Teknologi Malaysia</div>
-      <div class="fi-brand-text">Empowering students through intelligent campus systems. AI-Driven Campus Event Finder for UTM Students with Augmented Reality.</div>
-    </div>
-    <div>
-      <div class="fi-head">Information About</div>
-      <div class="fi-links">
-        <a href="#">Department of DVC (Students Affairs)</a>
-        <a href="#">Department of DVC (Research & Innovation)</a>
-        <a href="#">Department of DVC (Academic & International)</a>
-        <a href="#">Department of DVC (Development)</a>
-      </div>
+      <div class="fi-brand-text">AI-Driven Campus Event Finder for UTM Students with Augmented Reality.</div>
     </div>
     <div>
       <div class="fi-head">Quicklinks</div>
       <div class="fi-links">
         <a href="../Homepage/homepage.html">myUTM Portal</a>
         <a href="#">Staff Directory</a>
-        <a href="#">Scholarship & Financial Aids</a>
         <a href="#">Career@UTM</a>
         <a href="#">UTM Alumni</a>
       </div>
@@ -368,8 +342,14 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
         <a href="#">utm.my</a>
         <a href="#">Facebook</a>
         <a href="#">Instagram</a>
-        <a href="#">YouTube</a>
-        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div>
+      <div class="fi-head">Legal</div>
+      <div class="fi-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Disclaimer</a>
       </div>
     </div>
   </div>
@@ -378,7 +358,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     <div class="footer-bottom-links">
       <a href="#">Privacy Policy</a>
       <a href="#">Terms of Use</a>
-      <a href="#">Disclaimer</a>
     </div>
   </div>
 </footer>
@@ -393,7 +372,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     <div class="m-body">
       <span class="m-cat-badge ev-badge" id="mBadge"></span>
       <div class="m-title" id="mTitle"></div>
-      <!-- Registered notice in modal -->
       <div class="m-registered-note" id="mRegisteredNote">
         ✅ You are registered for this event! Click below to view your ticket.
       </div>
@@ -415,99 +393,57 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   </div>
 </div>
 
-<!-- ✅ FIREBASE -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, get, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAdOAZOl2j5HOShAUN4Hz2vdxvkV9K5Rqw",
-    authDomain: "utm-event-finder.firebaseapp.com",
-    databaseURL: "https://utm-event-finder-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "utm-event-finder",
-    storageBucket: "utm-event-finder.firebasestorage.app",
-    messagingSenderId: "939898985875",
-    appId: "1:939898985875:web:996880347433637bd41c66"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db  = getDatabase(app);
-
-  // Session
   const session = JSON.parse(sessionStorage.getItem('utm_user') || '{}');
   if (session.avatar) document.getElementById('headerAvatar').textContent = session.avatar;
-  if (session.matrix || session.name) {
-    document.getElementById('headerName').textContent = session.name || session.matrix || '—';
-  }
-
-  // ── Step 1: Load registrations for this student ──
-  async function loadMyRegistrations() {
-    if (!session.matrix) return new Set();
-    try {
-      const snap = await get(ref(db, 'registrations'));
-      const myEvents = new Set();
-      if (snap.exists()) {
-        snap.forEach(child => {
-          const r = child.val();
-          if ((r.matricNo || '').toUpperCase() === session.matrix.toUpperCase()) {
-            myEvents.add(r.eventId);
-          }
-        });
-      }
-      return myEvents;
-    } catch(e) {
-      console.error('Registration check error:', e);
-      return new Set();
-    }
-  }
-
-  // ── Step 2: Load events + merge registered status ──
-  onValue(ref(db, 'events'), async (snap) => {
-    const myEvents = await loadMyRegistrations();
-    window.MY_REGISTERED = myEvents;
-
-    const data = snap.val();
-    if (data) {
-      window.EVENTS = Object.entries(data)
-        .map(([id, v]) => ({ id, ...v, registered: myEvents.has(id) }))
-        .filter(e => e.status === 'approved');
-    } else {
-      window.EVENTS = [];
-    }
-    boot();
-  }, (error) => {
-    console.error('Firebase error:', error);
-    document.getElementById('evGrid').innerHTML =
-      '<div class="state-box"><h3>⚠️ Failed to load events</h3><p>Check your internet connection.</p></div>';
-  });
-</script>
-
-<script>
-  let curCat = 'all', curQ = '';
+  if (session.name || session.matrix) document.getElementById('headerName').textContent = session.name || session.matrix || '—';
 
   const badgeClass = {
     academic:'badge-academic', sports:'badge-sports',
     cultural:'badge-cultural', career:'badge-career', volunteer:'badge-volunteer'
   };
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const cat = params.get('cat');
-    if (cat) {
-      curCat = cat;
-      document.querySelectorAll('.ct-btn').forEach(b => {
-        b.classList.toggle('active', b.textContent.trim().toLowerCase() === cat);
-      });
+  let curCat = 'all', curQ = '';
+
+  async function init() {
+    // Load my registrations
+    let myEventIds = new Set();
+    if (session.matrix) {
+      const { data: regs } = await sb
+        .from('registrations')
+        .select('event_id')
+        .ilike('matric_no', session.matrix);
+      if (regs) regs.forEach(r => myEventIds.add(r.event_id));
     }
-  });
+
+    // Load events
+    const { data: events, error } = await sb
+      .from('events')
+      .select('*')
+      .eq('status', 'approved')
+      .order('created_at', { ascending: false });
+
+    if (error || !events) {
+      document.getElementById('evGrid').innerHTML =
+        '<div class="state-box"><h3>⚠️ Failed to load events</h3><p>Check your internet connection.</p></div>';
+      return;
+    }
+
+    window.EVENTS = events.map(e => ({ ...e, registered: myEventIds.has(e.id) }));
+    boot();
+  }
 
   function boot() {
-    if (!window.EVENTS) return;
-    const evs = window.EVENTS;
-
+    const evs = window.EVENTS || [];
     const total = evs.length;
-    const open  = evs.filter(e => e.slotsLeft > 0).length;
-    const slots = evs.reduce((a, e) => a + (e.slotsLeft || 0), 0);
+    const open  = evs.filter(e => e.slots_left > 0).length;
+    const slots = evs.reduce((a, e) => a + (e.slots_left || 0), 0);
+
     document.getElementById('statTotal').textContent = total;
     document.getElementById('statOpen').textContent  = open;
     document.getElementById('statSlots').textContent = slots >= 1000 ? (slots/1000).toFixed(1)+'k' : slots;
@@ -532,7 +468,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     });
 
     document.getElementById('evMeta').textContent =
-      list.length + ' event' + (list.length !== 1 ? 's' : '') + ' found · Live from Firebase';
+      list.length + ' event' + (list.length !== 1 ? 's' : '') + ' found · Live from Supabase';
 
     if (!list.length) {
       document.getElementById('evGrid').innerHTML =
@@ -541,8 +477,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     }
 
     document.getElementById('evGrid').innerHTML = list.map((ev, i) => {
-      const pct  = ev.slots > 0 ? Math.round((ev.slotsLeft / ev.slots) * 100) : 0;
-      const full = ev.slotsLeft <= 0;
+      const pct  = ev.slots > 0 ? Math.round((ev.slots_left / ev.slots) * 100) : 0;
+      const full = ev.slots_left <= 0;
       const low  = !full && pct <= 20;
       const fc   = full ? '#dc2626' : low ? '#e67e22' : '#1a5c38';
       const emoji = ev.emoji || '📌';
@@ -551,7 +487,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
       return `
         <div class="ev-card cat-${ev.category||'academic'}${isReg ? ' is-registered' : ''}"
              style="animation-delay:${i*.04}s"
-             onclick="openModal('${ev.id}')">
+             onclick="openModal(${ev.id})">
           <div class="ev-card-body">
             ${isReg ? `<div class="registered-ribbon">✓ Registered</div>` : ''}
             <div class="ev-card-top">
@@ -566,20 +502,14 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
             </div>
             <div class="ev-card-foot">
               ${isReg
-                ? `<div class="ev-slots">
-                    <div class="ev-slots-txt ok"><b>You're in!</b> Registration confirmed</div>
-                    <div class="ev-bar"><div class="ev-bar-fill" style="width:${pct}%;background:${fc}"></div></div>
-                  </div>`
+                ? `<div class="ev-slots"><div class="ev-slots-txt ok"><b>You're in!</b> Registration confirmed</div><div class="ev-bar"><div class="ev-bar-fill" style="width:${pct}%;background:${fc}"></div></div></div>`
                 : full
                   ? `<span class="full-tag">Registration Full</span>`
-                  : `<div class="ev-slots">
-                      <div class="ev-slots-txt ${low?'':'ok'}"><b>${ev.slotsLeft}</b> slots remaining</div>
-                      <div class="ev-bar"><div class="ev-bar-fill" style="width:${pct}%;background:${fc}"></div></div>
-                    </div>`
+                  : `<div class="ev-slots"><div class="ev-slots-txt ${low?'':'ok'}"><b>${ev.slots_left}</b> slots remaining</div><div class="ev-bar"><div class="ev-bar-fill" style="width:${pct}%;background:${fc}"></div></div></div>`
               }
               <button
                 class="ev-btn${isReg ? ' registered' : full ? ' outline' : ''}"
-                onclick="event.stopPropagation();${isReg ? `viewTicket('${ev.id}')` : full ? `openModal('${ev.id}')` : `goRegister('${ev.id}')`}">
+                onclick="event.stopPropagation();${isReg ? `viewTicket(${ev.id})` : full ? `openModal(${ev.id})` : `goRegister(${ev.id})`}">
                 ${isReg ? '🎟 View Ticket' : full ? 'View Details' : 'Register'}
               </button>
             </div>
@@ -592,8 +522,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     curCat = c;
     document.querySelectorAll('.ct-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
-    document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
-    document.getElementById('fc-'+c)?.closest('.sb-item')?.classList.add('active');
     render();
   }
 
@@ -614,7 +542,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   }
 
   function openModal(id) {
-    const ev    = (window.EVENTS||[]).find(e => e.id === id);
+    const ev = (window.EVENTS||[]).find(e => e.id === id);
     if (!ev) return;
     const isReg = !!ev.registered;
 
@@ -625,22 +553,19 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     document.getElementById('mTime').textContent   = ev.time||'–';
     document.getElementById('mLoc').textContent    = ev.location||'–';
     document.getElementById('mFac').textContent    = ev.faculty||'–';
-    document.getElementById('mSlots').textContent  = ev.slotsLeft > 0 ? ev.slotsLeft + ' slots remaining' : 'Registration Full';
-    document.getElementById('mOrg').textContent    = ev.organizerName||'–';
+    document.getElementById('mSlots').textContent  = ev.slots_left > 0 ? ev.slots_left + ' slots remaining' : 'Registration Full';
+    document.getElementById('mOrg').textContent    = ev.organizer_name||'–';
     document.getElementById('mDesc').textContent   = ev.description||'–';
 
-    // Registered notice
-    const note = document.getElementById('mRegisteredNote');
-    note.classList.toggle('show', isReg);
+    document.getElementById('mRegisteredNote').classList.toggle('show', isReg);
 
-    // Button state
     const btn = document.getElementById('mReg');
     if (isReg) {
       btn.textContent = '🎟 View My Ticket';
       btn.className   = 'm-btn-reg registered';
       btn.disabled    = false;
       btn.onclick     = () => { closeModal(); viewTicket(ev.id); };
-    } else if (ev.slotsLeft <= 0) {
+    } else if (ev.slots_left <= 0) {
       btn.textContent = 'Registration Closed';
       btn.className   = 'm-btn-reg';
       btn.disabled    = true;
@@ -659,21 +584,14 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   function goRegister(id) {
     const ev = (window.EVENTS||[]).find(e => e.id === id);
     if (!ev) return;
-    const p = new URLSearchParams({
-      id: ev.id, title: ev.title,
-      date: ev.date, location: ev.location, time: ev.time
-    });
+    const p = new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
     window.location.href = 'register.html?' + p;
   }
 
-  // View ticket — go to register page which will show ticket (already registered)
   function viewTicket(id) {
     const ev = (window.EVENTS||[]).find(e => e.id === id);
     if (!ev) return;
-    const p = new URLSearchParams({
-      id: ev.id, title: ev.title,
-      date: ev.date, location: ev.location, time: ev.time
-    });
+    const p = new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
     window.location.href = 'register.html?' + p;
   }
 
@@ -687,6 +605,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   }
 
   function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+
+  init();
 </script>
 </body>
 </html>

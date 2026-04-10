@@ -18,9 +18,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 
 .topbar{background:var(--red);height:38px;display:flex;align-items:center;justify-content:flex-end;padding:0 28px;gap:20px}
 .topbar a{color:rgba(255,255,255,.8);font-size:12.5px;text-decoration:none}
-.topbar a:hover{color:#fff}
-.topbar-sep{color:rgba(255,255,255,.3);font-size:11px}
-
 .header{background:#fff;border-bottom:4px solid var(--red);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:80px}
 .header-logo{display:flex;align-items:center;gap:16px;text-decoration:none}
 .logo-img{width:60px;height:60px;border-radius:50%;background:var(--red);border:2px solid #c8982a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;}
@@ -28,30 +25,21 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .logo-img-star{color:#c8982a;font-size:8px;letter-spacing:2px}
 .logo-utm{font-size:28px;font-weight:700;color:var(--red);line-height:1}
 .logo-full{font-size:11px;color:var(--muted);letter-spacing:.3px;margin-top:1px}
-.header-nav{display:flex;gap:0}
-.hn-item{padding:0 16px;height:80px;display:flex;align-items:center;font-size:13.5px;font-weight:500;color:var(--text);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-4px;transition:color .15s,border-color .15s;}
-.hn-item:hover{color:var(--red)}
-.hn-item.active{color:var(--red);border-bottom-color:var(--red)}
-.hn-item .arr{font-size:9px;margin-left:3px;opacity:.5}
 .header-right{display:flex;align-items:center;gap:10px}
-.user-pill{display:flex;align-items:center;gap:8px;background:#f5f5f5;border:1px solid var(--border);border-radius:20px;padding:5px 14px 5px 5px;font-size:13px;color:var(--muted);cursor:pointer;}
+.user-pill{display:flex;align-items:center;gap:8px;background:#f5f5f5;border:1px solid var(--border);border-radius:20px;padding:5px 14px 5px 5px;font-size:13px;color:var(--muted);}
 .user-av{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;}
 
 .section-nav{background:#1f1f1f;padding:0 28px;display:flex;gap:0}
-.sn-item{color:rgba(255,255,255,.6);font-size:13px;padding:10px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
-.sn-item:hover{color:#fff}
+.sn-item{color:rgba(255,255,255,.6);font-size:13px;padding:10px 16px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
 .sn-item.active{color:#fff;border-bottom-color:#c8982a}
 
 .page-title-bar{background:#fff;border-bottom:1px solid var(--border);padding:18px 28px}
 .ptb-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--light);margin-bottom:5px}
-.ptb-breadcrumb a{color:var(--muted);text-decoration:none;cursor:pointer}
-.ptb-breadcrumb a:hover{color:var(--red)}
-.ptb-breadcrumb span{color:var(--light)}
+.ptb-breadcrumb a{color:var(--muted);text-decoration:none}
 .ptb-title{font-size:20px;font-weight:700;color:var(--text)}
 
 .wrap{max-width:100%;margin:0 auto;padding:22px 28px 60px;display:grid;grid-template-columns:320px 1fr 280px;gap:18px;align-items:start;flex:1;}
 
-/* POSTER PANEL */
 .poster-panel{display:flex;flex-direction:column;gap:14px;position:sticky;top:16px;align-self:start}
 .poster-box{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden}
 .poster-box-head{background:var(--red);padding:10px 14px;font-size:12px;font-weight:700;color:#fff;letter-spacing:.4px;text-transform:uppercase;display:flex;align-items:center;gap:7px}
@@ -59,45 +47,32 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .pep-emoji{font-size:90px;filter:drop-shadow(0 4px 14px rgba(139,0,0,.18))}
 .pep-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 12px;border-radius:3px}
 .pep-title{font-size:13.5px;font-weight:600;color:var(--text);text-align:center;padding:0 10px;line-height:1.4}
-.poster-ph-note{padding:11px 14px;border-top:1px solid var(--border);background:#f9f9f9;text-align:center}
-.poster-ph-note p{font-size:11.5px;color:var(--muted);line-height:1.55;margin-bottom:6px}
-.poster-ph-note a{font-size:11.5px;color:var(--red);font-weight:600;text-decoration:none}
 .poster-box-body{padding:12px 14px}
 .poster-info-row{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);margin-bottom:7px}
-.poster-info-row:last-child{margin-bottom:0}
 .poster-info-ic{width:14px;text-align:center;opacity:.6;flex-shrink:0}
 .poster-info-val{font-weight:600;color:var(--text);font-size:12px}
-.poster-note{background:#fff;border:1px solid var(--border);border-radius:4px;padding:12px 14px}
-.poster-note-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--light);margin-bottom:7px}
-.poster-note-list{display:flex;flex-direction:column;gap:5px}
-.poster-note-item{display:flex;align-items:flex-start;gap:7px;font-size:12px;color:var(--muted)}
 
-/* LOADING STATE */
 .loading-box{background:#fff;border:1px solid var(--border);border-radius:4px;padding:40px;text-align:center;color:var(--muted)}
 .spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* AUTOFILL BANNER */
 .autofill-banner{background:#e8f5ed;border:1px solid #b7dfca;border-radius:4px;padding:11px 16px;font-size:13px;color:var(--green);display:none;align-items:center;gap:9px;margin-bottom:16px;font-weight:500;}
 .autofill-banner.show{display:flex}
 
-/* FORM CARD */
 .form-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.form-card.hide{display:none}
 .form-card-head{background:var(--red);padding:14px 20px;display:flex;align-items:center;gap:10px;}
-.form-card-head-icon{font-size:16px}
 .form-card-head-title{font-size:14px;font-weight:700;color:#fff}
 .form-card-head-sub{font-size:12px;color:rgba(255,255,255,.65);margin-left:auto}
 .form-body{padding:24px}
 .form-section{margin-bottom:28px}
-.form-section:last-child{margin-bottom:0}
 .form-section-title{font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.8px;padding-bottom:9px;border-bottom:1px solid var(--border);margin-bottom:18px;display:flex;align-items:center;gap:7px;}
-.form-section-title span{font-size:15px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 .form-row.full{grid-template-columns:1fr}
 .form-row.tri{grid-template-columns:1fr 1fr 1fr}
 .form-group{display:flex;flex-direction:column;gap:5px}
 .form-label{font-size:12.5px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:4px;}
-.form-label .req{color:var(--red);font-size:13px;margin-left:1px}
+.form-label .req{color:var(--red);font-size:13px}
 .form-input,.form-select,.form-textarea{width:100%;border:1px solid var(--border);border-radius:3px;padding:9px 12px;font-family:'Open Sans',sans-serif;font-size:13.5px;color:var(--text);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(139,0,0,.08);}
 .form-input::placeholder,.form-textarea::placeholder{color:#bbb}
@@ -116,19 +91,14 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .check-item label{font-size:13px;color:var(--text);cursor:pointer;line-height:1.4}
 .diet-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:2px}
 .agreement-box{background:#f9f9f9;border:1px solid var(--border);border-radius:3px;padding:14px 16px;font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:16px;}
-.agreement-box a{color:var(--red);text-decoration:none}
 .form-actions{display:flex;align-items:center;gap:12px;padding-top:4px}
 .btn-submit{background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px 32px;border-radius:3px;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:8px;}
 .btn-submit:hover{background:var(--red2)}
 .btn-submit:disabled{opacity:.5;cursor:not-allowed}
-.btn-cancel{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 20px;border-radius:3px;cursor:pointer;transition:all .15s;}
-.btn-cancel:hover{border-color:var(--red);color:var(--red)}
+.btn-cancel{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 20px;border-radius:3px;cursor:pointer;}
 .form-actions-note{font-size:12px;color:var(--light);margin-left:auto}
-
-/* LOCKED FIELD badge */
 .field-locked-badge{font-size:10px;color:var(--muted);background:#f0f0f0;border:1px solid #ddd;border-radius:10px;padding:1px 7px;margin-left:auto;font-weight:400;}
 
-/* RIGHT PANEL */
 .right-panel{display:flex;flex-direction:column;gap:14px;position:sticky;top:16px;align-self:start}
 .event-summary{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;border-top:3px solid var(--red);}
 .es-head{padding:14px 16px 12px;border-bottom:1px solid var(--border)}
@@ -142,7 +112,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .badge-volunteer{background:#f2ecf9;color:#5b2b91}
 .es-body{padding:14px 16px}
 .es-row{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--muted);margin-bottom:9px}
-.es-row:last-child{margin-bottom:0}
 .es-ic{width:15px;text-align:center;flex-shrink:0;opacity:.6;margin-top:1px}
 .es-val{color:var(--text);font-weight:500}
 .es-slots{margin:12px 0 0;padding:12px 16px;background:#f9f9f9;border-top:1px solid var(--border);}
@@ -155,17 +124,9 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .info-box-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:10px}
 .info-list{display:flex;flex-direction:column;gap:7px}
 .info-list-item{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:var(--muted);line-height:1.45}
-.help-box{background:var(--red);border-radius:4px;padding:14px 16px;}
-.help-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:5px}
-.help-text{font-size:12px;color:rgba(255,255,255,.7);line-height:1.55;margin-bottom:10px}
-.help-btn{font-family:'Open Sans',sans-serif;font-size:12.5px;font-weight:600;background:#fff;color:var(--red);border:none;padding:8px 16px;border-radius:3px;cursor:pointer;width:100%;transition:opacity .15s;}
-.help-btn:hover{opacity:.9}
 
-/* SUCCESS SCREEN */
 .success-screen{display:none;background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;text-align:center;}
-.success-screen.show{display:block;animation:slideIn 0.4s ease;}
-@keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.form-card.hide{display:none}
+.success-screen.show{display:block}
 .success-head{background:var(--green);padding:20px;display:flex;flex-direction:column;align-items:center;gap:8px}
 .success-icon{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:28px;}
 .success-head-title{font-size:17px;font-weight:700;color:#fff}
@@ -175,14 +136,11 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .success-ref-label{font-size:11px;color:var(--light);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
 .success-ref-num{font-size:22px;font-weight:700;color:var(--red);letter-spacing:2px}
 
-/* TICKET */
 .ticket{display:flex;border-radius:8px;overflow:hidden;margin-bottom:22px;box-shadow:0 4px 20px rgba(0,0,0,.13);position:relative}
-.ticket-left{width:140px;flex-shrink:0;background:linear-gradient(160deg,var(--red2) 0%,var(--red) 50%,#c0392b 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 12px;position:relative;overflow:hidden}
-.ticket-left::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0px,rgba(255,255,255,.04) 1px,transparent 1px,transparent 8px)}
-.ticket-left-emoji{font-size:38px;margin-bottom:10px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.3))}
+.ticket-left{width:140px;flex-shrink:0;background:linear-gradient(160deg,var(--red2) 0%,var(--red) 50%,#c0392b 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 12px;}
+.ticket-left-emoji{font-size:38px;margin-bottom:10px}
 .ticket-left-cat{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:4px}
 .ticket-left-logo{font-size:15px;font-weight:700;color:#fff;letter-spacing:.5px;border-top:1px solid rgba(255,255,255,.25);padding-top:10px;margin-top:6px;width:100%;text-align:center}
-.ticket-left-logo-sub{font-size:8px;color:rgba(255,255,255,.5);letter-spacing:1px;margin-top:1px}
 .ticket-sep{width:1px;background:repeating-linear-gradient(to bottom,var(--border) 0px,var(--border) 6px,transparent 6px,transparent 12px);flex-shrink:0}
 .ticket-right{flex:1;background:#fff;padding:18px 20px;text-align:left;display:flex;flex-direction:column;justify-content:space-between}
 .ticket-right-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--light);margin-bottom:6px}
@@ -197,48 +155,32 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 
 .success-note{font-size:12.5px;color:var(--muted);line-height:1.6;background:#f9f9f9;border-radius:3px;padding:12px 14px;margin-bottom:22px;text-align:left}
 .success-actions{display:flex;gap:10px}
-.btn-portal{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:3px;cursor:pointer;transition:background .15s;}
-.btn-portal:hover{background:var(--red2)}
-.btn-new{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 16px;border-radius:3px;cursor:pointer;transition:all .15s;}
-.btn-new:hover{border-color:var(--red);color:var(--red)}
+.btn-portal{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:3px;cursor:pointer;}
+.btn-new{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 16px;border-radius:3px;cursor:pointer;}
 
-/* SAVING STATE */
 .saving-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:999;align-items:center;justify-content:center;}
 .saving-overlay.show{display:flex}
 .saving-box{background:#fff;border-radius:8px;padding:32px 40px;text-align:center;}
 .saving-spinner{width:36px;height:36px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px;}
 .saving-text{font-size:14px;font-weight:600;color:var(--text)}
-.saving-sub{font-size:12px;color:var(--muted);margin-top:4px}
 
 .footer{background:#1f1f1f;padding:36px 24px 28px;margin-top:auto;}
-.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px;}
-.fi-brand-utm{font-size:22px;font-weight:700;color:#fff;line-height:1;margin-bottom:6px}
-.fi-brand-full{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.3px;margin-bottom:12px}
-.fi-brand-text{font-size:12.5px;color:rgba(255,255,255,.45);line-height:1.6}
-.fi-head{font-size:12px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
-.fi-links{display:flex;flex-direction:column;gap:8px}
-.fi-links a{font-size:12.5px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .15s}
-.fi-links a:hover{color:#fff}
-.footer-bottom{max-width:1100px;margin:0 auto;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.footer-bottom{max-width:1100px;margin:0 auto;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:space-between;}
 .footer-copy{font-size:12px;color:rgba(255,255,255,.3)}
 </style>
 </head>
 <body>
 
-<!-- SAVING OVERLAY -->
 <div class="saving-overlay" id="savingOverlay">
   <div class="saving-box">
     <div class="saving-spinner"></div>
     <div class="saving-text">Saving your registration...</div>
-    <div class="saving-sub">Please wait, do not close this page.</div>
   </div>
 </div>
 
 <div class="topbar">
   <a href="#">UTM Kuala Lumpur</a>
-  <span class="topbar-sep">|</span>
-  <a href="#">UTM Pagoh</a>
-  <span class="topbar-sep">|</span>
+  <span style="color:rgba(255,255,255,.3)">|</span>
   <a href="#">Contact Us</a>
 </div>
 
@@ -253,15 +195,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
       <div class="logo-full">Universiti Teknologi Malaysia</div>
     </div>
   </a>
-  <nav class="header-nav">
-    <div class="hn-item">Corporate Information <span class="arr">▾</span></div>
-    <div class="hn-item">Administration <span class="arr">▾</span></div>
-    <div class="hn-item">Achievements <span class="arr">▾</span></div>
-    <div class="hn-item">Publications <span class="arr">▾</span></div>
-    <div class="hn-item active">Faculties</div>
-    <div class="hn-item">Partnership</div>
-    <div class="hn-item">UTM Cares</div>
-  </nav>
   <div class="header-right">
     <div class="user-pill">
       <div class="user-av" id="headerAvatar">?</div>
@@ -274,8 +207,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   <div class="sn-item active">Campus Events</div>
   <div class="sn-item">Student Life</div>
   <div class="sn-item">Academic Calendar</div>
-  <div class="sn-item">HEP</div>
-  <div class="sn-item">Facilities</div>
 </div>
 
 <div class="page-title-bar">
@@ -291,7 +222,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 
 <div class="wrap">
 
-  <!-- POSTER COLUMN -->
   <aside class="poster-panel">
     <div class="poster-box">
       <div class="poster-box-head">🖼️ Event Poster</div>
@@ -300,55 +230,36 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
         <span class="pep-cat" id="pepCat"></span>
         <div class="pep-title" id="pepTitle">Loading event...</div>
       </div>
-      <div class="poster-ph-note">
-        <p>Official event poster will be displayed once uploaded by the organiser.</p>
-      </div>
       <div class="poster-box-body" style="border-top:1px solid var(--border)">
         <div class="poster-info-row"><span class="poster-info-ic">📅</span><span class="poster-info-val" id="ppDate">—</span></div>
         <div class="poster-info-row"><span class="poster-info-ic">🕐</span><span class="poster-info-val" id="ppTime">—</span></div>
         <div class="poster-info-row"><span class="poster-info-ic">📍</span><span class="poster-info-val" id="ppLocation">—</span></div>
       </div>
     </div>
-    <div class="poster-note">
-      <div class="poster-note-title">Before You Register</div>
-      <div class="poster-note-list">
-        <div class="poster-note-item"><span>📌</span>Check event date & venue carefully.</div>
-        <div class="poster-note-item"><span>🪪</span>Bring your student ID on event day.</div>
-        <div class="poster-note-item"><span>📱</span>Use the AR scanner for event map navigation.</div>
-        <div class="poster-note-item"><span>💬</span>Submit feedback after attending.</div>
-      </div>
-    </div>
   </aside>
 
-  <!-- FORM COLUMN -->
   <div>
-
-    <!-- Loading state -->
     <div class="loading-box" id="loadingBox">
       <div class="spinner"></div>
       <p>Loading event details...</p>
     </div>
 
-    <!-- SUCCESS SCREEN — di atas form, terus nampak bila form di-hide -->
     <div class="success-screen" id="successScreen">
       <div class="success-head">
         <div class="success-icon">✓</div>
         <div class="success-head-title">Registration Successful!</div>
-        <div class="success-head-sub">Your slot has been confirmed & saved to Firebase.</div>
+        <div class="success-head-sub">Your slot has been confirmed & saved to Supabase.</div>
       </div>
       <div class="success-body">
         <div class="success-ref">
           <div class="success-ref-label">Registration Reference Number</div>
           <div class="success-ref-num" id="refNum">—</div>
         </div>
-        <!-- TICKET -->
         <div class="ticket">
           <div class="ticket-left">
             <div class="ticket-left-emoji" id="tEmoji">🎟</div>
             <div class="ticket-left-cat" id="tCat">Event</div>
-            <div class="ticket-left-logo">UTM
-              <div class="ticket-left-logo-sub">UNIVERSITI TEKNOLOGI</div>
-            </div>
+            <div class="ticket-left-logo">UTM</div>
           </div>
           <div class="ticket-sep"></div>
           <div class="ticket-right">
@@ -370,31 +281,27 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           </div>
         </div>
         <div class="success-note">
-          Registration saved to Firebase. Please bring your student ID on the day of the event.
-          Your reference number: <strong id="refNumNote">—</strong>
+          Registration saved to Supabase. Please bring your student ID on the day of the event.
+          Reference: <strong id="refNumNote">—</strong>
         </div>
         <div class="success-actions">
-          <button class="btn-portal" onclick="goFeedback()">💬 Submit Feedback</button>
-          <button class="btn-new" onclick="window.location.href='events.html'">← Back to Events</button>
+          <button class="btn-portal" onclick="window.location.href='events.html'">← Back to Events</button>
         </div>
       </div>
     </div>
 
-    <!-- Auto-fill banner -->
     <div class="autofill-banner" id="autofillBanner">
-      ✅ Your profile has been auto-filled from your previous registration. Please review and update if needed.
+      ✅ Your profile has been auto-filled from your previous registration.
     </div>
 
-    <!-- FORM CARD -->
     <div class="form-card" id="formCard" style="display:none">
       <div class="form-card-head">
-        <span class="form-card-head-icon">📋</span>
+        <span style="font-size:16px">📋</span>
         <span class="form-card-head-title">Registration Form</span>
         <span class="form-card-head-sub">All fields marked * are required</span>
       </div>
       <div class="form-body">
 
-        <!-- SECTION 1: Personal Information -->
         <div class="form-section">
           <div class="form-section-title"><span>👤</span> Personal Information</div>
           <div class="form-row">
@@ -404,8 +311,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
               <span class="form-error" id="err-fullName">Please enter your full name.</span>
             </div>
             <div class="form-group">
-              <label class="form-label">
-                Matrix Number <span class="req">*</span>
+              <label class="form-label">Matrix Number <span class="req">*</span>
                 <span class="field-locked-badge" id="matrixLockBadge" style="display:none">🔒 Locked</span>
               </label>
               <input class="form-input" id="matrix" type="text" placeholder="e.g. B23CS0068"/>
@@ -429,9 +335,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
               <label class="form-label">Gender <span class="req">*</span></label>
               <select class="form-select" id="gender">
                 <option value="">— Select Gender —</option>
-                <option>Male</option>
-                <option>Female</option>
-                <option>Prefer not to say</option>
+                <option>Male</option><option>Female</option><option>Prefer not to say</option>
               </select>
               <span class="form-error" id="err-gender">Please select your gender.</span>
             </div>
@@ -446,7 +350,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           </div>
         </div>
 
-        <!-- SECTION 2: Academic Information -->
         <div class="form-section">
           <div class="form-section-title"><span>🎓</span> Academic Information</div>
           <div class="form-row">
@@ -458,12 +361,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
                 <option>Faculty of Civil Engineering</option>
                 <option>Faculty of Electrical Engineering</option>
                 <option>Faculty of Mechanical Engineering</option>
-                <option>Faculty of Chemical & Energy Engineering</option>
                 <option>Faculty of Science</option>
                 <option>Faculty of Management</option>
-                <option>Faculty of Social Sciences & Humanities</option>
-                <option>Faculty of Built Environment & Surveying</option>
-                <option>Azman Hashim International Business School</option>
                 <option>Other</option>
               </select>
               <span class="form-error" id="err-faculty">Please select your faculty.</span>
@@ -479,11 +378,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
               <label class="form-label">Year of Study <span class="req">*</span></label>
               <select class="form-select" id="year">
                 <option value="">— Year —</option>
-                <option>Year 1</option>
-                <option>Year 2</option>
-                <option>Year 3</option>
-                <option>Year 4</option>
-                <option>Postgraduate</option>
+                <option>Year 1</option><option>Year 2</option><option>Year 3</option><option>Year 4</option><option>Postgraduate</option>
               </select>
               <span class="form-error" id="err-year">Please select your year.</span>
             </div>
@@ -491,8 +386,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
               <label class="form-label">Semester</label>
               <select class="form-select" id="semester">
                 <option value="">— Semester —</option>
-                <option>Semester 1</option>
-                <option>Semester 2</option>
+                <option>Semester 1</option><option>Semester 2</option>
               </select>
             </div>
             <div class="form-group">
@@ -502,7 +396,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           </div>
         </div>
 
-        <!-- SECTION 3: Event Participation -->
         <div class="form-section">
           <div class="form-section-title"><span>📅</span> Event Participation</div>
           <div class="form-row full">
@@ -528,10 +421,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
               <label class="form-label">T-Shirt Size</label>
               <select class="form-select" id="tshirt">
                 <option value="">— Select Size —</option>
-                <option>XS</option><option>S</option><option>M</option>
-                <option>L</option><option>XL</option><option>XXL</option>
+                <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
               </select>
-              <span class="form-hint">Required for events that provide t-shirts.</span>
             </div>
           </div>
           <div class="form-row full">
@@ -547,8 +438,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           </div>
           <div class="form-row full">
             <div class="form-group">
-              <label class="form-label">Special Requirements / Accessibility Needs</label>
-              <textarea class="form-textarea" id="special" placeholder="e.g. wheelchair access, hearing assistance, etc. Leave blank if none."></textarea>
+              <label class="form-label">Special Requirements</label>
+              <textarea class="form-textarea" id="special" placeholder="e.g. wheelchair access, etc. Leave blank if none."></textarea>
             </div>
           </div>
           <div class="form-row full">
@@ -561,7 +452,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
                 <option>Campus Event Finder (this system)</option>
                 <option>Poster / Banner</option>
                 <option>Friend / Classmate</option>
-                <option>Lecturer / Supervisor</option>
                 <option>Social Media</option>
                 <option>Other</option>
               </select>
@@ -569,7 +459,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           </div>
         </div>
 
-        <!-- SECTION 4: Emergency Contact -->
         <div class="form-section">
           <div class="form-section-title"><span>🆘</span> Emergency Contact</div>
           <div class="form-row">
@@ -581,8 +470,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
             <div class="form-group">
               <label class="form-label">Relationship</label>
               <select class="form-select" id="ecRelation">
-                <option>Parent</option><option>Guardian</option><option>Sibling</option>
-                <option>Spouse</option><option>Friend</option><option>Other</option>
+                <option>Parent</option><option>Guardian</option><option>Sibling</option><option>Friend</option><option>Other</option>
               </select>
             </div>
           </div>
@@ -599,11 +487,10 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           </div>
         </div>
 
-        <!-- SECTION 5: Declaration -->
         <div class="form-section">
           <div class="form-section-title"><span>✅</span> Declaration & Agreement</div>
           <div class="agreement-box">
-            By submitting this form, I confirm that the information provided is accurate. I agree to comply with all event rules and the <a href="#">UTM Code of Conduct</a>. For full terms, refer to the <a href="#">UTM Privacy Policy</a>.
+            By submitting this form, I confirm that the information provided is accurate and I agree to comply with all event rules and UTM Code of Conduct.
           </div>
           <div class="check-group">
             <label class="check-item">
@@ -622,20 +509,15 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           <span class="form-error" id="err-terms" style="margin-top:8px">You must agree to the terms to proceed.</span>
         </div>
 
-        <!-- ACTIONS -->
         <div class="form-actions">
-          <button class="btn-submit" id="submitBtn" onclick="submitForm()">
-            Submit Registration →
-          </button>
+          <button class="btn-submit" id="submitBtn" onclick="submitForm()">Submit Registration →</button>
           <button class="btn-cancel" onclick="window.history.back()">Cancel</button>
-          <span class="form-actions-note">Your data is saved to Firebase.</span>
+          <span class="form-actions-note">Your data is saved to Supabase.</span>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- RIGHT PANEL -->
   <div class="right-panel">
     <div class="event-summary">
       <div class="es-head">
@@ -647,7 +529,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
         <div class="es-row"><span class="es-ic">📅</span><span class="es-val" id="esDate">—</span></div>
         <div class="es-row"><span class="es-ic">🕐</span><span class="es-val" id="esTime">—</span></div>
         <div class="es-row"><span class="es-ic">📍</span><span class="es-val" id="esLocation">—</span></div>
-        <div class="es-row"><span class="es-ic">🏛️</span><span class="es-val" id="esFaculty">—</span></div>
         <div class="es-row"><span class="es-ic">🎟</span><span class="es-val">Free admission</span></div>
       </div>
       <div class="es-slots">
@@ -662,131 +543,46 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     <div class="info-box">
       <div class="info-box-title">What to Bring</div>
       <div class="info-list">
-        <div class="info-list-item"><span>🪪</span>UTM Student ID Card (mandatory)</div>
-        <div class="info-list-item"><span>📧</span>Registration confirmation / reference number</div>
-        <div class="info-list-item"><span>👕</span>Appropriate attire (smart casual)</div>
+        <div class="info-list-item"><span>🪪</span>UTM Student ID Card</div>
+        <div class="info-list-item"><span>📧</span>Registration reference number</div>
         <div class="info-list-item"><span>📱</span>Mobile device for AR features</div>
       </div>
-    </div>
-
-    <div class="info-box">
-      <div class="info-box-title">Important Notes</div>
-      <div class="info-list">
-        <div class="info-list-item"><span>ℹ️</span>Registration closes 3 days before the event.</div>
-        <div class="info-list-item"><span>⚠️</span>Walk-in registrations are not guaranteed.</div>
-        <div class="info-list-item"><span>❌</span>Cancellations must be made 48 hours prior.</div>
-      </div>
-    </div>
-
-    <div class="help-box">
-      <div class="help-title">Need Help?</div>
-      <div class="help-text">Contact Student Affairs (HEP) or the Faculty of Computing for enquiries.</div>
-      <button class="help-btn">Contact Event Organiser</button>
     </div>
   </div>
 
 </div>
 
 <footer class="footer">
-  <div class="footer-inner">
-    <div>
-      <div class="fi-brand-utm">UTM</div>
-      <div class="fi-brand-full">Universiti Teknologi Malaysia</div>
-      <div class="fi-brand-text">AI-Driven Campus Event Finder for UTM Students with Augmented Reality.</div>
-    </div>
-    <div>
-      <div class="fi-head">Quicklinks</div>
-      <div class="fi-links">
-        <a href="../Homepage/homepage.html">myUTM Portal</a>
-        <a href="events.html">Campus Events</a>
-        <a href="#">Staff Directory</a>
-        <a href="#">UTM Alumni</a>
-      </div>
-    </div>
-    <div>
-      <div class="fi-head">Contact Us</div>
-      <div class="fi-links">
-        <a href="#">UTM Skudai, Johor</a>
-        <a href="#">utm.my</a>
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-      </div>
-    </div>
-    <div>
-      <div class="fi-head">Legal</div>
-      <div class="fi-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Disclaimer</a>
-      </div>
-    </div>
-  </div>
   <div class="footer-bottom">
     <div class="footer-copy">© 2025 Universiti Teknologi Malaysia. All Rights Reserved.</div>
   </div>
 </footer>
 
-<!-- ✅ FIREBASE MODULE -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, get, push, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAdOAZOl2j5HOShAUN4Hz2vdxvkV9K5Rqw",
-    authDomain: "utm-event-finder.firebaseapp.com",
-    databaseURL: "https://utm-event-finder-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "utm-event-finder",
-    storageBucket: "utm-event-finder.firebasestorage.app",
-    messagingSenderId: "939898985875",
-    appId: "1:939898985875:web:996880347433637bd41c66"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+  const params  = new URLSearchParams(window.location.search);
+  const eventId = parseInt(params.get('id'));
+  const session = JSON.parse(sessionStorage.getItem('utm_user') || '{}');
 
   const badgeClass = {
     academic:'badge-academic', sports:'badge-sports',
     cultural:'badge-cultural', career:'badge-career', volunteer:'badge-volunteer'
   };
 
-  // ── URL params ──
-  const params  = new URLSearchParams(window.location.search);
-  const eventId = params.get('id');
-
-  // ── Session ──
-  const session = JSON.parse(sessionStorage.getItem('utm_user') || '{}');
-
-  // ── Set header user info ──
   if (session.avatar) document.getElementById('headerAvatar').textContent = session.avatar;
-  if (session.matrix || session.email) {
-    document.getElementById('headerName').textContent = session.matrix || session.email;
-  }
+  if (session.matrix || session.email) document.getElementById('headerName').textContent = session.matrix || session.email;
 
-  // ── Helper: set value + green autofill tint ──
   function fillField(id, val, isSelect) {
     if (!val) return;
     const el = document.getElementById(id);
     if (!el) return;
-
     if (isSelect) {
-      // Cari option yang exact match dulu, kalau tak jumpa try partial match
-      let matched = false;
       for (const opt of el.options) {
-        if (opt.value === val || opt.text === val) {
-          el.value = opt.value;
-          matched = true;
-          break;
-        }
-      }
-      // Partial match fallback (e.g. "Faculty of Computing" dalam "Faculty of Computing, UTM")
-      if (!matched) {
-        for (const opt of el.options) {
-          if (opt.text.includes(val) || val.includes(opt.text)) {
-            el.value = opt.value;
-            matched = true;
-            break;
-          }
-        }
+        if (opt.value === val || opt.text === val) { el.value = opt.value; break; }
       }
     } else {
       el.value = val;
@@ -794,269 +590,191 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     el.classList.add('autofilled');
   }
 
-  // ── Lock matrix field to session matrix ──
   function lockMatrix() {
     if (!session.matrix) return;
     const mx = document.getElementById('matrix');
-    mx.value    = session.matrix;
+    mx.value = session.matrix;
     mx.readOnly = true;
     mx.classList.add('readonly');
     document.getElementById('matrixLockBadge').style.display = 'inline-flex';
   }
 
-  // ── Pre-fill from latest registration in Firebase ──
-  async function prefillFromFirebase() {
+  async function prefillFromSupabase() {
     if (!session.matrix) return;
+    const { data } = await sb
+      .from('registrations')
+      .select('*')
+      .ilike('matric_no', session.matrix)
+      .order('registered_at', { ascending: false })
+      .limit(1)
+      .single();
 
-    try {
-      const snap = await get(ref(db, 'registrations'));
-      if (!snap.exists()) return;
+    if (!data) return;
 
-      // Cari semua registrations milik matrix ni, ambil yang paling terbaru
-      let latest = null;
-      snap.forEach(child => {
-        const r = child.val();
-        if ((r.matricNo || '').toUpperCase() === session.matrix.toUpperCase()) {
-          if (!latest || r.registeredAt > latest.registeredAt) {
-            latest = r;
-          }
-        }
-      });
-
-      if (!latest) return;
-
-      // ── Fill fields dari registration terbaru ──
-      // Full Name — skip kalau sama dengan matrix number (first-time user)
-      if (latest.studentName &&
-          latest.studentName.toUpperCase() !== session.matrix.toUpperCase()) {
-        fillField('fullName', latest.studentName);
-      }
-
-      fillField('email',       latest.email);
-      fillField('phone',       latest.phone);
-      fillField('gender',      latest.gender,      true);
-      fillField('nationality', latest.nationality,  true);
-      fillField('faculty',     latest.faculty,      true);
-      fillField('programme',   latest.programme);
-      fillField('year',        latest.yearOfStudy,  true);
-      fillField('semester',    latest.semester,      true);
-      fillField('ecName',      latest.ecName);
-      fillField('ecPhone',     latest.ecPhone);
-      fillField('ecEmail',     latest.ecEmail);
-      if (latest.ecRelation)   fillField('ecRelation', latest.ecRelation, true);
-      if (latest.tshirtSize)   fillField('tshirt',     latest.tshirtSize, true);
-
-      // Diet radio
-      if (latest.dietaryRequirement) {
-        const dietRadio = document.querySelector(
-          `input[name="diet"][value="${latest.dietaryRequirement}"]`
-        );
-        if (dietRadio) dietRadio.checked = true;
-      }
-
-      // Show green banner
-      document.getElementById('autofillBanner').classList.add('show');
-
-    } catch (err) {
-      console.error('Prefill error:', err);
+    if (data.student_name && data.student_name.toUpperCase() !== session.matrix.toUpperCase()) fillField('fullName', data.student_name);
+    fillField('email',     data.email);
+    fillField('phone',     data.phone);
+    fillField('gender',    data.gender,       true);
+    fillField('nationality', data.nationality, true);
+    fillField('faculty',   data.faculty,      true);
+    fillField('programme', data.programme);
+    fillField('year',      data.year_of_study, true);
+    fillField('semester',  data.semester,      true);
+    fillField('ecName',    data.ec_name);
+    fillField('ecPhone',   data.ec_phone);
+    fillField('ecEmail',   data.ec_email);
+    if (data.ec_relation) fillField('ecRelation', data.ec_relation, true);
+    if (data.tshirt_size) fillField('tshirt', data.tshirt_size, true);
+    if (data.dietary) {
+      const r = document.querySelector(`input[name="diet"][value="${data.dietary}"]`);
+      if (r) r.checked = true;
     }
+    document.getElementById('autofillBanner').classList.add('show');
   }
 
-  // ── Load event from Firebase ──
-  async function loadEvent() {
+  function populateEventUI(ev) {
+    document.getElementById('dynEventTitle').textContent = ev.title || '—';
+    document.getElementById('pepEmoji').textContent      = ev.emoji || '📅';
+    document.getElementById('pepCat').textContent        = cap(ev.category);
+    document.getElementById('pepCat').className          = 'pep-cat ' + (badgeClass[ev.category] || '');
+    document.getElementById('pepTitle').textContent      = ev.title || '—';
+    document.getElementById('ppDate').textContent        = ev.date     || '—';
+    document.getElementById('ppTime').textContent        = ev.time     || '—';
+    document.getElementById('ppLocation').textContent    = ev.location || '—';
+    document.getElementById('esTitle').textContent       = ev.title    || '—';
+    document.getElementById('esBadge').textContent       = cap(ev.category);
+    document.getElementById('esBadge').className         = 'es-badge ' + (badgeClass[ev.category] || '');
+    document.getElementById('esDate').textContent        = ev.date     || '—';
+    document.getElementById('esTime').textContent        = ev.time     || '—';
+    document.getElementById('esLocation').textContent    = ev.location || '—';
+    document.getElementById('esSlotsCount').textContent  = (ev.slots_left || 0) + ' remaining';
+    const pct = ev.slots > 0 ? Math.round((ev.slots_left / ev.slots) * 100) : 0;
+    document.getElementById('esSlotsBar').style.width    = pct + '%';
+    document.getElementById('loadingBox').style.display  = 'none';
+  }
+
+  async function init() {
     if (!eventId) {
-      document.getElementById('loadingBox').innerHTML =
-        '<p style="color:#c0392b">⚠️ No event ID found. <a href="events.html">← Back to Events</a></p>';
+      document.getElementById('loadingBox').innerHTML = '<p style="color:#c0392b">⚠️ No event ID. <a href="events.html">← Back</a></p>';
       return;
     }
 
-    // Instant fill from URL params while Firebase loads
-    const urlTitle    = params.get('title');
-    const urlDate     = params.get('date');
-    const urlTime     = params.get('time');
-    const urlLocation = params.get('location');
+    // Check if already registered
+    if (session.matrix) {
+      const { data: existing } = await sb
+        .from('registrations')
+        .select('*')
+        .eq('event_id', eventId)
+        .ilike('matric_no', session.matrix)
+        .single();
 
-    if (urlTitle) {
-      document.getElementById('loadingBox').style.display = 'none';
-      document.getElementById('formCard').style.display   = 'block';
-      document.getElementById('dynEventTitle').textContent   = urlTitle;
-      document.getElementById('eventName').value             = urlTitle;
-      document.getElementById('pepTitle').textContent        = urlTitle;
-      document.getElementById('ppDate').textContent          = urlDate     || '—';
-      document.getElementById('ppTime').textContent          = urlTime     || '—';
-      document.getElementById('ppLocation').textContent      = urlLocation || '—';
-      document.getElementById('esTitle').textContent         = urlTitle;
-      document.getElementById('esDate').textContent          = urlDate     || '—';
-      document.getElementById('esTime').textContent          = urlTime     || '—';
-      document.getElementById('esLocation').textContent      = urlLocation || '—';
+      if (existing) {
+        // Load event for UI
+        const { data: ev } = await sb.from('events').select('*').eq('id', eventId).single();
+        if (ev) populateEventUI(ev);
 
-      // Lock matrix + prefill while form is shown
-      lockMatrix();
-      await prefillFromFirebase();
-    }
-
-    // Fetch full event from Firebase
-    try {
-      const snap = await get(ref(db, 'events/' + eventId));
-      if (!snap.exists()) {
-        if (!urlTitle) document.getElementById('loadingBox').innerHTML =
-          '<p style="color:#c0392b">⚠️ Event not found. <a href="events.html">← Back</a></p>';
+        renderTicket({
+          refNum:      existing.ref_num,
+          emoji:       ev?.emoji || '🎟',
+          category:    ev?.category || '',
+          title:       existing.event_title || ev?.title || '—',
+          studentName: existing.student_name,
+          matricNo:    existing.matric_no,
+          date:        ev?.date || '—',
+          role:        existing.role || 'Participant',
+          location:    ev?.location || '—',
+        });
         return;
       }
-
-      const ev = { id: eventId, ...snap.val() };
-      window.currentEvent = ev;
-
-      document.getElementById('loadingBox').style.display = 'none';
-      document.getElementById('formCard').style.display   = 'block';
-      document.getElementById('dynEventTitle').textContent   = ev.title;
-      document.getElementById('eventName').value             = ev.title;
-      document.getElementById('pepEmoji').textContent        = ev.emoji || '📅';
-      document.getElementById('pepCat').textContent          = cap(ev.category);
-      document.getElementById('pepCat').className            = 'pep-cat ' + (badgeClass[ev.category] || '');
-      document.getElementById('pepTitle').textContent        = ev.title;
-      document.getElementById('ppDate').textContent          = ev.date     || '—';
-      document.getElementById('ppTime').textContent          = ev.time     || '—';
-      document.getElementById('ppLocation').textContent      = ev.location || '—';
-      document.getElementById('esTitle').textContent         = ev.title;
-      document.getElementById('esBadge').textContent         = cap(ev.category);
-      document.getElementById('esBadge').className           = 'es-badge ' + (badgeClass[ev.category] || '');
-      document.getElementById('esDate').textContent          = ev.date     || '—';
-      document.getElementById('esTime').textContent          = ev.time     || '—';
-      document.getElementById('esLocation').textContent      = ev.location || '—';
-      document.getElementById('esFaculty').textContent       = ev.faculty  || '—';
-      document.getElementById('esSlotsCount').textContent    = (ev.slotsLeft || 0) + ' remaining';
-      const pct = ev.slots > 0 ? Math.round((ev.slotsLeft / ev.slots) * 100) : 0;
-      document.getElementById('esSlotsBar').style.width      = pct + '%';
-
-      // If no urlTitle was provided earlier, lock + prefill now
-      if (!urlTitle) {
-        lockMatrix();
-        await prefillFromFirebase();
-      }
-
-    } catch (err) {
-      console.error('Firebase load error:', err);
-      if (!urlTitle) document.getElementById('loadingBox').innerHTML =
-        '<p style="color:#c0392b">⚠️ Failed to load event. Check your connection.</p>';
     }
+
+    // Load event
+    const { data: ev } = await sb.from('events').select('*').eq('id', eventId).single();
+    if (!ev) {
+      document.getElementById('loadingBox').innerHTML = '<p style="color:#c0392b">⚠️ Event not found. <a href="events.html">← Back</a></p>';
+      return;
+    }
+
+    window.currentEvent = ev;
+    populateEventUI(ev);
+    document.getElementById('eventName').value = ev.title || '';
+    document.getElementById('formCard').style.display = 'block';
+    lockMatrix();
+    await prefillFromSupabase();
   }
 
-  // ── Submit Registration ──
   window.submitForm = async function() {
     if (!validate()) return;
 
     const ev = window.currentEvent;
-    if (!ev) { alert('Event data not loaded yet. Please wait.'); return; }
+    if (!ev) { alert('Event data not loaded yet.'); return; }
 
     document.getElementById('savingOverlay').classList.add('show');
     document.getElementById('submitBtn').disabled = true;
 
-    const diet      = document.querySelector('input[name="diet"]:checked')?.value || 'none';
-    const refNum    = 'UTM-' + Math.random().toString(36).substr(2, 6).toUpperCase();
-    const timestamp = new Date().toISOString();
+    const diet   = document.querySelector('input[name="diet"]:checked')?.value || 'none';
+    const refNum = 'UTM-' + Math.random().toString(36).substr(2, 6).toUpperCase();
 
     const regData = {
-      eventId:    eventId,
-      eventTitle: ev.title,
-      refNum:     refNum,
-      registeredAt: timestamp,
-      status:     'confirmed',
-      studentName:  document.getElementById('fullName').value.trim(),
-      matricNo:     document.getElementById('matrix').value.trim().toUpperCase(),
-      email:        document.getElementById('email').value.trim(),
-      phone:        document.getElementById('phone').value.trim(),
-      gender:       document.getElementById('gender').value,
-      nationality:  document.getElementById('nationality').value,
-      faculty:      document.getElementById('faculty').value,
-      programme:    document.getElementById('programme').value.trim(),
-      yearOfStudy:  document.getElementById('year').value,
-      semester:     document.getElementById('semester').value,
-      role:         document.getElementById('role').value,
-      tshirtSize:   document.getElementById('tshirt').value,
-      dietaryRequirement: diet,
-      specialRequirements: document.getElementById('special').value.trim(),
-      heardFrom:    document.getElementById('heardFrom').value,
-      ecName:       document.getElementById('ecName').value.trim(),
-      ecRelation:   document.getElementById('ecRelation').value,
-      ecPhone:      document.getElementById('ecPhone').value.trim(),
-      ecEmail:      document.getElementById('ecEmail').value.trim(),
-      agreeTerms:   document.getElementById('agreeTerms').checked,
-      agreePhoto:   document.getElementById('agreePhoto').checked,
-      agreeReminder: document.getElementById('agreeReminder').checked,
+      event_id:    eventId,
+      event_title: ev.title,
+      ref_num:     refNum,
+      registered_at: new Date().toISOString(),
+      status:      'confirmed',
+      student_name:  document.getElementById('fullName').value.trim(),
+      matric_no:     document.getElementById('matrix').value.trim().toUpperCase(),
+      email:         document.getElementById('email').value.trim(),
+      phone:         document.getElementById('phone').value.trim(),
+      gender:        document.getElementById('gender').value,
+      nationality:   document.getElementById('nationality').value,
+      faculty:       document.getElementById('faculty').value,
+      programme:     document.getElementById('programme').value.trim(),
+      year_of_study: document.getElementById('year').value,
+      semester:      document.getElementById('semester').value,
+      role:          document.getElementById('role').value,
+      tshirt_size:   document.getElementById('tshirt').value,
+      dietary:       diet,
+      special_req:   document.getElementById('special').value.trim(),
+      heard_from:    document.getElementById('heardFrom').value,
+      ec_name:       document.getElementById('ecName').value.trim(),
+      ec_relation:   document.getElementById('ecRelation').value,
+      ec_phone:      document.getElementById('ecPhone').value.trim(),
+      ec_email:      document.getElementById('ecEmail').value.trim(),
+      agree_terms:   document.getElementById('agreeTerms').checked,
+      agree_photo:   document.getElementById('agreePhoto').checked,
+      agree_reminder: document.getElementById('agreeReminder').checked,
     };
 
     try {
-      // 1. Save registration
-      await push(ref(db, 'registrations'), regData);
+      // Save registration
+      const { error } = await sb.from('registrations').insert(regData);
+      if (error) throw error;
 
-      // 2. Decrement slotsLeft
-      if ((ev.slotsLeft || 0) > 0) {
-        await update(ref(db, 'events/' + eventId), { slotsLeft: ev.slotsLeft - 1 });
-      }
-
-      // 3. ✅ Save / update student profile in Firebase for future auto-fill
-      const usersSnap = await get(ref(db, 'users'));
-      if (usersSnap.exists()) {
-        usersSnap.forEach(child => {
-          const u = child.val();
-          if (u.role === 'student' &&
-              (u.matrix || '').toUpperCase() === regData.matricNo) {
-            update(ref(db, 'users/' + child.key), {
-              name:               regData.studentName,
-              email:              regData.email,
-              phone:              regData.phone,
-              gender:             regData.gender,
-              nationality:        regData.nationality,
-              faculty:            regData.faculty,
-              programme:          regData.programme,
-              yearOfStudy:        regData.yearOfStudy,
-              semester:           regData.semester,
-              tshirtSize:         regData.tshirtSize,
-              dietaryRequirement: regData.dietaryRequirement,
-              ecName:             regData.ecName,
-              ecRelation:         regData.ecRelation,
-              ecPhone:            regData.ecPhone,
-              ecEmail:            regData.ecEmail,
-              updatedAt:          timestamp,
-            });
-
-            // Update session name too
-            if (session) {
-              session.name   = regData.studentName;
-              session.email  = regData.email;
-              session.avatar = regData.studentName.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
-              sessionStorage.setItem('utm_user', JSON.stringify(session));
-            }
-          }
-        });
+      // Decrement slots_left
+      if ((ev.slots_left || 0) > 0) {
+        await sb.from('events').update({ slots_left: ev.slots_left - 1 }).eq('id', eventId);
       }
 
       document.getElementById('savingOverlay').classList.remove('show');
-      showSuccess(regData, ev, refNum);
+      renderTicket({
+        refNum,
+        emoji:       ev.emoji || '🎟',
+        category:    ev.category,
+        title:       ev.title,
+        studentName: regData.student_name,
+        matricNo:    regData.matric_no,
+        date:        ev.date,
+        role:        regData.role || 'Participant',
+        location:    ev.location,
+      });
 
     } catch (err) {
-      console.error('Firebase save error:', err);
+      console.error('Supabase save error:', err);
       document.getElementById('savingOverlay').classList.remove('show');
       document.getElementById('submitBtn').disabled = false;
-      alert('⚠️ Failed to save registration. Please check your internet connection and try again.');
+      alert('⚠️ Failed to save registration. Please check your connection and try again.');
     }
   };
-
-  function showSuccess(regData, ev, refNum) {
-    // Terus render dari data yang baru disave — no sessionStorage needed
-    renderTicket({
-      refNum,
-      emoji:       ev.emoji || '🎟',
-      category:    ev.category,
-      title:       ev.title,
-      studentName: regData.studentName,
-      matricNo:    regData.matricNo,
-      date:        ev.date,
-      role:        regData.role || 'Participant',
-      location:    ev.location,
-    });
-  }
 
   function renderTicket(t) {
     document.getElementById('refNum').textContent     = t.refNum;
@@ -1071,7 +789,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     document.getElementById('tVenue').textContent     = t.location;
     document.getElementById('tRef').textContent       = t.refNum;
 
-    // Barcode
     const bc = document.getElementById('barcodeLines');
     bc.innerHTML = '';
     [28,14,22,10,28,18,8,24,16,28,12,20,28,8,18,24,10,28,16,14].forEach(h => {
@@ -1087,113 +804,19 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  window.goFeedback = function() {
-    window.location.href = 'feedback.html?id=' + eventId;
-  };
-
-  function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
-
-  // ── Init — check Firebase dulu ada tak registration untuk matrix+event ni ──
-  async function checkExistingRegistration() {
-    if (!eventId || !session.matrix) return null;
-    try {
-      const snap = await get(ref(db, 'registrations'));
-      if (!snap.exists()) return null;
-      let found = null;
-      snap.forEach(child => {
-        const r = child.val();
-        if ((r.matricNo || '').toUpperCase() === session.matrix.toUpperCase() &&
-            r.eventId === eventId) {
-          if (!found || r.registeredAt > found.registeredAt) found = r;
-        }
-      });
-      return found;
-    } catch(e) {
-      return null;
-    }
-  }
-
-  // ── Populate semua event UI elements (poster, right panel, breadcrumb) ──
-  function populateEventUI(ev) {
-    const badgeClass = {
-      academic:'badge-academic', sports:'badge-sports',
-      cultural:'badge-cultural', career:'badge-career', volunteer:'badge-volunteer'
-    };
-    document.getElementById('dynEventTitle').textContent   = ev.title || '—';
-    document.getElementById('pepEmoji').textContent        = ev.emoji || '📅';
-    document.getElementById('pepCat').textContent          = cap(ev.category);
-    document.getElementById('pepCat').className            = 'pep-cat ' + (badgeClass[ev.category] || '');
-    document.getElementById('pepTitle').textContent        = ev.title || '—';
-    document.getElementById('ppDate').textContent          = ev.date     || '—';
-    document.getElementById('ppTime').textContent          = ev.time     || '—';
-    document.getElementById('ppLocation').textContent      = ev.location || '—';
-    document.getElementById('esTitle').textContent         = ev.title    || '—';
-    document.getElementById('esBadge').textContent         = cap(ev.category);
-    document.getElementById('esBadge').className           = 'es-badge ' + (badgeClass[ev.category] || '');
-    document.getElementById('esDate').textContent          = ev.date     || '—';
-    document.getElementById('esTime').textContent          = ev.time     || '—';
-    document.getElementById('esLocation').textContent      = ev.location || '—';
-    document.getElementById('esFaculty').textContent       = ev.faculty  || '—';
-    document.getElementById('esSlotsCount').textContent    = (ev.slotsLeft || 0) + ' remaining';
-    const pct = ev.slots > 0 ? Math.round((ev.slotsLeft / ev.slots) * 100) : 0;
-    document.getElementById('esSlotsBar').style.width      = pct + '%';
-    document.getElementById('loadingBox').style.display    = 'none';
-  }
-
-  async function init() {
-    const existing = await checkExistingRegistration();
-
-    // Fetch event data regardless — untuk populate UI
-    let ev = {};
-    try {
-      const evSnap = await get(ref(db, 'events/' + eventId));
-      if (evSnap.exists()) ev = { id: eventId, ...evSnap.val() };
-    } catch(e) {}
-
-    // Populate event UI (poster panel, right panel)
-    if (ev.title) populateEventUI(ev);
-
-    if (existing) {
-      // Dah register — tunjuk ticket terus, jangan tunjuk form
-      renderTicket({
-        refNum:      existing.refNum,
-        emoji:       ev.emoji || '🎟',
-        category:    ev.category || '',
-        title:       existing.eventTitle || ev.title || '—',
-        studentName: existing.studentName,
-        matricNo:    existing.matricNo,
-        date:        ev.date || existing.eventDate || '—',
-        role:        existing.role || 'Participant',
-        location:    ev.location || existing.eventLocation || '—',
-      });
-    } else {
-      // Belum register — tunjuk form dengan event data
-      document.getElementById('eventName').value = ev.title || '';
-      document.getElementById('formCard').style.display = 'block';
-      // Prefill dari registration lama (event lain)
-      lockMatrix();
-      await prefillFromFirebase();
-    }
-  }
-
-  init();
-</script>
-
-<!-- Validation (non-module) -->
-<script>
   function validate() {
     const required = [
-      {id:'fullName',  err:'err-fullName'},
-      {id:'matrix',    err:'err-matrix'},
-      {id:'email',     err:'err-email'},
-      {id:'phone',     err:'err-phone'},
-      {id:'gender',    err:'err-gender'},
-      {id:'faculty',   err:'err-faculty'},
-      {id:'programme', err:'err-programme'},
-      {id:'year',      err:'err-year'},
-      {id:'role',      err:'err-role'},
-      {id:'ecName',    err:'err-ecName'},
-      {id:'ecPhone',   err:'err-ecPhone'},
+      {id:'fullName', err:'err-fullName'},
+      {id:'matrix',   err:'err-matrix'},
+      {id:'email',    err:'err-email'},
+      {id:'phone',    err:'err-phone'},
+      {id:'gender',   err:'err-gender'},
+      {id:'faculty',  err:'err-faculty'},
+      {id:'programme',err:'err-programme'},
+      {id:'year',     err:'err-year'},
+      {id:'role',     err:'err-role'},
+      {id:'ecName',   err:'err-ecName'},
+      {id:'ecPhone',  err:'err-ecPhone'},
     ];
     let ok = true;
     required.forEach(({id, err}) => {
@@ -1208,14 +831,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
         er?.classList.remove('show');
       }
     });
-    // Email format
-    const emailEl = document.getElementById('email');
-    if (emailEl?.value && !emailEl.value.includes('@')) {
-      emailEl.classList.add('error');
-      document.getElementById('err-email')?.classList.add('show');
-      ok = false;
-    }
-    // Terms
     if (!document.getElementById('agreeTerms')?.checked) {
       document.getElementById('err-terms')?.classList.add('show');
       ok = false;
@@ -1225,18 +840,9 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     return ok;
   }
 
-  // Live validation on blur
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.form-input:not(.readonly), .form-select').forEach(el => {
-      el.addEventListener('blur', () => {
-        if (el.value.trim()) {
-          el.classList.remove('error');
-          const err = document.getElementById('err-' + el.id);
-          if (err) err.classList.remove('show');
-        }
-      });
-    });
-  });
+  function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+
+  init();
 </script>
 </body>
 </html>
