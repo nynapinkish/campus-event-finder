@@ -190,188 +190,194 @@ body{font-family:'Open Sans',sans-serif;min-height:100vh;display:flex;flex-direc
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
-  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  let currentRole = 'student';
+let currentRole = 'student';
 
-  const roleConfig = {
-    student:   { idLabel: 'Matrix No.',    placeholder: 'e.g. B23CS0068', signupHint: false },
-    organizer: { idLabel: 'Email Address', placeholder: 'e.g. faris@utm.my', signupHint: true  },
-    admin:     { idLabel: 'Admin ID',      placeholder: 'Enter admin ID', signupHint: false }
-  };
+const roleConfig = {
+  student:   { idLabel: 'Matrix No.',    placeholder: 'e.g. B23CS0068', signupHint: false },
+  organizer: { idLabel: 'Email Address', placeholder: 'e.g. faris@utm.my', signupHint: true  },
+  admin:     { idLabel: 'Admin ID',      placeholder: 'Enter admin ID', signupHint: false }
+};
 
-  function switchRole(role) {
-    currentRole = role;
-    const cfg = roleConfig[role];
-    document.querySelectorAll('.role-pill').forEach(p => p.classList.remove('active'));
-    document.getElementById('pill-' + role).classList.add('active');
-    document.getElementById('idLabel').textContent = cfg.idLabel;
-    document.getElementById('emailInput').placeholder = cfg.placeholder;
-    document.getElementById('emailInput').value = '';
-    document.getElementById('pwInput').value = '';
-    document.getElementById('signupHint').classList.toggle('show', cfg.signupHint);
-    clearErrors();
-    document.getElementById('loginAlert').classList.remove('show');
+function switchRole(role) {
+  currentRole = role;
+  const cfg = roleConfig[role];
+  document.querySelectorAll('.role-pill').forEach(p => p.classList.remove('active'));
+  document.getElementById('pill-' + role).classList.add('active');
+  document.getElementById('idLabel').textContent = cfg.idLabel;
+  document.getElementById('emailInput').placeholder = cfg.placeholder;
+  document.getElementById('emailInput').value = '';
+  document.getElementById('pwInput').value = '';
+  document.getElementById('signupHint').classList.toggle('show', cfg.signupHint);
+  clearErrors();
+  document.getElementById('loginAlert').classList.remove('show');
+}
+
+async function doLogin() {
+  clearErrors();
+  document.getElementById('loginAlert').classList.remove('show');
+
+  const id = document.getElementById('emailInput').value.trim();
+  const pw = document.getElementById('pwInput').value.trim();
+
+  if (!id) {
+    document.getElementById('emailInput').classList.add('error');
+    document.getElementById('err-email').classList.add('show');
+    return;
+  }
+  if (!pw) {
+    document.getElementById('pwInput').classList.add('error');
+    document.getElementById('err-pw').classList.add('show');
+    return;
   }
 
-  async function doLogin() {
-    clearErrors();
-    document.getElementById('loginAlert').classList.remove('show');
+  setLoading(true);
 
-    const id = document.getElementById('emailInput').value.trim();
-    const pw = document.getElementById('pwInput').value.trim();
-
-    if (!id) {
-      document.getElementById('emailInput').classList.add('error');
-      document.getElementById('err-email').classList.add('show');
-      return;
-    }
-    if (!pw) {
-      document.getElementById('pwInput').classList.add('error');
-      document.getElementById('err-pw').classList.add('show');
+  try {
+    // ── ADMIN — hardcoded ──
+    if (currentRole === 'admin') {
+      if (id === 'admin' && pw === 'admin123') {
+        window.location.href = '/Admin/admin.html';
+      } else {
+        showError('Invalid Admin ID or password.');
+        setLoading(false);
+      }
       return;
     }
 
-    setLoading(true);
-
-    try {
-      // ── ADMIN — hardcoded ──
-      if (currentRole === 'admin') {
-        if (id === 'admin' && pw === 'admin') {
-          saveSession({ name: 'Administrator', role: 'Admin', email: 'admin', avatar: 'AD', matrix: '' });
-          window.location.href = '/Admin/admin.html';
-        } else {
-          showError('Invalid Admin ID or password.');
-        }
+    // ── STUDENT ──
+    if (currentRole === 'student') {
+      const matrixFormat = /^[A-Za-z]\d{2}[A-Za-z]{2}\d{4}$/;
+      if (!matrixFormat.test(id)) {
+        showError('Invalid Matrix No. format. Example: B23CS0068');
         setLoading(false);
         return;
       }
 
-      // ── STUDENT ──
-      if (currentRole === 'student') {
-        const matrixFormat = /^[A-Za-z]\d{2}[A-Za-z]{2}\d{4}$/;
-        if (!matrixFormat.test(id)) {
-          showError('Invalid Matrix No. format. Example: B23CS0068');
-          setLoading(false);
-          return;
-        }
+      const matrixUpper = id.toUpperCase();
+      const email = matrixUpper.toLowerCase() + '@student.utm.my';
 
-        const matrixUpper = id.toUpperCase();
+      // Cuba login dulu
+      const { data: signInData, error: signInError } = await sb.auth.signInWithPassword({ email, password: pw });
 
-        // Check if student exists in Supabase
-        const { data: existing } = await sb
-          .from('users')
-          .select('*')
-          .eq('role', 'student')
-          .ilike('matrix', matrixUpper)
-          .single();
+      if (signInError) {
+        // Kalau user tak wujud, auto-register
+        if (signInError.message.includes('Invalid login credentials')) {
+          const { data: signUpData, error: signUpError } = await sb.auth.signUp({
+            email,
+            password: pw,
+            options: {
+              data: { matrix: matrixUpper, role: 'student', name: matrixUpper }
+            }
+          });
 
-        if (existing) {
-          // Student exists — check password
-          if (existing.password !== pw) {
-            showError('Incorrect password for this Matrix No.');
-            setLoading(false);
-            return;
-          }
-        } else {
-          // Auto-create student
+          if (signUpError) throw signUpError;
+
+          // Insert ke table users
           await sb.from('users').insert({
-            matrix:     matrixUpper,
-            password:   pw,
-            role:       'student',
-            name:       matrixUpper,
-            email:      '',
+            matrix: matrixUpper,
+            email:  email,
+            role:   'student',
+            name:   matrixUpper,
             created_at: new Date().toISOString()
           });
-        }
 
-        saveSession({
-          name:   existing?.name || matrixUpper,
-          role:   'Student',
-          email:  existing?.email || '',
-          avatar: avatarFrom(existing?.name || matrixUpper),
-          matrix: matrixUpper
-        });
-        window.location.href = '/Homepage/homepage.html';
-        return;
-      }
-
-      // ── ORGANIZER ──
-      if (currentRole === 'organizer') {
-        const { data: match } = await sb
-          .from('users')
-          .select('*')
-          .eq('role', 'organizer')
-          .eq('email', id)
-          .eq('password', pw)
-          .single();
-
-        if (!match) {
-          showError('Invalid email or password. <a href="signup.html" style="color:var(--red)">Sign up?</a>');
-          setLoading(false);
+          window.location.href = '/Homepage/homepage.html';
           return;
         }
+        throw signInError;
+      }
 
-        saveSession({
-          name:   match.name  || id,
-          role:   'Organizer',
-          email:  match.email || id,
-          avatar: avatarFrom(match.name || id),
-          matrix: ''
-        });
-        window.location.href = '/Organizer/organizer.html';
+      window.location.href = '/Homepage/homepage.html';
+      return;
+    }
+
+    // ── ORGANIZER ──
+    if (currentRole === 'organizer') {
+      const { data, error } = await sb.auth.signInWithPassword({ email: id, password: pw });
+
+      if (error) {
+        showError('Invalid email or password. <a href="signup.html" style="color:var(--red)">Sign up?</a>');
+        setLoading(false);
         return;
       }
 
-    } catch (err) {
-      console.error('Login error:', err);
-      showError('Connection error. Please try again.');
-      setLoading(false);
+      // Verify role dalam table users
+      const { data: userRow } = await sb.from('users').select('role').eq('email', id).single();
+      if (!userRow || userRow.role !== 'organizer') {
+        await sb.auth.signOut();
+        showError('This account is not an organizer account.');
+        setLoading(false);
+        return;
+      }
+
+      window.location.href = '/Organizer/organizer.html';
+      return;
     }
-  }
 
-  function saveSession(data) {
-    sessionStorage.setItem('utm_user', JSON.stringify(data));
+  } catch (err) {
+    console.error('Login error:', err);
+    showError('Connection error. Please try again.');
+    setLoading(false);
   }
+}
 
-  function showError(msg) {
-    document.getElementById('alertMsg').innerHTML = msg;
-    document.getElementById('loginAlert').classList.add('show');
-    document.getElementById('emailInput').classList.add('error');
-    document.getElementById('pwInput').classList.add('error');
+function showError(msg) {
+  document.getElementById('alertMsg').innerHTML = msg;
+  document.getElementById('loginAlert').classList.add('show');
+  document.getElementById('emailInput').classList.add('error');
+  document.getElementById('pwInput').classList.add('error');
+}
+
+function avatarFrom(name) {
+  return (name || '').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+}
+
+function setLoading(on) {
+  const btn = document.getElementById('loginBtn');
+  const txt = document.getElementById('btnText');
+  const sp  = document.getElementById('btnSpinner');
+  btn.disabled = on;
+  btn.classList.toggle('loading', on);
+  txt.textContent = on ? 'Logging in...' : 'Login';
+  sp.style.display = on ? 'inline-block' : 'none';
+}
+
+function togglePw() {
+  const pw  = document.getElementById('pwInput');
+  const btn = document.getElementById('pwToggle');
+  if (pw.type === 'password') { pw.type = 'text'; btn.textContent = '🙈'; }
+  else { pw.type = 'password'; btn.textContent = '👁'; }
+}
+
+function clearErrors() {
+  ['emailInput','pwInput'].forEach(id => document.getElementById(id).classList.remove('error'));
+  document.getElementById('err-email').classList.remove('show');
+  document.getElementById('err-pw').classList.remove('show');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+window.addEventListener('DOMContentLoaded', async () => {
+  // Auto-redirect kalau dah ada session
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    const email = session.user.email;
+    if (email === 'admin') {
+      window.location.href = '/Admin/admin.html'; return;
+    }
+    const { data: userRow } = await sb.from('users').select('role').eq('email', email).single();
+    if (userRow?.role === 'organizer') {
+      window.location.href = '/Organizer/organizer.html'; return;
+    }
+    window.location.href = '/Homepage/homepage.html'; return;
   }
+  switchRole('student');
+});
 
-  function avatarFrom(name) {
-    return (name || '').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-  }
-
-  function setLoading(on) {
-    const btn = document.getElementById('loginBtn');
-    const txt = document.getElementById('btnText');
-    const sp  = document.getElementById('btnSpinner');
-    btn.disabled = on;
-    btn.classList.toggle('loading', on);
-    txt.textContent = on ? 'Logging in...' : 'Login';
-    sp.style.display = on ? 'inline-block' : 'none';
-  }
-
-  function togglePw() {
-    const pw  = document.getElementById('pwInput');
-    const btn = document.getElementById('pwToggle');
-    if (pw.type === 'password') { pw.type = 'text'; btn.textContent = '🙈'; }
-    else { pw.type = 'password'; btn.textContent = '👁'; }
-  }
-
-  function clearErrors() {
-    ['emailInput','pwInput'].forEach(id => document.getElementById(id).classList.remove('error'));
-    document.getElementById('err-email').classList.remove('show');
-    document.getElementById('err-pw').classList.remove('show');
-  }
-
-  document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-  window.addEventListener('DOMContentLoaded', () => switchRole('student'));
 </script>
 </body>
 </html>
