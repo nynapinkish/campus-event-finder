@@ -510,7 +510,7 @@ function render() {
 
   document.getElementById('evGrid').innerHTML = list.map((ev, i) => {
     const pct  = ev.slots > 0 ? Math.round((ev.slots_left / ev.slots) * 100) : 0;
-    const full = ev.slots_left <= 0;
+    const full = parseInt(ev.slots_left) <= 0;
     const low  = !full && pct <= 20;
     const fc   = full ? '#dc2626' : low ? '#e67e22' : '#1a5c38';
     const emoji = ev.emoji || '📌';
