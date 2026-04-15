@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Organizer Dashboard — UTM Campus Event Finder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#8B0000;--red2:#6d0000;--red-light:#fdf5f5;
+  --white:#fff;--bg:#f0f2f5;
+  --border:#e4e7ec;--border2:#f2f4f7;
+  --text:#1a1a2e;--muted:#64748b;--light:#94a3b8;
+  --green:#1a5c38;--green-light:#e8f5ed;
+  --gold:#c8982a;--gold-light:#fef9ec;
+  --blue:#1d4ed8;--blue-light:#eff6ff;
+  --orange:#b35900;--orange-light:#fef4e8;
+  --purple:#5b2b91;--purple-light:#f2ecf9;
+  --sidebar:240px;
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
+.layout{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--red);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;}
+.sidebar::-webkit-scrollbar{display:none}
+.sb-brand{display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,.1);padding:14px 16px;}
+.sb-logo-box{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(200,152,42,.5);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;}
+.sb-logo-utm{color:#fff;font-size:13px;font-weight:800;line-height:1}
+.sb-logo-star{color:var(--gold);font-size:7px;letter-spacing:1px}
+.sb-brand-text{margin-left:10px}
+.sb-brand-name{color:#fff;font-size:14px;font-weight:700;line-height:1}
+.sb-brand-sub{color:rgba(255,255,255,.45);font-size:10px;margin-top:1px}
+.sb-profile{display:flex;flex-direction:column;align-items:center;padding:20px 16px 14px;border-bottom:1px solid rgba(255,255,255,.07);}
+.sb-avatar{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;margin-bottom:9px;}
+.sb-name{color:#fff;font-size:13px;font-weight:600;text-align:center;line-height:1.3}
+.sb-badge-role{display:inline-flex;align-items:center;gap:4px;background:rgba(200,152,42,.2);border:1px solid rgba(200,152,42,.35);color:var(--gold);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:5px;text-transform:uppercase;letter-spacing:.3px}
+.sb-section{padding:12px 16px 4px;font-size:9.5px;font-weight:700;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:8px;}
+.sb-section::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08);}
+.sb-item{display:flex;align-items:center;gap:9px;padding:7px 10px;margin:1px 10px;border-radius:8px;font-size:12.5px;font-weight:500;color:rgba(255,255,255,.58);cursor:pointer;transition:all .15s;border:none;background:none;width:calc(100% - 20px);text-align:left;font-family:'Plus Jakarta Sans',sans-serif;}
+.sb-item:hover{color:#fff;background:rgba(255,255,255,.09);}
+.sb-item.active{color:var(--red);background:#fff;font-weight:700;}
+.sb-icon{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:background .15s;}
+.sb-item:hover .sb-icon{background:rgba(255,255,255,.14);}
+.sb-item.active .sb-icon{background:rgba(139,0,0,.08);}
+.sb-divider{height:1px;background:rgba(255,255,255,.07);margin:6px 16px}
+.sb-footer{margin-top:auto;padding:10px;border-top:1px solid rgba(255,255,255,.07);}
+.sb-logout{display:flex;align-items:center;gap:9px;color:rgba(255,255,255,.45);font-size:12.5px;cursor:pointer;transition:all .15s;border:none;background:none;font-family:'Plus Jakarta Sans',sans-serif;width:100%;text-align:left;padding:7px 10px;border-radius:8px;font-weight:500;}
+.sb-logout:hover{color:#fff;background:rgba(255,255,255,.07);}
+
+/* MAIN */
+.main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh;}
+.topbar{background:var(--red);position:sticky;top:0;z-index:50;box-shadow:0 3px 12px rgba(0,0,0,.25);}
+.topbar-upper{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:58px;}
+.topbar-lower{background:#6d0000;padding:5px 24px;font-size:11.5px;color:rgba(255,255,255,.7);font-weight:500;}
+.tb-page{font-size:16px;font-weight:700;color:#fff;line-height:1.1}
+.tb-breadcrumb{font-size:11.5px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:4px;margin-top:1px;}
+.tb-breadcrumb b{color:rgba(255,255,255,.9)}
+.tb-right{display:flex;align-items:center;gap:8px}
+.tb-chip{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 11px;font-size:11.5px;font-weight:600;color:#fff;}
+.tb-chip-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.tb-avatar{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2);border:1px solid rgba(200,152,42,.5);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;cursor:pointer;}
+
+/* CONTENT */
+.content{padding:24px;flex:1}
+.section{display:none}.section.active{display:block}
+.page-heading{margin-bottom:22px}
+.page-heading h1{font-size:20px;font-weight:800;color:var(--text);margin-bottom:3px}
+.page-heading p{font-size:13px;color:var(--muted)}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:box-shadow .2s,transform .2s;cursor:default;}
+.stat-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.09);transform:translateY(-2px)}
+.stat-icon{width:46px;height:46px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.si-red{background:var(--red-light);color:var(--red)}.si-green{background:var(--green-light);color:var(--green)}.si-gold{background:var(--gold-light);color:var(--gold)}.si-blue{background:var(--blue-light);color:var(--blue)}.si-orange{background:var(--orange-light);color:var(--orange)}
+.stat-num{font-size:24px;font-weight:800;color:var(--text);line-height:1}.stat-lbl{font-size:12px;color:var(--muted);margin-top:2px;font-weight:500}
+
+/* CARD */
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:20px;}
+.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-head-left{display:flex;align-items:center;gap:8px}
+.card-bar{width:3px;height:18px;background:var(--red);border-radius:2px;flex-shrink:0}
+.card-title{font-size:13.5px;font-weight:700;color:var(--text)}.card-sub{font-size:12px;color:var(--light);margin-left:8px}
+.card-body{padding:18px}.card-body.no-pad{padding:0}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);background:#f8fafc;border-bottom:1px solid var(--border);white-space:nowrap;}
+td{padding:12px 14px;font-size:13px;color:var(--text);border-bottom:1px solid var(--border2);vertical-align:middle;}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafbfc}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:4px;}
+.badge-pending{background:#fef3e8;color:var(--orange);border:1px solid rgba(179,89,0,.15)}
+.badge-approved{background:var(--green-light);color:var(--green);border:1px solid rgba(26,92,56,.15)}
+.badge-rejected{background:#fef2f2;color:#c0392b;border:1px solid rgba(192,57,43,.15)}
+.badge-academic{background:#e8eef8;color:#003087}.badge-sports{background:var(--green-light);color:var(--green)}.badge-cultural{background:var(--red-light);color:var(--red)}.badge-career{background:var(--orange-light);color:var(--orange)}.badge-volunteer{background:var(--purple-light);color:var(--purple)}
+
+/* BTNS */
+.btn{display:inline-flex;align-items:center;gap:5px;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:7px;cursor:pointer;transition:all .15s;}
+.btn-primary{background:var(--red);color:#fff}.btn-primary:hover{background:var(--red2)}
+.btn-outline{background:none;border:1px solid var(--border);color:var(--muted)}.btn-outline:hover{border-color:var(--red);color:var(--red)}
+.btn-danger{background:#fef2f2;color:#c0392b;border:1px solid rgba(192,57,43,.2)}.btn-danger:hover{background:#fee2e2}
+.btn-sm{padding:5px 10px;font-size:11.5px}
+.btn-success{background:var(--green-light);color:var(--green);border:1px solid rgba(26,92,56,.2)}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:12.5px;font-weight:600;color:var(--text)}
+.form-label span{color:var(--red);margin-left:2px}
+.form-input,.form-select,.form-textarea{width:100%;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13.5px;color:var(--text);background:#fff;outline:none;transition:border-color .15s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(139,0,0,.08)}
+.form-textarea{resize:vertical;min-height:100px}
+.form-hint{font-size:11.5px;color:var(--light)}
+.form-section{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.form-actions{display:flex;gap:10px;margin-top:22px;padding-top:18px;border-top:1px solid var(--border);}
+.char-counter{font-size:11px;color:var(--light);text-align:right;margin-top:2px}
+
+/* MINI EVENT */
+.ev-mini{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border2);}
+.ev-mini:last-child{border-bottom:none;padding-bottom:0}
+.ev-mini-emoji{width:38px;height:38px;border-radius:8px;background:var(--red-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.ev-mini-title{font-size:13px;font-weight:600;color:var(--text)}
+.ev-mini-meta{font-size:11.5px;color:var(--muted);margin-top:2px}
+
+/* FILTER BAR */
+.filter-bar{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.filter-tab{padding:6px 14px;font-size:12.5px;font-weight:600;border:1.5px solid var(--border);border-radius:20px;background:#fff;color:var(--muted);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s;}
+.filter-tab:hover{border-color:var(--red);color:var(--red)}.filter-tab.active{background:var(--red);border-color:var(--red);color:#fff}
+.filter-search{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:7px;padding:6px 12px;margin-left:auto;}
+.filter-search input{border:none;outline:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--text);background:transparent;width:180px;}
+.filter-search input::placeholder{color:#bbb}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:10px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.2);animation:mIn .2s ease;}
+@keyframes mIn{from{opacity:0;transform:scale(.97) translateY(8px)}to{opacity:1;transform:none}}
+.modal-head{background:var(--red);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-radius:10px 10px 0 0;}
+.modal-head-title{color:#fff;font-size:14px;font-weight:700}
+.modal-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:6px;font-size:13px;cursor:pointer;}
+.modal-close:hover{background:rgba(255,255,255,.3)}
+.modal-body{padding:20px}
+.modal-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.mic{background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:9px 12px}
+.mic-lbl{font-size:10px;color:var(--light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}.mic-val{font-size:13px;font-weight:600;color:var(--text)}
+.modal-desc{font-size:13.5px;line-height:1.7;color:var(--muted);background:#f8fafc;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 6px 6px 0;margin-bottom:18px}
+.modal-footer{display:flex;gap:10px}
+.reject-note{background:#fef2f2;border:1px solid rgba(192,57,43,.2);border-radius:6px;padding:10px 12px;font-size:12.5px;color:#c0392b;margin-bottom:14px;display:none}
+.reject-note.show{display:block}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted)}.empty-icon{font-size:40px;margin-bottom:12px;opacity:.4}.empty-state h3{font-size:15px;color:var(--text);margin-bottom:6px}
+
+/* FEEDBACK */
+.sentiment-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.sent-lbl{font-size:12px;color:var(--muted);width:68px;text-align:right;flex-shrink:0}
+.sent-track{flex:1;height:8px;background:#eee;border-radius:4px;overflow:hidden}
+.sent-fill{height:100%;border-radius:4px;transition:width .7s}
+.fill-pos{background:var(--green)}.fill-neu{background:#aaa}.fill-neg{background:#c0392b}
+.sent-pct{font-size:12px;font-weight:700;width:34px;flex-shrink:0}
+
+/* REGISTRATIONS */
+.reg-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:10px;}
+.reg-card-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.reg-card-meta{font-size:12px;color:var(--muted);margin-bottom:12px}
+.reg-bar-wrap{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.reg-bar-track{flex:1;height:8px;background:#f0f0f0;border-radius:4px;overflow:hidden}
+.reg-bar-fill{height:100%;border-radius:4px;background:var(--red);transition:width .8s}
+.reg-numbers{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted)}
+.reg-numbers b{color:var(--text)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;z-index:500;background:#1a1a1a;color:#fff;padding:12px 20px;border-radius:8px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(80px);opacity:0;transition:all .3s ease;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1}.toast.success{border-left:4px solid var(--green)}.toast.error{border-left:4px solid #ef4444}
+
+/* SPINNER */
+.spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.page-footer{background:#fff;border-top:1px solid var(--border);padding:12px 24px;}
+.page-footer-copy{font-size:12px;color:var(--light)}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#f5f5f5}::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-logo-box">
+      <div class="sb-logo-utm">UTM</div>
+      <div class="sb-logo-star">✦✦✦</div>
+    </div>
+    <div class="sb-brand-text">
+      <div class="sb-brand-name">UTM Events</div>
+      <div class="sb-brand-sub">Organizer Portal</div>
+    </div>
+  </div>
+  <div class="sb-profile">
+    <div class="sb-avatar" id="sbAvatar">OR</div>
+    <div class="sb-name" id="sbName">Organizer</div>
+    <div class="sb-badge-role">Event Organizer</div>
+  </div>
+
+  <div class="sb-section">Main</div>
+  <button class="sb-item active" onclick="showSection('dashboard',this)">
+    <div class="sb-icon">📊</div><span>Dashboard</span>
+  </button>
+
+  <div class="sb-section">Events</div>
+  <button class="sb-item" onclick="showSection('submit',this)">
+    <div class="sb-icon">➕</div><span>Submit Event</span>
+  </button>
+  <button class="sb-item" onclick="showSection('myevents',this)">
+    <div class="sb-icon">📋</div><span>My Events</span>
+  </button>
+
+  <div class="sb-section">Analytics</div>
+  <button class="sb-item" onclick="showSection('registrations',this)">
+    <div class="sb-icon">👥</div><span>Registrations</span>
+  </button>
+  <button class="sb-item" onclick="showSection('feedback',this)">
+    <div class="sb-icon">💬</div><span>Feedback</span>
+  </button>
+
+  <div class="sb-divider"></div>
+  <button class="sb-item" onclick="window.location.href='../Homepage/events.html'">
+    <div class="sb-icon">🌐</div><span>View Events Page</span>
+  </button>
+
+  <div class="sb-footer">
+    <button class="sb-logout" onclick="doLogout()">
+      <div class="sb-icon" style="background:rgba(255,255,255,.07)">🚪</div>
+      <span>Log Out</span>
+    </button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-upper">
+      <div>
+        <div class="tb-page" id="tbPage">Dashboard</div>
+        <div class="tb-breadcrumb">Organizer <span>›</span> <b id="tbSub">Overview</b></div>
+      </div>
+      <div class="tb-right">
+        <div class="tb-chip"><div class="tb-chip-dot" style="background:#22c55e"></div><span id="chipApproved">0 Live</span></div>
+        <div class="tb-chip"><div class="tb-chip-dot" style="background:#f59e0b"></div><span id="chipPending">0 Pending</span></div>
+        <div class="tb-avatar" id="tbAvatar">OR</div>
+      </div>
+    </div>
+    <div class="topbar-lower">Universiti Teknologi Malaysia &nbsp;—&nbsp; Campus Event Finder · Organizer</div>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="section active" id="sec-dashboard">
+      <div class="page-heading">
+        <h1>Welcome back, <span id="dashName">Organizer</span>! 👋</h1>
+        <p>Here's a summary of your events and activity.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon si-red">📅</div><div><div class="stat-num" id="dTotal">–</div><div class="stat-lbl">My Events</div></div></div>
+        <div class="stat-card"><div class="stat-icon si-gold">⏳</div><div><div class="stat-num" id="dPending">–</div><div class="stat-lbl">Pending Approval</div></div></div>
+        <div class="stat-card"><div class="stat-icon si-green">✅</div><div><div class="stat-num" id="dApproved">–</div><div class="stat-lbl">Approved</div></div></div>
+        <div class="stat-card"><div class="stat-icon si-blue">👥</div><div><div class="stat-num" id="dRegistrations">–</div><div class="stat-lbl">Total Registrations</div></div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-head-left"><div class="card-bar"></div><span class="card-title">My Latest Events</span></div>
+            <button class="btn btn-outline btn-sm" onclick="showSection('myevents',document.querySelectorAll('.sb-item')[2])">View All →</button>
+          </div>
+          <div class="card-body" id="dashEventList"><div class="empty-state"><div class="spinner"></div><p>Loading...</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">Slots Overview</span></div></div>
+          <div class="card-body" id="dashSlotChart"><div class="empty-state"><div class="empty-icon">📊</div><h3>No events yet</h3></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT EVENT -->
+    <div class="section" id="sec-submit">
+      <div class="page-heading"><h1>Submit New Event</h1><p>Fill in the details below. Your event will be reviewed by HEP Admin before going live.</p></div>
+      <div class="card">
+        <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">Event Details</span></div></div>
+        <div class="card-body">
+          <div class="form-section">Basic Information</div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label class="form-label">Event Title <span>*</span></label>
+              <input type="text" id="fTitle" class="form-input" placeholder="e.g. UTM AI Hackathon 2026" maxlength="100" oninput="updateChar('fTitle','cTitle',100)"/>
+              <div class="char-counter"><span id="cTitle">0</span>/100</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category <span>*</span></label>
+              <select id="fCat" class="form-select">
+                <option value="">-- Select Category --</option>
+                <option value="academic">Academic</option>
+                <option value="sports">Sports</option>
+                <option value="cultural">Cultural</option>
+                <option value="career">Career</option>
+                <option value="volunteer">Volunteer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Emoji Icon</label>
+              <input type="text" id="fEmoji" class="form-input" placeholder="e.g. 🎓" maxlength="2"/>
+              <div class="form-hint">Single emoji to represent your event</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date <span>*</span></label>
+              <input type="date" id="fDate" class="form-input"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Time <span>*</span></label>
+              <input type="time" id="fTime" class="form-input"/>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Venue / Location <span>*</span></label>
+              <input type="text" id="fLocation" class="form-input" placeholder="e.g. Dewan Sultan Iskandar, UTM Skudai"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Faculty / Department <span>*</span></label>
+              <input type="text" id="fFaculty" class="form-input" placeholder="e.g. FSSH, HEP, FKEE"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Total Slots <span>*</span></label>
+              <input type="number" id="fSlots" class="form-input" placeholder="e.g. 100" min="1" max="5000"/>
+            </div>
+          </div>
+
+          <div class="form-section" style="margin-top:22px">Description</div>
+          <div class="form-group">
+            <label class="form-label">Event Description <span>*</span></label>
+            <textarea id="fDesc" class="form-textarea" placeholder="Describe your event — objectives, activities, who should attend..." maxlength="1000" oninput="updateChar('fDesc','cDesc',1000)"></textarea>
+            <div class="char-counter"><span id="cDesc">0</span>/1000</div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" onclick="submitEvent()">🚀 Submit for Review</button>
+            <button class="btn btn-outline" onclick="clearForm()">Clear Form</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MY EVENTS -->
+    <div class="section" id="sec-myevents">
+      <div class="page-heading"><h1>My Events</h1><p>All events you have submitted.</p></div>
+      <div class="card">
+        <div class="filter-bar">
+          <button class="filter-tab active" onclick="filterMyEvents('all',this)">All</button>
+          <button class="filter-tab" onclick="filterMyEvents('approved',this)">Approved</button>
+          <button class="filter-tab" onclick="filterMyEvents('pending',this)">Pending</button>
+          <button class="filter-tab" onclick="filterMyEvents('rejected',this)">Rejected</button>
+          <div class="filter-search">🔍<input type="text" id="myEvSearch" placeholder="Search..." oninput="renderMyEvents()"/></div>
+        </div>
+        <div class="card-body no-pad"><div class="tbl-wrap">
+          <table><thead><tr><th>Event</th><th>Category</th><th>Date</th><th>Venue</th><th>Slots</th><th>Registered</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="myEventsTbody"></tbody></table>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- REGISTRATIONS -->
+    <div class="section" id="sec-registrations">
+      <div class="page-heading"><h1>Registrations</h1><p>Student registrations for your approved events.</p></div>
+      <div id="regContent"><div class="empty-state"><div class="spinner"></div><p>Loading...</p></div></div>
+    </div>
+
+    <!-- FEEDBACK -->
+    <div class="section" id="sec-feedback">
+      <div class="page-heading"><h1>Event Feedback</h1><p>Post-event feedback from registered students.</p></div>
+      <div id="feedbackContent"><div class="empty-state"><div class="spinner"></div><p>Loading...</p></div></div>
+    </div>
+
+  </div>
+  <div class="page-footer"><div class="page-footer-copy">© 2025 Universiti Teknologi Malaysia — Campus Event Finder · Organizer Portal</div></div>
+</div>
+</div>
+
+<!-- EVENT DETAIL MODAL -->
+<div class="overlay" id="evOverlay" onclick="handleOv(event)">
+  <div class="modal">
+    <div class="modal-head"><span class="modal-head-title">Event Details</span><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div style="margin-bottom:10px"><span class="badge" id="mCatBadge"></span>&nbsp;<span class="badge" id="mStatusBadge"></span></div>
+      <div style="font-size:17px;font-weight:700;color:var(--text);margin-bottom:16px;line-height:1.3" id="mTitle"></div>
+      <div class="reject-note" id="mRejectNote"></div>
+      <div class="modal-info-grid">
+        <div class="mic"><div class="mic-lbl">Date</div><div class="mic-val" id="mDate"></div></div>
+        <div class="mic"><div class="mic-lbl">Time</div><div class="mic-val" id="mTime"></div></div>
+        <div class="mic"><div class="mic-lbl">Venue</div><div class="mic-val" id="mVenue"></div></div>
+        <div class="mic"><div class="mic-lbl">Faculty</div><div class="mic-val" id="mFaculty"></div></div>
+        <div class="mic"><div class="mic-lbl">Slots</div><div class="mic-val" id="mSlots"></div></div>
+        <div class="mic"><div class="mic-lbl">Registered</div><div class="mic-val" id="mRegistered"></div></div>
+      </div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--light);margin-bottom:7px">Description</div>
+      <div class="modal-desc" id="mDesc"></div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" style="flex:1" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+let MY_EVENTS = [], MY_REGISTRATIONS = [], MY_FEEDBACK = [];
+let currentUser = null, myEvFilter = 'all';
+
+async function initOrganizer() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = '/Login/login.html'; return; }
+
+  const { data: user } = await sb.from('users').select('*').eq('email', session.user.email).single();
+  currentUser = user;
+
+  const name   = user?.name   || session.user.email;
+  const matrix = user?.matrix || '';
+  const initials = name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+
+  document.getElementById('sbAvatar').textContent  = initials;
+  document.getElementById('sbName').textContent    = name;
+  document.getElementById('tbAvatar').textContent  = initials;
+  document.getElementById('dashName').textContent  = name.split(' ')[0] || 'Organizer';
+
+  await Promise.all([loadMyEvents(), loadRegistrations(), loadFeedback()]);
+  renderDashboard();
+  renderMyEvents();
+  renderRegistrations();
+  renderFeedback();
+}
+
+async function loadMyEvents() {
+  const { data, error } = await sb.from('events')
+    .select('*')
+    .eq('organizer_email', currentUser?.email || '')
+    .order('created_at', { ascending: false });
+  if (!error && data) MY_EVENTS = data;
+}
+
+async function loadRegistrations() {
+  if (!MY_EVENTS.length) return;
+  const ids = MY_EVENTS.map(e => e.id);
+  const { data, error } = await sb.from('registrations').select('*').in('event_id', ids);
+  if (!error && data) MY_REGISTRATIONS = data;
+}
+
+async function loadFeedback() {
+  if (!MY_EVENTS.length) return;
+  const ids = MY_EVENTS.map(e => e.id);
+  try {
+    const { data, error } = await sb.from('feedback').select('*').in('event_id', ids);
+    if (!error && data) MY_FEEDBACK = data;
+  } catch (e) { MY_FEEDBACK = []; }
+}
+
+/* ── DASHBOARD ── */
+function renderDashboard() {
+  const total    = MY_EVENTS.length;
+  const pending  = MY_EVENTS.filter(e => e.status === 'pending').length;
+  const approved = MY_EVENTS.filter(e => e.status === 'approved').length;
+  const totalReg = MY_REGISTRATIONS.length;
+
+  document.getElementById('dTotal').textContent         = total;
+  document.getElementById('dPending').textContent       = pending;
+  document.getElementById('dApproved').textContent      = approved;
+  document.getElementById('dRegistrations').textContent = totalReg;
+  document.getElementById('chipApproved').textContent   = approved + ' Live';
+  document.getElementById('chipPending').textContent    = pending + ' Pending';
+
+  /* Latest events list */
+  const list = MY_EVENTS.slice(0, 5);
+  const el = document.getElementById('dashEventList');
+  if (!list.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><h3>No events yet</h3><p>Submit your first event!</p></div>`;
+  } else {
+    el.innerHTML = list.map(e => `
+      <div class="ev-mini">
+        <div class="ev-mini-emoji">${e.emoji || '📅'}</div>
+        <div style="flex:1;min-width:0">
+          <div class="ev-mini-title" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.title||'–'}</div>
+          <div class="ev-mini-meta">📅 ${e.date||'–'} &nbsp;·&nbsp; 📍 ${(e.location||'–').split(',')[0]}</div>
+        </div>
+        <span class="badge badge-${e.status}">${cap(e.status)}</span>
+      </div>`).join('');
+  }
+
+  /* Slot chart */
+  const approvedEvs = MY_EVENTS.filter(e => e.status === 'approved' && e.slots > 0);
+  const chartEl = document.getElementById('dashSlotChart');
+  if (!approvedEvs.length) {
+    chartEl.innerHTML = `<div class="empty-state"><div class="empty-icon">📊</div><h3>No approved events</h3></div>`;
+  } else {
+    chartEl.innerHTML = approvedEvs.slice(0, 5).map(e => {
+      const reg = (e.slots||0) - (e.slots_left||0);
+      const pct = Math.round((reg / e.slots) * 100);
+      return `
+        <div class="reg-card" style="margin-bottom:10px">
+          <div class="reg-card-title">${e.emoji||'📅'} ${e.title||'–'}</div>
+          <div class="reg-card-meta">${e.date||'–'} · ${e.location||'–'}</div>
+          <div class="reg-bar-wrap">
+            <div class="reg-bar-track"><div class="reg-bar-fill" style="width:${pct}%"></div></div>
+          </div>
+          <div class="reg-numbers"><span><b>${reg}</b> registered</span><span><b>${e.slots_left||0}</b> left</span></div>
+        </div>`;
+    }).join('');
+  }
+}
+
+/* ── MY EVENTS TABLE ── */
+function renderMyEvents() {
+  const q = (document.getElementById('myEvSearch')?.value || '').toLowerCase();
+  let rows = myEvFilter === 'all' ? MY_EVENTS : MY_EVENTS.filter(e => e.status === myEvFilter);
+  if (q) rows = rows.filter(e => (e.title||'').toLowerCase().includes(q) || (e.location||'').toLowerCase().includes(q));
+
+  const tbody = document.getElementById('myEventsTbody');
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📭</div><h3>No events found</h3></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = rows.map(e => {
+    const reg = (e.slots||0) - (e.slots_left||0);
+    return `
+      <tr>
+        <td><strong>${e.emoji||'📅'} ${e.title||'–'}</strong></td>
+        <td><span class="badge badge-${e.category}">${cap(e.category)}</span></td>
+        <td>${e.date||'–'}</td>
+        <td style="font-size:12.5px">${(e.location||'–').split(',')[0]}</td>
+        <td>${e.slots||'–'}</td>
+        <td><b>${reg}</b></td>
+        <td><span class="badge badge-${e.status}">${cap(e.status)}</span></td>
+        <td><button class="btn btn-outline btn-sm" onclick="openEventModal(${e.id})">View</button></td>
+      </tr>`;
+  }).join('');
+}
+
+function filterMyEvents(status, btn) {
+  myEvFilter = status;
+  document.querySelectorAll('#sec-myevents .filter-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderMyEvents();
+}
+
+/* ── REGISTRATIONS ── */
+function renderRegistrations() {
+  const el = document.getElementById('regContent');
+  const approvedEvs = MY_EVENTS.filter(e => e.status === 'approved');
+  if (!approvedEvs.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">👥</div><h3>No approved events yet</h3><p>Registrations will appear here once events are approved.</p></div>`;
+    return;
+  }
+
+  el.innerHTML = approvedEvs.map(ev => {
+    const regs = MY_REGISTRATIONS.filter(r => r.event_id === ev.id);
+    const reg = (ev.slots||0) - (ev.slots_left||0);
+    const pct = ev.slots > 0 ? Math.round((reg / ev.slots) * 100) : 0;
+
+    const rows = regs.length
+      ? regs.slice(0,10).map(r => `
+          <tr>
+            <td>${r.name||r.student_name||'–'}</td>
+            <td style="font-family:monospace;font-size:12.5px">${r.matric_no||'–'}</td>
+            <td>${r.email||'–'}</td>
+            <td>${(r.created_at||'').slice(0,10)||'–'}</td>
+          </tr>`).join('')
+      : `<tr><td colspan="4"><div class="empty-state" style="padding:24px"><h3>No registrations yet</h3></div></td></tr>`;
+
+    return `
+      <div class="card">
+        <div class="card-head">
+          <div class="card-head-left"><div class="card-bar"></div><span class="card-title">${ev.emoji||'📅'} ${ev.title||'–'}</span><span class="card-sub">${regs.length} registered</span></div>
+        </div>
+        <div class="card-body">
+          <div class="reg-bar-wrap" style="margin-bottom:4px">
+            <div style="font-size:12px;color:var(--muted);width:80px;flex-shrink:0">Capacity</div>
+            <div class="reg-bar-track"><div class="reg-bar-fill" style="width:${pct}%"></div></div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);width:60px;text-align:right">${pct}%</div>
+          </div>
+          <div class="reg-numbers" style="margin-bottom:14px"><span><b>${reg}</b> / ${ev.slots} slots filled</span><span><b>${ev.slots_left||0}</b> remaining</span></div>
+          <div class="tbl-wrap"><table><thead><tr><th>Name</th><th>Matric No</th><th>Email</th><th>Registered</th></tr></thead><tbody>${rows}</tbody></table></div>
+          ${regs.length > 10 ? `<div style="text-align:center;margin-top:10px;font-size:12.5px;color:var(--muted)">Showing 10 of ${regs.length} registrations</div>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/* ── FEEDBACK ── */
+function renderFeedback() {
+  const el = document.getElementById('feedbackContent');
+  const approvedEvs = MY_EVENTS.filter(e => e.status === 'approved');
+  if (!approvedEvs.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">💬</div><h3>No approved events yet</h3></div>`;
+    return;
+  }
+  if (!MY_FEEDBACK.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">💬</div><h3>No feedback received yet</h3><p>Feedback from students will appear here after events.</p></div>`;
+    return;
+  }
+
+  el.innerHTML = approvedEvs.map(ev => {
+    const fbs = MY_FEEDBACK.filter(f => f.event_id === ev.id);
+    if (!fbs.length) return '';
+    const tot = fbs.length;
+    const pos = fbs.filter(f => f.sentiment === 'positive').length;
+    const neu = fbs.filter(f => f.sentiment === 'neutral').length;
+    const neg = fbs.filter(f => f.sentiment === 'negative').length;
+    const avgRate = (fbs.reduce((a, f) => a + (f.overall_rating || 0), 0) / tot).toFixed(1);
+
+    return `
+      <div class="card">
+        <div class="card-head">
+          <div class="card-head-left"><div class="card-bar"></div><span class="card-title">${ev.emoji||'📅'} ${ev.title||'–'}</span><span class="card-sub">${tot} response${tot !== 1 ? 's' : ''} · Avg ${avgRate}/5</span></div>
+        </div>
+        <div class="card-body">
+          <div class="sentiment-row"><span class="sent-lbl">Positive</span><div class="sent-track"><div class="sent-fill fill-pos" style="width:${Math.round(pos/tot*100)}%"></div></div><span class="sent-pct" style="color:var(--green)">${Math.round(pos/tot*100)}%</span></div>
+          <div class="sentiment-row"><span class="sent-lbl">Neutral</span><div class="sent-track"><div class="sent-fill fill-neu" style="width:${Math.round(neu/tot*100)}%"></div></div><span class="sent-pct">${Math.round(neu/tot*100)}%</span></div>
+          <div class="sentiment-row"><span class="sent-lbl">Negative</span><div class="sent-track"><div class="sent-fill fill-neg" style="width:${Math.round(neg/tot*100)}%"></div></div><span class="sent-pct" style="color:#c0392b">${Math.round(neg/tot*100)}%</span></div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:6px">
+            ${fbs.slice(0,3).map(f => `
+              <div style="padding:9px 12px;background:#f8fafc;border-radius:6px;font-size:12.5px;color:var(--muted);border-left:3px solid ${f.sentiment==='positive'?'var(--green)':f.sentiment==='negative'?'#c0392b':'#aaa'}">
+                "${f.comment || f.text || '–'}"
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>`;
+  }).filter(Boolean).join('') || `<div class="empty-state"><div class="empty-icon">💬</div><h3>No feedback yet</h3></div>`;
+}
+
+/* ── SUBMIT EVENT ── */
+async function submitEvent() {
+  const title    = document.getElementById('fTitle').value.trim();
+  const category = document.getElementById('fCat').value;
+  const emoji    = document.getElementById('fEmoji').value.trim() || '📌';
+  const date     = document.getElementById('fDate').value;
+  const time     = document.getElementById('fTime').value;
+  const location = document.getElementById('fLocation').value.trim();
+  const faculty  = document.getElementById('fFaculty').value.trim();
+  const slots    = parseInt(document.getElementById('fSlots').value);
+  const desc     = document.getElementById('fDesc').value.trim();
+
+  if (!title || !category || !date || !time || !location || !faculty || !slots || !desc) {
+    showToast('Sila lengkapkan semua medan wajib.', 'error');
+    return;
+  }
+  if (isNaN(slots) || slots < 1) {
+    showToast('Sila masukkan bilangan slot yang sah.', 'error');
+    return;
+  }
+
+  const { error } = await sb.from('events').insert({
+    title, category, emoji, date, time,
+    location, faculty, slots, slots_left: slots,
+    description: desc,
+    status: 'pending',
+    organizer_name: currentUser?.name || '',
+    organizer_email: currentUser?.email || ''
+  });
+
+  if (error) {
+    showToast('Gagal submit event. Cuba lagi.', 'error');
+    console.error(error);
+    return;
+  }
+
+  showToast('✓ Event berjaya dihantar untuk semakan!', 'success');
+  clearForm();
+  await loadMyEvents();
+  renderDashboard();
+  renderMyEvents();
+}
+
+function clearForm() {
+  ['fTitle','fCat','fEmoji','fDate','fTime','fLocation','fFaculty','fSlots','fDesc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('cTitle').textContent = '0';
+  document.getElementById('cDesc').textContent  = '0';
+}
+
+function updateChar(inputId, counterId, max) {
+  const val = document.getElementById(inputId).value.length;
+  document.getElementById(counterId).textContent = val;
+}
+
+/* ── MODAL ── */
+function openEventModal(id) {
+  const ev = MY_EVENTS.find(e => e.id === id);
+  if (!ev) return;
+  const reg = (ev.slots||0) - (ev.slots_left||0);
+
+  document.getElementById('mCatBadge').textContent    = cap(ev.category);
+  document.getElementById('mCatBadge').className      = `badge badge-${ev.category}`;
+  document.getElementById('mStatusBadge').textContent = cap(ev.status);
+  document.getElementById('mStatusBadge').className   = `badge badge-${ev.status}`;
+  document.getElementById('mTitle').textContent       = ev.title||'–';
+  document.getElementById('mDate').textContent        = ev.date||'–';
+  document.getElementById('mTime').textContent        = ev.time||'–';
+  document.getElementById('mVenue').textContent       = ev.location||'–';
+  document.getElementById('mFaculty').textContent     = ev.faculty||'–';
+  document.getElementById('mSlots').textContent       = (ev.slots||'–') + ' total';
+  document.getElementById('mRegistered').textContent  = reg + ' students';
+  document.getElementById('mDesc').textContent        = ev.description||'–';
+
+  const rejectEl = document.getElementById('mRejectNote');
+  if (ev.status === 'rejected' && ev.reject_reason) {
+    rejectEl.textContent = '⚠ Reason: ' + ev.reject_reason;
+    rejectEl.classList.add('show');
+  } else {
+    rejectEl.classList.remove('show');
+  }
+
+  document.getElementById('evOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('evOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOv(e) {
+  if (e.target === document.getElementById('evOverlay')) closeModal();
+}
+
+/* ── UTILS ── */
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  const labels = {
+    'dashboard':    ['Dashboard','Overview'],
+    'submit':       ['Submit Event','Events'],
+    'myevents':     ['My Events','Events'],
+    'registrations':['Registrations','Analytics'],
+    'feedback':     ['Feedback','Analytics']
+  };
+  const [page, sub] = labels[id] || [id,''];
+  document.getElementById('tbPage').textContent = page;
+  document.getElementById('tbSub').textContent  = sub;
+}
+
+function showToast(msg, type = 'info') {
+  const t = document.getElementById('toast');
+  t.textContent  = msg;
+  t.className    = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+function doLogout() {
+  sb.auth.signOut().then(() => {
+    window.location.href = '/Login/login.html';
+  });
+}
+
+function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : '–'; }
+
+initOrganizer();
+</script>
+</body>
+</html>
