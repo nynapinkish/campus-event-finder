@@ -240,8 +240,9 @@ async function doLogin() {
     // ── ADMIN — hardcoded ──
     if (currentRole === 'admin') {
       if (id === 'admin' && pw === 'admin123') {
-        window.location.href = '/Admin/admin.html';
-      } else {
+    alert('Login berjaya! Cuba redirect...');
+    window.location.href = '../Admin/admin.html';
+} else {
         showError('Invalid Admin ID or password.');
         setLoading(false);
       }
