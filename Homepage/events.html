@@ -184,11 +184,11 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 <body>
 
 <div class="topbar">
-  <a href="#">UTM Kuala Lumpur</a>
-  <span class="topbar-sep">|</span>
-  <a href="#">UTM Pagoh</a>
+  <a href="#">UTM Skudai</a>
   <span class="topbar-sep">|</span>
   <a href="#">Contact Us</a>
+  <span class="topbar-sep">|</span>
+  <a href="#" onclick="doLogout()" style="cursor:pointer;">Logout</a>
 </div>
 
 <header class="header">
@@ -571,6 +571,11 @@ function setCatSb(c, btn) {
 function filterEvents() {
   curQ = document.getElementById('searchInput').value.toLowerCase().trim();
   render();
+}
+
+async function doLogout() {
+  await sb.auth.signOut();
+  window.location.href = '/Login/login.html';
 }
 
 function openModal(id) {
