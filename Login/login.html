@@ -238,16 +238,16 @@ async function doLogin() {
 
   try {
     // ── ADMIN — hardcoded ──
-    if (currentRole === 'admin') {
-      if (id === 'admin' && pw === 'admin123') {
-    alert('Login berjaya! Cuba redirect...');
-    window.location.href = '../Admin/admin.html';
-} else {
+if (currentRole === 'admin') {
+    if (id === 'admin' && pw === 'admin123') {
+        sessionStorage.setItem('utm_admin', 'true');
+        window.location.href = '../Admin/admin.html';
+    } else {
         showError('Invalid Admin ID or password.');
         setLoading(false);
-      }
-      return;
     }
+    return;
+}
 
     // ── STUDENT ──
     if (currentRole === 'student') {
