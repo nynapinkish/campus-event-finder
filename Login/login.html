@@ -363,18 +363,6 @@ function clearErrors() {
 document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
 window.addEventListener('DOMContentLoaded', async () => {
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) {
-    const email = session.user.email;
-    if (email === 'admin') {
-      window.location.href = '/Admin/admin.html'; return;
-    }
-    const { data: userRow } = await sb.from('users').select('role').eq('email', email).single();
-    if (userRow?.role === 'organizer') {
-      window.location.href = '/Organizer/organizer.html'; return;
-    }
-    window.location.href = '/Homepage/homepage.html'; return;
-  }
   switchRole('student');
 });
 
