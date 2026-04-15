@@ -668,11 +668,11 @@ async function submitEvent() {
   const desc     = document.getElementById('fDesc').value.trim();
 
   if (!title || !category || !date || !time || !location || !faculty || !slots || !desc) {
-    showToast('Sila lengkapkan semua medan wajib.', 'error');
+    showToast('Please complete all required fields.', 'error');
     return;
   }
   if (isNaN(slots) || slots < 1) {
-    showToast('Sila masukkan bilangan slot yang sah.', 'error');
+    showToast('Please enter a valid number of slots.', 'error');
     return;
   }
 
@@ -686,12 +686,12 @@ async function submitEvent() {
   });
 
   if (error) {
-    showToast('Gagal submit event. Cuba lagi.', 'error');
+    showToast('Failed to submit event. Please try again.', 'error');
     console.error(error);
     return;
   }
 
-  showToast('✓ Event berjaya dihantar untuk semakan!', 'success');
+  showToast('✓ Event successfully submitted for review!', 'success');
   clearForm();
   await loadMyEvents();
   renderDashboard();
