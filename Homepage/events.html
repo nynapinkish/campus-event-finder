@@ -622,14 +622,14 @@ function goRegister(id) {
   const ev = (window.EVENTS||[]).find(e => e.id === id);
   if (!ev) return;
   const p = new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
-  window.location.href = 'register.html?' + p;
+  window.location.href = '../Login/register.html?' + p;
 }
 
 function viewTicket(id) {
   const ev = (window.EVENTS||[]).find(e => e.id === id);
   if (!ev) return;
   const p = new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
-  window.location.href = 'register.html?' + p;
+  window.location.href = '../Login/register.html?' + p;
 }
 
 function closeModal() {
