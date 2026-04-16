@@ -604,11 +604,11 @@ async function init() {
   // Check if already registered
   if (user?.matrix) {
     const { data: existing } = await sb
-      .from('registrations')
-      .select('*')
-      .eq('event_id', eventId)
-      .ilike('matric_no', user.matrix)
-      .single();
+  .from('registrations')
+  .select('*')
+  .eq('event_id', eventId)
+  .ilike('matric_no', user.matrix)
+  .maybeSingle();
 
     if (existing) {
       const { data: ev } = await sb.from('events').select('*').eq('id', eventId).single();
@@ -661,7 +661,7 @@ async function prefillFromSupabase(matrix) {
     .ilike('matric_no', matrix)
     .order('registered_at', { ascending: false })
     .limit(1)
-    .single();
+    .maybeSingle();
 
   if (!data) return;
 
