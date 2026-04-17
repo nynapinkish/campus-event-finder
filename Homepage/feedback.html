@@ -813,44 +813,111 @@ function setRecommend(val) {
 }
 
 /* ── AI SENTIMENT (local NLP simulation) ── */
-function analyseSentiment() {
-  const liked      = document.getElementById('liked').value.toLowerCase();
-  const improve    = document.getElementById('improve').value.toLowerCase();
-  const additional = document.getElementById('additional').value.toLowerCase();
-  const combined   = liked + ' ' + improve + ' ' + additional;
+async function analyseSentiment() {
+  const liked      = document.getElementById('liked').value.trim();
+  const improve    = document.getElementById('improve').value.trim();
+  const additional = document.getElementById('additional').value.trim();
+  const combined   = [liked, improve, additional].filter(Boolean).join('. ');
 
-  const posWords = ['great','excellent','amazing','good','helpful','informative','well','enjoyed','love','fantastic','wonderful','organised','clear','engaging','professional','knowledgeable','interesting','best','satisfied','happy'];
-  const negWords = ['poor','bad','boring','disorganised','late','unclear','disappointed','waste','terrible','confusing','crowded','noisy','long','slow','difficult','problem','issue','complaint'];
+  const HF_TOKEN = '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'; // LETAK TOKEN AWAK DI SINI
 
+  try {
+    const response = await fetch(
+      'https://api-inference.huggingface.co/models/distilbert-base-uncased-finetuned-sst-2-english',
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${HF_TOKEN}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ inputs: combined })
+      }
+    );
+
+    const result = await response.json();
+
+    // HF returns: [[{label:"POSITIVE", score:0.99}, {label:"NEGATIVE", score:0.01}]]
+    if (!result || !result[0]) throw new Error('No result');
+
+    const scores  = result[0];
+    const posObj  = scores.find(s => s.label === 'POSITIVE');
+    const negObj  = scores.find(s => s.label === 'NEGATIVE');
+    const posScore = posObj ? posObj.score : 0.5;
+    const negScore = negObj ? negObj.score : 0.5;
+
+    // Adjust based on overall star rating awak
+    let adjustedPos = posScore;
+    let adjustedNeg = negScore;
+    if (overallRating >= 4) { adjustedPos = Math.min(1, posScore + 0.1); }
+    if (overallRating <= 2) { adjustedNeg = Math.min(1, negScore + 0.1); }
+
+    // Convert to percent
+    const total = adjustedPos + adjustedNeg;
+    let posP = Math.round((adjustedPos / total) * 100);
+    let negP = Math.round((adjustedNeg / total) * 100);
+
+    // Carve out neutral from middle zone
+    let neuP = 0;
+    if (posP > 20 && posP < 80) {
+      neuP = Math.round(Math.min(posP, negP) * 0.5);
+      posP -= Math.round(neuP * (posP / 100));
+      negP = 100 - posP - neuP;
+    }
+    if (negP < 0) negP = 0;
+    if (neuP < 0) neuP = 0;
+
+    // Determine overall sentiment
+    let sentiment, emoji, desc, badgeCls;
+    if (posP >= 55) {
+      sentiment = 'positive'; emoji = '😊'; badgeCls = 'badge-positive';
+      desc = 'The student expressed a generally positive experience.';
+    } else if (negP >= 45) {
+      sentiment = 'negative'; emoji = '😔'; badgeCls = 'badge-negative';
+      desc = 'The student raised concerns that need attention.';
+    } else {
+      sentiment = 'neutral'; emoji = '😐'; badgeCls = 'badge-neutral';
+      desc = 'The student had a mixed or balanced experience.';
+    }
+
+    // Simple keyword extract
+    const stopwords = new Set(['the','a','an','is','it','was','and','or','but','in','on','at','to','for','of','with','this','that','are','i','we','very','so','be','have','had','were','they','about','also','more','could','would','been','has']);
+    const words = combined.toLowerCase().split(/\W+/).filter(w => w.length > 3 && !stopwords.has(w));
+    const freq  = {};
+    words.forEach(w => freq[w] = (freq[w] || 0) + 1);
+    const sorted = Object.keys(freq).sort((a,b) => freq[b]-freq[a]);
+    const allPositiveKw = sentiment !== 'negative' ? sorted.slice(0,4) : sorted.slice(0,2);
+    const allNegativeKw = sentiment === 'negative'  ? sorted.slice(0,3) : [];
+
+    return { posP, neuP, negP, sentiment, emoji, desc, badgeCls, allPositiveKw, allNegativeKw };
+
+  } catch (err) {
+    console.warn('HF API failed, using fallback:', err.message);
+    return analyseSentimentFallback(combined);
+  }
+}
+
+// Fallback kalau HF tak respond (model loading, etc.)
+function analyseSentimentFallback(combined) {
+  const posWords = ['great','excellent','amazing','good','helpful','informative','enjoyed','love','fantastic','wonderful','organised','clear','engaging','knowledgeable','interesting','satisfied','happy','well','best','smooth'];
+  const negWords = ['poor','bad','boring','disorganised','late','unclear','disappointed','waste','terrible','confusing','crowded','noisy','slow','difficult','problem','issue','complaint','improve','better','lacking'];
   let posScore = 0, negScore = 0;
-  posWords.forEach(w => { if (combined.includes(w)) posScore++; });
-  negWords.forEach(w => { if (combined.includes(w)) negScore++; });
-
+  posWords.forEach(w => { if (combined.toLowerCase().includes(w)) posScore++; });
+  negWords.forEach(w => { if (combined.toLowerCase().includes(w)) negScore++; });
   if (overallRating >= 4) posScore += 2;
   else if (overallRating <= 2) negScore += 2;
-
   const total = Math.max(posScore + negScore, 1);
   let posP = Math.round((posScore / total) * 100);
   let negP = Math.round((negScore / total) * 100);
-  let neuP = 100 - posP - negP;
-  if (neuP < 0) { neuP = 0; posP = 100 - negP; }
-
-  if (posScore === 0 && negScore === 0) {
-    posP = overallRating >= 4 ? 60 : overallRating >= 3 ? 40 : 20;
-    neuP = overallRating >= 4 ? 30 : overallRating >= 3 ? 40 : 40;
-    negP = 100 - posP - neuP;
-  }
-
+  let neuP = Math.max(0, 100 - posP - negP);
   let sentiment, emoji, desc, badgeCls;
-  if (posP >= 50)      { sentiment='positive'; emoji='😊'; desc='The student expressed a generally positive experience.'; badgeCls='badge-positive'; }
-  else if (negP >= 40) { sentiment='negative'; emoji='😔'; desc='The student raised concerns that need attention.';       badgeCls='badge-negative'; }
-  else                 { sentiment='neutral';  emoji='😐'; desc='The student had a mixed or neutral experience.';         badgeCls='badge-neutral';  }
-
-  const allPositiveKw = posWords.filter(w => combined.includes(w)).slice(0, 4);
-  const allNegativeKw = negWords.filter(w => combined.includes(w)).slice(0, 3);
-
+  if (posP >= 55)      { sentiment='positive'; emoji='😊'; desc='Positive experience detected.';   badgeCls='badge-positive'; }
+  else if (negP >= 40) { sentiment='negative'; emoji='😔'; desc='Concerns raised.';                badgeCls='badge-negative'; }
+  else                 { sentiment='neutral';  emoji='😐'; desc='Mixed or neutral experience.';    badgeCls='badge-neutral';  }
+  const allPositiveKw = posWords.filter(w => combined.toLowerCase().includes(w)).slice(0,4);
+  const allNegativeKw = negWords.filter(w => combined.toLowerCase().includes(w)).slice(0,3);
   return { posP, neuP, negP, sentiment, emoji, desc, badgeCls, allPositiveKw, allNegativeKw };
 }
+
 
 /* ── VALIDATE ── */
 function validate() {
@@ -876,7 +943,14 @@ function validate() {
 async function submitFeedback() {
   if (!validate()) return;
 
-  const ai = analyseSentiment();
+  const btn = document.querySelector('.btn-submit');
+btn.innerHTML = '⏳ Analysing...';
+btn.disabled = true;
+
+const ai = await analyseSentiment();
+
+btn.innerHTML = 'Submit Feedback →';
+btn.disabled = false;
 
   const feedbackData = {
     event_id:            currentEvent?.id   || null,

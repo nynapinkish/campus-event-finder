@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -129,7 +129,7 @@ tr:hover td{background:#fafbfc}
 .filter-search input::placeholder{color:#bbb}
 
 /* ============================================================
-   COMPLIANCE PANEL (NEW)
+   COMPLIANCE PANEL
    ============================================================ */
 .compliance-panel{background:#fffbf0;border:1.5px solid #f5d87a;border-radius:10px;padding:14px 18px;margin-bottom:14px;}
 .compliance-panel-title{font-size:12px;font-weight:700;color:#78450a;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
@@ -143,7 +143,7 @@ tr:hover td{background:#fafbfc}
 .ci-badge.pass{background:var(--green-light);color:var(--green)}.ci-badge.fail{background:#fef2f2;color:#c0392b}.ci-badge.warn{background:#fef9ec;color:#92400e}.ci-badge.na{background:#f5f5f5;color:#888}
 .compliance-blocker{background:#fef2f2;border:1.5px solid rgba(192,57,43,.3);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:12.5px;color:#c0392b;font-weight:600;display:flex;align-items:center;gap:8px;}
 
-/* APPROVAL FLOW (NEW) */
+/* APPROVAL FLOW */
 .approval-flow{display:flex;align-items:center;gap:0;margin:18px 0 6px;flex-wrap:wrap;}
 .af-step{display:flex;flex-direction:column;align-items:center;min-width:80px;}
 .af-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2px solid var(--border);}
@@ -154,7 +154,7 @@ tr:hover td{background:#fafbfc}
 .af-label{font-size:10.5px;font-weight:600;color:var(--muted);margin-top:5px;text-align:center;line-height:1.3}
 .af-arrow{font-size:16px;color:var(--light);margin:0 4px;padding-bottom:20px;}
 
-/* SEMESTER TRACKER (NEW) */
+/* SEMESTER TRACKER */
 .sem-tracker{display:flex;align-items:center;gap:8px;margin-top:6px}
 .sem-slot{width:30px;height:10px;border-radius:3px;}
 .sem-slot.used{background:var(--red)}.sem-slot.avail{background:#e5e7eb}
@@ -187,7 +187,7 @@ tr:hover td{background:#fafbfc}
 .reject-reason-box textarea{width:100%;border:1px solid var(--border);border-radius:6px;padding:9px 12px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13.5px;resize:vertical;min-height:80px;outline:none;transition:border-color .15s;}
 .reject-reason-box textarea:focus{border-color:var(--red)}
 
-/* COMPLIANCE CHECKLIST IN TABLE */
+/* COMPLIANCE FLAGS IN TABLE */
 .compliance-flags{display:flex;flex-wrap:wrap;gap:4px}
 .cf-chip{font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;white-space:nowrap;}
 .cf-chip.ok{background:var(--green-light);color:var(--green)}.cf-chip.warn{background:#fef9ec;color:#92400e}.cf-chip.fail{background:#fef2f2;color:#c0392b}
@@ -268,10 +268,10 @@ tr:hover td{background:#fafbfc}
     <span class="sb-item-label">All Events</span>
   </button>
 
-  <div class="sb-section">Pematuhan HEP</div>
+  <div class="sb-section">HEP Compliance</div>
   <button class="sb-item" onclick="showSection('compliance',this)">
     <div class="sb-item-icon-wrap">✅</div>
-    <span class="sb-item-label">Semakan Pematuhan</span>
+    <span class="sb-item-label">Compliance Review</span>
     <span class="sb-badge" id="complianceBadge" style="display:none;background:#f59e0b">0</span>
   </button>
 
@@ -331,96 +331,95 @@ tr:hover td{background:#fafbfc}
 
     <!-- DASHBOARD -->
     <div class="section active" id="sec-dashboard">
-      <div class="page-heading"><h1>Dashboard Overview</h1><p>Selamat datang kembali! Berikut adalah keadaan semasa UTM Campus Event Finder.</p></div>
+      <div class="page-heading"><h1>Dashboard Overview</h1><p>Welcome back! Here is the current status of UTM Campus Event Finder.</p></div>
       <div class="stats-grid">
-        <div class="stat-card"><div class="stat-icon red">📅</div><div><div class="stat-num" id="dTotalEvents">–</div><div class="stat-lbl">Jumlah Events</div><div class="stat-sub">Semua kategori</div></div></div>
-        <div class="stat-card"><div class="stat-icon gold">⏳</div><div><div class="stat-num" id="dPending">–</div><div class="stat-lbl">Menunggu Kelulusan</div><div class="stat-sub">Perlu semakan</div></div></div>
-        <div class="stat-card"><div class="stat-icon green">✅</div><div><div class="stat-num" id="dApproved">–</div><div class="stat-lbl">Events Diluluskan</div><div class="stat-sub">Aktif di platform</div></div></div>
-        <div class="stat-card"><div class="stat-icon blue">💬</div><div><div class="stat-num" id="dFeedback">–</div><div class="stat-lbl">Maklum Balas</div><div class="stat-sub">Daripada pelajar</div></div></div>
+        <div class="stat-card"><div class="stat-icon red">📅</div><div><div class="stat-num" id="dTotalEvents">–</div><div class="stat-lbl">Total Events</div><div class="stat-sub">All categories</div></div></div>
+        <div class="stat-card"><div class="stat-icon gold">⏳</div><div><div class="stat-num" id="dPending">–</div><div class="stat-lbl">Pending Approval</div><div class="stat-sub">Requires review</div></div></div>
+        <div class="stat-card"><div class="stat-icon green">✅</div><div><div class="stat-num" id="dApproved">–</div><div class="stat-lbl">Approved Events</div><div class="stat-sub">Active on platform</div></div></div>
+        <div class="stat-card"><div class="stat-icon blue">💬</div><div><div class="stat-num" id="dFeedback">–</div><div class="stat-lbl">Feedback</div><div class="stat-sub">From students</div></div></div>
       </div>
       <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
-        <div class="stat-card"><div class="stat-icon green">👥</div><div><div class="stat-num" id="dRegistrations">–</div><div class="stat-lbl">Jumlah Pendaftaran</div></div></div>
-        <div class="stat-card"><div class="stat-icon gold">😊</div><div><div class="stat-num" id="dPosSentiment">–</div><div class="stat-lbl">Sentimen Positif</div></div></div>
-        <div class="stat-card"><div class="stat-icon red">🎟</div><div><div class="stat-num" id="dSlotsLeft">–</div><div class="stat-lbl">Slot Tersedia</div></div></div>
+        <div class="stat-card"><div class="stat-icon green">👥</div><div><div class="stat-num" id="dRegistrations">–</div><div class="stat-lbl">Total Registrations</div></div></div>
+        <div class="stat-card"><div class="stat-icon gold">😊</div><div><div class="stat-num" id="dPosSentiment">–</div><div class="stat-lbl">Positive Sentiment</div></div></div>
+        <div class="stat-card"><div class="stat-icon red">🎟</div><div><div class="stat-num" id="dSlotsLeft">–</div><div class="stat-lbl">Slots Available</div></div></div>
         <div class="stat-card" style="cursor:pointer" onclick="showSection('compliance', document.querySelector('.sb-item[onclick*=compliance]'))">
-          <div class="stat-icon orange">⚠️</div><div><div class="stat-num" id="dComplianceIssues">–</div><div class="stat-lbl">Isu Pematuhan</div><div class="stat-sub">Klik untuk semak</div></div>
+          <div class="stat-icon orange">⚠️</div><div><div class="stat-num" id="dComplianceIssues">–</div><div class="stat-lbl">Compliance Issues</div><div class="stat-sub">Click to review</div></div></div>
         </div>
       </div>
       <div class="dash-grid">
         <div class="card">
-          <div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">Menunggu Kelulusan</span></div><button class="btn btn-view btn-sm" onclick="showSection('pending',document.querySelectorAll('.sb-item')[1])">Lihat Semua →</button></div>
+          <div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">Pending Approval</span></div><button class="btn btn-view btn-sm" onclick="showSection('pending',document.querySelectorAll('.sb-item')[1])">View All →</button></div>
           <div class="card-body" id="dashPendingList"><div class="empty-state"><div class="empty-state-icon">⏳</div><h3>Loading...</h3></div></div>
         </div>
         <div class="card">
-          <div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">Analisis Sentimen AI</span></div></div>
+          <div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">AI Sentiment Analysis</span></div></div>
           <div class="card-body">
             <div style="margin-bottom:18px">
-              <div class="sentiment-row"><span class="sentiment-lbl">Positif</span><div class="sentiment-track"><div class="sentiment-fill fill-pos" style="width:0%" id="sentPos"></div></div><span class="sentiment-pct" style="color:var(--green)" id="sentPosPct">–%</span></div>
+              <div class="sentiment-row"><span class="sentiment-lbl">Positive</span><div class="sentiment-track"><div class="sentiment-fill fill-pos" style="width:0%" id="sentPos"></div></div><span class="sentiment-pct" style="color:var(--green)" id="sentPosPct">–%</span></div>
               <div class="sentiment-row"><span class="sentiment-lbl">Neutral</span><div class="sentiment-track"><div class="sentiment-fill fill-neu" style="width:0%" id="sentNeu"></div></div><span class="sentiment-pct" id="sentNeuPct">–%</span></div>
-              <div class="sentiment-row"><span class="sentiment-lbl">Negatif</span><div class="sentiment-track"><div class="sentiment-fill fill-neg" style="width:0%" id="sentNeg"></div></div><span class="sentiment-pct" style="color:#c0392b" id="sentNegPct">–%</span></div>
+              <div class="sentiment-row"><span class="sentiment-lbl">Negative</span><div class="sentiment-track"><div class="sentiment-fill fill-neg" style="width:0%" id="sentNeg"></div></div><span class="sentiment-pct" style="color:#c0392b" id="sentNegPct">–%</span></div>
             </div>
-            <div style="font-size:11px;color:var(--light);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:.6px">Kata Kunci Teratas</div>
-            <div class="kw-tags" id="kwTags"><span class="kw-tag">Tiada maklum balas lagi</span></div>
+            <div style="font-size:11px;color:var(--light);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:.6px">Top Keywords</div>
+            <div class="kw-tags" id="kwTags"><span class="kw-tag">No feedback yet</span></div>
           </div>
         </div>
       </div>
-      <div class="card"><div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">Pendaftaran mengikut Event</span></div></div><div class="card-body" id="dashRegChart"></div></div>
+      <div class="card"><div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">Registrations by Event</span></div></div><div class="card-body" id="dashRegChart"></div></div>
     </div>
 
     <!-- PENDING -->
     <div class="section" id="sec-pending">
-      <div class="page-heading"><h1>Menunggu Kelulusan</h1><p>Semak dan luluskan atau tolak permohonan event daripada penganjur.</p></div>
+      <div class="page-heading"><h1>Pending Approval</h1><p>Review, approve, or reject event applications from organizers.</p></div>
       <div class="card">
         <div class="filter-bar">
-          <span style="font-size:13px;color:var(--muted)">Events menunggu semakan</span>
-          <div class="filter-search">🔍<input type="text" id="pendingSearch" placeholder="Cari events..." oninput="filterPending()"/></div>
+          <span style="font-size:13px;color:var(--muted)">Events awaiting review</span>
+          <div class="filter-search">🔍<input type="text" id="pendingSearch" placeholder="Search events..." oninput="filterPending()"/></div>
         </div>
-        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Kategori</th><th>Penganjur</th><th>Tarikh</th><th>Slot</th><th>Pematuhan HEP</th><th>Dikemukakan</th><th>Tindakan</th></tr></thead><tbody id="pendingTbody"></tbody></table></div></div>
+        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Category</th><th>Organizer</th><th>Date</th><th>Slots</th><th>HEP Compliance</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="pendingTbody"></tbody></table></div></div>
       </div>
     </div>
 
     <!-- ALL EVENTS -->
     <div class="section" id="sec-all-events">
-      <div class="page-heading"><h1>Semua Events</h1><p>Lihat dan urus semua events kampus di platform.</p></div>
+      <div class="page-heading"><h1>All Events</h1><p>View and manage all campus events on the platform.</p></div>
       <div class="card">
         <div class="filter-bar">
-          <button class="filter-tab active" onclick="filterAllEvents('all',this)">Semua</button>
-          <button class="filter-tab" onclick="filterAllEvents('approved',this)">Diluluskan</button>
+          <button class="filter-tab active" onclick="filterAllEvents('all',this)">All</button>
+          <button class="filter-tab" onclick="filterAllEvents('approved',this)">Approved</button>
           <button class="filter-tab" onclick="filterAllEvents('pending',this)">Pending</button>
-          <button class="filter-tab" onclick="filterAllEvents('rejected',this)">Ditolak</button>
-          <div class="filter-search">🔍<input type="text" id="allEventsSearch" placeholder="Cari events..." oninput="filterAllEventsSearch()"/></div>
+          <button class="filter-tab" onclick="filterAllEvents('rejected',this)">Rejected</button>
+          <div class="filter-search">🔍<input type="text" id="allEventsSearch" placeholder="Search events..." oninput="filterAllEventsSearch()"/></div>
         </div>
-        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Kategori</th><th>Tarikh</th><th>Tempat</th><th>Slot</th><th>Pendaftaran</th><th>Status</th><th>Tindakan</th></tr></thead><tbody id="allEventsTbody"></tbody></table></div></div>
+        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Category</th><th>Date</th><th>Venue</th><th>Slots</th><th>Registrations</th><th>Status</th><th>Actions</th></tr></thead><tbody id="allEventsTbody"></tbody></table></div></div>
       </div>
     </div>
 
-    <!-- COMPLIANCE SECTION (NEW) -->
+    <!-- COMPLIANCE SECTION -->
     <div class="section" id="sec-compliance">
-      <div class="page-heading"><h1>Semakan Pematuhan HEP</h1><p>Semak pematuhan semua permohonan event mengikut Buku Panduan Aktiviti Mahasiswa UTM.</p></div>
+      <div class="page-heading"><h1>HEP Compliance Review</h1><p>Review compliance of all event applications according to the UTM Student Activity Guidebook.</p></div>
 
       <div class="comp-stat-row" id="compStatRow"></div>
 
-      <!-- Penjelasan kriteria -->
       <div class="card" style="margin-bottom:20px">
-        <div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">Kriteria Pematuhan (Buku Panduan Seksyen 3.2)</span></div></div>
+        <div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">Compliance Criteria (Guidebook Section 3.2)</span></div></div>
         <div class="card-body">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <div style="background:#f8fafc;border-radius:8px;padding:12px 14px;border-left:3px solid var(--green)">
-              <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">✅ Wajib Lulus</div>
+              <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">✅ Must Pass</div>
               <ul style="font-size:12.5px;color:var(--text);padding-left:16px;line-height:1.8">
-                <li>Kelulusan Penasihat/Pengetua diperoleh</li>
-                <li>Penyertaan pelbagai kaum (kecuali agama)</li>
-                <li>Dikemukakan ≥ 14 hari bekerja sebelum event</li>
-                <li>Laporan event sebelumnya telah diserahkan</li>
+                <li>Advisor/Principal approval obtained</li>
+                <li>Multiracial participation (except religious)</li>
+                <li>Submitted ≥ 14 working days before event</li>
+                <li>Previous event report has been submitted</li>
               </ul>
             </div>
             <div style="background:#f8fafc;border-radius:8px;padding:12px 14px;border-left:3px solid var(--gold)">
-              <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">⚠️ Had Semester</div>
+              <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">⚠️ Semester Limits</div>
               <ul style="font-size:12.5px;color:var(--text);padding-left:16px;line-height:1.8">
-                <li>Maksimum 4 aktiviti per semester per persatuan</li>
-                <li>Event semasa minggu peperiksaan — perlu kebenaran khas TNC (HEMA)</li>
-                <li>Event berakhir sebelum 12:00 tengah malam</li>
-                <li>Sponsor luar: dikemukakan ≥ 30 hari bekerja</li>
+                <li>Maximum 4 activities per semester per society</li>
+                <li>Events during exam week — requires special permission from TNC (HEMA)</li>
+                <li>Events must end before 12:00 midnight</li>
+                <li>External sponsors: submitted ≥ 30 working days</li>
               </ul>
             </div>
           </div>
@@ -429,20 +428,20 @@ tr:hover td{background:#fafbfc}
 
       <div class="card">
         <div class="filter-bar">
-          <button class="filter-tab active" onclick="filterCompliance('all',this)">Semua</button>
-          <button class="filter-tab" onclick="filterCompliance('issues',this)">Ada Isu</button>
-          <button class="filter-tab" onclick="filterCompliance('clear',this)">Lengkap</button>
-          <div class="filter-search">🔍<input type="text" id="complianceSearch" placeholder="Cari penganjur/event..." oninput="renderComplianceTable()"/></div>
+          <button class="filter-tab active" onclick="filterCompliance('all',this)">All</button>
+          <button class="filter-tab" onclick="filterCompliance('issues',this)">Has Issues</button>
+          <button class="filter-tab" onclick="filterCompliance('clear',this)">Clear</button>
+          <div class="filter-search">🔍<input type="text" id="complianceSearch" placeholder="Search organizer/event..." oninput="renderComplianceTable()"/></div>
         </div>
         <div class="card-body no-pad"><div class="tbl-wrap"><table>
           <thead><tr>
-            <th>Event / Penganjur</th>
-            <th>Penasihat Lulus</th>
-            <th>Pelbagai Kaum</th>
-            <th>Tempoh Notis</th>
-            <th>Laporan Lalu</th>
-            <th>Had Aktiviti (Sem)</th>
-            <th>Status Keseluruhan</th>
+            <th>Event / Organizer</th>
+            <th>Advisor Approved</th>
+            <th>Multiracial</th>
+            <th>Notice Period</th>
+            <th>Past Reports</th>
+            <th>Activity Limit (Sem)</th>
+            <th>Overall Status</th>
           </tr></thead>
           <tbody id="complianceTbody"></tbody>
         </table></div></div>
@@ -451,21 +450,21 @@ tr:hover td{background:#fafbfc}
 
     <!-- FEEDBACK -->
     <div class="section" id="sec-feedback">
-      <div class="page-heading"><h1>Maklum Balas & Analisis AI</h1><p>Maklum balas pelajar selepas event dianalisis oleh AI.</p></div>
+      <div class="page-heading"><h1>Feedback & AI Analysis</h1><p>Student feedback after events analyzed by AI.</p></div>
       <div id="feedbackCards"></div>
     </div>
 
     <!-- USERS -->
     <div class="section" id="sec-users">
-      <div class="page-heading"><h1>Pengurusan Pengguna</h1><p>Lihat pelajar berdaftar, penganjur, dan akaun admin.</p></div>
+      <div class="page-heading"><h1>User Management</h1><p>View registered students, organizers, and admin accounts.</p></div>
       <div class="card">
         <div class="filter-bar">
-          <button class="filter-tab active" onclick="filterUsers('all',this)">Semua</button>
-          <button class="filter-tab" onclick="filterUsers('student',this)">Pelajar</button>
-          <button class="filter-tab" onclick="filterUsers('organizer',this)">Penganjur</button>
-          <div class="filter-search">🔍<input type="text" id="usersSearch" placeholder="Cari pengguna..." oninput="renderUsersTable()"/></div>
+          <button class="filter-tab active" onclick="filterUsers('all',this)">All</button>
+          <button class="filter-tab" onclick="filterUsers('student',this)">Student</button>
+          <button class="filter-tab" onclick="filterUsers('organizer',this)">Organizer</button>
+          <div class="filter-search">🔍<input type="text" id="usersSearch" placeholder="Search users..." oninput="renderUsersTable()"/></div>
         </div>
-        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Pengguna</th><th>Matrik / Emel</th><th>Fakulti</th><th>Peranan</th><th>Status</th><th>Tarikh Daftar</th></tr></thead><tbody id="usersTbody"></tbody></table></div></div>
+        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>User</th><th>Matrix / Email</th><th>Faculty</th><th>Role</th><th>Status</th><th>Registered</th></tr></thead><tbody id="usersTbody"></tbody></table></div></div>
       </div>
     </div>
 
@@ -477,39 +476,39 @@ tr:hover td{background:#fafbfc}
 <!-- MODAL -->
 <div class="overlay" id="eventOverlay" onclick="handleOverlay(event)">
   <div class="modal">
-    <div class="modal-head"><span class="modal-head-title">Semakan Event</span><button class="modal-close" onclick="closeEventModal()">✕</button></div>
+    <div class="modal-head"><span class="modal-head-title">Event Review</span><button class="modal-close" onclick="closeEventModal()">✕</button></div>
     <div class="modal-body">
       <div style="margin-bottom:10px"><span class="badge" id="mCatBadge"></span><span class="badge" id="mStatusBadge" style="margin-left:6px"></span></div>
       <div style="font-size:17px;font-weight:700;color:var(--text);margin-bottom:16px;line-height:1.3" id="mTitle"></div>
       <div class="modal-info-grid">
-        <div class="modal-info-cell"><div class="mic-label">Tarikh</div><div class="mic-val" id="mDate"></div></div>
-        <div class="modal-info-cell"><div class="mic-label">Masa</div><div class="mic-val" id="mTime"></div></div>
-        <div class="modal-info-cell"><div class="mic-label">Tempat</div><div class="mic-val" id="mVenue"></div></div>
-        <div class="modal-info-cell"><div class="mic-label">Fakulti</div><div class="mic-val" id="mFaculty"></div></div>
-        <div class="modal-info-cell"><div class="mic-label">Penganjur</div><div class="mic-val" id="mOrganiser"></div></div>
-        <div class="modal-info-cell"><div class="mic-label">Slot</div><div class="mic-val" id="mSlots"></div></div>
+        <div class="modal-info-cell"><div class="mic-label">Date</div><div class="mic-val" id="mDate"></div></div>
+        <div class="modal-info-cell"><div class="mic-label">Time</div><div class="mic-val" id="mTime"></div></div>
+        <div class="modal-info-cell"><div class="mic-label">Venue</div><div class="mic-val" id="mVenue"></div></div>
+        <div class="modal-info-cell"><div class="mic-label">Faculty</div><div class="mic-val" id="mFaculty"></div></div>
+        <div class="modal-info-cell"><div class="mic-label">Organizer</div><div class="mic-val" id="mOrganiser"></div></div>
+        <div class="modal-info-cell"><div class="mic-label">Slots</div><div class="mic-val" id="mSlots"></div></div>
       </div>
       <div class="modal-desc" id="mDesc"></div>
 
-      <!-- COMPLIANCE PANEL (NEW - Feature 1,2,3,4,5) -->
-      <div class="modal-section-title">📋 Semakan Pematuhan HEP</div>
+      <!-- COMPLIANCE PANEL -->
+      <div class="modal-section-title">📋 HEP Compliance Review</div>
       <div class="compliance-panel" id="mCompliancePanel">
         <div class="compliance-checks" id="mComplianceChecks"></div>
         <div class="compliance-blocker" id="mComplianceBlocker" style="display:none">
-          🚫 Event ini <strong>tidak boleh diluluskan</strong> sehingga semua isu pematuhan diselesaikan.
+          🚫 This event <strong>cannot be approved</strong> until all compliance issues are resolved.
         </div>
       </div>
 
-      <!-- APPROVAL FLOW (NEW - Feature 6) -->
-      <div class="modal-section-title">🔄 Aliran Kelulusan (Seksyen 3.1.7)</div>
+      <!-- APPROVAL FLOW -->
+      <div class="modal-section-title">🔄 Approval Flow (Section 3.1.7)</div>
       <div style="background:#f8fafc;border-radius:8px;padding:14px;margin-bottom:16px">
         <div class="approval-flow" id="mApprovalFlow"></div>
         <div style="font-size:11.5px;color:var(--muted);margin-top:10px" id="mApprovalNote"></div>
       </div>
 
       <div class="reject-reason-box" id="rejectReasonBox">
-        <label style="font-size:12.5px;font-weight:600;color:var(--text);display:block;margin-bottom:6px">Sebab Penolakan <span style="color:var(--red)">*</span></label>
-        <textarea id="rejectReason" placeholder="Nyatakan sebab penolakan..."></textarea>
+        <label style="font-size:12.5px;font-weight:600;color:var(--text);display:block;margin-bottom:6px">Rejection Reason <span style="color:var(--red)">*</span></label>
+        <textarea id="rejectReason" placeholder="State the reason for rejection..."></textarea>
       </div>
       <div class="modal-actions" id="mActions"></div>
     </div>
@@ -532,12 +531,11 @@ let allEventsFilter = 'all', usersFilter = 'all', complianceFilter = 'all';
 let currentEventModal = null;
 
 // ============================================================
-// COMPLIANCE ENGINE (NEW)
-// Semak 5 kriteria pematuhan untuk setiap event
+// COMPLIANCE ENGINE
 // ============================================================
 
 /**
- * Kira bilangan hari bekerja antara dua tarikh (exclude Sabtu & Ahad)
+ * Calculate working days between two dates (excludes Saturday & Sunday)
  */
 function workingDaysBetween(dateStrSubmit, dateStrEvent) {
   try {
@@ -556,8 +554,8 @@ function workingDaysBetween(dateStrSubmit, dateStrEvent) {
 }
 
 /**
- * Kira berapa event diluluskan/pending untuk penganjur yang sama dalam semester semasa
- * Semester: Jan-Jun atau Jul-Dis
+ * Count approved/pending events for the same organizer in the current semester
+ * Semester: Jan–Jun or Jul–Dec
  */
 function countSemesterActivities(organizerName, excludeId) {
   if (!organizerName) return 0;
@@ -579,8 +577,7 @@ function countSemesterActivities(organizerName, excludeId) {
 }
 
 /**
- * Semak sama ada penganjur ada laporan yang belum diserahkan
- * (menggunakan field 'report_submitted' dalam events table — fallback ke true jika field tiada)
+ * Check if the organizer has outstanding unsubmitted reports
  */
 function hasPendingReport(organizerName, excludeId) {
   const pastApproved = EVENTS.filter(e =>
@@ -593,38 +590,38 @@ function hasPendingReport(organizerName, excludeId) {
 }
 
 /**
- * Jalankan semua 5 semakan pematuhan untuk satu event
+ * Run all 5 compliance checks for a single event
  * Returns: { checks: [...], hasBlocker: bool }
  */
 function runComplianceChecks(ev) {
   const checks = [];
   let hasBlocker = false;
 
-  // ── Check 1: Kelulusan Penasihat (Feature 1)
+  // ── Check 1: Advisor Approval
   const advisorApproved = ev.advisor_approved;
   if (advisorApproved === true) {
-    checks.push({ id:'advisor', label:'Kelulusan Penasihat/Pengetua', status:'pass', note:'Penasihat telah meluluskan' });
+    checks.push({ id:'advisor', label:'Advisor/Principal Approval', status:'pass', note:'Advisor has approved' });
   } else if (advisorApproved === false) {
-    checks.push({ id:'advisor', label:'Kelulusan Penasihat/Pengetua', status:'fail', note:'Belum mendapat kelulusan Penasihat' });
+    checks.push({ id:'advisor', label:'Advisor/Principal Approval', status:'fail', note:'Has not obtained Advisor approval' });
     hasBlocker = true;
   } else {
-    checks.push({ id:'advisor', label:'Kelulusan Penasihat/Pengetua', status:'warn', note:'Maklumat tidak disertakan' });
+    checks.push({ id:'advisor', label:'Advisor/Principal Approval', status:'warn', note:'Information not provided' });
   }
 
-  // ── Check 2: Penyertaan Pelbagai Kaum (Feature 2)
+  // ── Check 2: Multiracial Participation
   const isReligious = ev.category === 'religious' || (ev.tags || []).includes('religious');
   if (isReligious) {
-    checks.push({ id:'multiracial', label:'Penyertaan Pelbagai Kaum', status:'na', note:'Dikecualikan (persatuan agama)' });
+    checks.push({ id:'multiracial', label:'Multiracial Participation', status:'na', note:'Exempted (religious society)' });
   } else if (ev.multiracial === true) {
-    checks.push({ id:'multiracial', label:'Penyertaan Pelbagai Kaum', status:'pass', note:'Penyertaan pelbagai kaum disahkan' });
+    checks.push({ id:'multiracial', label:'Multiracial Participation', status:'pass', note:'Multiracial participation confirmed' });
   } else if (ev.multiracial === false) {
-    checks.push({ id:'multiracial', label:'Penyertaan Pelbagai Kaum', status:'fail', note:'Tidak membuka penyertaan pelbagai kaum' });
+    checks.push({ id:'multiracial', label:'Multiracial Participation', status:'fail', note:'Does not open participation to all races' });
     hasBlocker = true;
   } else {
-    checks.push({ id:'multiracial', label:'Penyertaan Pelbagai Kaum', status:'warn', note:'Maklumat tidak disertakan' });
+    checks.push({ id:'multiracial', label:'Multiracial Participation', status:'warn', note:'Information not provided' });
   }
 
-  // ── Check 3: Tempoh Notis (14/30 hari) (Feature 3)
+  // ── Check 3: Notice Period (14/30 working days)
   const hasExternal = ev.has_external_sponsor || ev.has_external_participants;
   const minDays = hasExternal ? 30 : 14;
   const submitDate = ev.created_at ? ev.created_at.slice(0,10) : null;
@@ -632,42 +629,42 @@ function runComplianceChecks(ev) {
   if (submitDate && eventDate) {
     const wd = workingDaysBetween(submitDate, eventDate);
     if (wd === null) {
-      checks.push({ id:'notice', label:`Notis Awal (≥${minDays} hari bekerja)`, status:'warn', note:'Tarikh tidak dapat dikira' });
+      checks.push({ id:'notice', label:`Notice Period (≥${minDays} working days)`, status:'warn', note:'Date cannot be calculated' });
     } else if (wd >= minDays) {
-      checks.push({ id:'notice', label:`Notis Awal (≥${minDays} hari bekerja)`, status:'pass', note:`${wd} hari bekerja sebelum event` });
+      checks.push({ id:'notice', label:`Notice Period (≥${minDays} working days)`, status:'pass', note:`${wd} working days before event` });
     } else {
-      checks.push({ id:'notice', label:`Notis Awal (≥${minDays} hari bekerja)`, status:'fail', note:`Hanya ${wd} hari bekerja — perlu ≥${minDays}` });
+      checks.push({ id:'notice', label:`Notice Period (≥${minDays} working days)`, status:'fail', note:`Only ${wd} working days — need ≥${minDays}` });
       hasBlocker = true;
     }
   } else {
-    checks.push({ id:'notice', label:'Notis Awal (14/30 hari bekerja)', status:'warn', note:'Tarikh submission tidak tersedia' });
+    checks.push({ id:'notice', label:'Notice Period (14/30 working days)', status:'warn', note:'Submission date not available' });
   }
 
-  // ── Check 4: Laporan Event Sebelumnya (Feature 5)
+  // ── Check 4: Previous Event Report
   const pendingRep = hasPendingReport(ev.organizer_name, ev.id);
   if (pendingRep) {
-    checks.push({ id:'report', label:'Laporan Event Sebelum Diserahkan', status:'fail', note:'Penganjur mempunyai laporan yang belum diserahkan' });
+    checks.push({ id:'report', label:'Previous Event Report Submitted', status:'fail', note:'Organizer has unsubmitted reports' });
     hasBlocker = true;
   } else {
-    checks.push({ id:'report', label:'Laporan Event Sebelum Diserahkan', status:'pass', note:'Tiada laporan tertunggak' });
+    checks.push({ id:'report', label:'Previous Event Report Submitted', status:'pass', note:'No outstanding reports' });
   }
 
-  // ── Check 5: Had 4 Aktiviti Per Semester (Feature 4)
+  // ── Check 5: Semester Activity Limit (max 4)
   const semCount = countSemesterActivities(ev.organizer_name, ev.id);
   if (semCount >= 4) {
-    checks.push({ id:'semLimit', label:'Had Aktiviti Semester (maks 4)', status:'fail', note:`${semCount} aktiviti lain dalam semester ini — perlu kebenaran HEMA` });
+    checks.push({ id:'semLimit', label:'Semester Activity Limit (max 4)', status:'fail', note:`${semCount} other activities this semester — requires HEMA permission` });
     hasBlocker = true;
   } else if (semCount === 3) {
-    checks.push({ id:'semLimit', label:'Had Aktiviti Semester (maks 4)', status:'warn', note:`${semCount}/4 aktiviti semester ini — event ini akan mencukupkan had` });
+    checks.push({ id:'semLimit', label:'Semester Activity Limit (max 4)', status:'warn', note:`${semCount}/4 activities this semester — this event will reach the limit` });
   } else {
-    checks.push({ id:'semLimit', label:'Had Aktiviti Semester (maks 4)', status:'pass', note:`${semCount}/4 aktiviti semester ini` });
+    checks.push({ id:'semLimit', label:'Semester Activity Limit (max 4)', status:'pass', note:`${semCount}/4 activities this semester` });
   }
 
   return { checks, hasBlocker };
 }
 
 /**
- * Render panel pematuhan dalam modal
+ * Render compliance panel inside modal
  */
 function renderModalCompliance(ev) {
   const { checks, hasBlocker } = runComplianceChecks(ev);
@@ -682,7 +679,7 @@ function renderModalCompliance(ev) {
       </div>
       <div style="display:flex;align-items:center;gap:8px">
         <span style="font-size:11.5px;color:var(--muted)">${c.note}</span>
-        <span class="ci-badge ${statusClass[c.status]}">${statusIcon[c.status]} ${c.status === 'pass' ? 'Lulus' : c.status === 'fail' ? 'Gagal' : c.status === 'na' ? 'N/A' : 'Amaran'}</span>
+        <span class="ci-badge ${statusClass[c.status]}">${statusIcon[c.status]} ${c.status === 'pass' ? 'Pass' : c.status === 'fail' ? 'Fail' : c.status === 'na' ? 'N/A' : 'Warning'}</span>
       </div>
     </div>`).join('');
 
@@ -692,19 +689,19 @@ function renderModalCompliance(ev) {
 }
 
 /**
- * Render aliran kelulusan 3 peringkat (Feature 6)
- * Presiden → Penasihat → HEMA
+ * Render 3-stage approval flow (Section 3.1.7)
+ * President → Advisor → HEMA
  */
 function renderApprovalFlow(ev) {
   const steps = [
     {
       icon: '👤',
-      label: 'Presiden\nPersatuan',
+      label: 'Society\nPresident',
       status: ev.president_approved ? 'done' : ev.status === 'rejected' ? 'rejected' : 'done'
     },
     {
       icon: '📝',
-      label: 'Penasihat /\nPengetua',
+      label: 'Advisor /\nPrincipal',
       status: ev.advisor_approved === true ? 'done' : ev.advisor_approved === false ? 'rejected' : 'current'
     },
     {
@@ -714,7 +711,7 @@ function renderApprovalFlow(ev) {
     }
   ];
 
-  const statusLabel = { done: 'Diluluskan', current: 'Menunggu', waiting: 'Belum Sampai', rejected: 'Ditolak' };
+  const statusLabel = { done: 'Approved', current: 'Waiting', waiting: 'Not Reached', rejected: 'Rejected' };
 
   document.getElementById('mApprovalFlow').innerHTML = steps.map((s, i) => `
     ${i > 0 ? '<div class="af-arrow">→</div>' : ''}
@@ -726,9 +723,9 @@ function renderApprovalFlow(ev) {
 
   const currentStep = steps.findIndex(s => s.status === 'current' || s.status === 'waiting');
   document.getElementById('mApprovalNote').textContent =
-    ev.status === 'approved' ? '✅ Semua peringkat kelulusan telah selesai.' :
-    ev.status === 'rejected' ? '❌ Permohonan ini telah ditolak.' :
-    `⏳ Menunggu kelulusan pada peringkat: ${steps[currentStep]?.label?.replace('\n',' ') || 'HEP/HEMA'}.`;
+    ev.status === 'approved' ? '✅ All approval stages have been completed.' :
+    ev.status === 'rejected' ? '❌ This application has been rejected.' :
+    `⏳ Awaiting approval at stage: ${steps[currentStep]?.label?.replace('\n',' ') || 'HEP/HEMA'}.`;
 }
 
 // ============================================================
@@ -783,26 +780,26 @@ async function approveEvent(id) {
   const ev = EVENTS.find(e => e.id === id);
   const { hasBlocker } = runComplianceChecks(ev);
   if (hasBlocker) {
-    showToast('⚠️ Event ini tidak boleh diluluskan — ada isu pematuhan HEP yang belum diselesaikan.', 'error');
+    showToast('⚠️ This event cannot be approved — there are unresolved HEP compliance issues.', 'error');
     return;
   }
   const { error } = await sb.from('events').update({ status: 'approved' }).eq('id', id);
-  if (error) { showToast('Gagal meluluskan event.', 'error'); return; }
+  if (error) { showToast('Failed to approve event.', 'error'); return; }
   closeEventModal();
   await loadEvents();
   refreshAllTables();
-  showToast('✓ "' + (ev?.title || 'Event') + '" diluluskan dan diterbitkan.', 'success');
+  showToast('✓ "' + (ev?.title || 'Event') + '" approved and published.', 'success');
 }
 
 async function confirmReject(id) {
   const reason = document.getElementById('rejectReason').value.trim();
-  if (!reason) { alert('Sila nyatakan sebab penolakan.'); return; }
+  if (!reason) { alert('Please state the reason for rejection.'); return; }
   const { error } = await sb.from('events').update({ status: 'rejected', reject_reason: reason }).eq('id', id);
-  if (error) { showToast('Gagal menolak event.', 'error'); return; }
+  if (error) { showToast('Failed to reject event.', 'error'); return; }
   closeEventModal();
   await loadEvents();
   refreshAllTables();
-  showToast('✕ Event telah ditolak.', 'error');
+  showToast('✕ Event has been rejected.', 'error');
 }
 
 // ============================================================
@@ -813,7 +810,7 @@ function renderDashboard() {
   const pending  = EVENTS.filter(e => e.status === 'pending').length;
   const approved = EVENTS.filter(e => e.status === 'approved').length;
   const totalReg = EVENTS.reduce((a, e) => a + ((e.slots || 0) - (e.slots_left || 0)), 0);
-  const slotsLeft = EVENTS.reduce((a, e) => a + (parseInt(e.slots_left) || 0), 0);
+  const slotsLeft = EVENTS.reduce((a, e) => a + (e.slots_left || 0), 0);
 
   const totalFb  = FEEDBACK.length;
   const posCount = FEEDBACK.filter(f => f.sentiment === 'positive').length;
@@ -823,7 +820,6 @@ function renderDashboard() {
   const neuPct   = totalFb ? Math.round((neuCount / totalFb) * 100) : 0;
   const negPct   = totalFb ? Math.round((negCount / totalFb) * 100) : 0;
 
-  // Count compliance issues
   const compIssues = EVENTS.filter(e => e.status === 'pending' && runComplianceChecks(e).hasBlocker).length;
 
   document.getElementById('dTotalEvents').textContent   = total;
@@ -846,18 +842,18 @@ function renderDashboard() {
 
   const kwEl = document.getElementById('kwTags');
   if (totalFb === 0) {
-    kwEl.innerHTML = '<span class="kw-tag">Tiada maklum balas lagi</span>';
+    kwEl.innerHTML = '<span class="kw-tag">No feedback yet</span>';
   } else {
     const posKws = [...new Set(FEEDBACK.filter(f => f.keywords).flatMap(f => f.keywords))].slice(0, 6);
     kwEl.innerHTML = posKws.length
       ? posKws.map(k => `<span class="kw-tag pos">${k}</span>`).join('')
-      : '<span class="kw-tag">Tiada kata kunci</span>';
+      : '<span class="kw-tag">No keywords</span>';
   }
 
   const pendingEvs = EVENTS.filter(e => e.status === 'pending');
   const pl = document.getElementById('dashPendingList');
   if (!pendingEvs.length) {
-    pl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div><h3>Tiada event pending</h3><p>Semua telah disemak.</p></div>';
+    pl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div><h3>No pending events</h3><p>All have been reviewed.</p></div>';
   } else {
     pl.innerHTML = pendingEvs.map(e => {
       const { hasBlocker } = runComplianceChecks(e);
@@ -866,12 +862,12 @@ function renderDashboard() {
         <div class="event-mini-emoji">${e.emoji || '📅'}</div>
         <div class="event-mini-body">
           <div class="event-mini-title">${e.title}</div>
-          <div class="event-mini-meta">📅 ${e.date || '–'} &nbsp;·&nbsp; Dikemukakan ${(e.created_at || '').slice(0,10) || '–'}
-            ${hasBlocker ? ' &nbsp;<span style="color:#c0392b;font-weight:700;font-size:10.5px">⚠️ Isu Pematuhan</span>' : ''}
+          <div class="event-mini-meta">📅 ${e.date || '–'} &nbsp;·&nbsp; Submitted ${(e.created_at || '').slice(0,10) || '–'}
+            ${hasBlocker ? ' &nbsp;<span style="color:#c0392b;font-weight:700;font-size:10.5px">⚠️ Compliance Issues</span>' : ''}
           </div>
         </div>
         <div class="event-mini-status">
-          <button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">Semak</button>
+          <button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">Review</button>
         </div>
       </div>`;
     }).join('');
@@ -885,7 +881,7 @@ function renderDashboard() {
 
   const chartEl = document.getElementById('dashRegChart');
   if (!chartData.length) {
-    chartEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>Tiada pendaftaran lagi</h3></div>';
+    chartEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No registrations yet</h3></div>';
   } else {
     chartEl.innerHTML = chartData.map(e => {
       const reg = (e.slots||0) - (e.slots_left||0);
@@ -901,7 +897,7 @@ function renderDashboard() {
 }
 
 // ============================================================
-// PENDING TABLE (updated with compliance flags)
+// PENDING TABLE
 // ============================================================
 function renderPendingTable() {
   const rows = EVENTS.filter(e => e.status === 'pending');
@@ -912,7 +908,7 @@ function renderPendingTable() {
 
   const tbody = document.getElementById('pendingTbody');
   if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>Tiada event pending</h3></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>No pending events</h3></div></td></tr>`;
     return;
   }
   tbody.innerHTML = filtered.map(e => {
@@ -920,10 +916,10 @@ function renderPendingTable() {
     const failCount = checks.filter(c => c.status === 'fail').length;
     const warnCount = checks.filter(c => c.status === 'warn').length;
     const compBadge = hasBlocker
-      ? `<span class="cf-chip fail">❌ ${failCount} isu</span>`
+      ? `<span class="cf-chip fail">❌ ${failCount} issues</span>`
       : warnCount > 0
-        ? `<span class="cf-chip warn">⚠️ ${warnCount} amaran</span>`
-        : `<span class="cf-chip ok">✅ Lengkap</span>`;
+        ? `<span class="cf-chip warn">⚠️ ${warnCount} warnings</span>`
+        : `<span class="cf-chip ok">✅ Clear</span>`;
     return `
     <tr>
       <td><strong>${e.emoji||'📅'} ${e.title||'–'}</strong></td>
@@ -934,9 +930,9 @@ function renderPendingTable() {
       <td>${compBadge}</td>
       <td>${(e.created_at||'').slice(0,10) || '–'}</td>
       <td style="display:flex;gap:6px;flex-wrap:wrap">
-        <button class="btn btn-approve btn-sm" onclick="approveEvent(${e.id})" ${hasBlocker?'disabled style="opacity:.5;cursor:not-allowed"':''}>✓ Lulus</button>
-        <button class="btn btn-reject btn-sm"  onclick="openEventModal(${e.id})">✕ Tolak</button>
-        <button class="btn btn-view btn-sm"    onclick="openEventModal(${e.id})">Lihat</button>
+        <button class="btn btn-approve btn-sm" onclick="approveEvent(${e.id})" ${hasBlocker?'disabled style="opacity:.5;cursor:not-allowed"':''}>✓ Approve</button>
+        <button class="btn btn-reject btn-sm"  onclick="openEventModal(${e.id})">✕ Reject</button>
+        <button class="btn btn-view btn-sm"    onclick="openEventModal(${e.id})">View</button>
       </td>
     </tr>`;
   }).join('');
@@ -955,7 +951,7 @@ function renderAllEventsTable() {
   );
   const tbody = document.getElementById('allEventsTbody');
   if (!rows.length) {
-    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">📋</div><h3>Tiada event ditemui</h3></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">📋</div><h3>No events found</h3></div></td></tr>`;
     return;
   }
   tbody.innerHTML = rows.map(e => {
@@ -967,9 +963,9 @@ function renderAllEventsTable() {
         <td>${e.date||'–'}</td>
         <td style="font-size:12.5px">${(e.location||'–').split(',')[0]}</td>
         <td>${e.slots||'–'}</td>
-        <td><div style="font-weight:600">${reg}</div><div style="font-size:11px;color:var(--muted)">${e.slots_left||0} baki</div></td>
+        <td><div style="font-weight:600">${reg}</div><div style="font-size:11px;color:var(--muted)">${e.slots_left||0} remaining</div></td>
         <td><span class="badge badge-${e.status}">${cap(e.status)}</span></td>
-        <td><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">Lihat</button></td>
+        <td><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">View</button></td>
       </tr>`;
   }).join('');
 }
@@ -984,7 +980,7 @@ function filterAllEvents(status, btn) {
 function filterAllEventsSearch() { renderAllEventsTable(); }
 
 // ============================================================
-// COMPLIANCE TABLE (NEW)
+// COMPLIANCE TABLE
 // ============================================================
 function renderComplianceTable() {
   const q = (document.getElementById('complianceSearch')?.value || '').toLowerCase();
@@ -1003,17 +999,15 @@ function renderComplianceTable() {
     );
   }
 
-  // Stats
   const allPending  = EVENTS.filter(e => e.status === 'pending');
   const issueCount  = allPending.filter(e => runComplianceChecks(e).hasBlocker).length;
   const clearCount  = allPending.length - issueCount;
   document.getElementById('compStatRow').innerHTML = `
     <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--red-light)">📋</div><div><div class="stat-num" style="font-size:20px">${allPending.length}</div><div class="stat-lbl">Total Pending</div></div></div>
-    <div class="comp-stat"><div class="comp-stat-icon" style="background:#fef2f2">❌</div><div><div class="stat-num" style="font-size:20px;color:#c0392b">${issueCount}</div><div class="stat-lbl">Ada Isu Pematuhan</div></div></div>
-    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--green-light)">✅</div><div><div class="stat-num" style="font-size:20px;color:var(--green)">${clearCount}</div><div class="stat-lbl">Pematuhan Lengkap</div></div></div>
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:#fef2f2">❌</div><div><div class="stat-num" style="font-size:20px;color:#c0392b">${issueCount}</div><div class="stat-lbl">Has Compliance Issues</div></div></div>
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--green-light)">✅</div><div><div class="stat-num" style="font-size:20px;color:var(--green)">${clearCount}</div><div class="stat-lbl">Full Compliance</div></div></div>
   `;
 
-  // Update sidebar badge
   const cb = document.getElementById('complianceBadge');
   cb.textContent   = issueCount;
   cb.style.display = issueCount > 0 ? 'inline-flex' : 'none';
@@ -1021,7 +1015,7 @@ function renderComplianceTable() {
 
   const tbody = document.getElementById('complianceTbody');
   if (!rows.length) {
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>Tiada rekod ditemui</h3></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>No records found</h3></div></td></tr>`;
     return;
   }
 
@@ -1048,12 +1042,12 @@ function renderComplianceTable() {
         ${cell('semLimit')}
         <td>
           ${hasBlocker
-            ? '<span class="badge badge-rejected">⛔ Tidak Boleh Lulus</span>'
+            ? '<span class="badge badge-rejected">⛔ Cannot Approve</span>'
             : checks.some(c=>c.status==='warn')
-              ? '<span class="badge badge-pending">⚠️ Ada Amaran</span>'
-              : '<span class="badge badge-approved">✅ Boleh Diluluskan</span>'
+              ? '<span class="badge badge-pending">⚠️ Has Warnings</span>'
+              : '<span class="badge badge-approved">✅ Can Be Approved</span>'
           }
-          <button class="btn btn-view btn-sm" style="margin-top:4px" onclick="openEventModal(${ev.id})">Semak</button>
+          <button class="btn btn-view btn-sm" style="margin-top:4px" onclick="openEventModal(${ev.id})">Review</button>
         </td>
       </tr>`;
   }).join('');
@@ -1072,7 +1066,7 @@ function filterCompliance(filter, btn) {
 function renderFeedbackCards() {
   const el = document.getElementById('feedbackCards');
   if (!FEEDBACK.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><h3>Tiada maklum balas lagi</h3><p>Maklum balas dari pelajar akan muncul di sini.</p></div>';
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><h3>No feedback yet</h3><p>Feedback from students will appear here.</p></div>';
     return;
   }
   const grouped = {};
@@ -1093,13 +1087,13 @@ function renderFeedbackCards() {
           <div class="card-head-left">
             <div class="card-head-bar"></div>
             <span class="card-title">${ev ? (ev.emoji||'📅') + ' ' + ev.title : 'Event #' + eid}</span>
-            <span class="card-sub">${tot} maklum balas</span>
+            <span class="card-sub">${tot} feedback</span>
           </div>
         </div>
         <div class="card-body">
-          <div class="sentiment-row"><span class="sentiment-lbl">Positif</span><div class="sentiment-track"><div class="sentiment-fill fill-pos" style="width:${tot?Math.round(pos/tot*100):0}%"></div></div><span class="sentiment-pct" style="color:var(--green)">${tot?Math.round(pos/tot*100):0}%</span></div>
+          <div class="sentiment-row"><span class="sentiment-lbl">Positive</span><div class="sentiment-track"><div class="sentiment-fill fill-pos" style="width:${tot?Math.round(pos/tot*100):0}%"></div></div><span class="sentiment-pct" style="color:var(--green)">${tot?Math.round(pos/tot*100):0}%</span></div>
           <div class="sentiment-row"><span class="sentiment-lbl">Neutral</span><div class="sentiment-track"><div class="sentiment-fill fill-neu" style="width:${tot?Math.round(neu/tot*100):0}%"></div></div><span class="sentiment-pct">${tot?Math.round(neu/tot*100):0}%</span></div>
-          <div class="sentiment-row"><span class="sentiment-lbl">Negatif</span><div class="sentiment-track"><div class="sentiment-fill fill-neg" style="width:${tot?Math.round(neg/tot*100):0}%"></div></div><span class="sentiment-pct" style="color:#c0392b">${tot?Math.round(neg/tot*100):0}%</span></div>
+          <div class="sentiment-row"><span class="sentiment-lbl">Negative</span><div class="sentiment-track"><div class="sentiment-fill fill-neg" style="width:${tot?Math.round(neg/tot*100):0}%"></div></div><span class="sentiment-pct" style="color:#c0392b">${tot?Math.round(neg/tot*100):0}%</span></div>
           <div style="margin-top:12px">
             ${fbs.slice(0,3).map(f => `
               <div style="padding:8px 12px;background:#f8fafc;border-radius:6px;margin-bottom:6px;font-size:12.5px;color:var(--muted);border-left:3px solid ${f.sentiment==='positive'?'var(--green)':f.sentiment==='negative'?'#c0392b':'#aaa'}">
@@ -1126,7 +1120,7 @@ function renderUsersTable() {
 
   const tbody = document.getElementById('usersTbody');
   if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">👥</div><h3>Tiada pengguna ditemui</h3></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">👥</div><h3>No users found</h3></div></td></tr>`;
     return;
   }
   tbody.innerHTML = filtered.map(u => {
@@ -1141,7 +1135,7 @@ function renderUsersTable() {
         <td style="font-family:monospace;font-size:12.5px">${u.matrix || u.email || '–'}</td>
         <td style="font-size:12.5px">${u.faculty||'–'}</td>
         <td><span class="badge" style="background:${roleBg};color:${roleClr}">${cap(u.role)}</span></td>
-        <td><span class="badge badge-approved">Aktif</span></td>
+        <td><span class="badge badge-approved">Active</span></td>
         <td style="font-size:12.5px;color:var(--muted)">${joined}</td>
       </tr>`;
   }).join('');
@@ -1172,10 +1166,9 @@ function openEventModal(id) {
   document.getElementById('mVenue').textContent       = ev.location || '–';
   document.getElementById('mFaculty').textContent     = ev.faculty  || '–';
   document.getElementById('mOrganiser').textContent   = ev.organizer_name || '–';
-  document.getElementById('mSlots').textContent       = (ev.slots || '–') + ' slot';
+  document.getElementById('mSlots').textContent       = (ev.slots || '–') + ' slots';
   document.getElementById('mDesc').textContent        = ev.description || '–';
 
-  // Render compliance & approval flow
   const hasBlocker = renderModalCompliance(ev);
   renderApprovalFlow(ev);
 
@@ -1185,11 +1178,11 @@ function openEventModal(id) {
   const actions = document.getElementById('mActions');
   if (ev.status === 'pending') {
     actions.innerHTML = `
-      <button class="btn-modal-approve" onclick="approveEvent(${ev.id})" ${hasBlocker?'disabled':''}>✓ Luluskan Event</button>
-      <button class="btn-modal-reject"  onclick="showRejectBox(${ev.id})">✕ Tolak</button>
-      <button class="btn-modal-close"   onclick="closeEventModal()">Tutup</button>`;
+      <button class="btn-modal-approve" onclick="approveEvent(${ev.id})" ${hasBlocker?'disabled':''}>✓ Approve Event</button>
+      <button class="btn-modal-reject"  onclick="showRejectBox(${ev.id})">✕ Reject</button>
+      <button class="btn-modal-close"   onclick="closeEventModal()">Close</button>`;
   } else {
-    actions.innerHTML = `<button class="btn-modal-close" style="width:100%" onclick="closeEventModal()">Tutup</button>`;
+    actions.innerHTML = `<button class="btn-modal-close" style="width:100%" onclick="closeEventModal()">Close</button>`;
   }
 
   document.getElementById('eventOverlay').classList.add('open');
@@ -1199,9 +1192,9 @@ function openEventModal(id) {
 function showRejectBox(id) {
   document.getElementById('rejectReasonBox').classList.add('show');
   document.getElementById('mActions').innerHTML = `
-    <button class="btn-modal-approve" onclick="approveEvent(${id})">✓ Luluskan</button>
-    <button class="btn-modal-reject"  onclick="confirmReject(${id})">✕ Sahkan Tolak</button>
-    <button class="btn-modal-close"   onclick="closeEventModal()">Batal</button>`;
+    <button class="btn-modal-approve" onclick="approveEvent(${id})">✓ Approve</button>
+    <button class="btn-modal-reject"  onclick="confirmReject(${id})">✕ Confirm Reject</button>
+    <button class="btn-modal-close"   onclick="closeEventModal()">Cancel</button>`;
 }
 
 function closeEventModal() {
@@ -1239,11 +1232,11 @@ function showSection(id, btn) {
   if (btn) btn.classList.add('active');
   const labels = {
     'dashboard':   ['Dashboard','Overview'],
-    'pending':     ['Menunggu Kelulusan','Events'],
-    'all-events':  ['Semua Events','Events'],
-    'compliance':  ['Semakan Pematuhan','HEP'],
-    'feedback':    ['Maklum Balas & AI','Analytics'],
-    'users':       ['Pengguna','System']
+    'pending':     ['Pending Approval','Events'],
+    'all-events':  ['All Events','Events'],
+    'compliance':  ['Compliance Review','HEP'],
+    'feedback':    ['Feedback & AI','Analytics'],
+    'users':       ['Users','System']
   };
   const [page, sub] = labels[id] || [id,''];
   document.getElementById('topbarPage').textContent = page;
