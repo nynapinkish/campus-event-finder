@@ -21,33 +21,12 @@
   --sidebar:240px;--topbar:64px;
   --sb-bg:#6d0000;--sb-darker:#580000;--sb-darkest:#460000;--sb-accent:#c8982a;
 }
-html, body {
-  height: 100%;
-}
+html, body { height: 100%; }
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
-
-/* LAYOUT FIX: sidebar fixed, main takes remaining width */
-.layout{
-  display: flex;
-  min-height: 100vh;
-}
+.layout{ display: flex; min-height: 100vh; }
 
 /* SIDEBAR */
-.sidebar{
-  width:var(--sidebar);
-  flex-shrink:0;
-  background:var(--red);
-  display:flex;
-  flex-direction:column;
-  position:fixed;
-  top:0;
-  left:0;
-  bottom:0;
-  z-index:100;
-  overflow-y:auto;
-  overflow-x:hidden;
-  scrollbar-width:none;
-}
+.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--red);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;}
 .sidebar::-webkit-scrollbar{display:none}
 .sb-brand{background:var(--red);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,.1);padding:12px 16px;}
 .sb-brand img{height:44px;object-fit:contain;}
@@ -75,17 +54,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .sb-logout:hover{color:#fff;background:rgba(255,255,255,.07);}
 .sb-logout-icon{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
 
-/* MAIN — key fix: margin-left equals sidebar width, takes remaining space */
-.main{
-  margin-left: var(--sidebar);
-  flex: 1;
-  min-width: 0;          /* prevent overflow */
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: calc(100% - var(--sidebar));
-}
-
+/* MAIN */
+.main{margin-left:var(--sidebar);flex:1;min-width:0;display:flex;flex-direction:column;min-height:100vh;width:calc(100% - var(--sidebar));}
 .topbar{background:var(--red);position:sticky;top:0;z-index:50;box-shadow:0 3px 12px rgba(0,0,0,.3);}
 .topbar-upper{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:58px;}
 .topbar-lower{background:#6d0000;padding:5px 24px;font-size:11.5px;color:rgba(255,255,255,.7);font-weight:500;letter-spacing:.2px;}
@@ -151,6 +121,8 @@ tr:hover td{background:#fafbfc}
 .btn-reject{background:none;color:#c0392b;border:1px solid rgba(192,57,43,.4)}.btn-reject:hover{background:#fef2f2}
 .btn-view{background:var(--bg);color:var(--muted);border:1px solid var(--border)}.btn-view:hover{color:var(--red);border-color:var(--red)}
 .btn-sm{padding:5px 10px;font-size:11.5px}
+.btn-waiver{background:#fff3cd;color:#856404;border:1px solid #ffc107;font-size:11.5px;padding:5px 10px;border-radius:6px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;transition:all .15s;}
+.btn-waiver:hover{background:#ffc107;color:#fff}
 
 /* FILTER BAR */
 .filter-bar{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
@@ -160,18 +132,140 @@ tr:hover td{background:#fafbfc}
 .filter-search input{border:none;outline:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--text);background:transparent;width:180px;}
 .filter-search input::placeholder{color:#bbb}
 
-/* COMPLIANCE PANEL */
-.compliance-panel{background:#fffbf0;border:1.5px solid #f5d87a;border-radius:10px;padding:14px 18px;margin-bottom:14px;}
-.compliance-panel-title{font-size:12px;font-weight:700;color:#78450a;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
-.compliance-checks{display:flex;flex-direction:column;gap:8px;}
-.compliance-item{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;}
-.compliance-item-left{display:flex;align-items:center;gap:8px;color:var(--text)}
-.ci-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.ci-dot.pass{background:var(--green)}.ci-dot.fail{background:#e74c3c}.ci-dot.warn{background:#f59e0b}.ci-dot.na{background:#bbb}
-.ci-label{font-size:12.5px}
-.ci-badge{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:4px;}
-.ci-badge.pass{background:var(--green-light);color:var(--green)}.ci-badge.fail{background:#fef2f2;color:#c0392b}.ci-badge.warn{background:#fef9ec;color:#92400e}.ci-badge.na{background:#f5f5f5;color:#888}
-.compliance-blocker{background:#fef2f2;border:1.5px solid rgba(192,57,43,.3);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:12.5px;color:#c0392b;font-weight:600;display:flex;align-items:center;gap:8px;}
+/* ================================================================
+   COMPLIANCE ENGINE — ACTION-BASED
+   ================================================================ */
+
+/* Required Action Box — shown when rule is violated */
+.required-action-box {
+  background: #fff3cd;
+  border: 1.5px solid #f59e0b;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 8px;
+}
+.required-action-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #7c4f00;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.required-action-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(245,158,11,.2);
+  font-size: 12.5px;
+}
+.required-action-item:last-child { border-bottom: none; }
+.ra-number {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f59e0b;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.ra-content { flex: 1; }
+.ra-rule { font-weight: 700; color: #7c4f00; margin-bottom: 2px; }
+.ra-desc { font-size: 11.5px; color: #92400e; line-height: 1.5; }
+.ra-ref { font-size: 10px; color: #b45309; font-style: italic; margin-top: 3px; }
+.ra-btn-wrap { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* Hard block box — CANNOT approve */
+.hard-block-box {
+  background: #fef2f2;
+  border: 2px solid #dc2626;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-top: 10px;
+}
+.hard-block-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #991b1b;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hard-block-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(220,38,38,.15);
+}
+.hard-block-item:last-child { border-bottom: none; }
+.hb-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.hb-body { flex: 1; }
+.hb-rule { font-size: 13px; font-weight: 700; color: #991b1b; margin-bottom: 2px; }
+.hb-detail { font-size: 12px; color: #b91c1c; line-height: 1.5; }
+.hb-ref { font-size: 10.5px; color: #dc2626; margin-top: 4px; padding: 2px 8px; background: rgba(220,38,38,.08); border-radius: 4px; display: inline-block; }
+.hb-action { font-size: 12px; font-weight: 600; color: #7f1d1d; margin-top: 6px; background: rgba(220,38,38,.1); padding: 5px 8px; border-radius: 5px; border-left: 3px solid #dc2626; }
+
+/* Warning box — can approve with caveats */
+.warn-box {
+  background: #fffbf0;
+  border: 1.5px solid #f59e0b;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 8px;
+}
+.warn-box-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #78450a;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  margin-bottom: 8px;
+}
+.warn-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(245,158,11,.15);
+  font-size: 12.5px;
+}
+.warn-item:last-child { border-bottom: none; }
+.warn-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+.warn-body { flex: 1; }
+.warn-rule { font-weight: 700; color: #7c4f00; margin-bottom: 2px; }
+.warn-detail { font-size: 12px; color: #92400e; line-height: 1.5; }
+.warn-ref { font-size: 10px; color: #b45309; font-style: italic; margin-top: 3px; }
+
+/* All clear box */
+.clear-box {
+  background: var(--green-light);
+  border: 1.5px solid rgba(26,92,56,.3);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.clear-box-icon { font-size: 22px; }
+.clear-box-text { font-size: 13px; font-weight: 600; color: var(--green); }
+.clear-box-sub { font-size: 11.5px; color: #2d6a4f; margin-top:2px; }
+
+/* Compliance summary chips in table */
+.cf-chip{font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;white-space:nowrap;}
+.cf-chip.ok{background:var(--green-light);color:var(--green)}.cf-chip.warn{background:#fef9ec;color:#92400e}.cf-chip.fail{background:#fef2f2;color:#c0392b}
 
 /* APPROVAL FLOW */
 .approval-flow{display:flex;align-items:center;gap:0;margin:18px 0 6px;flex-wrap:wrap;}
@@ -214,23 +308,11 @@ tr:hover td{background:#fafbfc}
 .toast{position:fixed;bottom:24px;right:24px;z-index:500;background:#1a1a1a;color:#fff;padding:12px 20px;border-radius:8px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(80px);opacity:0;transition:all .3s ease;pointer-events:none;}
 .toast.show{transform:translateY(0);opacity:1}.toast.success{border-left:4px solid var(--green)}.toast.error{border-left:4px solid #ef4444}.toast.info{border-left:4px solid var(--gold)}
 
-/* PAGE FOOTER — full width, pinned to bottom of .main */
-.page-footer{
-  background:#fff;
-  border-top:1px solid var(--border);
-  padding:12px 24px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  width:100%;
-  margin-top:auto;
-}
+/* PAGE FOOTER */
+.page-footer{background:#fff;border-top:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:auto;}
 .page-footer-copy{font-size:12px;color:var(--light)}
 
-::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:#f5f5f5}::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:#bbb}
-
 /* COMPLIANCE SECTION */
-.section#sec-compliance .comp-table-wrap{overflow-x:auto}
 .comp-stat-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
 .comp-stat{flex:1;min-width:140px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;}
 .comp-stat-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
@@ -238,7 +320,7 @@ tr:hover td{background:#fafbfc}
 /* MODAL */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);}
 .overlay.open{display:flex}
-.modal{background:#fff;border-radius:10px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.2);animation:mIn .2s ease;}
+.modal{background:#fff;border-radius:10px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.2);animation:mIn .2s ease;}
 @keyframes mIn{from{opacity:0;transform:scale(.97) translateY(8px)}to{opacity:1;transform:none}}
 .modal-head{background:var(--red);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-radius:10px 10px 0 0;}
 .modal-head-title{color:#fff;font-size:14px;font-weight:700}
@@ -251,7 +333,7 @@ tr:hover td{background:#fafbfc}
 .modal-desc{font-size:13.5px;line-height:1.7;color:var(--muted);background:#f8fafc;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 6px 6px 0;margin-bottom:18px}
 .modal-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin:16px 0 8px;display:flex;align-items:center;gap:6px}
 .modal-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
-.modal-actions{display:flex;gap:10px}
+.modal-actions{display:flex;gap:10px;margin-top:16px}
 .btn-modal-approve{flex:1;background:var(--green);color:#fff;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:7px;cursor:pointer;transition:background .15s}
 .btn-modal-approve:hover{background:#145e30}
 .btn-modal-approve:disabled{background:#9ca3af;cursor:not-allowed}
@@ -263,10 +345,19 @@ tr:hover td{background:#fafbfc}
 .reject-reason-box textarea{width:100%;border:1px solid var(--border);border-radius:6px;padding:9px 12px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13.5px;resize:vertical;min-height:80px;outline:none;transition:border-color .15s;}
 .reject-reason-box textarea:focus{border-color:var(--red)}
 
-/* COMPLIANCE FLAGS IN TABLE */
-.compliance-flags{display:flex;flex-wrap:wrap;gap:4px}
-.cf-chip{font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;white-space:nowrap;}
-.cf-chip.ok{background:var(--green-light);color:var(--green)}.cf-chip.warn{background:#fef9ec;color:#92400e}.cf-chip.fail{background:#fef2f2;color:#c0392b}
+/* Waiver modal */
+.waiver-modal-body { padding: 20px; }
+.waiver-form-row { margin-bottom: 14px; }
+.waiver-form-row label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+.waiver-form-row select, .waiver-form-row textarea, .waiver-form-row input {
+  width: 100%; border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 12px; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; outline: none; transition: border-color .15s;
+}
+.waiver-form-row select:focus, .waiver-form-row textarea:focus { border-color: var(--gold); }
+.waiver-form-row textarea { resize: vertical; min-height: 80px; }
+
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:#f5f5f5}::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:#bbb}
 </style>
 </head>
 <body>
@@ -404,13 +495,13 @@ tr:hover td{background:#fafbfc}
 
     <!-- PENDING -->
     <div class="section" id="sec-pending">
-      <div class="page-heading"><h1>Pending Approval</h1><p>Review, approve, or reject event applications from organizers.</p></div>
+      <div class="page-heading"><h1>Pending Approval</h1><p>Review, approve, or reject event applications. Events with compliance violations cannot be approved until resolved.</p></div>
       <div class="card">
         <div class="filter-bar">
           <span style="font-size:13px;color:var(--muted)">Events awaiting review</span>
           <div class="filter-search">🔍<input type="text" id="pendingSearch" placeholder="Search events..." oninput="filterPending()"/></div>
         </div>
-        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Category</th><th>Organizer</th><th>Date</th><th>Slots</th><th>HEP Compliance</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="pendingTbody"></tbody></table></div></div>
+        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Category</th><th>Organizer</th><th>Date</th><th>Slots</th><th>Compliance Status</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="pendingTbody"></tbody></table></div></div>
       </div>
     </div>
 
@@ -431,31 +522,33 @@ tr:hover td{background:#fafbfc}
 
     <!-- COMPLIANCE SECTION -->
     <div class="section" id="sec-compliance">
-      <div class="page-heading"><h1>HEP Compliance Review</h1><p>Review compliance of all event applications according to the UTM Student Activity Guidebook.</p></div>
+      <div class="page-heading"><h1>HEP Compliance Review</h1><p>Semak pematuhan permohonan aktiviti berdasarkan <strong>Buku Panduan Aktiviti Mahasiswa UTM</strong>. Setiap pelanggaran memerlukan tindakan sebelum kelulusan boleh diberikan.</p></div>
 
       <div class="comp-stat-row" id="compStatRow"></div>
 
+      <!-- PDF Rules Reference Card -->
       <div class="card" style="margin-bottom:20px">
-        <div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">Compliance Criteria (Guidebook Section 3.2)</span></div></div>
+        <div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">📖 Rujukan: Buku Panduan Aktiviti Mahasiswa UTM (2013)</span></div></div>
         <div class="card-body">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div style="background:#f8fafc;border-radius:8px;padding:12px 14px;border-left:3px solid var(--green)">
-              <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">✅ Must Pass</div>
-              <ul style="font-size:12.5px;color:var(--text);padding-left:16px;line-height:1.8">
-                <li>Advisor/Principal approval obtained</li>
-                <li>Multiracial participation (except religious)</li>
-                <li>Submitted ≥ 14 working days before event</li>
-                <li>Previous event report has been submitted</li>
-              </ul>
+            <div style="background:#fef2f2;border-radius:8px;padding:12px 14px;border-left:3px solid #dc2626">
+              <div style="font-size:11px;font-weight:700;color:#991b1b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">🚫 Halangan Mutlak (TIDAK BOLEH Diluluskan)</div>
+              <div style="font-size:12px;color:#7f1d1d;line-height:1.9">
+                <div>❌ <strong>Sek. 3.2.4(b)</strong> — Tiada persetujuan Penasihat/Pengetua</div>
+                <div>❌ <strong>Sek. 3.2.4(d)</strong> — Penglibatan tidak berbilang kaum (kecuali persatuan agama)</div>
+                <div>❌ <strong>Sek. 3.1.5</strong> — Dikemukakan kurang 14 hari bekerja sebelum program</div>
+                <div>❌ <strong>Sek. 3.4.4</strong> — Laporan aktiviti terdahulu belum dikemukakan kepada HEMA</div>
+              </div>
             </div>
-            <div style="background:#f8fafc;border-radius:8px;padding:12px 14px;border-left:3px solid var(--gold)">
-              <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">⚠️ Semester Limits</div>
-              <ul style="font-size:12.5px;color:var(--text);padding-left:16px;line-height:1.8">
-                <li>Maximum 4 activities per semester per society</li>
-                <li>Events during exam week — requires special permission from TNC (HEMA)</li>
-                <li>Events must end before 12:00 midnight</li>
-                <li>External sponsors: submitted ≥ 30 working days</li>
-              </ul>
+            <div style="background:#fffbf0;border-radius:8px;padding:12px 14px;border-left:3px solid #f59e0b">
+              <div style="font-size:11px;font-weight:700;color:#7c4f00;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">⚠️ Memerlukan Tindakan Khas</div>
+              <div style="font-size:12px;color:#92400e;line-height:1.9">
+                <div>⚠️ <strong>Sek. 3.1.6</strong> — Ada penajaan/penyertaan luar → perlu 30 hari bekerja</div>
+                <div>⚠️ <strong>Sek. 3.1.9</strong> — Melebihi 4 aktiviti/semester → perlu kebenaran Penasihat + HEMA</div>
+                <div>⚠️ <strong>Sek. 3.2.5</strong> — Semasa minggu ulangkaji/peperiksaan → perlu kebenaran TNC (HEMA)</div>
+                <div>⚠️ <strong>Sek. 3.2.10</strong> — Aktiviti melebihi 12 tengah malam → perlu kebenaran HEMA/Pengetua</div>
+                <div>⚠️ <strong>Sek. 3.2.6</strong> — Ada jemputan/tajaan luar → perlu kelulusan Naib Canselor</div>
+              </div>
             </div>
           </div>
         </div>
@@ -464,19 +557,20 @@ tr:hover td{background:#fafbfc}
       <div class="card">
         <div class="filter-bar">
           <button class="filter-tab active" onclick="filterCompliance('all',this)">All</button>
-          <button class="filter-tab" onclick="filterCompliance('issues',this)">Has Issues</button>
-          <button class="filter-tab" onclick="filterCompliance('clear',this)">Clear</button>
-          <div class="filter-search">🔍<input type="text" id="complianceSearch" placeholder="Search organizer/event..." oninput="renderComplianceTable()"/></div>
+          <button class="filter-tab" onclick="filterCompliance('blocker',this)">🚫 Halangan Mutlak</button>
+          <button class="filter-tab" onclick="filterCompliance('warn',this)">⚠️ Perlu Tindakan</button>
+          <button class="filter-tab" onclick="filterCompliance('clear',this)">✅ Boleh Diluluskan</button>
+          <div class="filter-search">🔍<input type="text" id="complianceSearch" placeholder="Cari penganjur/aktiviti..." oninput="renderComplianceTable()"/></div>
         </div>
         <div class="card-body no-pad"><div class="tbl-wrap"><table>
           <thead><tr>
-            <th>Event / Organizer</th>
-            <th>Advisor Approved</th>
-            <th>Multiracial</th>
-            <th>Notice Period</th>
-            <th>Past Reports</th>
-            <th>Activity Limit (Sem)</th>
-            <th>Overall Status</th>
+            <th>Aktiviti / Penganjur</th>
+            <th>Persetujuan Penasihat</th>
+            <th>Berbilang Kaum</th>
+            <th>Tempoh Notis</th>
+            <th>Laporan Terdahulu</th>
+            <th>Had Aktiviti</th>
+            <th>Status & Tindakan</th>
           </tr></thead>
           <tbody id="complianceTbody"></tbody>
         </table></div></div>
@@ -505,49 +599,85 @@ tr:hover td{background:#fafbfc}
 
   </div>
 
-  <!-- FOOTER — inside .main, after .content -->
   <div class="page-footer">
     <div class="page-footer-copy">© 2025 Universiti Teknologi Malaysia — Campus Event Finder Admin</div>
   </div>
 </div>
 </div>
 
-<!-- MODAL -->
+<!-- EVENT REVIEW MODAL -->
 <div class="overlay" id="eventOverlay" onclick="handleOverlay(event)">
   <div class="modal">
-    <div class="modal-head"><span class="modal-head-title">Event Review</span><button class="modal-close" onclick="closeEventModal()">✕</button></div>
+    <div class="modal-head"><span class="modal-head-title">Event Review — HEP Compliance Check</span><button class="modal-close" onclick="closeEventModal()">✕</button></div>
     <div class="modal-body">
       <div style="margin-bottom:10px"><span class="badge" id="mCatBadge"></span><span class="badge" id="mStatusBadge" style="margin-left:6px"></span></div>
       <div style="font-size:17px;font-weight:700;color:var(--text);margin-bottom:16px;line-height:1.3" id="mTitle"></div>
       <div class="modal-info-grid">
-        <div class="modal-info-cell"><div class="mic-label">Date</div><div class="mic-val" id="mDate"></div></div>
-        <div class="modal-info-cell"><div class="mic-label">Time</div><div class="mic-val" id="mTime"></div></div>
-        <div class="modal-info-cell"><div class="mic-label">Venue</div><div class="mic-val" id="mVenue"></div></div>
-        <div class="modal-info-cell"><div class="mic-label">Faculty</div><div class="mic-val" id="mFaculty"></div></div>
-        <div class="modal-info-cell"><div class="mic-label">Organizer</div><div class="mic-val" id="mOrganiser"></div></div>
-        <div class="modal-info-cell"><div class="mic-label">Slots</div><div class="mic-val" id="mSlots"></div></div>
+        <div class="modal-info-cell"><div class="mic-label">Tarikh</div><div class="mic-val" id="mDate"></div></div>
+        <div class="modal-info-cell"><div class="mic-label">Masa</div><div class="mic-val" id="mTime"></div></div>
+        <div class="modal-info-cell"><div class="mic-label">Tempat</div><div class="mic-val" id="mVenue"></div></div>
+        <div class="modal-info-cell"><div class="mic-label">Fakulti</div><div class="mic-val" id="mFaculty"></div></div>
+        <div class="modal-info-cell"><div class="mic-label">Penganjur</div><div class="mic-val" id="mOrganiser"></div></div>
+        <div class="modal-info-cell"><div class="mic-label">Kapasiti</div><div class="mic-val" id="mSlots"></div></div>
       </div>
       <div class="modal-desc" id="mDesc"></div>
 
-      <div class="modal-section-title">📋 HEP Compliance Review</div>
-      <div class="compliance-panel" id="mCompliancePanel">
-        <div class="compliance-checks" id="mComplianceChecks"></div>
-        <div class="compliance-blocker" id="mComplianceBlocker" style="display:none">
-          🚫 This event <strong>cannot be approved</strong> until all compliance issues are resolved.
-        </div>
-      </div>
+      <!-- COMPLIANCE ENGINE OUTPUT -->
+      <div class="modal-section-title">📋 Semakan Pematuhan HEP — Buku Panduan Aktiviti Mahasiswa</div>
+      <div id="mComplianceOutput"></div>
 
-      <div class="modal-section-title">🔄 Approval Flow (Section 3.1.7)</div>
+      <!-- APPROVAL FLOW -->
+      <div class="modal-section-title">🔄 Aliran Kelulusan (Sek. 3.1.7)</div>
       <div style="background:#f8fafc;border-radius:8px;padding:14px;margin-bottom:16px">
         <div class="approval-flow" id="mApprovalFlow"></div>
         <div style="font-size:11.5px;color:var(--muted);margin-top:10px" id="mApprovalNote"></div>
       </div>
 
       <div class="reject-reason-box" id="rejectReasonBox">
-        <label style="font-size:12.5px;font-weight:600;color:var(--text);display:block;margin-bottom:6px">Rejection Reason <span style="color:var(--red)">*</span></label>
-        <textarea id="rejectReason" placeholder="State the reason for rejection..."></textarea>
+        <label style="font-size:12.5px;font-weight:600;color:var(--text);display:block;margin-bottom:6px">Sebab Penolakan <span style="color:var(--red)">*</span></label>
+        <textarea id="rejectReason" placeholder="Nyatakan sebab penolakan dan nyatakan seksyen panduan yang dilanggar..."></textarea>
       </div>
       <div class="modal-actions" id="mActions"></div>
+    </div>
+  </div>
+</div>
+
+<!-- WAIVER / SPECIAL PERMISSION MODAL -->
+<div class="overlay" id="waiverOverlay" onclick="handleWaiverOverlay(event)">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-head" style="background:var(--gold)">
+      <span class="modal-head-title" id="waiverModalTitle">Rekod Kebenaran Khas</span>
+      <button class="modal-close" onclick="closeWaiverModal()">✕</button>
+    </div>
+    <div class="waiver-modal-body">
+      <div style="background:#fef9ec;border:1px solid #f59e0b;border-radius:8px;padding:12px;margin-bottom:16px;font-size:12.5px;color:#7c4f00" id="waiverContext"></div>
+      <div class="waiver-form-row">
+        <label>Jenis Kebenaran yang Diperlukan</label>
+        <select id="waiverType">
+          <option value="">-- Pilih --</option>
+          <option value="advisor">Kebenaran Penasihat Persatuan</option>
+          <option value="pengetua">Kebenaran Pengetua Kolej</option>
+          <option value="tnc_hema">Kebenaran TNC (HEMA)</option>
+          <option value="naib_canselor">Kebenaran Naib Canselor</option>
+          <option value="hema_office">Kelulusan Pejabat HEMA</option>
+        </select>
+      </div>
+      <div class="waiver-form-row">
+        <label>Nombor Rujukan Kebenaran</label>
+        <input type="text" id="waiverRef" placeholder="cth: HEMA/2025/KK/001"/>
+      </div>
+      <div class="waiver-form-row">
+        <label>Tarikh Kebenaran Diberikan</label>
+        <input type="date" id="waiverDate"/>
+      </div>
+      <div class="waiver-form-row">
+        <label>Nota Tambahan</label>
+        <textarea id="waiverNote" placeholder="Maklumat lanjut mengenai kebenaran ini..."></textarea>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button style="flex:1;background:var(--gold);color:#fff;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:11px;border-radius:7px;cursor:pointer" onclick="saveWaiver()">💾 Simpan Rekod</button>
+        <button style="background:none;border:1px solid var(--border);color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;padding:11px 16px;border-radius:7px;cursor:pointer" onclick="closeWaiverModal()">Batal</button>
+      </div>
     </div>
   </div>
 </div>
@@ -566,17 +696,37 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 let EVENTS = [], USERS = [], FEEDBACK = [];
 let allEventsFilter = 'all', usersFilter = 'all', complianceFilter = 'all';
 let currentEventModal = null;
+let waiverEventId = null, waiverRuleId = null;
+
+// In-memory waiver store (keyed by eventId_ruleId)
+const WAIVERS = {};
 
 // ============================================================
-// COMPLIANCE ENGINE
+// ================================================================
+//  COMPLIANCE ENGINE — BASED 100% ON PDF:
+//  Buku Panduan Aktiviti Mahasiswa UTM (2013)
+// ================================================================
+//
+//  Rules mapped to PDF sections:
+//  BLOCKER (cannot approve):
+//    B1 — Sek. 3.2.4(b): Tiada persetujuan Penasihat/Pengetua
+//    B2 — Sek. 3.2.4(d): Penglibatan tidak berbilang kaum
+//    B3 — Sek. 3.1.5:    < 14 hari bekerja (tiada external)
+//    B4 — Sek. 3.4.4:    Laporan aktiviti terdahulu belum hantar
+//
+//  WARNING (require special permission but can approve after):
+//    W1 — Sek. 3.1.6:    Ada external → perlu 30 hari (jika <30 hari bekerja)
+//    W2 — Sek. 3.1.9:    Dah 4 aktiviti/sem → perlu kebenaran Penasihat+HEMA
+//    W3 — Sek. 3.2.5:    Semasa exam/study week → perlu kebenaran TNC HEMA
+//    W4 — Sek. 3.2.10:   Melebihi 12 tengah malam → perlu kebenaran HEMA/Pengetua
+//    W5 — Sek. 3.2.6:    Ada jemputan/tajaan luar → perlu kelulusan Naib Canselor
 // ============================================================
-function workingDaysBetween(dateStrSubmit, dateStrEvent) {
+
+function workingDaysBetween(d1Str, d2Str) {
   try {
-    let d1 = new Date(dateStrSubmit);
-    let d2 = new Date(dateStrEvent);
+    let d1 = new Date(d1Str), d2 = new Date(d2Str);
     if (isNaN(d1) || isNaN(d2)) return null;
-    let count = 0;
-    let cur = new Date(d1);
+    let count = 0, cur = new Date(d1);
     while (cur < d2) {
       const day = cur.getDay();
       if (day !== 0 && day !== 6) count++;
@@ -595,7 +745,6 @@ function countSemesterActivities(organizerName, excludeId) {
   const semEnd = now.getMonth() < 6
     ? new Date(now.getFullYear(), 5, 30)
     : new Date(now.getFullYear(), 11, 31);
-
   return EVENTS.filter(e => {
     if (e.id === excludeId) return false;
     if (e.organizer_name !== organizerName) return false;
@@ -606,110 +755,286 @@ function countSemesterActivities(organizerName, excludeId) {
 }
 
 function hasPendingReport(organizerName, excludeId) {
-  const pastApproved = EVENTS.filter(e =>
+  return EVENTS.some(e =>
     e.id !== excludeId &&
     e.organizer_name === organizerName &&
     e.status === 'approved' &&
     e.report_submitted === false
   );
-  return pastApproved.length > 0;
 }
 
+function isExamPeriod(dateStr) {
+  // Check flag on event first, fallback to field
+  return false; // Will be checked via ev.during_exam_week field
+}
+
+function parseTimeHour(timeStr) {
+  if (!timeStr) return null;
+  // Accept "HH:MM" or "HH:MM AM/PM"
+  const m = timeStr.match(/(\d{1,2}):(\d{2})\s*(am|pm)?/i);
+  if (!m) return null;
+  let h = parseInt(m[1]);
+  if (m[3] && m[3].toLowerCase() === 'pm' && h < 12) h += 12;
+  if (m[3] && m[3].toLowerCase() === 'am' && h === 12) h = 0;
+  return h;
+}
+
+/**
+ * Main compliance check — returns { blockers[], warnings[], isAllClear }
+ * Each item: { id, rule, section, detail, action, authority }
+ */
 function runComplianceChecks(ev) {
-  const checks = [];
-  let hasBlocker = false;
+  const blockers = [];
+  const warnings = [];
+  const waiverKey = (ruleId) => `${ev.id}_${ruleId}`;
+  const hasWaiver = (ruleId) => !!WAIVERS[waiverKey(ruleId)];
 
-  const advisorApproved = ev.advisor_approved;
-  if (advisorApproved === true) {
-    checks.push({ id:'advisor', label:'Advisor/Principal Approval', status:'pass', note:'Advisor has approved' });
-  } else if (advisorApproved === false) {
-    checks.push({ id:'advisor', label:'Advisor/Principal Approval', status:'fail', note:'Has not obtained Advisor approval' });
-    hasBlocker = true;
-  } else {
-    checks.push({ id:'advisor', label:'Advisor/Principal Approval', status:'warn', note:'Information not provided' });
+  // ─── B1: Persetujuan Penasihat/Pengetua (Sek. 3.2.4(b)) ───────────
+  if (ev.advisor_approved === false) {
+    if (!hasWaiver('B1')) {
+      blockers.push({
+        id: 'B1',
+        rule: 'Tiada Persetujuan Penasihat / Pengetua',
+        section: 'Seksyen 3.2.4(b)',
+        detail: 'Semua permohonan aktiviti mesti disokong oleh Penasihat Persatuan, Pengetua Kolej, atau Dekan Fakulti yang berkenaan sebelum dihantar kepada Pejabat HEMA.',
+        action: 'Penganjur mesti mendapatkan sokongan bertulis daripada Penasihat/Pengetua/Dekan terlebih dahulu. Admin boleh rekod kebenaran setelah dokumen diterima.',
+        authority: 'Penasihat Persatuan / Pengetua Kolej / Dekan'
+      });
+    }
   }
 
-  const isReligious = ev.category === 'religious' || (ev.tags || []).includes('religious');
-  if (isReligious) {
-    checks.push({ id:'multiracial', label:'Multiracial Participation', status:'na', note:'Exempted (religious society)' });
-  } else if (ev.multiracial === true) {
-    checks.push({ id:'multiracial', label:'Multiracial Participation', status:'pass', note:'Multiracial participation confirmed' });
-  } else if (ev.multiracial === false) {
-    checks.push({ id:'multiracial', label:'Multiracial Participation', status:'fail', note:'Does not open participation to all races' });
-    hasBlocker = true;
-  } else {
-    checks.push({ id:'multiracial', label:'Multiracial Participation', status:'warn', note:'Information not provided' });
+  // ─── B2: Penglibatan berbilang kaum (Sek. 3.2.4(d)) ──────────────
+  const isReligious = ev.category === 'religious' || (ev.tags||[]).includes('religious');
+  if (!isReligious && ev.multiracial === false) {
+    if (!hasWaiver('B2')) {
+      blockers.push({
+        id: 'B2',
+        rule: 'Penglibatan Tidak Berbilang Kaum',
+        section: 'Seksyen 3.2.4(d) & 2.2.3(a)',
+        detail: 'Aktiviti mesti melibatkan semua kaum kecuali program berbentuk keagamaan. Keahlian persatuan pun hendaklah terdiri daripada berbilang kaum.',
+        action: 'Penganjur mesti membuka penyertaan kepada semua kaum dan mengemaskini kertas kerja untuk mengesahkan penglibatan berbilang kaum. Jika aktiviti khusus untuk satu kaum atas sebab yang sah, dokumen justifikasi mesti dikemukakan kepada HEMA.',
+        authority: 'Pejabat HEMA'
+      });
+    }
   }
 
+  // ─── B3 / W1: Tempoh Notis (Sek. 3.1.5 & 3.1.6) ─────────────────
   const hasExternal = ev.has_external_sponsor || ev.has_external_participants;
-  const minDays = hasExternal ? 30 : 14;
+  const requiredDays = hasExternal ? 30 : 14;
   const submitDate = ev.created_at ? ev.created_at.slice(0,10) : null;
   const eventDate  = ev.date;
   if (submitDate && eventDate) {
     const wd = workingDaysBetween(submitDate, eventDate);
-    if (wd === null) {
-      checks.push({ id:'notice', label:`Notice Period (≥${minDays} working days)`, status:'warn', note:'Date cannot be calculated' });
-    } else if (wd >= minDays) {
-      checks.push({ id:'notice', label:`Notice Period (≥${minDays} working days)`, status:'pass', note:`${wd} working days before event` });
-    } else {
-      checks.push({ id:'notice', label:`Notice Period (≥${minDays} working days)`, status:'fail', note:`Only ${wd} working days — need ≥${minDays}` });
-      hasBlocker = true;
+    if (wd !== null) {
+      if (!hasExternal && wd < 14) {
+        // Hard blocker — less than 14 working days
+        if (!hasWaiver('B3')) {
+          blockers.push({
+            id: 'B3',
+            rule: `Tempoh Notis Tidak Mencukupi (${wd} / 14 hari bekerja)`,
+            section: 'Seksyen 3.1.5',
+            detail: `Persatuan/Kelab mesti mengemukakan permohonan sekurang-kurangnya 14 hari bekerja sebelum tarikh program. Permohonan ini dikemukakan ${wd} hari bekerja sebelum program — kurang ${14-wd} hari.`,
+            action: 'Tolak permohonan dan minta penganjur kemukakan semula sekurang-kurangnya 14 hari bekerja sebelum tarikh program baru. Jika tarikh program masih jauh, minta penganjur kemukakan semula dengan tarikh yang betul.',
+            authority: 'Pejabat HEMA'
+          });
+        }
+      } else if (hasExternal && wd < 30) {
+        if (wd < 14) {
+          // Less than 14 days AND has external — double violation
+          if (!hasWaiver('B3')) {
+            blockers.push({
+              id: 'B3',
+              rule: `Tempoh Notis Kritikal — Ada Pihak Luar, ${wd} / 30 Hari Bekerja`,
+              section: 'Seksyen 3.1.5 & 3.1.6',
+              detail: `Program melibatkan penajaan/penyertaan pihak luar — memerlukan 30 hari bekerja. Hanya ${wd} hari bekerja, iaitu kurang ${30-wd} hari daripada yang dikehendaki.`,
+              action: 'Tolak permohonan. Minta penganjur kemukakan semula sekurang-kurangnya 30 hari bekerja sebelum program kerana melibatkan pihak luar.',
+              authority: 'Pejabat HEMA'
+            });
+          }
+        } else {
+          // 14-29 days with external — warning
+          if (!hasWaiver('W1')) {
+            warnings.push({
+              id: 'W1',
+              rule: `Tempoh Notis Kurang untuk Aktiviti Pihak Luar (${wd} / 30 hari bekerja)`,
+              section: 'Seksyen 3.1.6',
+              detail: `Aktiviti yang melibatkan penajaan atau penyertaan pihak luar perlu dikemukakan 30 hari bekerja lebih awal. Semasa ini ${wd} hari bekerja — kurang ${30-wd} hari.`,
+              action: 'Perlu mendapat kelulusan khas daripada Pejabat HEMA. Rekodkan kebenaran setelah perbincangan dengan pihak HEMA.',
+              authority: 'Pejabat HEMA'
+            });
+          }
+        }
+      }
     }
-  } else {
-    checks.push({ id:'notice', label:'Notice Period (14/30 working days)', status:'warn', note:'Submission date not available' });
   }
 
-  const pendingRep = hasPendingReport(ev.organizer_name, ev.id);
-  if (pendingRep) {
-    checks.push({ id:'report', label:'Previous Event Report Submitted', status:'fail', note:'Organizer has unsubmitted reports' });
-    hasBlocker = true;
-  } else {
-    checks.push({ id:'report', label:'Previous Event Report Submitted', status:'pass', note:'No outstanding reports' });
+  // ─── B4: Laporan aktiviti terdahulu (Sek. 3.4.4) ─────────────────
+  if (hasPendingReport(ev.organizer_name, ev.id)) {
+    if (!hasWaiver('B4')) {
+      blockers.push({
+        id: 'B4',
+        rule: 'Laporan Aktiviti Terdahulu Belum Dikemukakan',
+        section: 'Seksyen 3.4.4',
+        detail: 'Aktiviti selanjutnya hanya boleh dijalankan selepas semua laporan aktiviti dan kewangan terdahulu dikemukakan kepada HEMA (dalam tempoh 10 hari bekerja selepas program — Sek. 3.4.1).',
+        action: 'Hubungi Setiausaha dan Bendahari persatuan berkenaan untuk menghantar laporan program (Lampiran 3J) dan laporan kewangan yang tertunggak. Kelulusan aktiviti baru hanya boleh diberikan setelah semua laporan diterima.',
+        authority: 'Setiausaha & Bendahari Persatuan → Pejabat HEMA'
+      });
+    }
   }
 
+  // ─── W2: Had aktiviti per semester (Sek. 3.1.9) ───────────────────
   const semCount = countSemesterActivities(ev.organizer_name, ev.id);
   if (semCount >= 4) {
-    checks.push({ id:'semLimit', label:'Semester Activity Limit (max 4)', status:'fail', note:`${semCount} other activities this semester — requires HEMA permission` });
-    hasBlocker = true;
+    if (!hasWaiver('W2')) {
+      warnings.push({
+        id: 'W2',
+        rule: `Had Aktiviti Semester Dicapai (${semCount}/4 aktiviti)`,
+        section: 'Seksyen 3.1.9',
+        detail: `Persatuan/Kelab/JKM dibenarkan melaksana tidak melebihi 4 aktiviti dalam satu semester (tidak termasuk aktiviti wajib). Persatuan ini telah mencapai/melebihi had tersebut dengan ${semCount} aktiviti.`,
+        action: 'Mesti mendapat KEBENARAN BERTULIS daripada Penasihat/Pengetua DAN KELULUSAN Pejabat HEMA sebelum aktiviti kelima dan ke atas boleh dijalankan. Rekodkan kebenaran tersebut.',
+        authority: 'Penasihat / Pengetua → Pejabat HEMA'
+      });
+    }
   } else if (semCount === 3) {
-    checks.push({ id:'semLimit', label:'Semester Activity Limit (max 4)', status:'warn', note:`${semCount}/4 activities this semester — this event will reach the limit` });
-  } else {
-    checks.push({ id:'semLimit', label:'Semester Activity Limit (max 4)', status:'pass', note:`${semCount}/4 activities this semester` });
+    // Approaching limit — informational warning
+    warnings.push({
+      id: 'W2_NEAR',
+      rule: `Hampir Mencapai Had Aktiviti Semester (${semCount}/4)`,
+      section: 'Seksyen 3.1.9',
+      detail: `Persatuan ini sudah mempunyai ${semCount} aktiviti semester ini. Aktiviti ini akan menjadi aktiviti ke-4 — had maksimum. Aktiviti seterusnya selepas ini memerlukan kebenaran khas.`,
+      action: 'Boleh diluluskan. Maklumkan kepada penganjur bahawa aktiviti selanjutnya melebihi had dan perlu kebenaran khas.',
+      authority: 'Pejabat HEMA (maklumat sahaja)'
+    });
   }
 
-  return { checks, hasBlocker };
+  // ─── W3: Semasa minggu ulangkaji/peperiksaan (Sek. 3.2.5) ─────────
+  if (ev.during_exam_week === true) {
+    if (!hasWaiver('W3')) {
+      warnings.push({
+        id: 'W3',
+        rule: 'Aktiviti Semasa Minggu Ulangkaji / Peperiksaan',
+        section: 'Seksyen 3.2.5',
+        detail: 'Tidak dibenarkan melaksanakan sebarang aktiviti pada minggu ulangkaji hingga minggu peperiksaan kecuali dengan kebenaran Timbalan Naib Canselor (HEMA). Pelajar dinasihatkan melaksanakan program sekurang-kurangnya 2 minggu selepas peperiksaan.',
+        action: 'Mesti mendapat kebenaran bertulis daripada Timbalan Naib Canselor (HEMA) sebelum aktiviti boleh diluluskan. Rekodkan nombor rujukan kebenaran tersebut.',
+        authority: 'Timbalan Naib Canselor (HEMA)'
+      });
+    }
+  }
+
+  // ─── W4: Aktiviti melebihi 12 tengah malam (Sek. 3.2.10) ─────────
+  const endHour = parseTimeHour(ev.end_time);
+  const isLateNight = (endHour !== null) && (endHour === 0 || endHour >= 1 || ev.past_midnight === true);
+  if (ev.past_midnight === true || (endHour !== null && (endHour < 6 && endHour >= 0))) {
+    if (!hasWaiver('W4')) {
+      warnings.push({
+        id: 'W4',
+        rule: 'Aktiviti Melebihi Jam 12.00 Tengah Malam',
+        section: 'Seksyen 3.2.10',
+        detail: `Aktiviti perlu ditamatkan sebelum atau pada jam 12.00 tengah malam kecuali dengan kebenaran Pejabat HEMA/Pengetua. Semua pihak keselamatan juga perlu dimaklumkan.`,
+        action: 'Mendapatkan kebenaran bertulis daripada Pejabat HEMA atau Pengetua Kolej. Maklumkan kepada Pejabat Keselamatan UTM. Rekodkan kebenaran tersebut.',
+        authority: 'Pejabat HEMA / Pengetua Kolej + Pejabat Keselamatan'
+      });
+    }
+  }
+
+  // ─── W5: Jemputan / Tajaan Pihak Luar (Sek. 3.2.6) ───────────────
+  if (hasExternal) {
+    if (!hasWaiver('W5')) {
+      warnings.push({
+        id: 'W5',
+        rule: 'Melibatkan Jemputan / Tajaan Pihak Luar',
+        section: 'Seksyen 3.2.6',
+        detail: 'Semua aktiviti pelajar yang melibatkan jemputan dan/atau tajaan luar hendaklah mendapatkan kelulusan Naib Canselor dengan melalui Timbalan Naib Canselor (HEMA).',
+        action: 'Permohonan kelulusan perlu dikemukakan kepada TNC (HEMA) berserta: surat jemputan asal, senarai peserta, surat permohonan, tentatif/tarikh program, dan maklumat pegawai pengiring (Sek. 3.2.7). Rekodkan setelah kelulusan diterima.',
+        authority: 'Naib Canselor → melalui TNC (HEMA)'
+      });
+    }
+  }
+
+  const hasBlocker = blockers.length > 0;
+  const hasWarning = warnings.length > 0;
+  return { blockers, warnings, hasBlocker, hasWarning, isAllClear: !hasBlocker && !hasWarning };
 }
 
-function renderModalCompliance(ev) {
-  const { checks, hasBlocker } = runComplianceChecks(ev);
-  const statusIcon  = { pass:'✅', fail:'❌', warn:'⚠️', na:'➖' };
-  const statusClass = { pass:'pass', fail:'fail', warn:'warn', na:'na' };
+// ============================================================
+// RENDER COMPLIANCE OUTPUT (Modal)
+// ============================================================
+function renderModalComplianceOutput(ev) {
+  const { blockers, warnings, hasBlocker, isAllClear } = runComplianceChecks(ev);
+  let html = '';
 
-  document.getElementById('mComplianceChecks').innerHTML = checks.map(c => `
-    <div class="compliance-item">
-      <div class="compliance-item-left">
-        <span class="ci-dot ${statusClass[c.status]}"></span>
-        <span class="ci-label">${c.label}</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <span style="font-size:11.5px;color:var(--muted)">${c.note}</span>
-        <span class="ci-badge ${statusClass[c.status]}">${statusIcon[c.status]} ${c.status === 'pass' ? 'Pass' : c.status === 'fail' ? 'Fail' : c.status === 'na' ? 'N/A' : 'Warning'}</span>
-      </div>
-    </div>`).join('');
+  if (isAllClear) {
+    html = `
+      <div class="clear-box">
+        <div class="clear-box-icon">✅</div>
+        <div>
+          <div class="clear-box-text">Semua semakan pematuhan lulus</div>
+          <div class="clear-box-sub">Aktiviti ini memenuhi semua syarat Buku Panduan Aktiviti Mahasiswa UTM. Boleh diluluskan.</div>
+        </div>
+      </div>`;
+  } else {
+    if (blockers.length > 0) {
+      html += `
+        <div class="hard-block-box">
+          <div class="hard-block-title">🚫 HALANGAN MUTLAK — Tidak Boleh Diluluskan Sehingga Diselesaikan</div>
+          ${blockers.map(b => `
+            <div class="hard-block-item">
+              <div class="hb-icon">❌</div>
+              <div class="hb-body">
+                <div class="hb-rule">${b.rule}</div>
+                <div class="hb-detail">${b.detail}</div>
+                <div style="margin-top:6px"><span class="hb-ref">📖 ${b.section}</span></div>
+                <div class="hb-action">📌 Tindakan Diperlukan: ${b.action}</div>
+                <div style="margin-top:6px;font-size:11px;color:#991b1b"><strong>Pihak Berkuasa:</strong> ${b.authority}</div>
+                <div class="ra-btn-wrap">
+                  <button class="btn-waiver" onclick="openWaiverModal(${ev.id},'${b.id}','${b.rule.replace(/'/g,"\\'")}','${b.authority}')">
+                    📝 Rekod Kebenaran Diterima
+                  </button>
+                </div>
+              </div>
+            </div>`).join('')}
+        </div>`;
+    }
 
-  const blocker = document.getElementById('mComplianceBlocker');
-  blocker.style.display = hasBlocker ? 'flex' : 'none';
+    if (warnings.length > 0) {
+      html += `
+        <div class="warn-box" style="margin-top:10px">
+          <div class="warn-box-title">⚠️ MEMERLUKAN TINDAKAN KHAS — Boleh Diluluskan Setelah Kebenaran Direkodkan</div>
+          ${warnings.map(w => `
+            <div class="warn-item">
+              <div class="warn-icon">⚠️</div>
+              <div class="warn-body">
+                <div class="warn-rule">${w.rule}</div>
+                <div class="warn-detail">${w.detail}</div>
+                <div style="margin-top:4px"><span style="font-size:10px;color:#b45309;font-style:italic">📖 ${w.section}</span></div>
+                <div style="margin-top:5px;font-size:12px;font-weight:600;color:#7c4f00;background:rgba(245,158,11,.1);padding:5px 8px;border-radius:5px;border-left:3px solid #f59e0b">
+                  📌 ${w.action}
+                </div>
+                <div style="margin-top:4px;font-size:11px;color:#92400e"><strong>Pihak Berkuasa:</strong> ${w.authority}</div>
+                ${w.id !== 'W2_NEAR' ? `
+                <div class="ra-btn-wrap">
+                  <button class="btn-waiver" onclick="openWaiverModal(${ev.id},'${w.id}','${w.rule.replace(/'/g,"\\'")}','${w.authority}')">
+                    📝 Rekod Kebenaran Diterima
+                  </button>
+                  ${WAIVERS[ev.id+'_'+w.id] ? `<span style="font-size:11px;color:var(--green);font-weight:600">✅ Kebenaran Direkod</span>` : ''}
+                </div>` : ''}
+              </div>
+            </div>`).join('')}
+        </div>`;
+    }
+  }
+
+  document.getElementById('mComplianceOutput').innerHTML = html;
   return hasBlocker;
 }
 
 function renderApprovalFlow(ev) {
   const steps = [
-    { icon:'👤', label:'Society\nPresident', status: ev.president_approved ? 'done' : ev.status === 'rejected' ? 'rejected' : 'done' },
-    { icon:'📝', label:'Advisor /\nPrincipal', status: ev.advisor_approved === true ? 'done' : ev.advisor_approved === false ? 'rejected' : 'current' },
+    { icon:'👤', label:'Presiden\nPersatuan', status: 'done' },
+    { icon:'📝', label:'Penasihat /\nPengetua', status: ev.advisor_approved === true ? 'done' : ev.advisor_approved === false ? 'rejected' : 'current' },
     { icon:'🏛️', label:'HEP / HEMA', status: ev.status === 'approved' ? 'done' : ev.status === 'rejected' ? 'rejected' : 'waiting' }
   ];
-  const statusLabel = { done:'Approved', current:'Waiting', waiting:'Not Reached', rejected:'Rejected' };
-
+  const statusLabel = { done:'Diluluskan', current:'Menunggu', waiting:'Belum Sampai', rejected:'Ditolak' };
   document.getElementById('mApprovalFlow').innerHTML = steps.map((s, i) => `
     ${i > 0 ? '<div class="af-arrow">→</div>' : ''}
     <div class="af-step">
@@ -717,12 +1042,56 @@ function renderApprovalFlow(ev) {
       <div class="af-label">${s.label.replace('\n','<br>')}</div>
       <div style="font-size:10px;color:var(--muted);margin-top:3px">${statusLabel[s.status]}</div>
     </div>`).join('');
-
-  const currentStep = steps.findIndex(s => s.status === 'current' || s.status === 'waiting');
   document.getElementById('mApprovalNote').textContent =
-    ev.status === 'approved' ? '✅ All approval stages have been completed.' :
-    ev.status === 'rejected' ? '❌ This application has been rejected.' :
-    `⏳ Awaiting approval at stage: ${steps[currentStep]?.label?.replace('\n',' ') || 'HEP/HEMA'}.`;
+    ev.status === 'approved' ? '✅ Semua peringkat kelulusan telah selesai.' :
+    ev.status === 'rejected' ? '❌ Permohonan ini telah ditolak.' :
+    '⏳ Menunggu kelulusan di peringkat: HEP / HEMA.';
+}
+
+// ============================================================
+// WAIVER MODAL
+// ============================================================
+function openWaiverModal(eventId, ruleId, ruleName, authority) {
+  waiverEventId = eventId;
+  waiverRuleId  = ruleId;
+  document.getElementById('waiverModalTitle').textContent = 'Rekod Kebenaran Khas — ' + ruleId;
+  document.getElementById('waiverContext').innerHTML =
+    `<strong>Peraturan:</strong> ${ruleName}<br><strong>Pihak Berkuasa:</strong> ${authority}`;
+  document.getElementById('waiverType').value  = '';
+  document.getElementById('waiverRef').value   = '';
+  document.getElementById('waiverDate').value  = new Date().toISOString().slice(0,10);
+  document.getElementById('waiverNote').value  = '';
+  document.getElementById('waiverOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeWaiverModal() {
+  document.getElementById('waiverOverlay').classList.remove('open');
+}
+
+function handleWaiverOverlay(e) {
+  if (e.target === document.getElementById('waiverOverlay')) closeWaiverModal();
+}
+
+function saveWaiver() {
+  const type = document.getElementById('waiverType').value;
+  const ref  = document.getElementById('waiverRef').value.trim();
+  const date = document.getElementById('waiverDate').value;
+  const note = document.getElementById('waiverNote').value.trim();
+  if (!type || !ref) { alert('Sila isi jenis kebenaran dan nombor rujukan.'); return; }
+  const key = `${waiverEventId}_${waiverRuleId}`;
+  WAIVERS[key] = { type, ref, date, note, savedAt: new Date().toISOString() };
+  closeWaiverModal();
+  showToast('✅ Kebenaran telah direkodkan untuk ' + waiverRuleId, 'success');
+  // Re-render the modal if it's open
+  if (currentEventModal) {
+    const hasBlocker = renderModalComplianceOutput(currentEventModal);
+    // Update approve button state
+    const approveBtn = document.querySelector('.btn-modal-approve');
+    if (approveBtn) approveBtn.disabled = hasBlocker;
+  }
+  renderComplianceTable();
+  renderDashboard();
 }
 
 // ============================================================
@@ -730,16 +1099,11 @@ function renderApprovalFlow(ev) {
 // ============================================================
 async function initAdmin() {
   const isAdmin = sessionStorage.getItem('utm_admin');
-  if (!isAdmin) {
-    window.location.href = '/Login/login.html';
-    return;
-  }
-
+  if (!isAdmin) { window.location.href = '/Login/login.html'; return; }
   document.getElementById('sbName').textContent     = 'Administrator';
   document.getElementById('sbAvatar').textContent   = 'AD';
   document.getElementById('topbarAv').textContent   = 'AD';
   document.getElementById('topbarName').textContent = 'Administrator';
-
   await Promise.all([loadEvents(), loadUsers(), loadFeedback()]);
   renderDashboard();
   renderPendingTable();
@@ -757,12 +1121,10 @@ async function loadEvents() {
   const { data, error } = await sb.from('events').select('*').order('created_at', { ascending: false });
   if (!error && data) EVENTS = data;
 }
-
 async function loadUsers() {
   const { data, error } = await sb.from('users').select('*').order('created_at', { ascending: false });
   if (!error && data) USERS = data;
 }
-
 async function loadFeedback() {
   try {
     const { data, error } = await sb.from('feedback').select('*').order('created_at', { ascending: false });
@@ -775,28 +1137,29 @@ async function loadFeedback() {
 // ============================================================
 async function approveEvent(id) {
   const ev = EVENTS.find(e => e.id === id);
-  const { hasBlocker } = runComplianceChecks(ev);
+  const { hasBlocker, blockers } = runComplianceChecks(ev);
   if (hasBlocker) {
-    showToast('⚠️ This event cannot be approved — there are unresolved HEP compliance issues.', 'error');
+    const rules = blockers.map(b => `• ${b.section}: ${b.rule}`).join('\n');
+    showToast('🚫 Tidak boleh diluluskan — ada halangan pematuhan. Selesaikan dahulu.', 'error');
     return;
   }
   const { error } = await sb.from('events').update({ status: 'approved' }).eq('id', id);
-  if (error) { showToast('Failed to approve event.', 'error'); return; }
+  if (error) { showToast('Gagal meluluskan aktiviti.', 'error'); return; }
   closeEventModal();
   await loadEvents();
   refreshAllTables();
-  showToast('✓ "' + (ev?.title || 'Event') + '" approved and published.', 'success');
+  showToast('✓ "' + (ev?.title || 'Aktiviti') + '" diluluskan dan diterbitkan.', 'success');
 }
 
 async function confirmReject(id) {
   const reason = document.getElementById('rejectReason').value.trim();
-  if (!reason) { alert('Please state the reason for rejection.'); return; }
+  if (!reason) { alert('Sila nyatakan sebab penolakan.'); return; }
   const { error } = await sb.from('events').update({ status: 'rejected', reject_reason: reason }).eq('id', id);
-  if (error) { showToast('Failed to reject event.', 'error'); return; }
+  if (error) { showToast('Gagal menolak aktiviti.', 'error'); return; }
   closeEventModal();
   await loadEvents();
   refreshAllTables();
-  showToast('✕ Event has been rejected.', 'error');
+  showToast('✕ Aktiviti telah ditolak.', 'error');
 }
 
 // ============================================================
@@ -808,7 +1171,6 @@ function renderDashboard() {
   const approved = EVENTS.filter(e => e.status === 'approved').length;
   const totalReg = EVENTS.reduce((a, e) => a + ((e.slots || 0) - (e.slots_left || 0)), 0);
   const slotsLeft = EVENTS.reduce((a, e) => a + (e.slots_left || 0), 0);
-
   const totalFb  = FEEDBACK.length;
   const posCount = FEEDBACK.filter(f => f.sentiment === 'positive').length;
   const neuCount = FEEDBACK.filter(f => f.sentiment === 'neutral').length;
@@ -816,7 +1178,6 @@ function renderDashboard() {
   const posPct   = totalFb ? Math.round((posCount / totalFb) * 100) : 0;
   const neuPct   = totalFb ? Math.round((neuCount / totalFb) * 100) : 0;
   const negPct   = totalFb ? Math.round((negCount / totalFb) * 100) : 0;
-
   const compIssues = EVENTS.filter(e => e.status === 'pending' && runComplianceChecks(e).hasBlocker).length;
 
   document.getElementById('dTotalEvents').textContent   = total;
@@ -829,7 +1190,6 @@ function renderDashboard() {
   document.getElementById('dComplianceIssues').textContent = compIssues || '0';
   document.getElementById('topChipApproved').textContent   = approved + ' Live';
   document.getElementById('topChipPendingTxt').textContent = pending + ' Pending';
-
   document.getElementById('sentPos').style.width = posPct + '%';
   document.getElementById('sentNeu').style.width = neuPct + '%';
   document.getElementById('sentNeg').style.width = negPct + '%';
@@ -850,23 +1210,26 @@ function renderDashboard() {
   const pendingEvs = EVENTS.filter(e => e.status === 'pending');
   const pl = document.getElementById('dashPendingList');
   if (!pendingEvs.length) {
-    pl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div><h3>No pending events</h3><p>All have been reviewed.</p></div>';
+    pl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div><h3>Tiada aktiviti menunggu</h3><p>Semua telah disemak.</p></div>';
   } else {
     pl.innerHTML = pendingEvs.map(e => {
-      const { hasBlocker } = runComplianceChecks(e);
+      const { hasBlocker, blockers, warnings } = runComplianceChecks(e);
+      const tag = hasBlocker
+        ? `<span style="color:#dc2626;font-weight:700;font-size:10.5px">🚫 ${blockers.length} halangan mutlak</span>`
+        : warnings.length > 0
+          ? `<span style="color:#92400e;font-weight:700;font-size:10.5px">⚠️ ${warnings.length} perlu tindakan</span>`
+          : `<span style="color:var(--green);font-weight:700;font-size:10.5px">✅ Boleh diluluskan</span>`;
       return `
-      <div class="event-mini">
-        <div class="event-mini-emoji">${e.emoji || '📅'}</div>
-        <div class="event-mini-body">
-          <div class="event-mini-title">${e.title}</div>
-          <div class="event-mini-meta">📅 ${e.date || '–'} &nbsp;·&nbsp; Submitted ${(e.created_at || '').slice(0,10) || '–'}
-            ${hasBlocker ? ' &nbsp;<span style="color:#c0392b;font-weight:700;font-size:10.5px">⚠️ Compliance Issues</span>' : ''}
+        <div class="event-mini">
+          <div class="event-mini-emoji">${e.emoji || '📅'}</div>
+          <div class="event-mini-body">
+            <div class="event-mini-title">${e.title}</div>
+            <div class="event-mini-meta">📅 ${e.date || '–'} &nbsp;·&nbsp; ${(e.created_at || '').slice(0,10) || '–'} &nbsp;·&nbsp; ${tag}</div>
           </div>
-        </div>
-        <div class="event-mini-status">
-          <button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">Review</button>
-        </div>
-      </div>`;
+          <div class="event-mini-status">
+            <button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">Semak</button>
+          </div>
+        </div>`;
     }).join('');
   }
 
@@ -875,10 +1238,9 @@ function renderDashboard() {
     .sort((a, b) => ((b.slots||0)-(b.slots_left||0)) - ((a.slots||0)-(a.slots_left||0)))
     .slice(0, 6);
   const maxReg = Math.max(...chartData.map(e => (e.slots||0)-(e.slots_left||0)), 1);
-
   const chartEl = document.getElementById('dashRegChart');
   if (!chartData.length) {
-    chartEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No registrations yet</h3></div>';
+    chartEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>Tiada pendaftaran lagi</h3></div>';
   } else {
     chartEl.innerHTML = chartData.map(e => {
       const reg = (e.slots||0) - (e.slots_left||0);
@@ -902,36 +1264,42 @@ function renderPendingTable() {
   const filtered = q
     ? rows.filter(e => (e.title||'').toLowerCase().includes(q) || (e.organizer_name||'').toLowerCase().includes(q))
     : rows;
-
   const tbody = document.getElementById('pendingTbody');
   if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>No pending events</h3></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>Tiada aktiviti menunggu kelulusan</h3></div></td></tr>`;
     return;
   }
   tbody.innerHTML = filtered.map(e => {
-    const { checks, hasBlocker } = runComplianceChecks(e);
-    const failCount = checks.filter(c => c.status === 'fail').length;
-    const warnCount = checks.filter(c => c.status === 'warn').length;
-    const compBadge = hasBlocker
-      ? `<span class="cf-chip fail">❌ ${failCount} issues</span>`
-      : warnCount > 0
-        ? `<span class="cf-chip warn">⚠️ ${warnCount} warnings</span>`
-        : `<span class="cf-chip ok">✅ Clear</span>`;
+    const { blockers, warnings, hasBlocker } = runComplianceChecks(e);
+    let compCell;
+    if (hasBlocker) {
+      compCell = `<div style="display:flex;flex-direction:column;gap:3px">
+        <span class="cf-chip fail">🚫 ${blockers.length} halangan mutlak</span>
+        ${blockers.slice(0,2).map(b=>`<span style="font-size:10px;color:#991b1b">• ${b.section}</span>`).join('')}
+      </div>`;
+    } else if (warnings.length > 0) {
+      compCell = `<div style="display:flex;flex-direction:column;gap:3px">
+        <span class="cf-chip warn">⚠️ ${warnings.length} perlu tindakan</span>
+        ${warnings.slice(0,2).map(w=>`<span style="font-size:10px;color:#92400e">• ${w.section}</span>`).join('')}
+      </div>`;
+    } else {
+      compCell = `<span class="cf-chip ok">✅ Lulus</span>`;
+    }
     return `
-    <tr>
-      <td><strong>${e.emoji||'📅'} ${e.title||'–'}</strong></td>
-      <td><span class="badge badge-${e.category}">${cap(e.category)}</span></td>
-      <td>${e.organizer_name || '–'}</td>
-      <td>${e.date || '–'}</td>
-      <td>${e.slots || '–'}</td>
-      <td>${compBadge}</td>
-      <td>${(e.created_at||'').slice(0,10) || '–'}</td>
-      <td style="display:flex;gap:6px;flex-wrap:wrap">
-        <button class="btn btn-approve btn-sm" onclick="approveEvent(${e.id})" ${hasBlocker?'disabled style="opacity:.5;cursor:not-allowed"':''}>✓ Approve</button>
-        <button class="btn btn-reject btn-sm"  onclick="openEventModal(${e.id})">✕ Reject</button>
-        <button class="btn btn-view btn-sm"    onclick="openEventModal(${e.id})">View</button>
-      </td>
-    </tr>`;
+      <tr style="${hasBlocker?'background:#fff8f8':''}">
+        <td><strong>${e.emoji||'📅'} ${e.title||'–'}</strong></td>
+        <td><span class="badge badge-${e.category}">${cap(e.category)}</span></td>
+        <td>${e.organizer_name || '–'}</td>
+        <td>${e.date || '–'}</td>
+        <td>${e.slots || '–'}</td>
+        <td>${compCell}</td>
+        <td>${(e.created_at||'').slice(0,10) || '–'}</td>
+        <td style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-approve btn-sm" onclick="approveEvent(${e.id})" ${hasBlocker?'disabled style="opacity:.45;cursor:not-allowed;pointer-events:none"':''}>✓ Lulus</button>
+          <button class="btn btn-reject btn-sm"  onclick="openEventModal(${e.id})">✕ Tolak</button>
+          <button class="btn btn-view btn-sm"    onclick="openEventModal(${e.id})">Semak</button>
+        </td>
+      </tr>`;
   }).join('');
 }
 
@@ -943,12 +1311,10 @@ function filterPending() { renderPendingTable(); }
 function renderAllEventsTable() {
   const q = (document.getElementById('allEventsSearch')?.value || '').toLowerCase();
   let rows = allEventsFilter === 'all' ? EVENTS : EVENTS.filter(e => e.status === allEventsFilter);
-  if (q) rows = rows.filter(e =>
-    (e.title||'').toLowerCase().includes(q) || (e.location||'').toLowerCase().includes(q)
-  );
+  if (q) rows = rows.filter(e => (e.title||'').toLowerCase().includes(q) || (e.location||'').toLowerCase().includes(q));
   const tbody = document.getElementById('allEventsTbody');
   if (!rows.length) {
-    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">📋</div><h3>No events found</h3></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">📋</div><h3>Tiada aktiviti ditemui</h3></div></td></tr>`;
     return;
   }
   tbody.innerHTML = rows.map(e => {
@@ -960,9 +1326,9 @@ function renderAllEventsTable() {
         <td>${e.date||'–'}</td>
         <td style="font-size:12.5px">${(e.location||'–').split(',')[0]}</td>
         <td>${e.slots||'–'}</td>
-        <td><div style="font-weight:600">${reg}</div><div style="font-size:11px;color:var(--muted)">${e.slots_left||0} remaining</div></td>
+        <td><div style="font-weight:600">${reg}</div><div style="font-size:11px;color:var(--muted)">${e.slots_left||0} baki</div></td>
         <td><span class="badge badge-${e.status}">${cap(e.status)}</span></td>
-        <td><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">View</button></td>
+        <td><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">Lihat</button></td>
       </tr>`;
   }).join('');
 }
@@ -973,7 +1339,6 @@ function filterAllEvents(status, btn) {
   if (btn) btn.classList.add('active');
   renderAllEventsTable();
 }
-
 function filterAllEventsSearch() { renderAllEventsTable(); }
 
 // ============================================================
@@ -983,10 +1348,12 @@ function renderComplianceTable() {
   const q = (document.getElementById('complianceSearch')?.value || '').toLowerCase();
   let rows = EVENTS.filter(e => e.status === 'pending');
 
-  if (complianceFilter === 'issues') {
+  if (complianceFilter === 'blocker') {
     rows = rows.filter(e => runComplianceChecks(e).hasBlocker);
+  } else if (complianceFilter === 'warn') {
+    rows = rows.filter(e => { const r = runComplianceChecks(e); return !r.hasBlocker && r.hasWarning; });
   } else if (complianceFilter === 'clear') {
-    rows = rows.filter(e => !runComplianceChecks(e).hasBlocker);
+    rows = rows.filter(e => runComplianceChecks(e).isAllClear);
   }
 
   if (q) {
@@ -996,55 +1363,78 @@ function renderComplianceTable() {
     );
   }
 
-  const allPending  = EVENTS.filter(e => e.status === 'pending');
-  const issueCount  = allPending.filter(e => runComplianceChecks(e).hasBlocker).length;
-  const clearCount  = allPending.length - issueCount;
+  const allPending   = EVENTS.filter(e => e.status === 'pending');
+  const blockerCount = allPending.filter(e => runComplianceChecks(e).hasBlocker).length;
+  const warnCount    = allPending.filter(e => { const r = runComplianceChecks(e); return !r.hasBlocker && r.hasWarning; }).length;
+  const clearCount   = allPending.filter(e => runComplianceChecks(e).isAllClear).length;
+
   document.getElementById('compStatRow').innerHTML = `
-    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--red-light)">📋</div><div><div class="stat-num" style="font-size:20px">${allPending.length}</div><div class="stat-lbl">Total Pending</div></div></div>
-    <div class="comp-stat"><div class="comp-stat-icon" style="background:#fef2f2">❌</div><div><div class="stat-num" style="font-size:20px;color:#c0392b">${issueCount}</div><div class="stat-lbl">Has Compliance Issues</div></div></div>
-    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--green-light)">✅</div><div><div class="stat-num" style="font-size:20px;color:var(--green)">${clearCount}</div><div class="stat-lbl">Full Compliance</div></div></div>
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--red-light)">📋</div><div><div class="stat-num" style="font-size:20px">${allPending.length}</div><div class="stat-lbl">Jumlah Menunggu</div></div></div>
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:#fef2f2">🚫</div><div><div class="stat-num" style="font-size:20px;color:#dc2626">${blockerCount}</div><div class="stat-lbl">Halangan Mutlak</div></div></div>
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--gold-light)">⚠️</div><div><div class="stat-num" style="font-size:20px;color:var(--gold)">${warnCount}</div><div class="stat-lbl">Perlu Tindakan Khas</div></div></div>
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--green-light)">✅</div><div><div class="stat-num" style="font-size:20px;color:var(--green)">${clearCount}</div><div class="stat-lbl">Boleh Diluluskan</div></div></div>
   `;
 
   const cb = document.getElementById('complianceBadge');
-  cb.textContent   = issueCount;
-  cb.style.display = issueCount > 0 ? 'inline-flex' : 'none';
-  document.getElementById('dComplianceIssues').textContent = issueCount;
+  cb.textContent   = blockerCount;
+  cb.style.display = blockerCount > 0 ? 'inline-flex' : 'none';
+  document.getElementById('dComplianceIssues').textContent = blockerCount;
 
   const tbody = document.getElementById('complianceTbody');
   if (!rows.length) {
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>No records found</h3></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>Tiada rekod ditemui</h3></div></td></tr>`;
     return;
   }
 
-  const statusIcon  = { pass:'✅', fail:'❌', warn:'⚠️', na:'➖' };
-  const statusColor = { pass:'var(--green)', fail:'#c0392b', warn:'#92400e', na:'#888' };
+  const checkIcon = { pass:'✅', fail:'❌', warn:'⚠️', na:'➖', unknown:'❓' };
+  const checkColor = { pass:'var(--green)', fail:'#dc2626', warn:'#f59e0b', na:'#888', unknown:'#888' };
 
   tbody.innerHTML = rows.map(ev => {
-    const { checks, hasBlocker } = runComplianceChecks(ev);
-    const getCheck = id => checks.find(c => c.id === id) || { status:'warn', note:'–' };
-    const cell = (id) => {
-      const c = getCheck(id);
-      return `<td title="${c.note}" style="color:${statusColor[c.status]};font-size:14px;text-align:center">${statusIcon[c.status]}</td>`;
-    };
+    const { blockers, warnings, hasBlocker, isAllClear } = runComplianceChecks(ev);
+    const allIssues = [...blockers, ...warnings];
+
+    // Per-column check icons
+    const adv = ev.advisor_approved === true ? 'pass' : ev.advisor_approved === false ? 'fail' : 'unknown';
+    const isRel = ev.category === 'religious' || (ev.tags||[]).includes('religious');
+    const multi = isRel ? 'na' : ev.multiracial === true ? 'pass' : ev.multiracial === false ? 'fail' : 'unknown';
+    const hasExt = ev.has_external_sponsor || ev.has_external_participants;
+    const minD = hasExt ? 30 : 14;
+    const sub = ev.created_at ? ev.created_at.slice(0,10) : null;
+    let notice = 'unknown';
+    let noticeDays = '?';
+    if (sub && ev.date) {
+      const wd = workingDaysBetween(sub, ev.date);
+      if (wd !== null) {
+        noticeDays = wd;
+        notice = wd >= minD ? 'pass' : wd >= 14 && hasExt ? 'warn' : 'fail';
+      }
+    }
+    const rep = hasPendingReport(ev.organizer_name, ev.id) ? 'fail' : 'pass';
+    const sc  = countSemesterActivities(ev.organizer_name, ev.id);
+    const lim = sc >= 4 ? 'warn' : 'pass';
+
+    const col = (status, title) => `<td title="${title}" style="color:${checkColor[status]};font-size:16px;text-align:center">${checkIcon[status]}</td>`;
+
     return `
-      <tr>
+      <tr style="${hasBlocker?'background:#fff8f8':''}">
         <td>
           <div style="font-weight:600">${ev.emoji||'📅'} ${ev.title||'–'}</div>
           <div style="font-size:11.5px;color:var(--muted)">${ev.organizer_name||'–'}</div>
+          ${hasBlocker ? `<div style="margin-top:4px"><span style="font-size:10px;background:#fef2f2;color:#dc2626;padding:2px 6px;border-radius:3px;font-weight:700">${blockers.length} halangan</span></div>` : ''}
         </td>
-        ${cell('advisor')}
-        ${cell('multiracial')}
-        ${cell('notice')}
-        ${cell('report')}
-        ${cell('semLimit')}
+        ${col(adv, adv==='fail'?'Tiada persetujuan Penasihat (Sek. 3.2.4(b))':'Persetujuan Penasihat')}
+        ${col(multi, multi==='fail'?'Tidak berbilang kaum (Sek. 3.2.4(d))':multi==='na'?'Dikecualikan (persatuan agama)':'Berbilang kaum')}
+        ${col(notice, `${noticeDays} hari bekerja (perlu ≥${minD}) — Sek. ${hasExt?'3.1.6':'3.1.5'}`)}
+        ${col(rep, rep==='fail'?'Laporan terdahulu belum hantar (Sek. 3.4.4)':'Tiada laporan tertunggak')}
+        ${col(lim, `${sc}/4 aktiviti semester ini — Sek. 3.1.9`)}
         <td>
           ${hasBlocker
-            ? '<span class="badge badge-rejected">⛔ Cannot Approve</span>'
-            : checks.some(c=>c.status==='warn')
-              ? '<span class="badge badge-pending">⚠️ Has Warnings</span>'
-              : '<span class="badge badge-approved">✅ Can Be Approved</span>'
+            ? `<span class="badge badge-rejected" style="font-size:10px">🚫 ${blockers.length} Halangan</span>`
+            : warnings.length > 0
+              ? `<span class="badge badge-pending" style="font-size:10px">⚠️ ${warnings.length} Tindakan</span>`
+              : `<span class="badge badge-approved" style="font-size:10px">✅ Boleh Diluluskan</span>`
           }
-          <button class="btn btn-view btn-sm" style="margin-top:4px" onclick="openEventModal(${ev.id})">Review</button>
+          <button class="btn btn-view btn-sm" style="margin-top:4px;display:block" onclick="openEventModal(${ev.id})">Semak & Tindak</button>
         </td>
       </tr>`;
   }).join('');
@@ -1073,7 +1463,7 @@ function renderFeedbackCards() {
     grouped[eid].push(f);
   });
   el.innerHTML = Object.entries(grouped).map(([eid, fbs]) => {
-    const ev = EVENTS.find(e => e.id == eid);
+    const ev  = EVENTS.find(e => e.id == eid);
     const pos = fbs.filter(f => f.sentiment === 'positive').length;
     const neu = fbs.filter(f => f.sentiment === 'neutral').length;
     const neg = fbs.filter(f => f.sentiment === 'negative').length;
@@ -1081,8 +1471,7 @@ function renderFeedbackCards() {
     return `
       <div class="card" style="margin-bottom:16px">
         <div class="card-head">
-          <div class="card-head-left">
-            <div class="card-head-bar"></div>
+          <div class="card-head-left"><div class="card-head-bar"></div>
             <span class="card-title">${ev ? (ev.emoji||'📅') + ' ' + ev.title : 'Event #' + eid}</span>
             <span class="card-sub">${tot} feedback</span>
           </div>
@@ -1109,12 +1498,8 @@ function renderUsersTable() {
   const rows = usersFilter === 'all' ? USERS : USERS.filter(u => u.role === usersFilter);
   const q    = (document.getElementById('usersSearch')?.value || '').toLowerCase();
   const filtered = q
-    ? rows.filter(u =>
-        (u.name||'').toLowerCase().includes(q) ||
-        (u.email||'').toLowerCase().includes(q) ||
-        (u.matrix||'').toLowerCase().includes(q))
+    ? rows.filter(u => (u.name||'').toLowerCase().includes(q) || (u.email||'').toLowerCase().includes(q) || (u.matrix||'').toLowerCase().includes(q))
     : rows;
-
   const tbody = document.getElementById('usersTbody');
   if (!filtered.length) {
     tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">👥</div><h3>No users found</h3></div></td></tr>`;
@@ -1124,8 +1509,7 @@ function renderUsersTable() {
     const initials = (u.name || u.email || '?').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
     const avColor  = u.role === 'admin' ? 'red' : u.role === 'organizer' ? 'green' : 'blue';
     const roleBg   = u.role === 'admin' ? 'var(--red-light)' : u.role === 'organizer' ? 'var(--gold-light)' : 'var(--blue-light)';
-    const roleClr  = u.role === 'admin' ? 'var(--red)'       : u.role === 'organizer' ? 'var(--gold)'       : 'var(--blue)';
-    const joined   = (u.created_at || '').slice(0,10) || '–';
+    const roleClr  = u.role === 'admin' ? 'var(--red)' : u.role === 'organizer' ? 'var(--gold)' : 'var(--blue)';
     return `
       <tr>
         <td><div style="display:flex;align-items:center"><span class="user-av-cell ${avColor}">${initials}</span><span style="font-weight:600">${u.name||'–'}</span></div></td>
@@ -1133,7 +1517,7 @@ function renderUsersTable() {
         <td style="font-size:12.5px">${u.faculty||'–'}</td>
         <td><span class="badge" style="background:${roleBg};color:${roleClr}">${cap(u.role)}</span></td>
         <td><span class="badge badge-approved">Active</span></td>
-        <td style="font-size:12.5px;color:var(--muted)">${joined}</td>
+        <td style="font-size:12.5px;color:var(--muted)">${(u.created_at||'').slice(0,10)||'–'}</td>
       </tr>`;
   }).join('');
 }
@@ -1159,14 +1543,14 @@ function openEventModal(id) {
   document.getElementById('mStatusBadge').className   = `badge badge-${ev.status}`;
   document.getElementById('mTitle').textContent       = ev.title || '–';
   document.getElementById('mDate').textContent        = ev.date     || '–';
-  document.getElementById('mTime').textContent        = ev.time     || '–';
+  document.getElementById('mTime').textContent        = (ev.time || ev.start_time || '–') + (ev.end_time ? ' – ' + ev.end_time : '');
   document.getElementById('mVenue').textContent       = ev.location || '–';
   document.getElementById('mFaculty').textContent     = ev.faculty  || '–';
   document.getElementById('mOrganiser').textContent   = ev.organizer_name || '–';
-  document.getElementById('mSlots').textContent       = (ev.slots || '–') + ' slots';
+  document.getElementById('mSlots').textContent       = (ev.slots || '–') + ' slot';
   document.getElementById('mDesc').textContent        = ev.description || '–';
 
-  const hasBlocker = renderModalCompliance(ev);
+  const hasBlocker = renderModalComplianceOutput(ev);
   renderApprovalFlow(ev);
 
   document.getElementById('rejectReasonBox').classList.remove('show');
@@ -1175,11 +1559,13 @@ function openEventModal(id) {
   const actions = document.getElementById('mActions');
   if (ev.status === 'pending') {
     actions.innerHTML = `
-      <button class="btn-modal-approve" onclick="approveEvent(${ev.id})" ${hasBlocker?'disabled':''}>✓ Approve Event</button>
-      <button class="btn-modal-reject"  onclick="showRejectBox(${ev.id})">✕ Reject</button>
-      <button class="btn-modal-close"   onclick="closeEventModal()">Close</button>`;
+      <button class="btn-modal-approve" onclick="approveEvent(${ev.id})" ${hasBlocker?'disabled':''}>
+        ${hasBlocker ? '🚫 Tidak Boleh Diluluskan' : '✓ Luluskan Aktiviti'}
+      </button>
+      <button class="btn-modal-reject"  onclick="showRejectBox(${ev.id})">✕ Tolak</button>
+      <button class="btn-modal-close"   onclick="closeEventModal()">Tutup</button>`;
   } else {
-    actions.innerHTML = `<button class="btn-modal-close" style="width:100%" onclick="closeEventModal()">Close</button>`;
+    actions.innerHTML = `<button class="btn-modal-close" style="width:100%" onclick="closeEventModal()">Tutup</button>`;
   }
 
   document.getElementById('eventOverlay').classList.add('open');
@@ -1189,9 +1575,9 @@ function openEventModal(id) {
 function showRejectBox(id) {
   document.getElementById('rejectReasonBox').classList.add('show');
   document.getElementById('mActions').innerHTML = `
-    <button class="btn-modal-approve" onclick="approveEvent(${id})">✓ Approve</button>
-    <button class="btn-modal-reject"  onclick="confirmReject(${id})">✕ Confirm Reject</button>
-    <button class="btn-modal-close"   onclick="closeEventModal()">Cancel</button>`;
+    <button class="btn-modal-approve" onclick="approveEvent(${id})">✓ Luluskan</button>
+    <button class="btn-modal-reject"  onclick="confirmReject(${id})">✕ Sahkan Tolak</button>
+    <button class="btn-modal-close"   onclick="closeEventModal()">Batal</button>`;
 }
 
 function closeEventModal() {
