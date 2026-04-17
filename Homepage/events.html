@@ -598,10 +598,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
 
-// ─── REPLACE THIS WITH YOUR REAL sk-ant-... KEY ───────────────
-const GEMINI_KEY = 'AQ.Ab8RN6JAzUHutVqv-vajGZkDgQWyQ9QRZIvUN5Oelk7lVQK2ew';
-const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-
 // ─────────────────────────────────────────────────────────────
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
@@ -744,22 +740,24 @@ Format:
 ]`;
 
   try {
-const res = await fetch(`${GEMINI_URL}?key=${GEMINI_KEY}`, {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.7, maxOutputTokens: 400 }
-      })
-    });
+const res = await fetch(
+  `${SUPABASE_URL}/functions/v1/ai-recommend`,
+  {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${SUPABASE_ANON}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ prompt })
+  }
+);
 
-    if (!res.ok) throw new Error('Gemini API error ' + res.status);
+if (!res.ok) throw new Error('AI error ' + res.status);
 
-    const data = await res.json();
-    const raw  = data?.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
-
-    const clean = raw.replace(/```json|```/g,'').trim();
-    const picks = JSON.parse(clean);
+const data = await res.json();
+const raw  = data?.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+const clean = raw.replace(/```json|```/g,'').trim();
+const picks = JSON.parse(clean);
 
     renderRecommendations(picks, evs, user);
   } catch (err) {
