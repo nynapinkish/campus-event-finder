@@ -599,7 +599,9 @@ const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
 
 // ─── REPLACE THIS WITH YOUR REAL sk-ant-... KEY ───────────────
-const ANTHROPIC_KEY = 'sk-ant-REPLACE_WITH_YOUR_KEY';
+const GEMINI_KEY = 'AQ.Ab8RN6JAzUHutVqv-vajGZkDgQWyQ9QRZIvUN5Oelk7lVQK2ew';
+const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
 // ─────────────────────────────────────────────────────────────
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
@@ -742,32 +744,23 @@ Format:
 ]`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+const res = await fetch(`${GEMINI_URL}?key=${GEMINI_KEY}`, {
       method : 'POST',
-      headers: {
-        'Content-Type'     : 'application/json',
-        'x-api-key'        : ANTHROPIC_KEY,
-        'anthropic-version': '2023-06-01',
-        /* Required for browser calls — make sure CORS is enabled on your deployment
-           or proxy this request through a Supabase Edge Function (see comments below) */
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model     : 'claude-sonnet-4-20250514',
-        max_tokens: 400,
-        messages  : [{ role:'user', content: prompt }]
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.7, maxOutputTokens: 400 }
       })
     });
 
-    if (!res.ok) throw new Error('Claude API error ' + res.status);
+    if (!res.ok) throw new Error('Gemini API error ' + res.status);
 
     const data = await res.json();
-    const raw  = data?.content?.[0]?.text || '[]';
+    const raw  = data?.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
 
-    /* strip accidental ```json fences just in case */
     const clean = raw.replace(/```json|```/g,'').trim();
     const picks = JSON.parse(clean);
-
+    
     renderRecommendations(picks, evs, user);
   } catch (err) {
     console.warn('AI recommendation failed:', err);
