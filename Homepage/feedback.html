@@ -826,8 +826,8 @@ async function analyseSentiment() {
 
     if (error) throw error;
 
-    const scores   = data[0];
-    const posObj   = scores.find(s => s.label === 'POSITIVE');
+    const scores = Array.isArray(data[0]) ? data[0] : data;
+    const posObj = scores.find(s => s.label === 'POSITIVE');
     const negObj   = scores.find(s => s.label === 'NEGATIVE');
     let posP = Math.round((posObj ? posObj.score : 0.5) * 100);
     let negP = Math.round((negObj ? negObj.score : 0.5) * 100);
