@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Campus Event Finder — UTM (with AI Recommendations)</title>
+<title>Campus Event Finder — UTM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -177,7 +177,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .skel-line{background:#f0f0f0;border-radius:3px;margin-bottom:8px;animation:shimmer 1.4s ease infinite;background-size:200% 100%;background-image:linear-gradient(90deg,#f0f0f0 25%,#e4e4e4 50%,#f0f0f0 75%)}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .rec-matched{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;background:#e8f5ed;color:#1a5c38;padding:2px 7px;border-radius:3px}
-.rec-wildcard{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;background:#f5f5f5;color:#999;padding:2px 7px;border-radius:3px}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center;padding:20px}
 .overlay.open{display:flex}
 .modal{background:#fff;border-radius:4px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.2);animation:mIn .2s ease}
@@ -312,11 +311,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 </head>
 <body>
 
-<div class="topbar">
-  <a href="#">UTM Skudai</a><span class="topbar-sep">|</span>
-  <a href="#">Contact Us</a><span class="topbar-sep">|</span>
-  <a href="#" onclick="doLogout()">Logout</a>
-</div>
+<div class="topbar"><a href="#">UTM Skudai</a><span class="topbar-sep">|</span><a href="#">Contact Us</a><span class="topbar-sep">|</span><a href="#" onclick="doLogout()">Logout</a></div>
 
 <header class="header">
   <a class="header-logo" href="../Homepage/homepage.html">
@@ -332,17 +327,11 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     <div class="hn-item">Partnership</div>
     <div class="hn-item">UTM Cares</div>
   </nav>
-  <div class="header-right">
-    <div class="user-pill"><div class="user-av" id="headerAvatar">?</div><span id="headerName">—</span></div>
-  </div>
+  <div class="header-right"><div class="user-pill"><div class="user-av" id="headerAvatar">?</div><span id="headerName">—</span></div></div>
 </header>
 
 <div class="section-nav">
-  <div class="sn-item active">Campus Events</div>
-  <div class="sn-item">Student Life</div>
-  <div class="sn-item">Academic Calendar</div>
-  <div class="sn-item">HEP</div>
-  <div class="sn-item">Facilities</div>
+  <div class="sn-item active">Campus Events</div><div class="sn-item">Student Life</div><div class="sn-item">Academic Calendar</div><div class="sn-item">HEP</div><div class="sn-item">Facilities</div>
 </div>
 
 <div class="page-title-bar">
@@ -350,33 +339,27 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     <div class="ptb-breadcrumb"><a href="../Homepage/homepage.html">Home</a><span>›</span><a href="#">Student Affairs</a><span>›</span><span>Campus Event Finder</span></div>
     <div class="ptb-title">Campus Event Finder</div>
   </div>
-  <div class="ptb-right">
-    <span class="ptb-tag">🤖 AI-Powered</span>
-    <span class="ptb-tag">📱 AR Navigation</span>
-  </div>
+  <div class="ptb-right"><span class="ptb-tag">🤖 AI-Powered</span><span class="ptb-tag">📱 AR Navigation</span></div>
 </div>
 
 <div class="cat-tabs">
-  <button class="ct-btn active" data-mode="upcoming" onclick="switchMode('upcoming',this)">All Events</button>
-  <button class="ct-btn" data-mode="upcoming" onclick="setCat('academic',this)">Academic</button>
-  <button class="ct-btn" data-mode="upcoming" onclick="setCat('sports',this)">Sports</button>
-  <button class="ct-btn" data-mode="upcoming" onclick="setCat('cultural',this)">Cultural</button>
-  <button class="ct-btn" data-mode="upcoming" onclick="setCat('career',this)">Career</button>
-  <button class="ct-btn" data-mode="upcoming" onclick="setCat('volunteer',this)">Volunteer</button>
+  <button class="ct-btn active" onclick="switchMode('upcoming',this)">All Events</button>
+  <button class="ct-btn" onclick="setCat('academic',this)">Academic</button>
+  <button class="ct-btn" onclick="setCat('sports',this)">Sports</button>
+  <button class="ct-btn" onclick="setCat('cultural',this)">Cultural</button>
+  <button class="ct-btn" onclick="setCat('career',this)">Career</button>
+  <button class="ct-btn" onclick="setCat('volunteer',this)">Volunteer</button>
   <div class="ct-sep"></div>
   <button class="ct-btn archived-btn" id="archTabBtn" onclick="switchToArchived()">📜 Archived <span class="arch-count" id="archCountBadge">0</span></button>
 </div>
 
-<!-- AI RECOMMENDATION SECTION -->
+<!-- AI RECOMMENDATION -->
 <div class="ai-rec-outer" id="aiRecOuter" style="display:none">
   <div class="ai-rec-wrap">
     <div class="ai-rec-header">
       <div class="ai-rec-title">
         <div class="ai-rec-title-icon">🤖</div>
-        <div>
-          <h3>Recommended For You</h3>
-          <p id="aiRecSubtitle">Personalised picks based on your interests</p>
-        </div>
+        <div><h3>Recommended For You</h3><p id="aiRecSubtitle">Personalised picks based on your interests</p></div>
       </div>
       <div style="display:flex;align-items:center;gap:12px">
         <button class="ai-rec-edit" onclick="openPrefModal()">✏️ Edit interests</button>
@@ -384,9 +367,9 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
       </div>
     </div>
     <div class="ai-rec-scroll" id="aiRecScroll">
-      <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div><div class="skel-line" style="width:55%;height:12px"></div></div>
-      <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div><div class="skel-line" style="width:55%;height:12px"></div></div>
-      <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div><div class="skel-line" style="width:55%;height:12px"></div></div>
+      <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
+      <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
+      <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
     </div>
   </div>
 </div>
@@ -433,14 +416,14 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   <div class="footer-bottom"><div class="footer-copy">© 2025 Universiti Teknologi Malaysia. All Rights Reserved.</div><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div></div>
 </footer>
 
-<!-- Event Details Modal -->
+<!-- Event Modal -->
 <div class="overlay" id="overlay" onclick="handleOv(event)">
   <div class="modal">
     <div class="m-nav"><span class="m-nav-title">Event Details</span><button class="m-nav-close" onclick="closeModal()">✕</button></div>
     <div class="m-body">
       <span class="m-cat-badge ev-badge" id="mBadge"></span>
       <div class="m-title" id="mTitle"></div>
-      <div class="m-registered-note" id="mRegisteredNote">✅ You are registered for this event! Click below to view your ticket.</div>
+      <div class="m-registered-note" id="mRegisteredNote">✅ You are registered for this event!</div>
       <div class="m-info-grid">
         <div class="m-info-cell"><div class="m-info-lbl">Date</div><div class="m-info-val" id="mDate"></div></div>
         <div class="m-info-cell"><div class="m-info-lbl">Time</div><div class="m-info-val" id="mTime"></div></div>
@@ -494,7 +477,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   </div>
 </div>
 
-<!-- Chatbot Widget -->
+<!-- Chatbot -->
 <button id="utm-chat-fab" onclick="toggleChat()" aria-label="Open UTM AI Assistant">
   <span id="chat-badge" class="hidden">1</span>
   <svg class="fab-open" viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-2 10H6v-2h12v2zm0-3H6V7h12v2z"/></svg>
@@ -515,351 +498,296 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
-const badgeClass = { academic:'badge-academic', sports:'badge-sports', cultural:'badge-cultural', career:'badge-career', volunteer:'badge-volunteer' };
-const catEmojis = { academic:'📚', sports:'⚽', cultural:'🎭', career:'💼', volunteer:'🤝' };
+const SUPABASE_URL='https://wqpkguilunzhzkeciujv.supabase.co';
+const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON);
+const badgeClass={academic:'badge-academic',sports:'badge-sports',cultural:'badge-cultural',career:'badge-career',volunteer:'badge-volunteer'};
+const catEmojis={academic:'📚',sports:'⚽',cultural:'🎭',career:'💼',volunteer:'🤝'};
+let curCat='all',curQ='',currentUser=null,userPrefs=null;
+let upcomingEvents=[],archivedEvents=[],viewMode='upcoming';
 
-let curCat = 'all', curQ = '', currentUser = null, userPrefs = null;
-let upcomingEvents = [], archivedEvents = [], viewMode = 'upcoming';
+function todayStr(){return new Date().toISOString().split('T')[0]}
+function isExpired(ev){return ev.date&&ev.date<todayStr()}
+function cap(s){return s?s[0].toUpperCase()+s.slice(1):''}
+function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
-function todayStr() { return new Date().toISOString().split('T')[0]; }
-function isExpired(ev) { return ev.date && ev.date < todayStr(); }
-function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
-function escHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-
-/* ═════════════ PREFERENCES ═══════════════ */
-const PREF_KEY = 'utm_event_prefs';
-function loadPrefs() { try { var r = localStorage.getItem(PREF_KEY); userPrefs = r ? JSON.parse(r) : null; } catch(e) { userPrefs = null; } updatePrefUI(); }
-function savePrefsToStorage(d) { userPrefs = d; localStorage.setItem(PREF_KEY, JSON.stringify(d)); updatePrefUI(); }
-function updatePrefUI() {
-  var el = document.getElementById('sbPrefSummary');
-  if (!el) return;
-  if (!userPrefs || (!userPrefs.categories.length && !userPrefs.keywords.length)) { el.textContent = 'Not set yet'; return; }
-  var p = [];
-  if (userPrefs.categories.length) p.push(userPrefs.categories.map(function(c){ return catEmojis[c]||''; }).join(' '));
-  if (userPrefs.keywords.length) { p.push(userPrefs.keywords.slice(0,3).join(', ')); if (userPrefs.keywords.length > 3) p.push('+' + (userPrefs.keywords.length - 3)); }
-  el.textContent = p.join(' · ') || 'Not set yet';
-}
-function openPrefModal() {
-  document.getElementById('prefOverlay').classList.add('open'); document.body.style.overflow = 'hidden';
-  var cats = (userPrefs && userPrefs.categories) || [], freq = (userPrefs && userPrefs.frequency) || '', tags = (userPrefs && userPrefs.keywords) || [];
-  document.querySelectorAll('.pref-cat-card').forEach(function(c){ c.classList.toggle('selected', cats.indexOf(c.dataset.cat) !== -1); });
-  document.querySelectorAll('.pref-freq-pill').forEach(function(p){ p.classList.toggle('selected', p.dataset.freq === freq); });
-  renderPrefTags(tags);
-}
-function closePrefModal() { document.getElementById('prefOverlay').classList.remove('open'); document.body.style.overflow = ''; }
-function togglePrefCat(c) { c.classList.toggle('selected'); }
-function togglePrefFreq(p) { var w = p.classList.contains('selected'); document.querySelectorAll('.pref-freq-pill').forEach(function(x){ x.classList.remove('selected'); }); if (!w) p.classList.add('selected'); }
-var tempTags = [];
-function renderPrefTags(t) { tempTags = t || []; document.getElementById('prefTagsWrap').innerHTML = tempTags.map(function(t,i){ return '<div class="pref-tag">' + escHtml(t) + '<span class="pref-tag-x" onclick="removePrefTag('+i+')">×</span></div>'; }).join(''); }
-function addPrefTag() { var inp = document.getElementById('prefTagInput'), v = inp.value.trim().toLowerCase(); if (!v || tempTags.indexOf(v) !== -1 || tempTags.length >= 8) { inp.value = ''; return; } tempTags.push(v); renderPrefTags(tempTags); inp.value = ''; inp.focus(); }
-function removePrefTag(i) { tempTags.splice(i,1); renderPrefTags(tempTags); }
-function savePreferences() {
-  var cats = []; document.querySelectorAll('.pref-cat-card.selected').forEach(function(c){ cats.push(c.dataset.cat); });
-  var fe = document.querySelector('.pref-freq-pill.selected');
-  savePrefsToStorage({ categories: cats, frequency: fe ? fe.dataset.freq : 'occasionally', keywords: tempTags.slice(), savedAt: new Date().toISOString() });
-  closePrefModal();
-  var myIds = new Set(); upcomingEvents.forEach(function(e){ if(e.registered) myIds.add(e.id); });
-  loadAIRecommendations(currentUser, myIds);
-}
-function skipPreferences() { savePrefsToStorage({ categories:[], frequency:'occasionally', keywords:[], savedAt:new Date().toISOString(), skipped:true }); closePrefModal(); }
+/* ═════════════ PREFERENCES ═════════════ */
+const PREF_KEY='utm_event_prefs';
+function loadPrefs(){try{var r=localStorage.getItem(PREF_KEY);userPrefs=r?JSON.parse(r):null}catch(e){userPrefs=null}updatePrefUI()}
+function savePrefsToStorage(d){userPrefs=d;localStorage.setItem(PREF_KEY,JSON.stringify(d));updatePrefUI()}
+function updatePrefUI(){var el=document.getElementById('sbPrefSummary');if(!el)return;if(!userPrefs||(!userPrefs.categories.length&&!userPrefs.keywords.length)){el.textContent='Not set yet';return}var p=[];if(userPrefs.categories.length)p.push(userPrefs.categories.map(function(c){return catEmojis[c]||''}).join(' '));if(userPrefs.keywords.length){p.push(userPrefs.keywords.slice(0,3).join(', '));if(userPrefs.keywords.length>3)p.push('+' +(userPrefs.keywords.length-3))}el.textContent=p.join(' · ')||'Not set yet'}
+function openPrefModal(){document.getElementById('prefOverlay').classList.add('open');document.body.style.overflow='hidden';var cats=(userPrefs&&userPrefs.categories)||[],freq=(userPrefs&&userPrefs.frequency)||'',tags=(userPrefs&&userPrefs.keywords)||[];document.querySelectorAll('.pref-cat-card').forEach(function(c){c.classList.toggle('selected',cats.indexOf(c.dataset.cat)!==-1)});document.querySelectorAll('.pref-freq-pill').forEach(function(p){p.classList.toggle('selected',p.dataset.freq===freq)});renderPrefTags(tags)}
+function closePrefModal(){document.getElementById('prefOverlay').classList.remove('open');document.body.style.overflow=''}
+function togglePrefCat(c){c.classList.toggle('selected')}
+function togglePrefFreq(p){var w=p.classList.contains('selected');document.querySelectorAll('.pref-freq-pill').forEach(function(x){x.classList.remove('selected')});if(!w)p.classList.add('selected')}
+var tempTags=[];
+function renderPrefTags(t){tempTags=t||[];document.getElementById('prefTagsWrap').innerHTML=tempTags.map(function(t,i){return'<div class="pref-tag">'+escHtml(t)+'<span class="pref-tag-x" onclick="removePrefTag('+i+')">×</span></div>'}).join('')}
+function addPrefTag(){var inp=document.getElementById('prefTagInput'),v=inp.value.trim().toLowerCase();if(!v||tempTags.indexOf(v)!==-1||tempTags.length>=8){inp.value='';return}tempTags.push(v);renderPrefTags(tempTags);inp.value='';inp.focus()}
+function removePrefTag(i){tempTags.splice(i,1);renderPrefTags(tempTags)}
+function savePreferences(){var cats=[];document.querySelectorAll('.pref-cat-card.selected').forEach(function(c){cats.push(c.dataset.cat)});var fe=document.querySelector('.pref-freq-pill.selected');savePrefsToStorage({categories:cats,frequency:fe?fe.dataset.freq:'occasionally',keywords:tempTags.slice(),savedAt:new Date().toISOString()});closePrefModal();var myIds=new Set();upcomingEvents.forEach(function(e){if(e.registered)myIds.add(e.id)});loadAIRecommendations(currentUser,myIds)}
+function skipPreferences(){savePrefsToStorage({categories:[],frequency:'occasionally',keywords:[],savedAt:new Date().toISOString(),skipped:true});closePrefModal()}
 
 /* ═════════════ INIT ═════════════ */
-async function init() {
+async function init(){
   loadPrefs();
-  const { data: { session } } = await sb.auth.getSession();
-  if (!session) { window.location.href = '/Login/login.html'; return; }
-  const { data: user } = await sb.from('users').select('*').eq('email', session.user.email).single();
-  currentUser = user;
-  if (user?.name) {
-    document.getElementById('headerAvatar').textContent = (user.name||'').split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase();
-    document.getElementById('headerName').textContent = user.matrix || user.name || session.user.email;
-  }
-  let myEventIds = new Set();
-  if (user?.matrix) { const { data: regs } = await sb.from('registrations').select('event_id').ilike('matric_no', user.matrix); if (regs) regs.forEach(function(r){ myEventIds.add(r.event_id); }); }
-
-  const today = todayStr();
-  const { data: events, error } = await sb.from('events').select('*').eq('status','approved').gte('date', today).order('date',{ascending:true});
-  if (error || !events) { document.getElementById('evGrid').innerHTML = '<div class="state-box"><h3>⚠️ Failed to load events</h3><p>Check your internet connection.</p></div>'; return; }
-  upcomingEvents = events.map(function(e){ return Object.assign({}, e, { registered: myEventIds.has(e.id) }); });
-
-  const { count: archCount } = await sb.from('events').select('*',{count:'exact',head:true}).eq('status','approved').lt('date', today);
-  document.getElementById('archCountBadge').textContent = archCount || 0;
-  document.getElementById('statArchived').textContent = archCount || 0;
-  document.getElementById('sbArchSummary').textContent = (archCount||0) + ' past event' + ((archCount||0)!==1?'s':'') + ' available';
-
-  window.EVENTS = upcomingEvents;
+  const{data:{session}}=await sb.auth.getSession();
+  if(!session){window.location.href='/Login/login.html';return}
+  const{data:user}=await sb.from('users').select('*').eq('email',session.user.email).single();
+  currentUser=user;
+  if(user?.name){document.getElementById('headerAvatar').textContent=(user.name||'').split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase();document.getElementById('headerName').textContent=user.matrix||user.name||session.user.email}
+  let myEventIds=new Set();
+  if(user?.matrix){const{data:regs}=await sb.from('registrations').select('event_id').ilike('matric_no',user.matrix);if(regs)regs.forEach(function(r){myEventIds.add(r.event_id)})}
+  const today=todayStr();
+  const{data:events,error}=await sb.from('events').select('*').eq('status','approved').gte('date',today).order('date',{ascending:true});
+  if(error||!events){document.getElementById('evGrid').innerHTML='<div class="state-box"><h3>⚠️ Failed to load events</h3><p>Check your internet connection.</p></div>';return}
+  upcomingEvents=events.map(function(e){return Object.assign({},e,{registered:myEventIds.has(e.id)})});
+  const{count:archCount}=await sb.from('events').select('*',{count:'exact',head:true}).eq('status','approved').lt('date',today);
+  document.getElementById('archCountBadge').textContent=archCount||0;
+  document.getElementById('statArchived').textContent=archCount||0;
+  document.getElementById('sbArchSummary').textContent=(archCount||0)+' past event'+((archCount||0)!==1?'s':'')+' available';
+  window.EVENTS=upcomingEvents;
   boot();
-  if (!userPrefs) setTimeout(function(){ openPrefModal(); }, 600);
-  loadAIRecommendations(user, myEventIds);
+  if(!userPrefs)setTimeout(function(){openPrefModal()},600);
+  loadAIRecommendations(user,myEventIds);
 }
 
-/* ═════════════ BOOT ═════════════ */
-function boot() {
-  var evs = upcomingEvents, total = evs.length, open = evs.filter(function(e){return e.slots_left>0}).length, slots = evs.reduce(function(a,e){return a+(e.slots_left||0)},0);
-  document.getElementById('statTotal').textContent = total;
-  document.getElementById('statOpen').textContent = open;
-  document.getElementById('statSlots').textContent = slots >= 1000 ? (slots/1000).toFixed(1)+'k' : slots;
-  ['all','academic','sports','cultural','career','volunteer'].forEach(function(c){ var el = document.getElementById('fc-'+c); if(el) el.textContent = c==='all' ? total : evs.filter(function(e){return e.category===c}).length; });
+function boot(){
+  var evs=upcomingEvents,total=evs.length,open=evs.filter(function(e){return e.slots_left>0}).length,slots=evs.reduce(function(a,e){return a+(e.slots_left||0)},0);
+  document.getElementById('statTotal').textContent=total;
+  document.getElementById('statOpen').textContent=open;
+  document.getElementById('statSlots').textContent=slots>=1000?(slots/1000).toFixed(1)+'k':slots;
+  ['all','academic','sports','cultural','career','volunteer'].forEach(function(c){var el=document.getElementById('fc-'+c);if(el)el.textContent=c==='all'?total:evs.filter(function(e){return e.category===c}).length});
   render();
 }
 
 /* ═════════════ VIEW MODE ═════════════ */
-function switchMode(mode, btn) {
-  viewMode = 'upcoming'; curCat = 'all'; window.EVENTS = upcomingEvents;
-  document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});
-  if(btn) btn.classList.add('active');
-  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
-  document.querySelector('.sb-item').classList.add('active');
-  document.getElementById('evTitle').textContent = 'Upcoming Events';
-  document.getElementById('evBadge').className = 'ev-toolbar-badge live';
-  document.getElementById('evBadge').innerHTML = '● Live';
-  document.getElementById('aiRecOuter').style.display = '';
-  render();
-}
-function switchToArchived() {
-  viewMode = 'archived'; curCat = 'all';
-  document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});
-  document.getElementById('archTabBtn').classList.add('active');
-  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
-  document.querySelector('.sb-item').classList.add('active');
-  document.getElementById('evTitle').textContent = 'Past / Archived Events';
-  document.getElementById('evBadge').className = 'ev-toolbar-badge';
-  document.getElementById('evBadge').innerHTML = '📜 Archived';
-  document.getElementById('aiRecOuter').style.display = 'none';
-  if (!archivedEvents.length) {
-    document.getElementById('evGrid').innerHTML = '<div class="state-box"><div class="spinner"></div><p>Loading archived events...</p></div>';
-    sb.from('events').select('*').eq('status','approved').lt('date', todayStr()).order('date',{ascending:false}).then(function(res){
-      var myIds = new Set(); upcomingEvents.forEach(function(e){ if(e.registered) myIds.add(e.id); });
-      archivedEvents = (res.data||[]).map(function(e){ return Object.assign({}, e, { registered: myIds.has(e.id) }); });
-      window.EVENTS = archivedEvents; render();
-    });
-  } else { window.EVENTS = archivedEvents; render(); }
-}
+function switchMode(mode,btn){viewMode='upcoming';curCat='all';window.EVENTS=upcomingEvents;document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});if(btn)btn.classList.add('active');document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});document.querySelector('.sb-item').classList.add('active');document.getElementById('evTitle').textContent='Upcoming Events';document.getElementById('evBadge').className='ev-toolbar-badge live';document.getElementById('evBadge').innerHTML='● Live';document.getElementById('aiRecOuter').style.display='';render()}
+function switchToArchived(){viewMode='archived';curCat='all';document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});document.getElementById('archTabBtn').classList.add('active');document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});document.querySelector('.sb-item').classList.add('active');document.getElementById('evTitle').textContent='Past / Archived Events';document.getElementById('evBadge').className='ev-toolbar-badge';document.getElementById('evBadge').innerHTML='📜 Archived';document.getElementById('aiRecOuter').style.display='none';if(!archivedEvents.length){document.getElementById('evGrid').innerHTML='<div class="state-box"><div class="spinner"></div><p>Loading archived events...</p></div>';sb.from('events').select('*').eq('status','approved').lt('date',todayStr()).order('date',{ascending:false}).then(function(res){var myIds=new Set();upcomingEvents.forEach(function(e){if(e.registered)myIds.add(e.id)});archivedEvents=(res.data||[]).map(function(e){return Object.assign({},e,{registered:myIds.has(e.id)})});window.EVENTS=archivedEvents;render()})}else{window.EVENTS=archivedEvents;render()}}
 
-/* ═══════════════════════════════════════════════════════════════
-   AI RECOMMENDATIONS — FIXED: hard category constraints
-   ═══════════════════════════════════════════════════════════════ */
+/* ═════════════════════════════════════════════════════════════════════
+   AI RECOMMENDATIONS — CLIENT-SIDE FILTER. NEVER TRUST AI OUTPUT.
+   ═════════════════════════════════════════════════════════════════════ */
 async function loadAIRecommendations(user, myEventIds) {
   var evs = upcomingEvents;
   if (!evs.length) return;
-  document.getElementById('aiRecOuter').style.display = 'block';
 
-  var eventSummaries = evs
-    .filter(function(e){ return e.slots_left > 0 && !myEventIds.has(e.id); })
-    .slice(0, 30)
-    .map(function(e){ return { id:e.id, title:e.title, category:e.category, faculty:e.faculty||'Open to all', date:e.date, slots:e.slots_left, description:(e.description||'').substring(0,100) }; });
-
-  if (!eventSummaries.length) { document.getElementById('aiRecOuter').style.display = 'none'; return; }
-
-  var prefCats = (userPrefs && userPrefs.categories) ? userPrefs.categories : [];
-  var prefFreq = (userPrefs && userPrefs.frequency) ? userPrefs.frequency : 'unknown';
+  var prefCats = (userPrefs && userPrefs.categories && userPrefs.categories.length) ? userPrefs.categories : [];
   var prefKeys = (userPrefs && userPrefs.keywords) ? userPrefs.keywords : [];
+  var prefFreq = (userPrefs && userPrefs.frequency) ? userPrefs.frequency : 'unknown';
   var userPastCats = evs.filter(function(e){ return myEventIds.has(e.id); }).map(function(e){ return e.category; }).filter(Boolean);
-  var userFaculty = user?.faculty || 'Unknown';
 
-  /* Count available events per category */
-  var catCounts = {};
-  eventSummaries.forEach(function(e){ catCounts[e.category] = (catCounts[e.category]||0) + 1; });
+  /*
+    ══════════════════════════════════════════════════════════
+    STRATEGY: Don't rely on AI for category filtering.
+    Do it CLIENT-SIDE instead.
+    ══════════════════════════════════════════════════════════
 
-  /* Build subtitle */
-  var subtitleParts = [];
-  if (prefCats.length) subtitleParts.push('interests: ' + prefCats.join(', '));
-  if (prefKeys.length) subtitleParts.push('keywords: ' + prefKeys.slice(0,4).join(', '));
-  if (!subtitleParts.length) subtitleParts.push('explore and discover');
-  document.getElementById('aiRecSubtitle').textContent = 'Based on your ' + subtitleParts.join(' · ');
+    If user HAS preferences:
+      1. Filter events to ONLY their preferred categories (hard filter)
+      2. If keywords exist, rank keyword-matching events higher
+      3. Send ONLY those filtered events to AI for ranking + reasons
+      4. AI cannot possibly return wrong categories because we
+         only gave it events from correct categories
+      5. After AI responds, filter AGAIN just to be safe
+      6. If 0 events in preferred categories → hide section entirely
 
-  /* ── THE KEY FIX: build HARD constraints based on what user picked ── */
-  var hasPrefs = prefCats.length > 0;
-  var constraintBlock = '';
+    If user has NO preferences:
+      1. Send all events to AI for diverse picks
+      2. Show whatever comes back (no filtering)
+  */
 
-  if (hasPrefs) {
-    var numCats = prefCats.length;
-
-    /* How many events in the preferred categories are actually available? */
-    var availableInPrefs = eventSummaries.filter(function(e){ return prefCats.indexOf(e.category) !== -1; }).length;
-
-    if (availableInPrefs >= 4) {
-      /* Plenty of matches — ALL 4 must be from preferred categories */
-      constraintBlock =
-        '*** CRITICAL CATEGORY CONSTRAINT ***\n' +
-        'The student selected these categories: ' + prefCats.join(', ') + '.\n' +
-        'There are ' + availableInPrefs + ' events available in these categories — MORE THAN ENOUGH.\n' +
-        'You MUST pick ALL 4 events from: ' + prefCats.join(', ') + '.\n' +
-        'Do NOT pick any event outside these categories. ZERO exceptions.\n' +
-        'If you pick an event outside ' + prefCats.join('/') + ', your response is WRONG.\n\n';
-    } else if (availableInPrefs >= 3) {
-      /* Most matches available — 3 must match, 1 allowed as discovery */
-      constraintBlock =
-        '*** CRITICAL CATEGORY CONSTRAINT ***\n' +
-        'The student selected these categories: ' + prefCats.join(', ') + '.\n' +
-        'There are ' + availableInPrefs + ' events available in these categories.\n' +
-        'You MUST pick at least 3 out of 4 events from: ' + prefCats.join(', ') + '.\n' +
-        'You may include at most 1 event from another category as a "discovery" pick.\n' +
-        'Mark the discovery pick\'s reason with "✨ Discover: " prefix.\n\n';
-    } else if (availableInPrefs >= 1) {
-      /* Few matches — use what's available, fill rest with related */
-      constraintBlock =
-        '*** CRITICAL CATEGORY CONSTRAINT ***\n' +
-        'The student selected these categories: ' + prefCats.join(', ') + '.\n' +
-        'BUT only ' + availableInPrefs + ' event(s) are available in these categories.\n' +
-        'You MUST pick ALL ' + availableInPrefs + ' available event(s) from: ' + prefCats.join(', ') + '.\n' +
-        'For the remaining ' + (4 - availableInPrefs) + ' slot(s), pick the closest related categories.\n' +
-        'Related order: academic↔career, cultural↔volunteer, sports is standalone.\n' +
-        'Mark non-preferred picks\' reasons with "✨ Discover: " prefix.\n\n';
-    } else {
-      /* No matches at all in preferred categories */
-      constraintBlock =
-        '*** CATEGORY CONSTRAINT ***\n' +
-        'The student selected: ' + prefCats.join(', ') + ' but NO events are available in these categories.\n' +
-        'Pick 4 diverse events from whatever is available.\n' +
-        'In your reasons, acknowledge that their preferred category has no current events.\n\n';
-    }
-
-    /* Keyword matching instruction */
-    if (prefKeys.length) {
-      constraintBlock +=
-        '*** KEYWORD MATCHING ***\n' +
-        'The student also specified these interests: ' + prefKeys.join(', ') + '.\n' +
-        'When choosing between events in the same category, prefer ones whose title or description matches these keywords.\n' +
-        'In the reason, mention which keyword matched. Example: "Matches your interest in badminton"\n\n';
-    }
-  } else {
-    /* No preferences set at all — diverse mix */
-    constraintBlock =
-      '*** NO PREFERENCES SET ***\n' +
-      'The student has not selected any preferred categories.\n' +
-      'Pick 4 events from DIFFERENT categories for maximum variety.\n' +
-      'Do not pick more than 1 event from the same category.\n\n';
-  }
-
-  var prompt =
-    'You are a university event recommendation engine for UTM.\n\n' +
-    'Student profile:\n' +
-    '- Faculty: ' + userFaculty + '\n' +
-    '- Preferred categories: ' + (prefCats.length ? prefCats.join(', ') : 'None') + '\n' +
-    '- Attendance frequency: ' + prefFreq + '\n' +
-    '- Interest keywords: ' + (prefKeys.length ? prefKeys.join(', ') : 'None') + '\n' +
-    '- Past categories attended: ' + (userPastCats.length ? userPastCats.join(', ') : 'None') + '\n\n' +
-    constraintBlock +
-    'Other rules:\n' +
-    '- NEVER pick events with 0 slots.\n' +
-    '- If frequency is "weekly" or "biweekly", prefer sooner dates.\n' +
-    '- Faculty-specific events get slight priority.\n' +
-    '- Each reason: max 12 words, mention WHY it fits the student.\n\n' +
-    'Available events:\n' + JSON.stringify(eventSummaries, null, 2) + '\n\n' +
-    'Respond ONLY with valid JSON array. No markdown.\n' +
-    '[{ "id": <number>, "reason": "Short reason" }, ...]';
-
-  try {
-    var res = await fetch(SUPABASE_URL + '/functions/v1/ai-recommend', {
-      method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + SUPABASE_ANON, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: prompt })
+  if (prefCats.length > 0) {
+    /* ── HARD FILTER: only events matching preferred categories ── */
+    var filtered = evs.filter(function(e) {
+      return prefCats.indexOf(e.category) !== -1 && e.slots_left > 0 && !myEventIds.has(e.id);
     });
-    if (!res.ok) throw new Error('AI error ' + res.status);
-    var data = await res.json();
-    var raw = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) || '[]';
-    var clean = raw.replace(/```json|```/g,'').trim();
-    var picks = JSON.parse(clean);
-    renderRecommendations(picks, evs, prefCats);
-  } catch (err) {
-    console.warn('AI recommendation failed:', err);
-    document.getElementById('aiRecOuter').style.display = 'none';
+
+    /* If keywords exist, sort keyword-matching events to the top */
+    if (prefKeys.length > 0) {
+      var kwLower = prefKeys.map(function(k){ return k.toLowerCase(); });
+      filtered.sort(function(a, b) {
+        var aText = ((a.title || '') + ' ' + (a.description || '')).toLowerCase();
+        var bText = ((b.title || '') + ' ' + (b.description || '')).toLowerCase();
+        var aMatch = kwLower.some(function(k){ return aText.indexOf(k) !== -1; }) ? 1 : 0;
+        var bMatch = kwLower.some(function(k){ return bText.indexOf(k) !== -1; }) ? 1 : 0;
+        return bMatch - aMatch; // keyword matches first
+      });
+    }
+
+    /* If nothing matches → hide section, don't even call AI */
+    if (filtered.length === 0) {
+      document.getElementById('aiRecOuter').style.display = 'none';
+      return;
+    }
+
+    /* Show section with subtitle */
+    var catLabels = prefCats.map(function(c){ return cap(c); }).join(', ');
+    document.getElementById('aiRecOuter').style.display = 'block';
+    document.getElementById('aiRecSubtitle').textContent =
+      'Showing only ' + catLabels + ' events you selected';
+
+    /* Send ONLY filtered events to AI — it physically cannot pick wrong categories */
+    var eventSummaries = filtered.slice(0, 10).map(function(e){
+      return { id:e.id, title:e.title, category:e.category, faculty:e.faculty||'Open to all', date:e.date, slots:e.slots_left, description:(e.description||'').substring(0, 100) };
+    });
+
+    var prompt =
+      'You are a university event recommender for UTM.\n\n' +
+      'Student interests: ' + catLabels + '\n' +
+      'Keywords: ' + (prefKeys.length ? prefKeys.join(', ') : 'None') + '\n' +
+      'Faculty: ' + (user?.faculty || 'Unknown') + '\n' +
+      'Frequency: ' + prefFreq + '\n' +
+      'Past categories: ' + (userPastCats.length ? userPastCats.join(', ') : 'None') + '\n\n' +
+      'Available events (ALL are from the student\'s preferred categories):\n' +
+      JSON.stringify(eventSummaries, null, 2) + '\n\n' +
+      'Pick up to 4 events. Rank by relevance to the student.\n' +
+      'For each, write a reason (max 12 words) explaining why it fits.\n' +
+      'NEVER pick events outside the listed categories.\n\n' +
+      'Respond ONLY with JSON array. No markdown.\n' +
+      '[{ "id": <number>, "reason": "Short reason" }, ...]';
+
+    try {
+      var res = await fetch(SUPABASE_URL + '/functions/v1/ai-recommend', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + SUPABASE_ANON, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: prompt })
+      });
+      if (!res.ok) throw new Error('AI error ' + res.status);
+      var data = await res.json();
+      var raw = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) || '[]';
+      var clean = raw.replace(/```json|```/g, '').trim();
+      var picks = JSON.parse(clean);
+
+      /* ═══ SAFETY FILTER: double-check every pick's category ═══ */
+      var safePicks = picks.filter(function(pick) {
+        var ev = evs.find(function(e){ return e.id === pick.id; });
+        if (!ev) return false; // invalid ID
+        if (prefCats.indexOf(ev.category) === -1) {
+          console.warn('AI returned wrong category "' + ev.category + '" — blocked.');
+          return false; // WRONG CATEGORY — BLOCKED
+        }
+        return true;
+      });
+
+      renderRecommendations(safePicks, evs, prefCats);
+
+    } catch(err) {
+      console.warn('AI recommendation failed:', err);
+      document.getElementById('aiRecOuter').style.display = 'none';
+    }
+
+  } else {
+    /* ═══ NO PREFERENCES SET — diverse mix, no filtering ═══ */
+    var eventSummaries = evs
+      .filter(function(e){ return e.slots_left > 0 && !myEventIds.has(e.id); })
+      .slice(0, 30)
+      .map(function(e){
+        return { id:e.id, title:e.title, category:e.category, faculty:e.faculty||'Open to all', date:e.date, slots:e.slots_left };
+      });
+
+    if (!eventSummaries.length) { document.getElementById('aiRecOuter').style.display = 'none'; return; }
+
+    document.getElementById('aiRecOuter').style.display = 'block';
+    document.getElementById('aiRecSubtitle').textContent = 'Explore and discover new events';
+
+    var prompt =
+      'You are a university event recommender for UTM.\n\n' +
+      'Student has NO preferred categories set.\n' +
+      'Faculty: ' + (user?.faculty || 'Unknown') + '\n\n' +
+      'Pick 4 events from DIFFERENT categories for variety.\n' +
+      'Do not pick more than 1 from the same category.\n\n' +
+      'Available events:\n' + JSON.stringify(eventSummaries, null, 2) + '\n\n' +
+      'Respond ONLY with JSON array. No markdown.\n' +
+      '[{ "id": <number>, "reason": "Short reason" }, ...]';
+
+    try {
+      var res = await fetch(SUPABASE_URL + '/functions/v1/ai-recommend', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + SUPABASE_ANON, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: prompt })
+      });
+      if (!res.ok) throw new Error('AI error ' + res.status);
+      var data = await res.json();
+      var raw = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) || '[]';
+      var clean = raw.replace(/```json|```/g, '').trim();
+      var picks = JSON.parse(clean);
+      renderRecommendations(picks, evs, []);
+    } catch(err) {
+      console.warn('AI recommendation failed:', err);
+      document.getElementById('aiRecOuter').style.display = 'none';
+    }
   }
 }
 
-/* ═════════════ RENDER RECOMMENDATIONS ═════════════ */
 function renderRecommendations(picks, evs, prefCats) {
   if (!picks || !picks.length) { document.getElementById('aiRecOuter').style.display = 'none'; return; }
-
-  document.getElementById('aiRecScroll').innerHTML = picks.map(function(pick, i) {
+  document.getElementById('aiRecScroll').innerHTML = picks.map(function(pick, i){
     var ev = evs.find(function(e){ return e.id === pick.id; });
     if (!ev) return '';
-
-    /* Check if this pick matches user's preferred categories */
-    var isMatch = prefCats && prefCats.length && prefCats.indexOf(ev.category) !== -1;
-    var isDiscovery = pick.reason && pick.reason.indexOf('Discover') !== -1;
-    var tagHtml = '';
-    if (prefCats && prefCats.length) {
-      if (isMatch) {
-        tagHtml = '<div class="rec-matched">✓ Match</div>';
-      } else if (isDiscovery) {
-        tagHtml = '<div class="rec-wildcard">✨ Discover</div>';
-      }
-    }
-
-    return '<div class="rec-card cat-'+(ev.category||'academic')+'" onclick="openModal('+ev.id+')" style="animation:fadeUp .3s ease '+(i*.08)+'s both">' +
-      '<div class="rec-card-body">' +
-        '<div class="rec-card-top"><span class="ev-badge '+(badgeClass[ev.category]||'badge-academic')+'">'+cap(ev.category)+'</span>' +
-        (tagHtml ? '<div>'+tagHtml+'</div>' : '') +
-        '<span style="font-size:22px;line-height:1">'+(ev.emoji||'📌')+'</span></div>' +
-        '<div class="rec-ai-reason"><span class="rec-ai-reason-icon">✦</span><span>'+pick.reason+'</span></div>' +
-        '<div class="rec-title">'+(ev.title||'Untitled Event')+'</div>' +
-        '<div class="rec-meta-row"><span class="rec-meta-ic">📅</span>'+(ev.date||'–')+'</div>' +
-        '<div class="rec-meta-row"><span class="rec-meta-ic">📍</span>'+(ev.location||'–')+'</div>' +
-      '</div>' +
-      '<div class="rec-foot"><span class="rec-slots"><b>'+ev.slots_left+'</b> slots left</span>' +
+    return '<div class="rec-card cat-'+(ev.category||'academic')+'" onclick="openModal('+ev.id+')" style="animation:fadeUp .3s ease '+(i*.08)+'s both">'+
+      '<div class="rec-card-body">'+
+        '<div class="rec-card-top"><span class="ev-badge '+(badgeClass[ev.category]||'badge-academic')+'">'+cap(ev.category)+'</span>'+
+        '<div class="rec-matched">✓ Match</div>'+
+        '<span style="font-size:22px;line-height:1">'+(ev.emoji||'📌')+'</span></div>'+
+        '<div class="rec-ai-reason"><span class="rec-ai-reason-icon">✦</span><span>'+pick.reason+'</span></div>'+
+        '<div class="rec-title">'+(ev.title||'Untitled Event')+'</div>'+
+        '<div class="rec-meta-row"><span class="rec-meta-ic">📅</span>'+(ev.date||'–')+'</div>'+
+        '<div class="rec-meta-row"><span class="rec-meta-ic">📍</span>'+(ev.location||'–')+'</div>'+
+      '</div>'+
+      '<div class="rec-foot"><span class="rec-slots"><b>'+ev.slots_left+'</b> slots left</span>'+
         '<button class="rec-btn" onclick="event.stopPropagation();goRegister('+ev.id+')">Register</button></div></div>';
   }).join('');
 }
 
 /* ═════════════ RENDER GRID ═════════════ */
-function render() {
-  var evs = window.EVENTS || [], isArch = (viewMode === 'archived');
-  var list = evs.filter(function(e){
-    var mc = curCat === 'all' || e.category === curCat;
-    var ms = !curQ || (e.title||'').toLowerCase().indexOf(curQ)!==-1 || (e.location||'').toLowerCase().indexOf(curQ)!==-1 || (e.faculty||'').toLowerCase().indexOf(curQ)!==-1;
-    return mc && ms;
-  });
-  var label = isArch ? 'archived event' : 'upcoming event';
-  document.getElementById('evMeta').textContent = list.length + ' ' + label + (list.length!==1?'s':'') + ' found' + (isArch ? '' : ' · Live from Supabase');
-  if (!list.length) { document.getElementById('evGrid').innerHTML = '<div class="state-box"><h3>'+(isArch?'No archived events':'No events found')+'</h3><p>'+(isArch?'Past events will appear here.':'Try a different filter.')+'</p></div>'; return; }
-  document.getElementById('evGrid').innerHTML = list.map(function(ev, i){
-    var pct=ev.slots>0?Math.round((ev.slots_left/ev.slots)*100):0, full=parseInt(ev.slots_left)<=0, low=!full&&pct<=20, fc=full?'#dc2626':low?'#e67e22':'#1a5c38', emoji=ev.emoji||'📌', isReg=!!ev.registered;
-    var extra='', ribbon='', foot='';
-    if(isArch){ extra=' is-expired'; ribbon='<div class="expired-ribbon">Expired</div>'; foot='<span class="full-tag" style="color:#888;background:#f5f5f5;border-color:#ddd">Event has passed</span>'; }
-    else if(isReg){ extra=' is-registered'; ribbon='<div class="registered-ribbon">✓ Registered</div>'; foot='<div class="ev-slots"><div class="ev-slots-txt ok"><b>You\'re in!</b></div><div class="ev-bar"><div class="ev-bar-fill" style="width:'+pct+'%;background:'+fc+'"></div></div></div><button class="ev-btn registered" onclick="event.stopPropagation();viewTicket('+ev.id+')">🎟 View Ticket</button>'; }
-    else if(full){ foot='<span class="full-tag">Registration Full</span><button class="ev-btn outline" onclick="event.stopPropagation();openModal('+ev.id+')">View Details</button>'; }
-    else{ foot='<div class="ev-slots"><div class="ev-slots-txt '+(low?'':'ok')+'"><b>'+ev.slots_left+'</b> slots remaining</div><div class="ev-bar"><div class="ev-bar-fill" style="width:'+pct+'%;background:'+fc+'"></div></div></div><button class="ev-btn" onclick="event.stopPropagation();goRegister('+ev.id+')">Register</button>'; }
+function render(){
+  var evs=window.EVENTS||[],isArch=(viewMode==='archived');
+  var list=evs.filter(function(e){var mc=curCat==='all'||e.category===curCat;var ms=!curQ||(e.title||'').toLowerCase().indexOf(curQ)!==-1||(e.location||'').toLowerCase().indexOf(curQ)!==-1||(e.faculty||'').toLowerCase().indexOf(curQ)!==-1;return mc&&ms});
+  document.getElementById('evMeta').textContent=list.length+' '+(isArch?'archived':'upcoming')+' event'+(list.length!==1?'s':'')+' found'+(isArch?'':' · Live from Supabase');
+  if(!list.length){document.getElementById('evGrid').innerHTML='<div class="state-box"><h3>'+(isArch?'No archived events':'No events found')+'</h3><p>'+(isArch?'Past events will appear here.':'Try a different filter.')+'</p></div>';return}
+  document.getElementById('evGrid').innerHTML=list.map(function(ev,i){
+    var pct=ev.slots>0?Math.round((ev.slots_left/ev.slots)*100):0,full=parseInt(ev.slots_left)<=0,low=!full&&pct<=20,fc=full?'#dc2626':low?'#e67e22':'#1a5c38',emoji=ev.emoji||'📌',isReg=!!ev.registered;
+    var extra='',ribbon='',foot='';
+    if(isArch){extra=' is-expired';ribbon='<div class="expired-ribbon">Expired</div>';foot='<span class="full-tag" style="color:#888;background:#f5f5f5;border-color:#ddd">Event has passed</span>'}
+    else if(isReg){extra=' is-registered';ribbon='<div class="registered-ribbon">✓ Registered</div>';foot='<div class="ev-slots"><div class="ev-slots-txt ok"><b>You\'re in!</b></div><div class="ev-bar"><div class="ev-bar-fill" style="width:'+pct+'%;background:'+fc+'"></div></div></div><button class="ev-btn registered" onclick="event.stopPropagation();viewTicket('+ev.id+')">🎟 View Ticket</button>'}
+    else if(full){foot='<span class="full-tag">Registration Full</span><button class="ev-btn outline" onclick="event.stopPropagation();openModal('+ev.id+')">View Details</button>'}
+    else{foot='<div class="ev-slots"><div class="ev-slots-txt '+(low?'':'ok')+'"><b>'+ev.slots_left+'</b> slots remaining</div><div class="ev-bar"><div class="ev-bar-fill" style="width:'+pct+'%;background:'+fc+'"></div></div></div><button class="ev-btn" onclick="event.stopPropagation();goRegister('+ev.id+')">Register</button>'}
     return '<div class="ev-card cat-'+(ev.category||'academic')+extra+'" style="animation-delay:'+(i*.04)+'s" onclick="openModal('+ev.id+')"><div class="ev-card-body">'+ribbon+
       '<div class="ev-card-top"><span class="ev-badge '+(badgeClass[ev.category]||'badge-academic')+'">'+cap(ev.category)+'</span><span class="ev-emoji">'+emoji+'</span></div>'+
       '<div class="ev-title">'+(ev.title||'Untitled Event')+'</div>'+
       '<div class="ev-meta"><div class="ev-meta-row"><span class="ev-meta-ic">📅</span>'+(ev.date||'–')+'</div><div class="ev-meta-row"><span class="ev-meta-ic">🕐</span>'+(ev.time||'–')+'</div><div class="ev-meta-row"><span class="ev-meta-ic">📍</span>'+(ev.location||'–')+'</div></div>'+
-      '<div class="ev-card-foot">'+foot+'</div></div></div>';
-  }).join('');
+      '<div class="ev-card-foot">'+foot+'</div></div></div>'
+  }).join('')
 }
 
 /* ═════════════ FILTERS ═════════════ */
-function setCat(c, btn) { if(viewMode==='archived'){} else { viewMode='upcoming'; window.EVENTS=upcomingEvents; } curCat=c; document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')}); if(btn) btn.classList.add('active'); render(); }
-function setCatSb(c, btn) { curCat=c; document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')}); btn.classList.add('active'); document.querySelectorAll('.ct-btn:not(.archived-btn)').forEach(function(b){ var t=b.textContent.trim().toLowerCase(); b.classList.toggle('active', viewMode==='archived'?false:(c==='all'?t==='all events':t===c)); }); render(); }
-function filterEvents() { curQ = document.getElementById('searchInput').value.toLowerCase().trim(); render(); }
-async function doLogout() { await sb.auth.signOut(); window.location.href = '/Login/login.html'; }
+function setCat(c,btn){if(viewMode!=='archived'){viewMode='upcoming';window.EVENTS=upcomingEvents}curCat=c;document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});if(btn)btn.classList.add('active');render()}
+function setCatSb(c,btn){curCat=c;document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('.ct-btn:not(.archived-btn)').forEach(function(b){var t=b.textContent.trim().toLowerCase();b.classList.toggle('active',viewMode==='archived'?false:(c==='all'?t==='all events':t===c))});render()}
+function filterEvents(){curQ=document.getElementById('searchInput').value.toLowerCase().trim();render()}
+async function doLogout(){await sb.auth.signOut();window.location.href='/Login/login.html'}
 
 /* ═════════════ MODAL ═════════════ */
-function openModal(id) {
-  var ev = upcomingEvents.find(function(e){return e.id===id}) || archivedEvents.find(function(e){return e.id===id});
-  if(!ev) return; var isReg=!!ev.registered, expired=isExpired(ev);
-  document.getElementById('mBadge').textContent=cap(ev.category); document.getElementById('mBadge').className='m-cat-badge ev-badge '+(badgeClass[ev.category]||'badge-academic');
-  document.getElementById('mTitle').textContent=ev.title||'–'; document.getElementById('mDate').textContent=ev.date||'–'; document.getElementById('mTime').textContent=ev.time||'–';
-  document.getElementById('mLoc').textContent=ev.location||'–'; document.getElementById('mFac').textContent=ev.faculty||'–';
+function openModal(id){
+  var ev=upcomingEvents.find(function(e){return e.id===id})||archivedEvents.find(function(e){return e.id===id});
+  if(!ev)return;var isReg=!!ev.registered,expired=isExpired(ev);
+  document.getElementById('mBadge').textContent=cap(ev.category);document.getElementById('mBadge').className='m-cat-badge ev-badge '+(badgeClass[ev.category]||'badge-academic');
+  document.getElementById('mTitle').textContent=ev.title||'–';document.getElementById('mDate').textContent=ev.date||'–';document.getElementById('mTime').textContent=ev.time||'–';
+  document.getElementById('mLoc').textContent=ev.location||'–';document.getElementById('mFac').textContent=ev.faculty||'–';
   document.getElementById('mSlots').textContent=expired?'Event has passed':(ev.slots_left>0?ev.slots_left+' slots remaining':'Registration Full');
-  document.getElementById('mOrg').textContent=ev.organizer_name||'–'; document.getElementById('mDesc').textContent=ev.description||'–';
-  document.getElementById('mRegisteredNote').classList.toggle('show', isReg);
-  var fb=document.getElementById('mFeedback'); fb.style.display=isReg?'block':'none'; fb.onclick=function(){closeModal();window.location.href='../Feedback/feedback_form.html?id='+id;};
-  var btn=document.getElementById('mReg'); btn.style.background='';
-  if(expired){btn.textContent='Event Has Passed';btn.className='m-btn-reg';btn.disabled=true;btn.onclick=null;btn.style.background='#999';}
-  else if(isReg){btn.textContent='🎟 View My Ticket';btn.className='m-btn-reg registered';btn.disabled=false;btn.onclick=function(){closeModal();viewTicket(ev.id);};}
-  else if(ev.slots_left<=0){btn.textContent='Registration Closed';btn.className='m-btn-reg';btn.disabled=true;btn.onclick=null;}
-  else{btn.textContent='Register Now';btn.className='m-btn-reg';btn.disabled=false;btn.onclick=function(){goRegister(ev.id);};}
-  document.getElementById('overlay').classList.add('open'); document.body.style.overflow='hidden';
+  document.getElementById('mOrg').textContent=ev.organizer_name||'–';document.getElementById('mDesc').textContent=ev.description||'–';
+  document.getElementById('mRegisteredNote').classList.toggle('show',isReg);
+  var fb=document.getElementById('mFeedback');fb.style.display=isReg?'block':'none';fb.onclick=function(){closeModal();window.location.href='../Feedback/feedback_form.html?id='+id};
+  var btn=document.getElementById('mReg');btn.style.background='';
+  if(expired){btn.textContent='Event Has Passed';btn.className='m-btn-reg';btn.disabled=true;btn.onclick=null;btn.style.background='#999'}
+  else if(isReg){btn.textContent='🎟 View My Ticket';btn.className='m-btn-reg registered';btn.disabled=false;btn.onclick=function(){closeModal();viewTicket(ev.id)}}
+  else if(ev.slots_left<=0){btn.textContent='Registration Closed';btn.className='m-btn-reg';btn.disabled=true;btn.onclick=null}
+  else{btn.textContent='Register Now';btn.className='m-btn-reg';btn.disabled=false;btn.onclick=function(){goRegister(ev.id)}}
+  document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden'
 }
-function goRegister(id){var ev=(window.EVENTS||[]).find(function(e){return e.id===id}); if(!ev)return; window.location.href='../Login/register.html?'+new URLSearchParams({id:ev.id,title:ev.title,date:ev.date,location:ev.location,time:ev.time});}
-function viewTicket(id){goRegister(id);}
-function closeModal(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow='';}
-function handleOv(e){if(e.target===document.getElementById('overlay'))closeModal();}
+function goRegister(id){var ev=(window.EVENTS||[]).find(function(e){return e.id===id});if(!ev)return;window.location.href='../Login/register.html?'+new URLSearchParams({id:ev.id,title:ev.title,date:ev.date,location:ev.location,time:ev.time})}
+function viewTicket(id){goRegister(id)}
+function closeModal(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow=''}
+function handleOv(e){if(e.target===document.getElementById('overlay'))closeModal()}
 
 init();
 </script>
@@ -868,16 +796,16 @@ init();
 <script>
 (function(){
   var chatOpen=false,chatHistory=[],eventsCtx='',firstOpen=true;
-  function buildCtx(){var e=window.EVENTS||[];if(!e.length)return'No events loaded.';return e.slice(0,20).map(function(e){return'['+(e.category||'').toUpperCase()+'] '+e.title+' | '+e.date+' '+(e.time||'')+' | '+(e.location||'–')+' | Slots: '+e.slots_left}).join('\n');}
-  window.toggleChat=function(){chatOpen=!chatOpen;document.getElementById('utm-chat-fab').classList.toggle('open',chatOpen);document.getElementById('utm-chat-win').classList.toggle('open',chatOpen);document.getElementById('chat-badge').classList.add('hidden');if(chatOpen&&firstOpen){firstOpen=false;eventsCtx=buildCtx();addBot("Hi! I'm the UTM AI Assistant 👋\n\nI can help you find events, check available slots, or answer anything about the Campus Event Finder.\n\nWhat would you like to know?");document.getElementById('cwInput').focus();}};
-  window.sendQuick=function(t){document.getElementById('cwInput').value=t;sendMsg();};
-  window.sendMsg=async function(){var inp=document.getElementById('cwInput'),t=inp.value.trim();if(!t)return;inp.value='';document.getElementById('cwQuick').style.display='none';addUsr(t);chatHistory.push({role:'user',content:t});var tid=addTyp();document.getElementById('cwSend').disabled=true;try{var sys='You are UTM AI Assistant for Campus Event Finder.\n\nCurrent events:\n'+(eventsCtx||buildCtx())+'\n\nRules:\n- Answer in English.\n- Reference data accurately.\n- Keep concise (max 3-4 sentences).\n- Never make up events.';var r=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({prompt:'SYSTEM: '+sys+'\n\n'+chatHistory.map(function(m){return(m.role==='user'?'Student':'Assistant')+': '+m.content}).join('\n')+'\nAssistant:'})});rmTyp(tid);if(!r.ok)throw new Error(r.status);var d=await r.json();var rep=(d&&d.candidates&&d.candidates[0]&&d.candidates[0].content&&d.candidates[0].content.parts&&d.candidates[0].content.parts[0]&&d.candidates[0].content.parts[0].text)||"Sorry, I can't respond right now.";addBot(rep);chatHistory.push({role:'assistant',content:rep});}catch(e){rmTyp(tid);addBot("Sorry, there's a technical issue. Please try again. 🙏");}document.getElementById('cwSend').disabled=false;document.getElementById('cwInput').focus();};
-  function now(){return new Date().toLocaleTimeString('en-MY',{hour:'2-digit',minute:'2-digit'});}
-  function addBot(t){var m=document.getElementById('cwMsgs'),d=document.createElement('div');d.className='msg bot';d.innerHTML='<div class="msg-av">🤖</div><div><div class="msg-bubble">'+t.replace(/\n/g,'<br>')+'</div><div class="msg-time">'+now()+'</div></div>';m.appendChild(d);m.scrollTop=m.scrollHeight;if(!chatOpen)document.getElementById('chat-badge').classList.remove('hidden');}
-  function addUsr(t){var m=document.getElementById('cwMsgs'),d=document.createElement('div');d.className='msg user';d.innerHTML='<div><div class="msg-bubble">'+t+'</div><div class="msg-time" style="text-align:right">'+now()+'</div></div>';m.appendChild(d);m.scrollTop=m.scrollHeight;}
-  function addTyp(){var m=document.getElementById('cwMsgs'),id='typ-'+Date.now(),d=document.createElement('div');d.className='msg bot';d.id=id;d.innerHTML='<div class="msg-av">🤖</div><div class="msg-bubble" style="padding:10px 14px"><div class="typing-dots"><span></span><span></span><span></span></div></div>';m.appendChild(d);m.scrollTop=m.scrollHeight;return id;}
-  function rmTyp(id){var el=document.getElementById(id);if(el)el.remove();}
-  setTimeout(function(){if(!chatOpen)document.getElementById('chat-badge').classList.remove('hidden');},3000);
+  function buildCtx(){var e=window.EVENTS||[];if(!e.length)return'No events loaded.';return e.slice(0,20).map(function(e){return'['+(e.category||'').toUpperCase()+'] '+e.title+' | '+e.date+' '+(e.time||'')+' | '+(e.location||'–')+' | Slots: '+e.slots_left}).join('\n')}
+  window.toggleChat=function(){chatOpen=!chatOpen;document.getElementById('utm-chat-fab').classList.toggle('open',chatOpen);document.getElementById('utm-chat-win').classList.toggle('open',chatOpen);document.getElementById('chat-badge').classList.add('hidden');if(chatOpen&&firstOpen){firstOpen=false;eventsCtx=buildCtx();addBot("Hi! I'm the UTM AI Assistant 👋\n\nI can help you find events, check available slots, or answer anything about the Campus Event Finder.\n\nWhat would you like to know?");document.getElementById('cwInput').focus()}};
+  window.sendQuick=function(t){document.getElementById('cwInput').value=t;sendMsg()};
+  window.sendMsg=async function(){var inp=document.getElementById('cwInput'),t=inp.value.trim();if(!t)return;inp.value='';document.getElementById('cwQuick').style.display='none';addUsr(t);chatHistory.push({role:'user',content:t});var tid=addTyp();document.getElementById('cwSend').disabled=true;try{var sys='You are UTM AI Assistant for Campus Event Finder.\n\nCurrent events:\n'+(eventsCtx||buildCtx())+'\n\nRules:\n- Answer in English.\n- Reference data accurately.\n- Keep concise (max 3-4 sentences).\n- Never make up events.';var r=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({prompt:'SYSTEM: '+sys+'\n\n'+chatHistory.map(function(m){return(m.role==='user'?'Student':'Assistant')+': '+m.content}).join('\n')+'\nAssistant:'})});rmTyp(tid);if(!r.ok)throw new Error(r.status);var d=await r.json();var rep=(d&&d.candidates&&d.candidates[0]&&d.candidates[0].content&&d.candidates[0].content.parts&&d.candidates[0].content.parts[0]&&d.candidates[0].content.parts[0].text)||"Sorry, I can't respond right now.";addBot(rep);chatHistory.push({role:'assistant',content:rep})}catch(e){rmTyp(tid);addBot("Sorry, there's a technical issue. Please try again. 🙏")}document.getElementById('cwSend').disabled=false;document.getElementById('cwInput').focus()};
+  function now(){return new Date().toLocaleTimeString('en-MY',{hour:'2-digit',minute:'2-digit'})}
+  function addBot(t){var m=document.getElementById('cwMsgs'),d=document.createElement('div');d.className='msg bot';d.innerHTML='<div class="msg-av">🤖</div><div><div class="msg-bubble">'+t.replace(/\n/g,'<br>')+'</div><div class="msg-time">'+now()+'</div></div>';m.appendChild(d);m.scrollTop=m.scrollHeight;if(!chatOpen)document.getElementById('chat-badge').classList.remove('hidden')}
+  function addUsr(t){var m=document.getElementById('cwMsgs'),d=document.createElement('div');d.className='msg user';d.innerHTML='<div><div class="msg-bubble">'+t+'</div><div class="msg-time" style="text-align:right">'+now()+'</div></div>';m.appendChild(d);m.scrollTop=m.scrollHeight}
+  function addTyp(){var m=document.getElementById('cwMsgs'),id='typ-'+Date.now(),d=document.createElement('div');d.className='msg bot';d.id=id;d.innerHTML='<div class="msg-av">🤖</div><div class="msg-bubble" style="padding:10px 14px"><div class="typing-dots"><span></span><span></span><span></span></div></div>';m.appendChild(d);m.scrollTop=m.scrollHeight;return id}
+  function rmTyp(id){var el=document.getElementById(id);if(el)el.remove()}
+  setTimeout(function(){if(!chatOpen)document.getElementById('chat-badge').classList.remove('hidden')},3000)
 })();
 </script>
 </body>
