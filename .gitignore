@@ -1,0 +1,4 @@
+Add-Content .gitignore ".env"
+Add-Content .gitignore ".venv/"
+Add-Content .gitignore "venv/"
+Add-Content .gitignore "__pycache__/"
