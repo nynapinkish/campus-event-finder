@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Campus Event Finder — UTM</title>
+<title>Campus Event Finder — UTM (with AI Recommendations)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -58,6 +58,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 
 .wrap{max-width:1320px;margin:0 auto;padding:24px 24px 60px;display:grid;grid-template-columns:230px 1fr;gap:20px;align-items:start;}
 
+/* ─── SIDEBAR ─────────────────────── */
 .sidebar{display:flex;flex-direction:column;gap:14px}
 .sb-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;}
 .sb-card-head{background:var(--red);padding:10px 14px;font-size:12px;font-weight:700;color:#fff;letter-spacing:.5px;text-transform:uppercase;}
@@ -87,6 +88,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .back-link{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:4px;padding:9px 14px;font-size:13px;color:var(--muted);text-decoration:none;transition:all .15s;}
 .back-link:hover{color:var(--red);border-color:rgba(139,0,0,.3)}
 
+/* ─── EVENTS AREA ─────────────────── */
 .ev-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
 .ev-toolbar-left h2{font-size:16px;font-weight:700;color:var(--text)}
 .ev-toolbar-left p{font-size:12.5px;color:var(--muted);margin-top:2px}
@@ -103,7 +105,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .ev-card.is-registered{border-color:#b7dfca;background:#fafffe;}
 .ev-card.is-registered .ev-card-body{position:relative}
 .registered-ribbon{position:absolute;top:0;right:0;background:var(--green);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 0 4px;}
-
 .ev-card-body{padding:16px;position:relative;}
 .ev-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
 .ev-badge{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:3px;}
@@ -137,6 +138,147 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ─── AI RECOMMENDATION SECTION ───── */
+.ai-rec-outer{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+}
+.ai-rec-wrap{
+  max-width:1320px;
+  margin:0 auto;
+  padding:20px 24px 22px;
+}
+.ai-rec-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.ai-rec-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.ai-rec-title-icon{
+  width:30px;height:30px;
+  background:linear-gradient(135deg,#8B0000,#c0392b);
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;
+  flex-shrink:0;
+}
+.ai-rec-title h3{
+  font-size:15px;font-weight:700;color:var(--text);
+}
+.ai-rec-title p{
+  font-size:11.5px;color:var(--muted);margin-top:1px;
+}
+.ai-rec-badge{
+  font-size:10px;font-weight:700;letter-spacing:.6px;
+  background:linear-gradient(90deg,#8B0000,#c0392b);
+  color:#fff;padding:3px 10px;border-radius:20px;
+  text-transform:uppercase;
+  flex-shrink:0;
+}
+/* Scroll container */
+.ai-rec-scroll{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-bottom:6px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border) transparent;
+}
+.ai-rec-scroll::-webkit-scrollbar{height:4px}
+.ai-rec-scroll::-webkit-scrollbar-track{background:transparent}
+.ai-rec-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* Recommendation card */
+.rec-card{
+  flex:0 0 260px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:box-shadow .2s,transform .2s;
+  position:relative;
+}
+.rec-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);transform:translateY(-2px)}
+.rec-card.cat-academic{border-top:3px solid #003087}
+.rec-card.cat-sports{border-top:3px solid #1a5c38}
+.rec-card.cat-cultural{border-top:3px solid var(--red)}
+.rec-card.cat-career{border-top:3px solid #b35900}
+.rec-card.cat-volunteer{border-top:3px solid #5b2b91}
+.rec-card-body{padding:13px 14px 14px}
+.rec-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.rec-ai-reason{
+  font-size:10.5px;color:#8B0000;
+  background:var(--red-light);
+  border:1px solid rgba(139,0,0,.15);
+  border-radius:3px;
+  padding:3px 8px;
+  margin-bottom:8px;
+  line-height:1.4;
+  display:flex;align-items:flex-start;gap:5px;
+}
+.rec-ai-reason-icon{flex-shrink:0;margin-top:1px;font-size:11px}
+.rec-title{font-size:13.5px;font-weight:600;color:var(--text);line-height:1.35;margin-bottom:8px}
+.rec-meta-row{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-bottom:3px}
+.rec-meta-ic{opacity:.6;font-size:11px;width:13px;text-align:center}
+.rec-foot{
+  border-top:1px solid var(--border);
+  padding:9px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.rec-slots{font-size:11.5px;color:var(--muted)}
+.rec-slots b{color:#1a5c38}
+.rec-btn{
+  background:var(--red);color:#fff;
+  border:none;font-family:'Open Sans',sans-serif;
+  font-size:11.5px;font-weight:600;
+  padding:5px 13px;border-radius:3px;
+  cursor:pointer;transition:background .15s;
+}
+.rec-btn:hover{background:var(--red2)}
+
+/* Skeleton loader for rec cards */
+.rec-skeleton{
+  flex:0 0 260px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:6px;
+  border-top:3px solid #eee;
+  padding:13px 14px 14px;
+  overflow:hidden;
+}
+.skel-line{
+  background:#f0f0f0;
+  border-radius:3px;
+  margin-bottom:8px;
+  animation:shimmer 1.4s ease infinite;
+  background-size:200% 100%;
+  background-image:linear-gradient(90deg,#f0f0f0 25%,#e4e4e4 50%,#f0f0f0 75%);
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* AI thinking indicator */
+.ai-thinking{
+  display:flex;align-items:center;gap:10px;
+  font-size:12.5px;color:var(--muted);
+  padding:20px 0;
+}
+.ai-thinking-dots{display:flex;gap:4px}
+.ai-thinking-dots span{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--red);opacity:.4;
+  animation:dotPulse 1.2s ease infinite;
+}
+.ai-thinking-dots span:nth-child(2){animation-delay:.2s}
+.ai-thinking-dots span:nth-child(3){animation-delay:.4s}
+@keyframes dotPulse{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
+
+/* ─── MODAL ───────────────────────── */
 .footer{background:#1f1f1f;padding:36px 24px 28px;margin-top:auto;}
 .footer-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px;}
 .fi-brand-utm{font-size:22px;font-weight:700;color:#fff;line-height:1;margin-bottom:6px}
@@ -188,7 +330,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   <span class="topbar-sep">|</span>
   <a href="#">Contact Us</a>
   <span class="topbar-sep">|</span>
-  <a href="#" onclick="doLogout()" style="cursor:pointer;">Logout</a>
+  <a href="#" onclick="doLogout()">Logout</a>
 </div>
 
 <header class="header">
@@ -252,6 +394,60 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   <button class="ct-btn" onclick="setCat('career',this)">Career</button>
   <button class="ct-btn" onclick="setCat('volunteer',this)">Volunteer</button>
 </div>
+
+<!-- ════════════════════════════════════════════════════════
+     AI RECOMMENDATION SECTION — above the grid
+     Shows personalised picks based on faculty + past regs
+     ════════════════════════════════════════════════════════ -->
+<div class="ai-rec-outer" id="aiRecOuter" style="display:none">
+  <div class="ai-rec-wrap">
+    <div class="ai-rec-header">
+      <div class="ai-rec-title">
+        <div class="ai-rec-title-icon">🤖</div>
+        <div>
+          <h3>Recommended For You</h3>
+          <p id="aiRecSubtitle">Personalised picks based on your faculty and interests</p>
+        </div>
+      </div>
+      <span class="ai-rec-badge">AI Picks</span>
+    </div>
+
+    <!-- Skeleton shown while AI is thinking -->
+    <div class="ai-rec-scroll" id="aiRecScroll">
+      <div class="rec-skeleton">
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+          <div class="skel-line" style="width:70px;height:18px"></div>
+          <div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div>
+        </div>
+        <div class="skel-line" style="width:90%;height:12px"></div>
+        <div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div>
+        <div class="skel-line" style="width:60%;height:12px"></div>
+        <div class="skel-line" style="width:55%;height:12px"></div>
+      </div>
+      <div class="rec-skeleton">
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+          <div class="skel-line" style="width:70px;height:18px"></div>
+          <div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div>
+        </div>
+        <div class="skel-line" style="width:90%;height:12px"></div>
+        <div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div>
+        <div class="skel-line" style="width:60%;height:12px"></div>
+        <div class="skel-line" style="width:55%;height:12px"></div>
+      </div>
+      <div class="rec-skeleton">
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+          <div class="skel-line" style="width:70px;height:18px"></div>
+          <div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div>
+        </div>
+        <div class="skel-line" style="width:90%;height:12px"></div>
+        <div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div>
+        <div class="skel-line" style="width:60%;height:12px"></div>
+        <div class="skel-line" style="width:55%;height:12px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end AI recommendation section -->
 
 <div class="wrap">
   <aside class="sidebar">
@@ -362,7 +558,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   </div>
 </footer>
 
-<!-- Modal -->
+<!-- Modal (unchanged from original) -->
 <div class="overlay" id="overlay" onclick="handleOv(event)">
   <div class="modal">
     <div class="m-nav">
@@ -390,64 +586,62 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
         <button class="m-btn-close" id="mFeedback" onclick="closeModal()" style="display:none">📝 Feedback</button>
         <button class="m-btn-close" onclick="closeModal()">Close</button>
       </div>
-
-</div>
+    </div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+/* ══════════════════════════════════════════════════════════════
+   CONFIG
+   ══════════════════════════════════════════════════════════════ */
 const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-let curCat = 'all', curQ = '';
-let currentUser = null;
+// ─── REPLACE THIS WITH YOUR REAL sk-ant-... KEY ───────────────
+const ANTHROPIC_KEY = 'sk-ant-REPLACE_WITH_YOUR_KEY';
+// ─────────────────────────────────────────────────────────────
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
 const badgeClass = {
   academic:'badge-academic', sports:'badge-sports',
   cultural:'badge-cultural', career:'badge-career', volunteer:'badge-volunteer'
 };
 
+let curCat = 'all', curQ = '';
+let currentUser = null;
+
+/* ══════════════════════════════════════════════════════════════
+   INIT
+   ══════════════════════════════════════════════════════════════ */
 async function init() {
-  // Check session
   const { data: { session } } = await sb.auth.getSession();
-  if (!session) {
-    window.location.href = '/Login/login.html';
-    return;
-  }
+  if (!session) { window.location.href = '/Login/login.html'; return; }
 
-  // Get user data
   const { data: user } = await sb.from('users')
-    .select('*')
-    .eq('email', session.user.email)
-    .single();
-
+    .select('*').eq('email', session.user.email).single();
   currentUser = user;
 
-  if (user?.avatar || user?.name) {
+  if (user?.name) {
     document.getElementById('headerAvatar').textContent =
-      (user.name || '').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+      (user.name||'').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
     document.getElementById('headerName').textContent =
       user.matrix || user.name || session.user.email;
   }
 
-  // Load my registrations
+  /* load registrations */
   let myEventIds = new Set();
   if (user?.matrix) {
-    const { data: regs } = await sb
-      .from('registrations')
-      .select('event_id')
-      .ilike('matric_no', user.matrix);
+    const { data: regs } = await sb.from('registrations')
+      .select('event_id').ilike('matric_no', user.matrix);
     if (regs) regs.forEach(r => myEventIds.add(r.event_id));
   }
 
-  // Load events
-  const { data: events, error } = await sb
-    .from('events')
-    .select('*')
-    .eq('status', 'approved')
-    .order('created_at', { ascending: false });
+  /* load events */
+  const { data: events, error } = await sb.from('events')
+    .select('*').eq('status','approved')
+    .order('created_at',{ ascending:false });
 
   if (error || !events) {
     document.getElementById('evGrid').innerHTML =
@@ -456,40 +650,180 @@ async function init() {
   }
 
   window.EVENTS = events.map(e => ({ ...e, registered: myEventIds.has(e.id) }));
+
   boot();
+
+  /* kick off AI recommendations asynchronously (non-blocking) */
+  loadAIRecommendations(user, myEventIds);
 }
 
+/* ══════════════════════════════════════════════════════════════
+   BOOT (stats, counts, render)
+   ══════════════════════════════════════════════════════════════ */
 function boot() {
-  const evs = window.EVENTS || [];
+  const evs   = window.EVENTS || [];
   const total = evs.length;
   const open  = evs.filter(e => e.slots_left > 0).length;
-  const slots = evs.reduce((a, e) => a + (e.slots_left || 0), 0);
+  const slots = evs.reduce((a,e) => a + (e.slots_left||0), 0);
 
   document.getElementById('statTotal').textContent = total;
   document.getElementById('statOpen').textContent  = open;
   document.getElementById('statSlots').textContent = slots >= 1000 ? (slots/1000).toFixed(1)+'k' : slots;
 
   ['all','academic','sports','cultural','career','volunteer'].forEach(c => {
-    const el = document.getElementById('fc-' + c);
-    if (el) el.textContent = c === 'all' ? total : evs.filter(e => e.category === c).length;
+    const el = document.getElementById('fc-'+c);
+    if (el) el.textContent = c==='all' ? total : evs.filter(e=>e.category===c).length;
   });
 
-  // Check URL param for category
   const urlCat = new URLSearchParams(window.location.search).get('cat');
   if (urlCat) {
     curCat = urlCat;
-    document.querySelectorAll('.ct-btn').forEach(b => {
-      b.classList.toggle('active', b.textContent.trim().toLowerCase() === urlCat);
-    });
+    document.querySelectorAll('.ct-btn').forEach(b =>
+      b.classList.toggle('active', b.textContent.trim().toLowerCase() === urlCat));
     document.querySelectorAll('.sb-item').forEach(b => {
-      const t = b.querySelector('.sb-item-left')?.textContent?.trim().toLowerCase() || '';
+      const t = b.querySelector('.sb-item-left')?.textContent?.trim().toLowerCase()||'';
       b.classList.toggle('active', t === urlCat);
     });
   }
-
   render();
 }
 
+/* ══════════════════════════════════════════════════════════════
+   AI RECOMMENDATIONS
+   ══════════════════════════════════════════════════════════════ */
+async function loadAIRecommendations(user, myEventIds) {
+  const evs = window.EVENTS || [];
+  if (!evs.length) return;
+
+  /* show the section with skeleton */
+  document.getElementById('aiRecOuter').style.display = 'block';
+
+  /* Build a compact event list to send to Claude (avoid huge payloads) */
+  const eventSummaries = evs
+    .filter(e => e.slots_left > 0 && !myEventIds.has(e.id))  /* only open, unregistered */
+    .slice(0, 30)                                              /* cap at 30 to keep prompt short */
+    .map(e => ({
+      id      : e.id,
+      title   : e.title,
+      category: e.category,
+      faculty : e.faculty || 'Open to all',
+      date    : e.date,
+      slots   : e.slots_left
+    }));
+
+  if (!eventSummaries.length) {
+    document.getElementById('aiRecOuter').style.display = 'none';
+    return;
+  }
+
+  const userFaculty       = user?.faculty || 'Unknown';
+  const userPastCategories = evs
+    .filter(e => myEventIds.has(e.id))
+    .map(e => e.category)
+    .filter(Boolean);
+
+  const prompt = `You are a helpful university event recommendation engine for UTM (Universiti Teknologi Malaysia).
+
+Student profile:
+- Faculty: ${userFaculty}
+- Past event categories attended: ${userPastCategories.length ? userPastCategories.join(', ') : 'None yet'}
+
+Available upcoming events (JSON array):
+${JSON.stringify(eventSummaries, null, 2)}
+
+Task: Pick the TOP 4 most relevant events for this student. 
+For each pick, write a short reason (max 12 words) explaining why it suits them.
+
+Respond ONLY with a valid JSON array. No markdown, no explanation outside the array.
+Format:
+[
+  { "id": <event_id_number>, "reason": "Short personalised reason here" },
+  ...
+]`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method : 'POST',
+      headers: {
+        'Content-Type'     : 'application/json',
+        'x-api-key'        : ANTHROPIC_KEY,
+        'anthropic-version': '2023-06-01',
+        /* Required for browser calls — make sure CORS is enabled on your deployment
+           or proxy this request through a Supabase Edge Function (see comments below) */
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model     : 'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        messages  : [{ role:'user', content: prompt }]
+      })
+    });
+
+    if (!res.ok) throw new Error('Claude API error ' + res.status);
+
+    const data = await res.json();
+    const raw  = data?.content?.[0]?.text || '[]';
+
+    /* strip accidental ```json fences just in case */
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const picks = JSON.parse(clean);
+
+    renderRecommendations(picks, evs, user);
+  } catch (err) {
+    console.warn('AI recommendation failed:', err);
+    /* Silently hide section — don't break the page */
+    document.getElementById('aiRecOuter').style.display = 'none';
+  }
+}
+
+function renderRecommendations(picks, evs, user) {
+  if (!picks || !picks.length) {
+    document.getElementById('aiRecOuter').style.display = 'none';
+    return;
+  }
+
+  /* update subtitle with faculty name */
+  const faculty = user?.faculty ? `for ${user.faculty} students` : 'based on your profile';
+  document.getElementById('aiRecSubtitle').textContent =
+    `Personalised picks ${faculty} · Powered by Claude AI`;
+
+  const html = picks.map((pick, i) => {
+    const ev = evs.find(e => e.id === pick.id);
+    if (!ev) return '';
+
+    const pct  = ev.slots > 0 ? Math.round((ev.slots_left / ev.slots) * 100) : 0;
+    const fc   = pct <= 20 ? '#e67e22' : '#1a5c38';
+    const emoji = ev.emoji || '📌';
+
+    return `
+      <div class="rec-card cat-${ev.category||'academic'}" onclick="openModal(${ev.id})"
+           style="animation:fadeUp .3s ease ${i * .08}s both">
+        <div class="rec-card-body">
+          <div class="rec-card-top">
+            <span class="ev-badge ${badgeClass[ev.category]||'badge-academic'}">${cap(ev.category)}</span>
+            <span style="font-size:22px;line-height:1">${emoji}</span>
+          </div>
+          <div class="rec-ai-reason">
+            <span class="rec-ai-reason-icon">✦</span>
+            <span>${pick.reason}</span>
+          </div>
+          <div class="rec-title">${ev.title||'Untitled Event'}</div>
+          <div class="rec-meta-row"><span class="rec-meta-ic">📅</span>${ev.date||'–'}</div>
+          <div class="rec-meta-row"><span class="rec-meta-ic">📍</span>${ev.location||'–'}</div>
+        </div>
+        <div class="rec-foot">
+          <span class="rec-slots"><b>${ev.slots_left}</b> slots left</span>
+          <button class="rec-btn" onclick="event.stopPropagation();goRegister(${ev.id})">Register</button>
+        </div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('aiRecScroll').innerHTML = html;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RENDER (main events grid — unchanged logic)
+   ══════════════════════════════════════════════════════════════ */
 function render() {
   const evs  = window.EVENTS || [];
   const list = evs.filter(e => {
@@ -519,9 +853,8 @@ function render() {
     const isReg = !!ev.registered;
 
     return `
-      <div class="ev-card cat-${ev.category||'academic'}${isReg ? ' is-registered' : ''}"
-           style="animation-delay:${i*.04}s"
-           onclick="openModal(${ev.id})">
+      <div class="ev-card cat-${ev.category||'academic'}${isReg?' is-registered':''}"
+           style="animation-delay:${i*.04}s" onclick="openModal(${ev.id})">
         <div class="ev-card-body">
           ${isReg ? `<div class="registered-ribbon">✓ Registered</div>` : ''}
           <div class="ev-card-top">
@@ -542,8 +875,8 @@ function render() {
                 : `<div class="ev-slots"><div class="ev-slots-txt ${low?'':'ok'}"><b>${ev.slots_left}</b> slots remaining</div><div class="ev-bar"><div class="ev-bar-fill" style="width:${pct}%;background:${fc}"></div></div></div>`
             }
             <button
-              class="ev-btn${isReg ? ' registered' : full ? ' outline' : ''}"
-              onclick="event.stopPropagation();${isReg ? `viewTicket(${ev.id})` : full ? `openModal(${ev.id})` : `goRegister(${ev.id})`}">
+              class="ev-btn${isReg?' registered':full?' outline':''}"
+              onclick="event.stopPropagation();${isReg?`viewTicket(${ev.id})`:full?`openModal(${ev.id})`:`goRegister(${ev.id})`}">
               ${isReg ? '🎟 View Ticket' : full ? 'View Details' : 'Register'}
             </button>
           </div>
@@ -552,6 +885,9 @@ function render() {
   }).join('');
 }
 
+/* ══════════════════════════════════════════════════════════════
+   FILTERS
+   ══════════════════════════════════════════════════════════════ */
 function setCat(c, btn) {
   curCat = c;
   document.querySelectorAll('.ct-btn').forEach(b => b.classList.remove('active'));
@@ -565,7 +901,7 @@ function setCatSb(c, btn) {
   btn.classList.add('active');
   document.querySelectorAll('.ct-btn').forEach(b => {
     const t = b.textContent.trim().toLowerCase();
-    b.classList.toggle('active', c === 'all' ? t === 'all events' : t === c);
+    b.classList.toggle('active', c==='all' ? t==='all events' : t===c);
   });
   render();
 }
@@ -580,6 +916,9 @@ async function doLogout() {
   window.location.href = '/Login/login.html';
 }
 
+/* ══════════════════════════════════════════════════════════════
+   MODAL
+   ══════════════════════════════════════════════════════════════ */
 function openModal(id) {
   const ev = (window.EVENTS||[]).find(e => e.id === id);
   if (!ev) return;
@@ -595,12 +934,11 @@ function openModal(id) {
   document.getElementById('mSlots').textContent  = ev.slots_left > 0 ? ev.slots_left + ' slots remaining' : 'Registration Full';
   document.getElementById('mOrg').textContent    = ev.organizer_name||'–';
   document.getElementById('mDesc').textContent   = ev.description||'–';
-
   document.getElementById('mRegisteredNote').classList.toggle('show', isReg);
 
   const fbBtn = document.getElementById('mFeedback');
-    fbBtn.style.display = isReg ? 'block' : 'none';
-    fbBtn.onclick = () => { closeModal(); window.location.href = '../Feedback/feedback_form.html?id=' + id; };
+  fbBtn.style.display = isReg ? 'block' : 'none';
+  fbBtn.onclick = () => { closeModal(); window.location.href = '../Feedback/feedback_form.html?id=' + id; };
 
   const btn = document.getElementById('mReg');
   if (isReg) {
@@ -637,7 +975,7 @@ function viewTicket(id) {
   const p = new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
   window.location.href = '../Login/register.html?' + p;
 }
-//test
+
 function closeModal() {
   document.getElementById('overlay').classList.remove('open');
   document.body.style.overflow = '';
@@ -650,7 +988,52 @@ function handleOv(e) {
 function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
 
 init();
-
 </script>
+
+<!--
+═══════════════════════════════════════════════════════════════════
+  ⚠️  CORS / DEPLOYMENT NOTE
+═══════════════════════════════════════════════════════════════════
+  Calling the Anthropic API directly from the browser WILL work
+  locally / on claude.ai previews, but in PRODUCTION you should
+  proxy the call through a Supabase Edge Function to:
+    1. Keep your API key server-side (not exposed in JS source)
+    2. Avoid any CORS issues in some browser environments
+
+  Edge Function skeleton (supabase/functions/ai-recommend/index.ts):
+  ──────────────────────────────────────────────────────────────────
+  import { serve } from "https://deno.land/std/http/server.ts"
+  serve(async (req) => {
+    const { prompt } = await req.json()
+    const r = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": Deno.env.get("ANTHROPIC_KEY"),
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 400,
+        messages: [{ role: "user", content: prompt }]
+      })
+    })
+    const data = await r.json()
+    return new Response(JSON.stringify(data), {
+      headers: { "Content-Type": "application/json",
+                 "Access-Control-Allow-Origin": "*" }
+    })
+  })
+  ──────────────────────────────────────────────────────────────────
+  Then in loadAIRecommendations(), replace the fetch URL with:
+  const res = await fetch(
+    `${SUPABASE_URL}/functions/v1/ai-recommend`,
+    { method:'POST',
+      headers:{ 'Authorization':'Bearer '+SUPABASE_ANON,
+                'Content-Type':'application/json' },
+      body: JSON.stringify({ prompt }) }
+  )
+═══════════════════════════════════════════════════════════════════
+-->
 </body>
 </html>
