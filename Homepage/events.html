@@ -58,7 +58,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 
 .wrap{max-width:1320px;margin:0 auto;padding:24px 24px 60px;display:grid;grid-template-columns:230px 1fr;gap:20px;align-items:start;}
 
-/* ─── SIDEBAR ─────────────────────── */
 .sidebar{display:flex;flex-direction:column;gap:14px}
 .sb-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;}
 .sb-card-head{background:var(--red);padding:10px 14px;font-size:12px;font-weight:700;color:#fff;letter-spacing:.5px;text-transform:uppercase;}
@@ -88,7 +87,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .back-link{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:4px;padding:9px 14px;font-size:13px;color:var(--muted);text-decoration:none;transition:all .15s;}
 .back-link:hover{color:var(--red);border-color:rgba(139,0,0,.3)}
 
-/* ─── EVENTS AREA ─────────────────── */
 .ev-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
 .ev-toolbar-left h2{font-size:16px;font-weight:700;color:var(--text)}
 .ev-toolbar-left p{font-size:12.5px;color:var(--muted);margin-top:2px}
@@ -138,7 +136,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ─── AI RECOMMENDATION SECTION ───── */
 .ai-rec-outer{background:#fff;border-bottom:1px solid var(--border)}
 .ai-rec-wrap{max-width:1320px;margin:0 auto;padding:20px 24px 22px}
 .ai-rec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
@@ -173,14 +170,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .rec-skeleton{flex:0 0 260px;background:#fff;border:1px solid var(--border);border-radius:6px;border-top:3px solid #eee;padding:13px 14px 14px;overflow:hidden}
 .skel-line{background:#f0f0f0;border-radius:3px;margin-bottom:8px;animation:shimmer 1.4s ease infinite;background-size:200% 100%;background-image:linear-gradient(90deg,#f0f0f0 25%,#e4e4e4 50%,#f0f0f0 75%)}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.ai-thinking{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--muted);padding:20px 0}
-.ai-thinking-dots{display:flex;gap:4px}
-.ai-thinking-dots span{width:6px;height:6px;border-radius:50%;background:var(--red);opacity:.4;animation:dotPulse 1.2s ease infinite}
-.ai-thinking-dots span:nth-child(2){animation-delay:.2s}
-.ai-thinking-dots span:nth-child(3){animation-delay:.4s}
-@keyframes dotPulse{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
 
-/* ─── MODAL ───────────────────────── */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center;padding:20px;}
 .overlay.open{display:flex}
 .modal{background:#fff;border-radius:4px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.2);animation:mIn .2s ease;}
@@ -224,9 +214,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .footer-bottom-links a{font-size:12px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s}
 .footer-bottom-links a:hover{color:rgba(255,255,255,.7)}
 
-/* ═══════════════════════════════════════════════════════════════
-   CHATBOT WIDGET STYLES
-   ═══════════════════════════════════════════════════════════════ */
+/* ── CHATBOT WIDGET ─────────────────────────────────── */
 #utm-chat-fab{
   position:fixed;bottom:28px;right:28px;z-index:9999;
   width:56px;height:56px;border-radius:50%;
@@ -595,7 +583,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   </div>
 </footer>
 
-<!-- Modal -->
+<!-- Event Details Modal -->
 <div class="overlay" id="overlay" onclick="handleOv(event)">
   <div class="modal">
     <div class="m-nav">
@@ -652,14 +640,14 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   <div class="cw-msgs" id="cwMsgs"></div>
 
   <div class="cw-quick" id="cwQuick">
-    <button class="qr-btn" onclick="sendQuick('Apa event ada minggu ni?')">📅 Event minggu ini</button>
-    <button class="qr-btn" onclick="sendQuick('Ada event sukan tak?')">⚽ Event sukan</button>
-    <button class="qr-btn" onclick="sendQuick('Macam mana nak daftar event?')">📝 Cara daftar</button>
-    <button class="qr-btn" onclick="sendQuick('Tunjukkan semua event')">📋 Semua event</button>
+    <button class="qr-btn" onclick="sendQuick('What events are on this week?')">📅 Events this week</button>
+    <button class="qr-btn" onclick="sendQuick('Are there any sports events?')">⚽ Sports events</button>
+    <button class="qr-btn" onclick="sendQuick('How do I register for an event?')">📝 How to register</button>
+    <button class="qr-btn" onclick="sendQuick('Show me all events')">📋 All events</button>
   </div>
 
   <div class="cw-input-row">
-    <input class="cw-input" id="cwInput" placeholder="Tanya apa-apa pasal events..."
+    <input class="cw-input" id="cwInput" placeholder="Ask anything about events..."
            onkeydown="if(event.key==='Enter')sendMsg()"/>
     <button class="cw-send" id="cwSend" onclick="sendMsg()">
       <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
@@ -671,7 +659,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* ══════════════════════════════════════════════════════════════
-   SUPABASE CONFIG (global — chatbot juga guna ni)
+   SUPABASE CONFIG (shared — chatbot also uses these)
    ══════════════════════════════════════════════════════════════ */
 const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
@@ -1043,21 +1031,21 @@ init();
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     CHATBOT WIDGET — SCRIPT (separate IIFE, guna SUPABASE global)
+     CHATBOT WIDGET — SCRIPT (separate IIFE, uses global SUPABASE vars)
      ═══════════════════════════════════════════════════════════════ -->
 <script>
 (function(){
-  let chatOpen   = false;
-  let chatHistory= [];
-  let eventsCtx  = '';
-  let firstOpen  = true;
+  var chatOpen    = false;
+  var chatHistory = [];
+  var eventsCtx   = '';
+  var firstOpen   = true;
 
   function buildEventsContext() {
-    const evs = window.EVENTS || [];
+    var evs = window.EVENTS || [];
     if (!evs.length) return 'No events loaded yet.';
-    return evs.slice(0,20).map(e =>
-      `[${e.category?.toUpperCase()}] ${e.title} | ${e.date} ${e.time||''} | ${e.location||'–'} | Slots: ${e.slots_left} | Faculty: ${e.faculty||'Open'}`
-    ).join('\n');
+    return evs.slice(0, 20).map(function(e) {
+      return '[' + (e.category || '').toUpperCase() + '] ' + e.title + ' | ' + e.date + ' ' + (e.time || '') + ' | ' + (e.location || '–') + ' | Slots: ' + e.slots_left + ' | Faculty: ' + (e.faculty || 'Open');
+    }).join('\n');
   }
 
   window.toggleChat = function() {
@@ -1069,7 +1057,7 @@ init();
     if (chatOpen && firstOpen) {
       firstOpen = false;
       eventsCtx = buildEventsContext();
-      addBotMsg("Hai! Saya UTM AI Assistant 👋\n\nSaya boleh bantu kamu cari events, semak slot yang ada, atau tanya apa-apa pasal Campus Event Finder UTM.\n\nNak tanya apa?");
+      addBotMsg("Hi! I'm the UTM AI Assistant 👋\n\nI can help you find events, check available slots, or answer anything about the UTM Campus Event Finder.\n\nWhat would you like to know?");
       document.getElementById('cwInput').focus();
     }
   };
@@ -1080,44 +1068,35 @@ init();
   };
 
   window.sendMsg = async function() {
-    const input = document.getElementById('cwInput');
-    const text  = input.value.trim();
+    var input = document.getElementById('cwInput');
+    var text  = input.value.trim();
     if (!text) return;
     input.value = '';
 
     document.getElementById('cwQuick').style.display = 'none';
 
     addUserMsg(text);
-    chatHistory.push({ role:'user', content: text });
+    chatHistory.push({ role: 'user', content: text });
 
-    const typId = addTyping();
+    var typId = addTyping();
     document.getElementById('cwSend').disabled = true;
 
     try {
-      const systemMsg = `You are UTM AI Assistant, a friendly bilingual (Malay/English) chatbot for Universiti Teknologi Malaysia's Campus Event Finder.
+      var systemMsg = 'You are UTM AI Assistant, a friendly chatbot for Universiti Teknologi Malaysia\'s Campus Event Finder.\n\n' +
+        'Current campus events data:\n' + (eventsCtx || buildEventsContext()) + '\n\n' +
+        'Rules:\n' +
+        '- Answer in English.\n' +
+        '- If asked about events, reference the data above accurately.\n' +
+        '- Keep answers concise and helpful (max 3-4 sentences).\n' +
+        '- If no relevant event found, say so politely.\n' +
+        '- For registration questions, tell them to click "Register" on the event card.\n' +
+        '- Be warm, friendly, and encouraging.\n' +
+        '- Never make up events that aren\'t in the data.';
 
-Current campus events data:
- ${eventsCtx || buildEventsContext()}
-
-Rules:
-- Answer in the same language the student uses (BM or English).
-- If asked about events, reference the data above accurately.
-- Keep answers concise and helpful (max 3-4 sentences).
-- If no relevant event found, say so politely.
-- For registration questions, tell them to click "Register" on the event card.
-- Be warm, friendly, and encouraging.
-- Never make up events that aren't in the data.`;
-
-      const messages = [
-        { role:'user', content: systemMsg + '\n\n[Student first message will follow]' },
-        { role:'assistant', content: 'Faham! Saya sedia membantu.' },
-        ...chatHistory
-      ];
-
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/ai-recommend`, {
+      var res = await fetch(SUPABASE_URL + '/functions/v1/ai-recommend', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${SUPABASE_ANON}`,
+          'Authorization': 'Bearer ' + SUPABASE_ANON,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ prompt: buildChatPrompt(systemMsg, chatHistory) })
@@ -1126,15 +1105,15 @@ Rules:
       removeTyping(typId);
 
       if (!res.ok) throw new Error('HTTP ' + res.status);
-      const data = await res.json();
-      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Maaf, saya tidak dapat menjawab sekarang.';
+      var data  = await res.json();
+      var reply = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) || 'Sorry, I\'m unable to respond right now.';
 
       addBotMsg(reply);
-      chatHistory.push({ role:'assistant', content: reply });
+      chatHistory.push({ role: 'assistant', content: reply });
 
     } catch(e) {
       removeTyping(typId);
-      addBotMsg('Maaf, ada masalah teknikal. Cuba lagi sebentar. 🙏');
+      addBotMsg('Sorry, there\'s a technical issue. Please try again in a moment. 🙏');
       console.warn('Chat error:', e);
     }
 
@@ -1143,29 +1122,26 @@ Rules:
   };
 
   function buildChatPrompt(systemMsg, history) {
-    const lines = [
-      `SYSTEM: ${systemMsg}`,
-      '',
-      ...history.map(m => `${m.role === 'user' ? 'Student' : 'Assistant'}: ${m.content}`)
-    ];
+    var lines = ['SYSTEM: ' + systemMsg, ''];
+    for (var i = 0; i < history.length; i++) {
+      var m = history[i];
+      lines.push((m.role === 'user' ? 'Student' : 'Assistant') + ': ' + m.content);
+    }
     lines.push('Assistant:');
     return lines.join('\n');
   }
 
   function now() {
-    return new Date().toLocaleTimeString('en-MY', {hour:'2-digit',minute:'2-digit'});
+    return new Date().toLocaleTimeString('en-MY', { hour: '2-digit', minute: '2-digit' });
   }
 
   function addBotMsg(text) {
-    const msgs = document.getElementById('cwMsgs');
-    const div  = document.createElement('div');
+    var msgs = document.getElementById('cwMsgs');
+    var div  = document.createElement('div');
     div.className = 'msg bot';
-    div.innerHTML = `
-      <div class="msg-av">🤖</div>
-      <div>
-        <div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div>
-        <div class="msg-time">${now()}</div>
-      </div>`;
+    div.innerHTML = '<div class="msg-av">🤖</div>' +
+      '<div><div class="msg-bubble">' + text.replace(/\n/g, '<br>') + '</div>' +
+      '<div class="msg-time">' + now() + '</div></div>';
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
 
@@ -1175,40 +1151,35 @@ Rules:
   }
 
   function addUserMsg(text) {
-    const msgs = document.getElementById('cwMsgs');
-    const div  = document.createElement('div');
+    var msgs = document.getElementById('cwMsgs');
+    var div  = document.createElement('div');
     div.className = 'msg user';
-    div.innerHTML = `
-      <div>
-        <div class="msg-bubble">${text}</div>
-        <div class="msg-time" style="text-align:right">${now()}</div>
-      </div>`;
+    div.innerHTML = '<div><div class="msg-bubble">' + text + '</div>' +
+      '<div class="msg-time" style="text-align:right">' + now() + '</div></div>';
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
   }
 
   function addTyping() {
-    const msgs = document.getElementById('cwMsgs');
-    const id   = 'typ-' + Date.now();
-    const div  = document.createElement('div');
+    var msgs = document.getElementById('cwMsgs');
+    var id   = 'typ-' + Date.now();
+    var div  = document.createElement('div');
     div.className = 'msg bot';
     div.id = id;
-    div.innerHTML = `
-      <div class="msg-av">🤖</div>
-      <div class="msg-bubble" style="padding:10px 14px">
-        <div class="typing-dots"><span></span><span></span><span></span></div>
-      </div>`;
+    div.innerHTML = '<div class="msg-av">🤖</div>' +
+      '<div class="msg-bubble" style="padding:10px 14px">' +
+      '<div class="typing-dots"><span></span><span></span><span></span></div></div>';
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
     return id;
   }
 
   function removeTyping(id) {
-    const el = document.getElementById(id);
+    var el = document.getElementById(id);
     if (el) el.remove();
   }
 
-  setTimeout(() => {
+  setTimeout(function() {
     if (!chatOpen) {
       document.getElementById('chat-badge').classList.remove('hidden');
     }
