@@ -5,498 +5,461 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Admin Dashboard — UTM Campus Event Finder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --red:#8B0000;--red2:#6d0000;--red-light:#fdf5f5;
-  --white:#fff;--bg:#f0f2f5;
-  --border:#e4e7ec;--border2:#f2f4f7;
-  --text:#1a1a2e;--muted:#64748b;--light:#94a3b8;
+  --orange:#F5A623;--orange2:#d4881a;
+  --red:#8B0000;--red2:#6d0000;--red-badge:#e53935;
+  --navy:#1a237e;--dark:#1c1c2e;
+  --white:#fff;--border:#e0e0e0;
+  --text:#222;--muted:#666;--light:#aaa;
+  --bg:#eef0f3;
+  --radius:12px;
+  --shadow:0 2px 8px rgba(0,0,0,0.10);
+  --shadow-md:0 4px 16px rgba(0,0,0,0.12);
   --green:#1a5c38;--green-light:#e8f5ed;
   --gold:#c8982a;--gold-light:#fef9ec;
   --blue:#1d4ed8;--blue-light:#eff6ff;
-  --orange:#b35900;--orange-light:#fef4e8;
+  --orange-c:#b35900;--orange-light:#fef4e8;
   --purple:#5b2b91;--purple-light:#f2ecf9;
-  --sidebar:240px;--topbar:64px;
-  --sb-bg:#6d0000;--sb-darker:#580000;--sb-darkest:#460000;--sb-accent:#c8982a;
+  --sidebar:250px;
 }
-html, body { height: 100%; }
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
-.layout{ display: flex; min-height: 100vh; }
+html,body{height:100%;font-family:'Roboto',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
 
-/* SIDEBAR */
-.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--red);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;}
-.sidebar::-webkit-scrollbar{display:none}
-.sb-brand{background:var(--red);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,.1);padding:12px 16px;}
-.sb-brand img{height:44px;object-fit:contain;}
-.sb-profile{display:flex;flex-direction:column;align-items:center;padding:22px 16px 16px;background:var(--red);border-bottom:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden;}
-.sb-profile::before{content:'';position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:160px;height:80px;background:radial-gradient(ellipse,rgba(200,152,42,.2) 0%,transparent 70%);pointer-events:none;}
-.sb-avatar-wrap{position:relative;margin-bottom:10px;}
-.sb-avatar-ring{width:70px;height:70px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--sb-accent) 0%,rgba(255,255,255,.3) 100%);}
-.sb-avatar-inner{width:100%;height:100%;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.5px;}
-.sb-avatar-badge{position:absolute;bottom:2px;right:2px;width:13px;height:13px;border-radius:50%;background:#22c55e;border:2px solid var(--sb-darker);}
-.sb-profile-name{color:#fff;font-size:13px;font-weight:700;text-align:center;line-height:1.2;margin-bottom:5px;}
-.sb-profile-role{display:inline-flex;align-items:center;gap:4px;background:rgba(200,152,42,.2);border:1px solid rgba(200,152,42,.35);color:var(--sb-accent);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.3px;text-transform:uppercase;}
-.sb-section{padding:14px 16px 5px;font-size:9.5px;font-weight:700;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:8px;}
-.sb-section::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08);}
-.sb-item{display:flex;align-items:center;gap:9px;padding:6px 10px;margin:1px 10px;border-radius:8px;font-size:12.5px;font-weight:500;color:rgba(255,255,255,.58);cursor:pointer;transition:all .15s;border:none;background:none;width:calc(100% - 20px);text-align:left;font-family:'Plus Jakarta Sans',sans-serif;position:relative;}
-.sb-item:hover{color:#fff;background:rgba(255,255,255,.09);}
-.sb-item.active{color:var(--red);background:#fff;font-weight:700;}
-.sb-item-icon-wrap{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:background .15s;}
-.sb-item:hover .sb-item-icon-wrap{background:rgba(255,255,255,.14);}
-.sb-item.active .sb-item-icon-wrap{background:rgba(139,0,0,.08);}
+/* ── TOP BAND ── */
+.top-band{
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.20) 55%, rgba(238,240,243,0.95) 100%),
+    url("https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=1600&auto=format&fit=crop&q=80") center top/cover no-repeat;
+  position:relative;
+}
+.top-band::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:
+    linear-gradient(to bottom,rgba(0,0,0,.24) 0%,rgba(0,0,0,.14) 60%,rgba(238,240,243,1) 100%),
+    linear-gradient(150deg,#2d5a27 0%,#1a3d1a 35%,#0d2b0d 65%,#1a3520 100%);
+  opacity:.55;
+}
+.top-band>*{position:relative;z-index:1;}
+
+/* ── NAVBAR ── */
+.navbar{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:300;background:rgba(15,35,15,0.88);backdrop-filter:blur(8px);}
+.nav-logo{display:flex;flex-direction:column}
+.logo-row{display:flex;align-items:baseline;line-height:1}
+.l-my{color:var(--orange);font-size:19px;font-weight:300;font-style:italic}
+.l-utm{color:#fff;font-size:19px;font-weight:700}
+.l-portal{color:var(--orange);font-size:19px;font-weight:400}
+.l-tag{color:var(--orange2);font-size:8px;letter-spacing:2.5px;display:block;margin-top:1px}
+.nav-ticker{position:absolute;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:12px;white-space:nowrap;pointer-events:none;display:flex;align-items:center;gap:6px;}
+.nav-ticker-badge{background:rgba(200,152,42,.25);border:1px solid rgba(200,152,42,.4);color:var(--gold);font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase;}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-icon-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.8);font-size:13px;cursor:pointer;padding:5px 10px;border-radius:6px;font-family:'Roboto',sans-serif;transition:all .15s;}
+.nav-icon-btn:hover{background:rgba(255,255,255,.22);color:#fff}
+.nav-uname{color:rgba(255,255,255,.8);font-size:13px;font-weight:500}
+.nav-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;cursor:pointer;border:2px solid rgba(255,255,255,.3);}
+
+/* ── QUICK ICONS ── */
+.qi-row{display:flex;justify-content:center;gap:6px;padding:16px 20px 0;flex-wrap:wrap;}
+.qi-card{background:var(--white);border-radius:var(--radius);border:none;padding:14px 12px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:105px;cursor:pointer;box-shadow:var(--shadow);transition:all .2s;font-family:'Roboto',sans-serif;}
+.qi-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.qi-card.active-qi{border:2px solid var(--red);background:#fff5f5;}
+.qi-icon{font-size:22px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px;}
+.qi-icon.red-bg{background:#fff0f0;color:var(--red)}
+.qi-icon.gold-bg{background:var(--gold-light);color:var(--gold)}
+.qi-icon.green-bg{background:var(--green-light);color:var(--green)}
+.qi-icon.blue-bg{background:var(--blue-light);color:var(--blue)}
+.qi-icon.orange-bg{background:var(--orange-light);color:var(--orange-c)}
+.qi-label{font-size:11.5px;color:var(--text);font-weight:400;text-align:center;line-height:1.25}
+.qi-count{font-size:10px;font-weight:700;color:var(--muted)}
+
+/* ── LAYOUT ── */
+.main-grid{display:flex;align-items:flex-start;gap:10px;padding:14px 10px 36px;max-width:1600px;margin:0 auto;}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;padding:16px 0 12px;}
+.sb-head{padding:0 16px 12px;border-bottom:1px solid #f0f0f0;margin-bottom:8px}
+.sb-title{font-size:14px;font-weight:600;color:var(--text)}
+.sb-sub{font-size:11.5px;color:var(--light);margin-top:1px}
+.sb-section-lbl{padding:10px 16px 4px;font-size:9.5px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:1.5px;}
+.sb-item{display:flex;align-items:center;gap:9px;padding:7px 16px;margin:1px 0;font-size:13px;font-weight:400;color:var(--muted);cursor:pointer;transition:all .15s;border:none;background:none;width:100%;text-align:left;font-family:'Roboto',sans-serif;position:relative;}
+.sb-item:hover{color:var(--red);background:#fff5f5;}
+.sb-item.active{color:var(--red);background:#fff0f0;font-weight:600;border-left:3px solid var(--red);}
+.sb-item-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0;}
 .sb-item-label{flex:1}
-.sb-badge{font-size:9.5px;font-weight:700;background:#ef4444;color:#fff;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center;}
-.sb-divider{height:1px;background:rgba(255,255,255,.07);margin:6px 16px}
-.sb-footer{margin-top:auto;padding:10px 10px;border-top:1px solid rgba(255,255,255,.07);}
-.sb-logout{display:flex;align-items:center;gap:9px;color:rgba(255,255,255,.45);font-size:12.5px;cursor:pointer;transition:all .15s;border:none;background:none;font-family:'Plus Jakarta Sans',sans-serif;width:100%;text-align:left;padding:6px 10px;border-radius:8px;font-weight:500;}
-.sb-logout:hover{color:#fff;background:rgba(255,255,255,.07);}
-.sb-logout-icon{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.sb-badge{font-size:9.5px;font-weight:700;background:var(--red-badge);color:#fff;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center;}
+.sb-badge.gold{background:var(--gold)}
+.sb-divider{height:1px;background:#f0f0f0;margin:6px 0}
+.sb-footer{padding:12px 16px 0;border-top:1px solid #f0f0f0;margin-top:8px}
+.sb-logout{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:13px;cursor:pointer;transition:all .15s;border:none;background:none;font-family:'Roboto',sans-serif;width:100%;text-align:left;padding:7px 0;}
+.sb-logout:hover{color:var(--red-badge)}
 
-/* MAIN */
-.main{margin-left:var(--sidebar);flex:1;min-width:0;display:flex;flex-direction:column;min-height:100vh;width:calc(100% - var(--sidebar));}
-.topbar{background:var(--red);position:sticky;top:0;z-index:50;box-shadow:0 3px 12px rgba(0,0,0,.3);}
-.topbar-upper{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:58px;}
-.topbar-lower{background:#6d0000;padding:5px 24px;font-size:11.5px;color:rgba(255,255,255,.7);font-weight:500;letter-spacing:.2px;}
-.topbar-left{display:flex;align-items:center;gap:12px}
-.topbar-page{font-size:16px;font-weight:700;color:#fff;line-height:1.1}
-.topbar-breadcrumb{font-size:11.5px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:4px;margin-top:1px;}
-.topbar-breadcrumb b{color:rgba(255,255,255,.9);font-weight:600}
-.topbar-right{display:flex;align-items:center;gap:8px}
-.topbar-chip{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 11px;font-size:11.5px;font-weight:600;color:#fff;}
-.topbar-chip-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.notif-btn{position:relative;width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:#fff;transition:all .15s;}
-.notif-btn:hover{background:rgba(255,255,255,.25);}
-.notif-dot{position:absolute;top:5px;right:5px;width:8px;height:8px;background:#ef4444;border-radius:50%;border:2px solid #fff;}
-.topbar-profile{display:flex;align-items:center;gap:8px;padding:5px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.15);cursor:pointer;transition:all .15s;}
-.topbar-profile:hover{background:rgba(255,255,255,.25);}
-.topbar-profile-av{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
-.topbar-profile-name{font-size:12px;font-weight:600;color:#fff}
-.topbar-profile-role{font-size:10px;color:rgba(255,255,255,.65)}
-
-/* CONTENT */
-.content{padding:24px;flex:1}
+/* ── MAIN CONTENT ── */
+.content-wrap{flex:1;display:flex;flex-direction:column;gap:10px;}
 .section{display:none}.section.active{display:block}
-.page-heading{margin-bottom:22px}
-.page-heading h1{font-size:20px;font-weight:800;color:var(--text);margin-bottom:3px}
-.page-heading p{font-size:13px;color:var(--muted)}
 
-/* STATS */
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
-.stat-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:box-shadow .2s,transform .2s;}
-.stat-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.09);transform:translateY(-2px)}
-.stat-icon{width:46px;height:46px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
-.stat-icon.red{background:var(--red-light);color:var(--red)}.stat-icon.green{background:var(--green-light);color:var(--green)}.stat-icon.gold{background:var(--gold-light);color:var(--gold)}.stat-icon.blue{background:var(--blue-light);color:var(--blue)}.stat-icon.orange{background:var(--orange-light);color:var(--orange)}
-.stat-num{font-size:24px;font-weight:800;color:var(--text);line-height:1}.stat-lbl{font-size:12px;color:var(--muted);margin-top:2px;font-weight:500}.stat-sub{font-size:11px;color:var(--light);margin-top:3px}
+/* ── STATUS BAR (above cards) ── */
+.status-bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.status-chip{display:flex;align-items:center;gap:6px;background:var(--white);border-radius:20px;padding:5px 13px;font-size:12px;font-weight:500;color:var(--text);box-shadow:var(--shadow);}
+.chip-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.chip-dot.green{background:#22c55e}.chip-dot.gold{background:var(--gold)}.chip-dot.red{background:var(--red-badge)}.chip-dot.blue{background:var(--blue)}
 
-/* CARDS */
-.card{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:20px;}
-.card-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+/* ── STATS GRID ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+.stat-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px;display:flex;align-items:center;gap:13px;transition:all .2s;cursor:default;}
+.stat-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.stat-icon{width:44px;height:44px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:19px;}
+.stat-icon.red{background:#fff0f0;color:var(--red)}.stat-icon.green{background:var(--green-light);color:var(--green)}.stat-icon.gold{background:var(--gold-light);color:var(--gold)}.stat-icon.blue{background:var(--blue-light);color:var(--blue)}.stat-icon.orange{background:var(--orange-light);color:var(--orange-c)}
+.stat-num{font-size:22px;font-weight:700;color:var(--text);line-height:1}
+.stat-lbl{font-size:12px;color:var(--muted);margin-top:2px}
+.stat-sub{font-size:11px;color:var(--light);margin-top:2px}
+
+/* ── CARDS ── */
+.card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:12px;}
+.card-head{padding:13px 18px;border-bottom:1px solid #f5f5f5;display:flex;align-items:center;justify-content:space-between;}
 .card-head-left{display:flex;align-items:center;gap:8px}
-.card-head-bar{width:3px;height:18px;background:var(--red);border-radius:2px;flex-shrink:0}
-.card-title{font-size:13.5px;font-weight:700;color:var(--text)}.card-sub{font-size:12px;color:var(--light);margin-left:8px}
-.card-body{padding:18px}.card-body.no-pad{padding:0}
+.card-bar{width:3px;height:16px;background:var(--red);border-radius:2px;flex-shrink:0}
+.card-title{font-size:14px;font-weight:600;color:var(--text)}
+.card-sub{font-size:12px;color:var(--light);margin-left:6px}
+.card-body{padding:16px}
+.card-body.no-pad{padding:0}
 
-/* TABLE */
+/* ── TABLE ── */
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse}
-th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);background:#f8fafc;border-bottom:1px solid var(--border);white-space:nowrap;}
-td{padding:12px 14px;font-size:13px;color:var(--text);border-bottom:1px solid var(--border2);vertical-align:middle;}
+th{padding:9px 14px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);background:#f8f9fc;border-bottom:1px solid var(--border);}
+td{padding:11px 14px;font-size:13px;color:var(--text);border-bottom:1px solid #f5f5f7;vertical-align:middle;}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#fafbfc}
 
-/* BADGES */
-.badge{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:4px;}
-.badge-pending{background:#fef3e8;color:var(--orange);border:1px solid rgba(179,89,0,.15)}
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:4px;}
+.badge-pending{background:#fef3e8;color:var(--orange-c);border:1px solid rgba(179,89,0,.15)}
 .badge-approved{background:var(--green-light);color:var(--green);border:1px solid rgba(26,92,56,.15)}
 .badge-rejected{background:#fef2f2;color:#c0392b;border:1px solid rgba(192,57,43,.15)}
-.badge-academic{background:#e8eef8;color:#003087}.badge-sports{background:var(--green-light);color:var(--green)}.badge-cultural{background:var(--red-light);color:var(--red)}.badge-career{background:var(--orange-light);color:var(--orange)}.badge-volunteer{background:var(--purple-light);color:var(--purple)}
-.badge-warning{background:#fef9ec;color:#92400e;border:1px solid rgba(180,120,0,.2)}
-.badge-info{background:var(--blue-light);color:var(--blue);border:1px solid rgba(29,78,216,.15)}
+.badge-academic{background:#e8eef8;color:#003087}.badge-sports{background:var(--green-light);color:var(--green)}.badge-cultural{background:#fce4ec;color:#880e4f}.badge-career{background:var(--orange-light);color:var(--orange-c)}.badge-volunteer{background:var(--purple-light);color:var(--purple)}
+.badge-warning{background:#fef9ec;color:#92400e}
+.badge-info{background:var(--blue-light);color:var(--blue)}
 
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:6px;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:7px;cursor:pointer;transition:all .15s;}
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:5px;border:none;font-family:'Roboto',sans-serif;font-size:12px;font-weight:500;padding:6px 13px;border-radius:7px;cursor:pointer;transition:all .15s;}
 .btn-approve{background:var(--green);color:#fff}.btn-approve:hover{background:#145e30}
-.btn-reject{background:none;color:#c0392b;border:1px solid rgba(192,57,43,.4)}.btn-reject:hover{background:#fef2f2}
-.btn-view{background:var(--bg);color:var(--muted);border:1px solid var(--border)}.btn-view:hover{color:var(--red);border-color:var(--red)}
-.btn-sm{padding:5px 10px;font-size:11.5px}
-.btn-waiver{background:#fff3cd;color:#856404;border:1px solid #ffc107;font-size:11.5px;padding:5px 10px;border-radius:6px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;transition:all .15s;}
+.btn-reject{background:none;color:#c0392b;border:1px solid rgba(192,57,43,.35)}.btn-reject:hover{background:#fef2f2}
+.btn-view{background:#f5f5f7;color:var(--muted);border:1px solid var(--border)}.btn-view:hover{color:var(--red);border-color:var(--red)}
+.btn-sm{padding:4px 10px;font-size:11.5px}
+.btn-prim{background:var(--navy);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:13px;font-weight:500;padding:10px;border-radius:8px;cursor:pointer;transition:background .15s;width:100%;}
+.btn-prim:hover{background:#283593}
+.btn-waiver{background:#fff3cd;color:#856404;border:1px solid #ffc107;font-size:11.5px;padding:5px 10px;border-radius:6px;cursor:pointer;font-family:'Roboto',sans-serif;font-weight:500;transition:all .15s;}
 .btn-waiver:hover{background:#ffc107;color:#fff}
 
-/* FILTER BAR */
-.filter-bar{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
-.filter-tab{padding:6px 14px;font-size:12.5px;font-weight:600;border:1.5px solid var(--border);border-radius:20px;background:#fff;color:var(--muted);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s;}
+/* ── FILTER BAR ── */
+.filter-bar{display:flex;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid #f0f0f0;flex-wrap:wrap;background:#fafafa;}
+.filter-tab{padding:5px 13px;font-size:12px;font-weight:500;border:1.5px solid var(--border);border-radius:20px;background:#fff;color:var(--muted);cursor:pointer;font-family:'Roboto',sans-serif;transition:all .15s;}
 .filter-tab:hover{border-color:var(--red);color:var(--red)}.filter-tab.active{background:var(--red);border-color:var(--red);color:#fff}
-.filter-search{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:7px;padding:6px 12px;margin-left:auto;}
-.filter-search input{border:none;outline:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--text);background:transparent;width:180px;}
+.filter-search{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:7px;padding:5px 11px;margin-left:auto;}
+.filter-search input{border:none;outline:none;font-family:'Roboto',sans-serif;font-size:13px;color:var(--text);background:transparent;width:170px;}
 .filter-search input::placeholder{color:#bbb}
 
-/* COMPLIANCE ENGINE — ACTION-BASED */
-.required-action-box {
-  background: #fff3cd;
-  border: 1.5px solid #f59e0b;
-  border-radius: 8px;
-  padding: 12px 14px;
-  margin-top: 8px;
-}
-.required-action-title {
-  font-size: 11px;
-  font-weight: 800;
-  color: #7c4f00;
-  text-transform: uppercase;
-  letter-spacing: .6px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.required-action-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 6px 0;
-  border-bottom: 1px solid rgba(245,158,11,.2);
-  font-size: 12.5px;
-}
-.required-action-item:last-child { border-bottom: none; }
-.ra-number {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #f59e0b;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.ra-content { flex: 1; }
-.ra-rule { font-weight: 700; color: #7c4f00; margin-bottom: 2px; }
-.ra-desc { font-size: 11.5px; color: #92400e; line-height: 1.5; }
-.ra-ref { font-size: 10px; color: #b45309; font-style: italic; margin-top: 3px; }
-.ra-btn-wrap { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
-
-/* Hard block box */
-.hard-block-box {
-  background: #fef2f2;
-  border: 2px solid #dc2626;
-  border-radius: 8px;
-  padding: 14px 16px;
-  margin-top: 10px;
-}
-.hard-block-title {
-  font-size: 12px;
-  font-weight: 800;
-  color: #991b1b;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.hard-block-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(220,38,38,.15);
-}
-.hard-block-item:last-child { border-bottom: none; }
-.hb-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-.hb-body { flex: 1; }
-.hb-rule { font-size: 13px; font-weight: 700; color: #991b1b; margin-bottom: 2px; }
-.hb-detail { font-size: 12px; color: #b91c1c; line-height: 1.5; }
-.hb-ref { font-size: 10.5px; color: #dc2626; margin-top: 4px; padding: 2px 8px; background: rgba(220,38,38,.08); border-radius: 4px; display: inline-block; }
-.hb-action { font-size: 12px; font-weight: 600; color: #7f1d1d; margin-top: 6px; background: rgba(220,38,38,.1); padding: 5px 8px; border-radius: 5px; border-left: 3px solid #dc2626; }
-
-/* Warning box */
-.warn-box {
-  background: #fffbf0;
-  border: 1.5px solid #f59e0b;
-  border-radius: 8px;
-  padding: 12px 14px;
-  margin-top: 8px;
-}
-.warn-box-title {
-  font-size: 11px;
-  font-weight: 800;
-  color: #78450a;
-  text-transform: uppercase;
-  letter-spacing: .6px;
-  margin-bottom: 8px;
-}
-.warn-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 6px 0;
-  border-bottom: 1px solid rgba(245,158,11,.15);
-  font-size: 12.5px;
-}
-.warn-item:last-child { border-bottom: none; }
-.warn-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
-.warn-body { flex: 1; }
-.warn-rule { font-weight: 700; color: #7c4f00; margin-bottom: 2px; }
-.warn-detail { font-size: 12px; color: #92400e; line-height: 1.5; }
-.warn-ref { font-size: 10px; color: #b45309; font-style: italic; margin-top: 3px; }
-
-/* All clear box */
-.clear-box {
-  background: var(--green-light);
-  border: 1.5px solid rgba(26,92,56,.3);
-  border-radius: 8px;
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.clear-box-icon { font-size: 22px; }
-.clear-box-text { font-size: 13px; font-weight: 600; color: var(--green); }
-.clear-box-sub { font-size: 11.5px; color: #2d6a4f; margin-top:2px; }
-
-/* Compliance summary chips */
-.cf-chip{font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;white-space:nowrap;}
+/* ── COMPLIANCE ── */
+.required-action-box{background:#fff3cd;border:1.5px solid #f59e0b;border-radius:8px;padding:12px 14px;margin-top:8px}
+.hard-block-box{background:#fef2f2;border:2px solid #dc2626;border-radius:8px;padding:14px 16px;margin-top:10px}
+.hard-block-title{font-size:12px;font-weight:700;color:#991b1b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.hard-block-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(220,38,38,.15)}
+.hard-block-item:last-child{border-bottom:none}
+.hb-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.hb-body{flex:1}
+.hb-rule{font-size:13px;font-weight:600;color:#991b1b;margin-bottom:2px}
+.hb-detail{font-size:12px;color:#b91c1c;line-height:1.5}
+.hb-ref{font-size:10.5px;color:#dc2626;margin-top:4px;padding:2px 8px;background:rgba(220,38,38,.08);border-radius:4px;display:inline-block}
+.hb-action{font-size:12px;font-weight:500;color:#7f1d1d;margin-top:6px;background:rgba(220,38,38,.1);padding:5px 8px;border-radius:5px;border-left:3px solid #dc2626}
+.warn-box{background:#fffbf0;border:1.5px solid #f59e0b;border-radius:8px;padding:12px 14px;margin-top:8px}
+.warn-box-title{font-size:11px;font-weight:700;color:#78450a;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.warn-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid rgba(245,158,11,.15);font-size:12.5px}
+.warn-item:last-child{border-bottom:none}
+.warn-icon{flex-shrink:0;font-size:14px;margin-top:1px}
+.warn-body{flex:1}
+.warn-rule{font-weight:600;color:#7c4f00;margin-bottom:2px}
+.warn-detail{font-size:12px;color:#92400e;line-height:1.5}
+.warn-ref{font-size:10px;color:#b45309;font-style:italic;margin-top:3px}
+.clear-box{background:var(--green-light);border:1.5px solid rgba(26,92,56,.3);border-radius:8px;padding:14px 16px;display:flex;align-items:center;gap:10px}
+.clear-box-icon{font-size:22px}
+.clear-box-text{font-size:13px;font-weight:600;color:var(--green)}
+.clear-box-sub{font-size:11.5px;color:#2d6a4f;margin-top:2px}
+.cf-chip{font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;white-space:nowrap}
 .cf-chip.ok{background:var(--green-light);color:var(--green)}.cf-chip.warn{background:#fef9ec;color:#92400e}.cf-chip.fail{background:#fef2f2;color:#c0392b}
+.comp-stat-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.comp-stat{flex:1;min-width:130px;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:13px 15px;display:flex;align-items:center;gap:11px;}
+.comp-stat-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 
-/* APPROVAL FLOW */
-.approval-flow{display:flex;align-items:center;gap:0;margin:18px 0 6px;flex-wrap:wrap;}
-.af-step{display:flex;flex-direction:column;align-items:center;min-width:80px;}
-.af-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2px solid var(--border);}
+/* ── APPROVAL FLOW ── */
+.approval-flow{display:flex;align-items:center;gap:0;margin:14px 0 6px;flex-wrap:wrap}
+.af-step{display:flex;flex-direction:column;align-items:center;min-width:76px}
+.af-circle{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2px solid var(--border)}
 .af-circle.done{background:var(--green-light);border-color:var(--green);color:var(--green)}
 .af-circle.current{background:var(--gold-light);border-color:var(--gold);color:var(--gold)}
 .af-circle.waiting{background:#f5f5f5;border-color:#ddd;color:#999}
 .af-circle.rejected{background:#fef2f2;border-color:#c0392b;color:#c0392b}
-.af-label{font-size:10.5px;font-weight:600;color:var(--muted);margin-top:5px;text-align:center;line-height:1.3}
-.af-arrow{font-size:16px;color:var(--light);margin:0 4px;padding-bottom:20px;}
+.af-label{font-size:10px;font-weight:500;color:var(--muted);margin-top:4px;text-align:center;line-height:1.3}
+.af-arrow{font-size:16px;color:var(--light);margin:0 4px;padding-bottom:18px}
 
-/* SENTIMENT */
+/* ── SENTIMENT ── */
 .sentiment-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.sentiment-lbl{font-size:12px;color:var(--muted);width:68px;text-align:right;flex-shrink:0}
-.sentiment-track{flex:1;height:8px;background:#eee;border-radius:4px;overflow:hidden}
+.sentiment-lbl{font-size:12px;color:var(--muted);width:62px;text-align:right;flex-shrink:0}
+.sentiment-track{flex:1;height:7px;background:#eee;border-radius:4px;overflow:hidden}
 .sentiment-fill{height:100%;border-radius:4px;transition:width .7s ease}
 .fill-pos{background:var(--green)}.fill-neu{background:#aaa}.fill-neg{background:#c0392b}
-.sentiment-pct{font-size:12px;font-weight:700;width:34px;flex-shrink:0}
+.sentiment-pct{font-size:12px;font-weight:700;width:32px;flex-shrink:0}
 .kw-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .kw-tag{font-size:11.5px;padding:3px 9px;border-radius:4px;border:1px solid var(--border);background:#f5f5f5;color:var(--text)}
 .kw-tag.pos{background:var(--green-light);color:var(--green);border-color:rgba(26,92,56,.2)}
 .kw-tag.neg{background:#fef2f2;color:#c0392b;border-color:rgba(192,57,43,.2)}
 
-/* DASHBOARD */
-.empty-state{text-align:center;padding:48px 20px;color:var(--muted)}.empty-state-icon{font-size:40px;margin-bottom:12px;opacity:.4}.empty-state h3{font-size:15px;color:var(--text);margin-bottom:6px}
-.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
-.event-mini{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border2);}
+/* ── DASHBOARD MISC ── */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.event-mini{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid #f5f5f7}
 .event-mini:last-child{border-bottom:none;padding-bottom:0}
-.event-mini-emoji{width:36px;height:36px;border-radius:8px;background:var(--red-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
-.event-mini-body{flex:1;min-width:0}.event-mini-title{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.event-mini-meta{font-size:11.5px;color:var(--muted);margin-top:2px}
+.event-mini-emoji{width:34px;height:34px;border-radius:8px;background:#fff0f0;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.event-mini-body{flex:1;min-width:0}
+.event-mini-title{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.event-mini-meta{font-size:11.5px;color:var(--muted);margin-top:1px}
 .event-mini-status{flex-shrink:0}
-.chart-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.chart-bar-lbl{font-size:12.5px;color:var(--text);width:160px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chart-bar-track{flex:1;height:10px;background:#eee;border-radius:5px;overflow:hidden}
+.chart-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.chart-bar-lbl{font-size:12px;color:var(--text);width:160px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chart-bar-track{flex:1;height:9px;background:#eee;border-radius:5px;overflow:hidden}
 .chart-bar-fill{height:100%;border-radius:5px;transition:width .8s ease}
-.chart-bar-pct{font-size:12px;font-weight:700;color:var(--muted);width:36px;text-align:right;flex-shrink:0}
-.user-av-cell{width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-right:8px;}
+.chart-bar-pct{font-size:12px;font-weight:700;color:var(--muted);width:32px;text-align:right;flex-shrink:0}
+.user-av-cell{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-right:7px}
 .user-av-cell.green{background:var(--green)}.user-av-cell.blue{background:var(--blue)}
-.toast{position:fixed;bottom:24px;right:24px;z-index:500;background:#1a1a1a;color:#fff;padding:12px 20px;border-radius:8px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(80px);opacity:0;transition:all .3s ease;pointer-events:none;}
-.toast.show{transform:translateY(0);opacity:1}.toast.success{border-left:4px solid var(--green)}.toast.error{border-left:4px solid #ef4444}.toast.info{border-left:4px solid var(--gold)}
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty-state-icon{font-size:36px;margin-bottom:10px;opacity:.4}
+.empty-state h3{font-size:14px;color:var(--text);margin-bottom:4px}
 
-/* PAGE FOOTER */
-.page-footer{background:#fff;border-top:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:auto;}
-.page-footer-copy{font-size:12px;color:var(--light)}
-
-/* COMPLIANCE SECTION */
-.comp-stat-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-.comp-stat{flex:1;min-width:140px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;}
-.comp-stat-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
-
-/* MODAL */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);}
+/* ── MODAL ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)}
 .overlay.open{display:flex}
-.modal{background:#fff;border-radius:10px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.2);animation:mIn .2s ease;}
+.modal{background:#fff;border-radius:14px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.2);animation:mIn .2s ease}
 @keyframes mIn{from{opacity:0;transform:scale(.97) translateY(8px)}to{opacity:1;transform:none}}
-.modal-head{background:var(--red);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-radius:10px 10px 0 0;}
-.modal-head-title{color:#fff;font-size:14px;font-weight:700}
-.modal-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:6px;font-size:13px;cursor:pointer;transition:background .15s;}
-.modal-close:hover{background:rgba(255,255,255,.3)}
+.modal-head{background:var(--dark);padding:13px 18px;display:flex;align-items:center;justify-content:space-between;border-radius:14px 14px 0 0}
+.modal-head-title{color:#fff;font-size:14px;font-weight:500}
+.modal-close{background:rgba(255,255,255,.12);border:none;color:#fff;width:26px;height:26px;border-radius:6px;font-size:13px;cursor:pointer;transition:background .15s}
+.modal-close:hover{background:rgba(255,255,255,.25)}
 .modal-body{padding:20px}
-.modal-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.modal-info-cell{background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:9px 12px}
-.mic-label{font-size:10px;color:var(--light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}.mic-val{font-size:13px;font-weight:600;color:var(--text)}
-.modal-desc{font-size:13.5px;line-height:1.7;color:var(--muted);background:#f8fafc;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 6px 6px 0;margin-bottom:18px}
-.modal-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin:16px 0 8px;display:flex;align-items:center;gap:6px}
+.modal-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.modal-info-cell{background:#f8fafc;border:1px solid var(--border);border-radius:7px;padding:9px 12px}
+.mic-label{font-size:10px;color:var(--light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.mic-val{font-size:13px;font-weight:500;color:var(--text)}
+.modal-desc{font-size:13px;line-height:1.7;color:var(--muted);background:#f8fafc;border-left:3px solid var(--red);padding:11px 13px;border-radius:0 7px 7px 0;margin-bottom:16px}
+.modal-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin:14px 0 8px;display:flex;align-items:center;gap:6px}
 .modal-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
-.modal-actions{display:flex;gap:10px;margin-top:16px}
-.btn-modal-approve{flex:1;background:var(--green);color:#fff;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:7px;cursor:pointer;transition:background .15s}
+.modal-actions{display:flex;gap:9px;margin-top:14px}
+.btn-modal-approve{flex:1;background:var(--green);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:13.5px;font-weight:500;padding:11px;border-radius:7px;cursor:pointer;transition:background .15s}
 .btn-modal-approve:hover{background:#145e30}
 .btn-modal-approve:disabled{background:#9ca3af;cursor:not-allowed}
-.btn-modal-reject{background:#fef2f2;color:#c0392b;border:1.5px solid rgba(192,57,43,.3);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:12px 18px;border-radius:7px;cursor:pointer;transition:all .15s}
+.btn-modal-reject{background:#fef2f2;color:#c0392b;border:1.5px solid rgba(192,57,43,.3);font-family:'Roboto',sans-serif;font-size:13.5px;font-weight:500;padding:11px 16px;border-radius:7px;cursor:pointer;transition:all .15s}
 .btn-modal-reject:hover{background:#fee2e2}
-.btn-modal-close{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;padding:12px 18px;border-radius:7px;cursor:pointer;transition:all .15s}
+.btn-modal-close{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Roboto',sans-serif;font-size:13.5px;padding:11px 16px;border-radius:7px;cursor:pointer;transition:all .15s}
 .btn-modal-close:hover{border-color:var(--red);color:var(--red)}
-.reject-reason-box{display:none;margin-top:14px}.reject-reason-box.show{display:block}
-.reject-reason-box textarea{width:100%;border:1px solid var(--border);border-radius:6px;padding:9px 12px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13.5px;resize:vertical;min-height:80px;outline:none;transition:border-color .15s;}
+.reject-reason-box{display:none;margin-top:13px}
+.reject-reason-box.show{display:block}
+.reject-reason-box textarea{width:100%;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-family:'Roboto',sans-serif;font-size:13px;resize:vertical;min-height:76px;outline:none;transition:border-color .15s}
 .reject-reason-box textarea:focus{border-color:var(--red)}
+.waiver-form-row{margin-bottom:13px}
+.waiver-form-row label{display:block;font-size:12.5px;font-weight:500;color:var(--text);margin-bottom:5px}
+.waiver-form-row select,.waiver-form-row textarea,.waiver-form-row input{width:100%;border:1px solid var(--border);border-radius:7px;padding:8px 12px;font-family:'Roboto',sans-serif;font-size:13px;outline:none;transition:border-color .15s}
+.waiver-form-row select:focus,.waiver-form-row textarea:focus{border-color:var(--gold)}
+.waiver-form-row textarea{resize:vertical;min-height:72px}
 
-/* Waiver modal */
-.waiver-modal-body { padding: 20px; }
-.waiver-form-row { margin-bottom: 14px; }
-.waiver-form-row label { display: block; font-size: 12.5px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
-.waiver-form-row select, .waiver-form-row textarea, .waiver-form-row input {
-  width: 100%; border: 1px solid var(--border); border-radius: 6px;
-  padding: 8px 12px; font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 13px; outline: none; transition: border-color .15s;
-}
-.waiver-form-row select:focus, .waiver-form-row textarea:focus { border-color: var(--gold); }
-.waiver-form-row textarea { resize: vertical; min-height: 80px; }
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;z-index:500;background:#1c1c2e;color:#fff;padding:12px 20px;border-radius:9px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(80px);opacity:0;transition:all .3s ease;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-left:4px solid var(--green)}
+.toast.error{border-left:4px solid #ef4444}
+.toast.info{border-left:4px solid var(--gold)}
 
-::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:#f5f5f5}::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:#bbb}
+/* ── PAGE SECTION HEADING ── */
+.page-heading{margin-bottom:14px}
+.page-heading h1{font-size:18px;font-weight:600;color:var(--text);margin-bottom:2px}
+.page-heading p{font-size:12.5px;color:var(--muted)}
+
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:#f0f0f0}
+::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#bbb}
 </style>
 </head>
 <body>
-<div class="layout">
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="sb-brand">
-    <img src="/Images/LOGO-UTM.png" alt="UTM Logo" onerror="this.style.display='none'"/>
-  </div>
-  <div class="sb-profile">
-    <div class="sb-avatar-wrap">
-      <div class="sb-avatar-ring"><div class="sb-avatar-inner" id="sbAvatar">AD</div></div>
-      <div class="sb-avatar-badge"></div>
+<!-- TOP BAND -->
+<div class="top-band">
+  <nav class="navbar">
+    <div class="nav-logo">
+      <div class="logo-row">
+        <span class="l-my">my</span><span class="l-utm">UTM</span><span class="l-portal">Portal</span>
+      </div>
+      <span class="l-tag">ADMIN DASHBOARD</span>
     </div>
-    <div class="sb-profile-name" id="sbName">Administrator</div>
-    <div class="sb-profile-role">Admin / Student Affairs</div>
-  </div>
+    <div class="nav-ticker">
+      <span class="nav-ticker-badge">Admin</span>
+      <span style="color:rgba(255,255,255,.65);font-size:12px">Student Affairs &amp; Campus Event Management</span>
+    </div>
+    <div class="nav-right">
+      <button class="nav-icon-btn" onclick="window.location.href='/Homepage/homepage.html'">🌐 View Site</button>
+      <span class="nav-uname" id="navUname">Administrator</span>
+      <div class="nav-avatar" id="navAvatar">AD</div>
+    </div>
+  </nav>
 
-  <div class="sb-section">Main</div>
-  <button class="sb-item active" onclick="showSection('dashboard',this)">
-    <div class="sb-item-icon-wrap">📊</div>
-    <span class="sb-item-label">Dashboard</span>
-  </button>
-
-  <div class="sb-section">Events</div>
-  <button class="sb-item" onclick="showSection('pending',this)">
-    <div class="sb-item-icon-wrap">⏳</div>
-    <span class="sb-item-label">Pending Approval</span>
-    <span class="sb-badge" id="pendingBadge" style="display:none">0</span>
-  </button>
-  <button class="sb-item" onclick="showSection('all-events',this)">
-    <div class="sb-item-icon-wrap">📋</div>
-    <span class="sb-item-label">All Events</span>
-  </button>
-
-  <div class="sb-section">Compliance</div>
-  <button class="sb-item" onclick="showSection('compliance',this)">
-    <div class="sb-item-icon-wrap">✅</div>
-    <span class="sb-item-label">Compliance Review</span>
-    <span class="sb-badge" id="complianceBadge" style="display:none;background:#f59e0b">0</span>
-  </button>
-
-  <div class="sb-section">Analytics</div>
-  <button class="sb-item" onclick="showSection('feedback',this)">
-    <div class="sb-item-icon-wrap">🤖</div>
-    <span class="sb-item-label">Feedback & AI</span>
-  </button>
-
-  <div class="sb-section">System</div>
-  <button class="sb-item" onclick="showSection('users',this)">
-    <div class="sb-item-icon-wrap">👥</div>
-    <span class="sb-item-label">Users</span>
-  </button>
-
-  <div class="sb-divider"></div>
-  <button class="sb-item" onclick="window.location.href='/Homepage/homepage.html'">
-    <div class="sb-item-icon-wrap">🌐</div>
-    <span class="sb-item-label">View Event Site</span>
-  </button>
-
-  <div class="sb-footer">
-    <button class="sb-logout" onclick="doLogout()">
-      <div class="sb-logout-icon">🚪</div>
-      <span>Log Out</span>
+  <div class="qi-row">
+    <button class="qi-card" onclick="showSection('dashboard',this)" id="qi-dashboard">
+      <div class="qi-icon red-bg">📊</div>
+      <span class="qi-label">Dashboard</span>
+      <span class="qi-count" id="qiTotal">—</span>
+    </button>
+    <button class="qi-card" onclick="showSection('pending',this)" id="qi-pending">
+      <div class="qi-icon gold-bg">⏳</div>
+      <span class="qi-label">Pending</span>
+      <span class="qi-count" id="qiPending">—</span>
+    </button>
+    <button class="qi-card" onclick="showSection('all-events',this)" id="qi-all">
+      <div class="qi-icon blue-bg">📋</div>
+      <span class="qi-label">All Events</span>
+      <span class="qi-count" id="qiAll">—</span>
+    </button>
+    <button class="qi-card" onclick="showSection('compliance',this)" id="qi-compliance">
+      <div class="qi-icon orange-bg">✅</div>
+      <span class="qi-label">Compliance</span>
+      <span class="qi-count" id="qiCompliance">—</span>
+    </button>
+    <button class="qi-card" onclick="showSection('feedback',this)" id="qi-feedback">
+      <div class="qi-icon red-bg">🤖</div>
+      <span class="qi-label">AI Feedback</span>
+      <span class="qi-count" id="qiFeedback">—</span>
+    </button>
+    <button class="qi-card" onclick="showSection('users',this)" id="qi-users">
+      <div class="qi-icon green-bg">👥</div>
+      <span class="qi-label">Users</span>
+      <span class="qi-count" id="qiUsers">—</span>
     </button>
   </div>
-</aside>
+</div>
 
-<!-- MAIN -->
-<div class="main">
-  <div class="topbar">
-    <div class="topbar-upper">
-      <div class="topbar-left">
-        <div>
-          <div class="topbar-page" id="topbarPage">Dashboard</div>
-          <div class="topbar-breadcrumb">Admin <span>›</span> <b id="topbarSub">Overview</b></div>
-        </div>
-      </div>
-      <div class="topbar-right">
-        <div class="topbar-chip"><div class="topbar-chip-dot" style="background:#22c55e"></div><span id="topChipApproved">0 Live</span></div>
-        <div class="topbar-chip"><div class="topbar-chip-dot" style="background:#f59e0b"></div><span id="topChipPendingTxt">0 Pending</span></div>
-        <div class="notif-btn">🔔<div class="notif-dot"></div></div>
-        <div class="topbar-profile" onclick="doLogout()">
-          <div class="topbar-profile-av" id="topbarAv">AD</div>
-          <div>
-            <div class="topbar-profile-name" id="topbarName">Administrator</div>
-            <div class="topbar-profile-role">Student Affairs Admin</div>
-          </div>
-        </div>
-      </div>
+<!-- MAIN GRID -->
+<div class="main-grid">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-head">
+      <div class="sb-title">Navigation</div>
+      <div class="sb-sub">Admin Controls</div>
     </div>
-    <div class="topbar-lower">Universiti Teknologi Malaysia &nbsp;—&nbsp; Campus Event Finder Admin</div>
-  </div>
 
-  <div class="content">
+    <div class="sb-section-lbl">Main</div>
+    <button class="sb-item active" onclick="showSection('dashboard',this)">
+      <span class="sb-item-icon">📊</span>
+      <span class="sb-item-label">Dashboard</span>
+    </button>
+
+    <div class="sb-section-lbl">Events</div>
+    <button class="sb-item" onclick="showSection('pending',this)">
+      <span class="sb-item-icon">⏳</span>
+      <span class="sb-item-label">Pending Approval</span>
+      <span class="sb-badge" id="pendingBadge" style="display:none">0</span>
+    </button>
+    <button class="sb-item" onclick="showSection('all-events',this)">
+      <span class="sb-item-icon">📋</span>
+      <span class="sb-item-label">All Events</span>
+    </button>
+
+    <div class="sb-section-lbl">Compliance</div>
+    <button class="sb-item" onclick="showSection('compliance',this)">
+      <span class="sb-item-icon">✅</span>
+      <span class="sb-item-label">Compliance Review</span>
+      <span class="sb-badge gold" id="complianceBadge" style="display:none">0</span>
+    </button>
+
+    <div class="sb-section-lbl">Analytics</div>
+    <button class="sb-item" onclick="showSection('feedback',this)">
+      <span class="sb-item-icon">🤖</span>
+      <span class="sb-item-label">Feedback &amp; AI</span>
+    </button>
+
+    <div class="sb-section-lbl">System</div>
+    <button class="sb-item" onclick="showSection('users',this)">
+      <span class="sb-item-icon">👥</span>
+      <span class="sb-item-label">Users</span>
+    </button>
+
+    <div class="sb-divider"></div>
+    <button class="sb-item" onclick="window.location.href='/Homepage/homepage.html'">
+      <span class="sb-item-icon">🌐</span>
+      <span class="sb-item-label">View Event Site</span>
+    </button>
+
+    <div class="sb-footer">
+      <button class="sb-logout" onclick="doLogout()">
+        <span>🚪</span> Log Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- CONTENT AREA -->
+  <div class="content-wrap">
+
+    <!-- STATUS BAR -->
+    <div class="status-bar" id="statusBar">
+      <div class="status-chip"><div class="chip-dot green"></div><span id="chipApproved">0 Live</span></div>
+      <div class="status-chip"><div class="chip-dot gold"></div><span id="chipPending">0 Pending</span></div>
+      <div class="status-chip"><div class="chip-dot red"></div><span id="chipBlockers">0 Blockers</span></div>
+      <div class="status-chip"><div class="chip-dot blue"></div><span id="chipFeedback">0 Feedback</span></div>
+    </div>
 
     <!-- DASHBOARD -->
     <div class="section active" id="sec-dashboard">
-      <div class="page-heading"><h1>Dashboard Overview</h1><p>Welcome back! Here is the current status of UTM Campus Event Finder.</p></div>
+      <div class="page-heading"><h1>Dashboard Overview</h1><p>Welcome back! Current status of UTM Campus Event Finder.</p></div>
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-icon red">📅</div><div><div class="stat-num" id="dTotalEvents">–</div><div class="stat-lbl">Total Events</div><div class="stat-sub">All categories</div></div></div>
         <div class="stat-card"><div class="stat-icon gold">⏳</div><div><div class="stat-num" id="dPending">–</div><div class="stat-lbl">Pending Approval</div><div class="stat-sub">Requires review</div></div></div>
         <div class="stat-card"><div class="stat-icon green">✅</div><div><div class="stat-num" id="dApproved">–</div><div class="stat-lbl">Approved Events</div><div class="stat-sub">Active on platform</div></div></div>
         <div class="stat-card"><div class="stat-icon blue">💬</div><div><div class="stat-num" id="dFeedback">–</div><div class="stat-lbl">Feedback</div><div class="stat-sub">From students</div></div></div>
       </div>
-      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+      <div class="stats-grid">
         <div class="stat-card"><div class="stat-icon green">👥</div><div><div class="stat-num" id="dRegistrations">–</div><div class="stat-lbl">Total Registrations</div></div></div>
         <div class="stat-card"><div class="stat-icon gold">😊</div><div><div class="stat-num" id="dPosSentiment">–</div><div class="stat-lbl">Positive Sentiment</div></div></div>
         <div class="stat-card"><div class="stat-icon red">🎟</div><div><div class="stat-num" id="dSlotsLeft">–</div><div class="stat-lbl">Slots Available</div></div></div>
-        <div class="stat-card" style="cursor:pointer" onclick="showSection('compliance', document.querySelector('.sb-item[onclick*=compliance]'))">
-          <div class="stat-icon orange">⚠️</div><div><div class="stat-num" id="dComplianceIssues">–</div><div class="stat-lbl">Compliance Issues</div><div class="stat-sub">Click to review</div></div></div>
+        <div class="stat-card" style="cursor:pointer" onclick="showSection('compliance',null)">
+          <div class="stat-icon orange">⚠️</div><div><div class="stat-num" id="dComplianceIssues">–</div><div class="stat-lbl">Compliance Issues</div><div class="stat-sub">Click to review</div></div>
+        </div>
       </div>
       <div class="dash-grid">
         <div class="card">
-          <div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">Pending Approval</span></div><button class="btn btn-view btn-sm" onclick="showSection('pending',document.querySelectorAll('.sb-item')[1])">View All →</button></div>
+          <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">Pending Approval</span></div><button class="btn btn-view btn-sm" onclick="showSection('pending',null)">View All →</button></div>
           <div class="card-body" id="dashPendingList"><div class="empty-state"><div class="empty-state-icon">⏳</div><h3>Loading...</h3></div></div>
         </div>
         <div class="card">
-          <div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">AI Sentiment Analysis</span></div></div>
+          <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">AI Sentiment Analysis</span></div></div>
           <div class="card-body">
-            <div style="margin-bottom:18px">
+            <div style="margin-bottom:16px">
               <div class="sentiment-row"><span class="sentiment-lbl">Positive</span><div class="sentiment-track"><div class="sentiment-fill fill-pos" style="width:0%" id="sentPos"></div></div><span class="sentiment-pct" style="color:var(--green)" id="sentPosPct">–%</span></div>
               <div class="sentiment-row"><span class="sentiment-lbl">Neutral</span><div class="sentiment-track"><div class="sentiment-fill fill-neu" style="width:0%" id="sentNeu"></div></div><span class="sentiment-pct" id="sentNeuPct">–%</span></div>
               <div class="sentiment-row"><span class="sentiment-lbl">Negative</span><div class="sentiment-track"><div class="sentiment-fill fill-neg" style="width:0%" id="sentNeg"></div></div><span class="sentiment-pct" style="color:#c0392b" id="sentNegPct">–%</span></div>
             </div>
-            <div style="font-size:11px;color:var(--light);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:.6px">Top Keywords</div>
+            <div style="font-size:10.5px;color:var(--light);margin-bottom:7px;font-weight:600;text-transform:uppercase;letter-spacing:.6px">Top Keywords</div>
             <div class="kw-tags" id="kwTags"><span class="kw-tag">No feedback yet</span></div>
           </div>
         </div>
       </div>
-      <div class="card"><div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">Registrations by Event</span></div></div><div class="card-body" id="dashRegChart"></div></div>
+      <div class="card"><div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">Registrations by Event</span></div></div><div class="card-body" id="dashRegChart"></div></div>
     </div>
 
     <!-- PENDING -->
     <div class="section" id="sec-pending">
-      <div class="page-heading"><h1>Pending Approval</h1><p>Review, approve, or reject event applications. Events with compliance violations cannot be approved until resolved.</p></div>
+      <div class="page-heading"><h1>Pending Approval</h1><p>Review, approve, or reject event applications.</p></div>
       <div class="card">
         <div class="filter-bar">
           <span style="font-size:13px;color:var(--muted)">Events awaiting review</span>
           <div class="filter-search">🔍<input type="text" id="pendingSearch" placeholder="Search events..." oninput="filterPending()"/></div>
         </div>
-        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Category</th><th>Organizer</th><th>Date</th><th>Slots</th><th>Compliance Status</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="pendingTbody"></tbody></table></div></div>
+        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Category</th><th>Organizer</th><th>Date</th><th>Slots</th><th>Compliance</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="pendingTbody"></tbody></table></div></div>
       </div>
     </div>
 
@@ -515,58 +478,46 @@ tr:hover td{background:#fafbfc}
       </div>
     </div>
 
-    <!-- COMPLIANCE SECTION -->
+    <!-- COMPLIANCE -->
     <div class="section" id="sec-compliance">
-      <div class="page-heading"><h1>Student Affairs Compliance Review</h1><p>Review activity application compliance based on the <strong>UTM Student Activity Guidebook (2013)</strong>. Each violation requires action before approval can be granted.</p></div>
-
+      <div class="page-heading"><h1>Student Affairs Compliance Review</h1><p>Review based on <strong>UTM Student Activity Guidebook (2013)</strong>.</p></div>
       <div class="comp-stat-row" id="compStatRow"></div>
-
-      <!-- Rules Reference Card -->
-      <div class="card" style="margin-bottom:20px">
-        <div class="card-head"><div class="card-head-left"><div class="card-head-bar"></div><span class="card-title">📖 Reference: UTM Student Activity Guidebook (2013)</span></div></div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">📖 Reference: UTM Student Activity Guidebook (2013)</span></div></div>
         <div class="card-body">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <div style="background:#fef2f2;border-radius:8px;padding:12px 14px;border-left:3px solid #dc2626">
-              <div style="font-size:11px;font-weight:700;color:#991b1b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">🚫 Absolute Blockers (CANNOT Be Approved)</div>
-              <div style="font-size:12px;color:#7f1d1d;line-height:1.9">
+              <div style="font-size:11px;font-weight:600;color:#991b1b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">🚫 Absolute Blockers (CANNOT Be Approved)</div>
+              <div style="font-size:12px;color:#7f1d1d;line-height:2">
                 <div>❌ <strong>Sec. 3.2.4(b)</strong> — No approval from Advisor/Principal</div>
-                <div>❌ <strong>Sec. 3.2.4(d)</strong> — Non-multiracial participation (except religious societies)</div>
-                <div>❌ <strong>Sec. 3.1.5</strong> — Submitted less than 14 working days before programme</div>
-                <div>❌ <strong>Sec. 3.4.4</strong> — Previous activity report not yet submitted to HEMA</div>
+                <div>❌ <strong>Sec. 3.2.4(d)</strong> — Non-multiracial participation</div>
+                <div>❌ <strong>Sec. 3.1.5</strong> — Less than 14 working days notice</div>
+                <div>❌ <strong>Sec. 3.4.4</strong> — Previous activity report not submitted</div>
               </div>
             </div>
             <div style="background:#fffbf0;border-radius:8px;padding:12px 14px;border-left:3px solid #f59e0b">
-              <div style="font-size:11px;font-weight:700;color:#7c4f00;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">⚠️ Requires Special Action</div>
-              <div style="font-size:12px;color:#92400e;line-height:1.9">
-                <div>⚠️ <strong>Sec. 3.1.6</strong> — Has external sponsorship/participation → requires 30 working days</div>
-                <div>⚠️ <strong>Sec. 3.1.9</strong> — Exceeds 4 activities/semester → requires Advisor + HEMA approval</div>
-                <div>⚠️ <strong>Sec. 3.2.5</strong> — During revision/exam week → requires TNC (HEMA) approval</div>
-                <div>⚠️ <strong>Sec. 3.2.10</strong> — Activity past midnight → requires HEMA/Principal approval</div>
-                <div>⚠️ <strong>Sec. 3.2.6</strong> — Has external invitation/sponsorship → requires Vice Chancellor approval</div>
+              <div style="font-size:11px;font-weight:600;color:#7c4f00;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">⚠️ Requires Special Action</div>
+              <div style="font-size:12px;color:#92400e;line-height:2">
+                <div>⚠️ <strong>Sec. 3.1.6</strong> — External sponsorship → 30 working days</div>
+                <div>⚠️ <strong>Sec. 3.1.9</strong> — Exceeds 4 activities/semester</div>
+                <div>⚠️ <strong>Sec. 3.2.5</strong> — During revision/exam week</div>
+                <div>⚠️ <strong>Sec. 3.2.10</strong> — Activity past midnight</div>
+                <div>⚠️ <strong>Sec. 3.2.6</strong> — External invitation/sponsorship → VC approval</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <div class="card">
         <div class="filter-bar">
           <button class="filter-tab active" onclick="filterCompliance('all',this)">All</button>
-          <button class="filter-tab" onclick="filterCompliance('blocker',this)">🚫 Absolute Blockers</button>
+          <button class="filter-tab" onclick="filterCompliance('blocker',this)">🚫 Blockers</button>
           <button class="filter-tab" onclick="filterCompliance('warn',this)">⚠️ Requires Action</button>
-          <button class="filter-tab" onclick="filterCompliance('clear',this)">✅ Can Be Approved</button>
-          <div class="filter-search">🔍<input type="text" id="complianceSearch" placeholder="Search organizer/activity..." oninput="renderComplianceTable()"/></div>
+          <button class="filter-tab" onclick="filterCompliance('clear',this)">✅ Can Approve</button>
+          <div class="filter-search">🔍<input type="text" id="complianceSearch" placeholder="Search..." oninput="renderComplianceTable()"/></div>
         </div>
         <div class="card-body no-pad"><div class="tbl-wrap"><table>
-          <thead><tr>
-            <th>Activity / Organizer</th>
-            <th>Advisor Approval</th>
-            <th>Multiracial</th>
-            <th>Notice Period</th>
-            <th>Previous Report</th>
-            <th>Activity Limit</th>
-            <th>Status & Action</th>
-          </tr></thead>
+          <thead><tr><th>Activity / Organizer</th><th>Advisor</th><th>Multiracial</th><th>Notice Period</th><th>Prev. Report</th><th>Act. Limit</th><th>Status &amp; Action</th></tr></thead>
           <tbody id="complianceTbody"></tbody>
         </table></div></div>
       </div>
@@ -574,7 +525,7 @@ tr:hover td{background:#fafbfc}
 
     <!-- FEEDBACK -->
     <div class="section" id="sec-feedback">
-      <div class="page-heading"><h1>Feedback & AI Analysis</h1><p>Student feedback after events analyzed by AI.</p></div>
+      <div class="page-heading"><h1>Feedback &amp; AI Analysis</h1><p>Student feedback analyzed by AI sentiment engine.</p></div>
       <div id="feedbackCards"></div>
     </div>
 
@@ -592,21 +543,16 @@ tr:hover td{background:#fafbfc}
       </div>
     </div>
 
-  </div>
-
-  <div class="page-footer">
-    <div class="page-footer-copy">© 2025 Universiti Teknologi Malaysia — Campus Event Finder Admin</div>
-  </div>
-</div>
-</div>
+  </div><!-- /content-wrap -->
+</div><!-- /main-grid -->
 
 <!-- EVENT REVIEW MODAL -->
 <div class="overlay" id="eventOverlay" onclick="handleOverlay(event)">
   <div class="modal">
-    <div class="modal-head"><span class="modal-head-title">Event Review — Student Affairs Compliance Check</span><button class="modal-close" onclick="closeEventModal()">✕</button></div>
+    <div class="modal-head"><span class="modal-head-title">Event Review — Compliance Check</span><button class="modal-close" onclick="closeEventModal()">✕</button></div>
     <div class="modal-body">
       <div style="margin-bottom:10px"><span class="badge" id="mCatBadge"></span><span class="badge" id="mStatusBadge" style="margin-left:6px"></span></div>
-      <div style="font-size:17px;font-weight:700;color:var(--text);margin-bottom:16px;line-height:1.3" id="mTitle"></div>
+      <div style="font-size:17px;font-weight:600;color:var(--text);margin-bottom:14px;line-height:1.3" id="mTitle"></div>
       <div class="modal-info-grid">
         <div class="modal-info-cell"><div class="mic-label">Date</div><div class="mic-val" id="mDate"></div></div>
         <div class="modal-info-cell"><div class="mic-label">Time</div><div class="mic-val" id="mTime"></div></div>
@@ -616,36 +562,28 @@ tr:hover td{background:#fafbfc}
         <div class="modal-info-cell"><div class="mic-label">Capacity</div><div class="mic-val" id="mSlots"></div></div>
       </div>
       <div class="modal-desc" id="mDesc"></div>
-
-      <!-- COMPLIANCE ENGINE OUTPUT -->
       <div class="modal-section-title">📋 Compliance Check — UTM Student Activity Guidebook</div>
       <div id="mComplianceOutput"></div>
-
-      <!-- APPROVAL FLOW -->
       <div class="modal-section-title">🔄 Approval Flow (Sec. 3.1.7)</div>
-      <div style="background:#f8fafc;border-radius:8px;padding:14px;margin-bottom:16px">
+      <div style="background:#f8fafc;border-radius:8px;padding:13px;margin-bottom:14px">
         <div class="approval-flow" id="mApprovalFlow"></div>
-        <div style="font-size:11.5px;color:var(--muted);margin-top:10px" id="mApprovalNote"></div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:8px" id="mApprovalNote"></div>
       </div>
-
       <div class="reject-reason-box" id="rejectReasonBox">
-        <label style="font-size:12.5px;font-weight:600;color:var(--text);display:block;margin-bottom:6px">Reason for Rejection <span style="color:var(--red)">*</span></label>
-        <textarea id="rejectReason" placeholder="State the reason for rejection and specify which guideline section was violated..."></textarea>
+        <label style="font-size:12.5px;font-weight:500;color:var(--text);display:block;margin-bottom:6px">Reason for Rejection <span style="color:var(--red-badge)">*</span></label>
+        <textarea id="rejectReason" placeholder="State the reason and which guideline section was violated..."></textarea>
       </div>
       <div class="modal-actions" id="mActions"></div>
     </div>
   </div>
 </div>
 
-<!-- WAIVER / SPECIAL PERMISSION MODAL -->
+<!-- WAIVER MODAL -->
 <div class="overlay" id="waiverOverlay" onclick="handleWaiverOverlay(event)">
-  <div class="modal" style="max-width:480px">
-    <div class="modal-head" style="background:var(--gold)">
-      <span class="modal-head-title" id="waiverModalTitle">Record Special Permission</span>
-      <button class="modal-close" onclick="closeWaiverModal()">✕</button>
-    </div>
-    <div class="waiver-modal-body">
-      <div style="background:#fef9ec;border:1px solid #f59e0b;border-radius:8px;padding:12px;margin-bottom:16px;font-size:12.5px;color:#7c4f00" id="waiverContext"></div>
+  <div class="modal" style="max-width:460px">
+    <div class="modal-head" style="background:#8B6914"><span class="modal-head-title" id="waiverModalTitle">Record Special Permission</span><button class="modal-close" onclick="closeWaiverModal()">✕</button></div>
+    <div style="padding:20px">
+      <div style="background:#fef9ec;border:1px solid #f59e0b;border-radius:8px;padding:11px;margin-bottom:14px;font-size:12.5px;color:#7c4f00" id="waiverContext"></div>
       <div class="waiver-form-row">
         <label>Type of Permission Required</label>
         <select id="waiverType">
@@ -667,11 +605,11 @@ tr:hover td{background:#fafbfc}
       </div>
       <div class="waiver-form-row">
         <label>Additional Notes</label>
-        <textarea id="waiverNote" placeholder="Additional information regarding this permission..."></textarea>
+        <textarea id="waiverNote" placeholder="Additional information..."></textarea>
       </div>
-      <div style="display:flex;gap:10px">
-        <button style="flex:1;background:var(--gold);color:#fff;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;padding:11px;border-radius:7px;cursor:pointer" onclick="saveWaiver()">💾 Save Record</button>
-        <button style="background:none;border:1px solid var(--border);color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;padding:11px 16px;border-radius:7px;cursor:pointer" onclick="closeWaiverModal()">Cancel</button>
+      <div style="display:flex;gap:9px">
+        <button style="flex:1;background:var(--gold);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:13.5px;font-weight:500;padding:10px;border-radius:7px;cursor:pointer" onclick="saveWaiver()">💾 Save Record</button>
+        <button style="background:none;border:1px solid var(--border);color:var(--muted);font-family:'Roboto',sans-serif;font-size:13.5px;padding:10px 15px;border-radius:7px;cursor:pointer" onclick="closeWaiverModal()">Cancel</button>
       </div>
     </div>
   </div>
@@ -681,9 +619,6 @@ tr:hover td{background:#fafbfc}
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ============================================================
-// CONFIG
-// ============================================================
 const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
@@ -692,39 +627,14 @@ let EVENTS = [], USERS = [], FEEDBACK = [];
 let allEventsFilter = 'all', usersFilter = 'all', complianceFilter = 'all';
 let currentEventModal = null;
 let waiverEventId = null, waiverRuleId = null;
-
-// In-memory waiver store (keyed by eventId_ruleId)
 const WAIVERS = {};
-
-// ============================================================
-// COMPLIANCE ENGINE — BASED 100% ON PDF:
-// UTM Student Activity Guidebook (2013)
-//
-// Rules mapped to PDF sections:
-// BLOCKER (cannot approve):
-//   B1 — Sec. 3.2.4(b): No approval from Advisor/Principal
-//   B2 — Sec. 3.2.4(d): Non-multiracial participation
-//   B3 — Sec. 3.1.5:    Less than 14 working days (no external)
-//   B4 — Sec. 3.4.4:    Previous activity report not submitted
-//
-// WARNING (require special permission but can approve after):
-//   W1 — Sec. 3.1.6:    Has external → requires 30 working days
-//   W2 — Sec. 3.1.9:    Already 4 activities/sem → requires Advisor+HEMA
-//   W3 — Sec. 3.2.5:    During exam/study week → requires TNC HEMA
-//   W4 — Sec. 3.2.10:   Past midnight → requires HEMA/Principal
-//   W5 — Sec. 3.2.6:    Has external invitation/sponsorship → requires VC
-// ============================================================
 
 function workingDaysBetween(d1Str, d2Str) {
   try {
     let d1 = new Date(d1Str), d2 = new Date(d2Str);
     if (isNaN(d1) || isNaN(d2)) return null;
     let count = 0, cur = new Date(d1);
-    while (cur < d2) {
-      const day = cur.getDay();
-      if (day !== 0 && day !== 6) count++;
-      cur.setDate(cur.getDate() + 1);
-    }
+    while (cur < d2) { const day = cur.getDay(); if (day !== 0 && day !== 6) count++; cur.setDate(cur.getDate() + 1); }
     return count;
   } catch(e) { return null; }
 }
@@ -732,28 +642,13 @@ function workingDaysBetween(d1Str, d2Str) {
 function countSemesterActivities(organizerName, excludeId) {
   if (!organizerName) return 0;
   const now = new Date();
-  const semStart = now.getMonth() < 6
-    ? new Date(now.getFullYear(), 0, 1)
-    : new Date(now.getFullYear(), 6, 1);
-  const semEnd = now.getMonth() < 6
-    ? new Date(now.getFullYear(), 5, 30)
-    : new Date(now.getFullYear(), 11, 31);
-  return EVENTS.filter(e => {
-    if (e.id === excludeId) return false;
-    if (e.organizer_name !== organizerName) return false;
-    if (e.status === 'rejected') return false;
-    const eDate = new Date(e.date);
-    return eDate >= semStart && eDate <= semEnd;
-  }).length;
+  const semStart = now.getMonth() < 6 ? new Date(now.getFullYear(), 0, 1) : new Date(now.getFullYear(), 6, 1);
+  const semEnd   = now.getMonth() < 6 ? new Date(now.getFullYear(), 5, 30) : new Date(now.getFullYear(), 11, 31);
+  return EVENTS.filter(e => e.id !== excludeId && e.organizer_name === organizerName && e.status !== 'rejected' && new Date(e.date) >= semStart && new Date(e.date) <= semEnd).length;
 }
 
 function hasPendingReport(organizerName, excludeId) {
-  return EVENTS.some(e =>
-    e.id !== excludeId &&
-    e.organizer_name === organizerName &&
-    e.status === 'approved' &&
-    e.report_submitted === false
-  );
+  return EVENTS.some(e => e.id !== excludeId && e.organizer_name === organizerName && e.status === 'approved' && e.report_submitted === false);
 }
 
 function parseTimeHour(timeStr) {
@@ -766,337 +661,144 @@ function parseTimeHour(timeStr) {
   return h;
 }
 
-/**
- * Main compliance check — returns { blockers[], warnings[], isAllClear }
- * Each item: { id, rule, section, detail, action, authority }
- */
 function runComplianceChecks(ev) {
-  const blockers = [];
-  const warnings = [];
-  const waiverKey = (ruleId) => `${ev.id}_${ruleId}`;
-  const hasWaiver = (ruleId) => !!WAIVERS[waiverKey(ruleId)];
-
-  // ─── B1: Advisor/Principal Approval (Sec. 3.2.4(b)) ───────────
-  if (ev.advisor_approved === false) {
-    if (!hasWaiver('B1')) {
-      blockers.push({
-        id: 'B1',
-        rule: 'No Advisor / Principal Approval',
-        section: 'Section 3.2.4(b)',
-        detail: 'All activity applications must be endorsed by the Society Advisor, College Principal, or relevant Faculty Dean before being submitted to the HEMA Office.',
-        action: 'The organizer must obtain written endorsement from the Advisor/Principal/Dean first. Admin may record the approval once the document is received.',
-        authority: 'Society Advisor / College Principal / Faculty Dean'
-      });
-    }
+  const blockers = [], warnings = [];
+  const hasWaiver = (ruleId) => !!WAIVERS[`${ev.id}_${ruleId}`];
+  if (ev.advisor_approved === false && !hasWaiver('B1')) {
+    blockers.push({ id:'B1', rule:'No Advisor / Principal Approval', section:'Section 3.2.4(b)', detail:'All activity applications must be endorsed by the Society Advisor, College Principal, or Faculty Dean before submission to HEMA.', action:'Organizer must obtain written endorsement first. Admin may record approval once document is received.', authority:'Society Advisor / College Principal / Faculty Dean' });
   }
-
-  // ─── B2: Multiracial Participation (Sec. 3.2.4(d)) ──────────────
   const isReligious = ev.category === 'religious' || (ev.tags||[]).includes('religious');
-  if (!isReligious && ev.multiracial === false) {
-    if (!hasWaiver('B2')) {
-      blockers.push({
-        id: 'B2',
-        rule: 'Non-Multiracial Participation',
-        section: 'Section 3.2.4(d) & 2.2.3(a)',
-        detail: 'Activities must involve all races except for religious programmes. Society membership must also be multiracial.',
-        action: 'The organizer must open participation to all races and update the proposal to confirm multiracial involvement. If the activity is specifically for one race for valid reasons, a justification document must be submitted to HEMA.',
-        authority: 'HEMA Office'
-      });
-    }
+  if (!isReligious && ev.multiracial === false && !hasWaiver('B2')) {
+    blockers.push({ id:'B2', rule:'Non-Multiracial Participation', section:'Section 3.2.4(d) & 2.2.3(a)', detail:'Activities must involve all races except for religious programmes.', action:'Organizer must open participation to all races and update the proposal.', authority:'HEMA Office' });
   }
-
-  // ─── B3 / W1: Notice Period (Sec. 3.1.5 & 3.1.6) ─────────────────
   const hasExternal = ev.has_external_sponsor || ev.has_external_participants;
   const requiredDays = hasExternal ? 30 : 14;
   const submitDate = ev.created_at ? ev.created_at.slice(0,10) : null;
-  const eventDate  = ev.date;
-  if (submitDate && eventDate) {
-    const wd = workingDaysBetween(submitDate, eventDate);
+  if (submitDate && ev.date) {
+    const wd = workingDaysBetween(submitDate, ev.date);
     if (wd !== null) {
-      if (!hasExternal && wd < 14) {
-        if (!hasWaiver('B3')) {
-          blockers.push({
-            id: 'B3',
-            rule: `Insufficient Notice Period (${wd} / 14 working days)`,
-            section: 'Section 3.1.5',
-            detail: `Societies/Clubs must submit applications at least 14 working days before the programme date. This application was submitted ${wd} working days before the programme — short by ${14-wd} days.`,
-            action: 'Reject the application and request the organizer to resubmit at least 14 working days before the new programme date. If the programme date is still far away, request resubmission with the correct date.',
-            authority: 'HEMA Office'
-          });
-        }
+      if (!hasExternal && wd < 14 && !hasWaiver('B3')) {
+        blockers.push({ id:'B3', rule:`Insufficient Notice Period (${wd} / 14 working days)`, section:'Section 3.1.5', detail:`Application submitted ${wd} working days before programme — short by ${14-wd} days.`, action:'Reject and request resubmission at least 14 working days before the new programme date.', authority:'HEMA Office' });
       } else if (hasExternal && wd < 30) {
-        if (wd < 14) {
-          if (!hasWaiver('B3')) {
-            blockers.push({
-              id: 'B3',
-              rule: `Critical Notice Period — Has External Parties, ${wd} / 30 Working Days`,
-              section: 'Section 3.1.5 & 3.1.6',
-              detail: `Programmes involving external sponsorship/participation require 30 working days. Only ${wd} working days provided — short by ${30-wd} days.`,
-              action: 'Reject the application. Request the organizer to resubmit at least 30 working days before the programme as it involves external parties.',
-              authority: 'HEMA Office'
-            });
-          }
-        } else {
-          if (!hasWaiver('W1')) {
-            warnings.push({
-              id: 'W1',
-              rule: `Insufficient Notice for External Activity (${wd} / 30 working days)`,
-              section: 'Section 3.1.6',
-              detail: `Activities involving external sponsorship or participation must be submitted 30 working days in advance. Currently ${wd} working days — short by ${30-wd} days.`,
-              action: 'Special approval from the HEMA Office is required. Record the approval after discussion with HEMA.',
-              authority: 'HEMA Office'
-            });
-          }
+        if (wd < 14 && !hasWaiver('B3')) {
+          blockers.push({ id:'B3', rule:`Critical Notice Period — Has External (${wd} / 30 working days)`, section:'Section 3.1.5 & 3.1.6', detail:`Programmes with external parties require 30 working days. Only ${wd} provided.`, action:'Reject and request resubmission with at least 30 working days notice.', authority:'HEMA Office' });
+        } else if (!hasWaiver('W1')) {
+          warnings.push({ id:'W1', rule:`Insufficient Notice for External Activity (${wd} / 30 days)`, section:'Section 3.1.6', detail:`External activities require 30 working days. Currently ${wd} days.`, action:'Special approval from HEMA Office required.', authority:'HEMA Office' });
         }
       }
     }
   }
-
-  // ─── B4: Previous Activity Report (Sec. 3.4.4) ─────────────────
-  if (hasPendingReport(ev.organizer_name, ev.id)) {
-    if (!hasWaiver('B4')) {
-      blockers.push({
-        id: 'B4',
-        rule: 'Previous Activity Report Not Submitted',
-        section: 'Section 3.4.4',
-        detail: 'Subsequent activities can only be carried out after all previous activity and financial reports have been submitted to HEMA (within 10 working days after the programme — Sec. 3.4.1).',
-        action: 'Contact the Secretary and Treasurer of the relevant society to submit the outstanding programme report (Appendix 3J) and financial report. New activity approval can only be granted after all reports are received.',
-        authority: 'Society Secretary & Treasurer → HEMA Office'
-      });
-    }
+  if (hasPendingReport(ev.organizer_name, ev.id) && !hasWaiver('B4')) {
+    blockers.push({ id:'B4', rule:'Previous Activity Report Not Submitted', section:'Section 3.4.4', detail:'Subsequent activities can only proceed after all previous reports are submitted to HEMA (within 10 working days).', action:'Contact Secretary and Treasurer to submit outstanding reports first.', authority:'Society Secretary & Treasurer → HEMA Office' });
   }
-
-  // ─── W2: Activity Limit Per Semester (Sec. 3.1.9) ───────────────────
   const semCount = countSemesterActivities(ev.organizer_name, ev.id);
-  if (semCount >= 4) {
-    if (!hasWaiver('W2')) {
-      warnings.push({
-        id: 'W2',
-        rule: `Semester Activity Limit Reached (${semCount}/4 activities)`,
-        section: 'Section 3.1.9',
-        detail: `Societies/Clubs/JKM are allowed to carry out no more than 4 activities per semester (excluding mandatory activities). This society has reached or exceeded the limit with ${semCount} activities.`,
-        action: 'Must obtain WRITTEN APPROVAL from the Advisor/Principal AND APPROVAL from the HEMA Office before the 5th and subsequent activities can be carried out. Record the approval.',
-        authority: 'Advisor / Principal → HEMA Office'
-      });
-    }
+  if (semCount >= 4 && !hasWaiver('W2')) {
+    warnings.push({ id:'W2', rule:`Semester Activity Limit Reached (${semCount}/4)`, section:'Section 3.1.9', detail:`Society has reached or exceeded the 4 activities/semester limit with ${semCount} activities.`, action:'Must obtain written approval from Advisor/Principal AND HEMA before proceeding.', authority:'Advisor / Principal → HEMA Office' });
   } else if (semCount === 3) {
-    warnings.push({
-      id: 'W2_NEAR',
-      rule: `Approaching Semester Activity Limit (${semCount}/4)`,
-      section: 'Section 3.1.9',
-      detail: `This society already has ${semCount} activities this semester. This will be the 4th activity — the maximum limit. Any further activities after this will require special approval.`,
-      action: 'Can be approved. Inform the organizer that subsequent activities will exceed the limit and require special approval.',
-      authority: 'HEMA Office (information only)'
-    });
+    warnings.push({ id:'W2_NEAR', rule:`Approaching Semester Limit (${semCount}/4)`, section:'Section 3.1.9', detail:`This will be the 4th activity — the maximum. Any further activities will require special approval.`, action:'Can be approved. Inform organizer about the limit.', authority:'HEMA Office (info only)' });
   }
-
-  // ─── W3: During Revision/Exam Week (Sec. 3.2.5) ─────────
-  if (ev.during_exam_week === true) {
-    if (!hasWaiver('W3')) {
-      warnings.push({
-        id: 'W3',
-        rule: 'Activity During Revision / Exam Week',
-        section: 'Section 3.2.5',
-        detail: 'No activities are allowed during revision week through exam week except with approval from the Deputy Vice Chancellor (HEMA). Students are advised to organise programmes at least 2 weeks after exams.',
-        action: 'Must obtain written approval from the Deputy Vice Chancellor (HEMA) before the activity can be approved. Record the approval reference number.',
-        authority: 'Deputy Vice Chancellor (HEMA)'
-      });
-    }
+  if (ev.during_exam_week === true && !hasWaiver('W3')) {
+    warnings.push({ id:'W3', rule:'Activity During Revision / Exam Week', section:'Section 3.2.5', detail:'No activities allowed during revision/exam week without DVC (HEMA) approval.', action:'Must obtain written approval from DVC (HEMA).', authority:'Deputy Vice Chancellor (HEMA)' });
   }
-
-  // ─── W4: Activity Past Midnight (Sec. 3.2.10) ─────────
   const endHour = parseTimeHour(ev.end_time);
-  if (ev.past_midnight === true || (endHour !== null && (endHour < 6 && endHour >= 0))) {
-    if (!hasWaiver('W4')) {
-      warnings.push({
-        id: 'W4',
-        rule: 'Activity Past 12.00 Midnight',
-        section: 'Section 3.2.10',
-        detail: `Activities must end before or at 12.00 midnight unless approved by the HEMA Office/College Principal. All security parties must also be notified.`,
-        action: 'Obtain written approval from the HEMA Office or College Principal. Notify the UTM Security Office. Record the approval.',
-        authority: 'HEMA Office / College Principal + Security Office'
-      });
-    }
+  if ((ev.past_midnight === true || (endHour !== null && endHour < 6 && endHour >= 0)) && !hasWaiver('W4')) {
+    warnings.push({ id:'W4', rule:'Activity Past 12.00 Midnight', section:'Section 3.2.10', detail:'Activities must end before midnight unless approved by HEMA/College Principal.', action:'Obtain written approval from HEMA or College Principal. Notify Security Office.', authority:'HEMA Office / College Principal + Security Office' });
   }
-
-  // ─── W5: External Invitation/Sponsorship (Sec. 3.2.6) ───────────────
-  if (hasExternal) {
-    if (!hasWaiver('W5')) {
-      warnings.push({
-        id: 'W5',
-        rule: 'Involves External Invitation / Sponsorship',
-        section: 'Section 3.2.6',
-        detail: 'All student activities involving external invitations and/or sponsorship must obtain approval from the Vice Chancellor through the Deputy Vice Chancellor (HEMA).',
-        action: 'The approval application must be submitted to the DVC (HEMA) together with: original invitation letter, participant list, application letter, programme schedule/date, and accompanying officer details (Sec. 3.2.7). Record once approval is received.',
-        authority: 'Vice Chancellor → through DVC (HEMA)'
-      });
-    }
+  if (hasExternal && !hasWaiver('W5')) {
+    warnings.push({ id:'W5', rule:'Involves External Invitation / Sponsorship', section:'Section 3.2.6', detail:'All activities with external invitations/sponsorship require Vice Chancellor approval through DVC (HEMA).', action:'Submit approval application to DVC (HEMA) with required documents.', authority:'Vice Chancellor → through DVC (HEMA)' });
   }
-
-  const hasBlocker = blockers.length > 0;
-  const hasWarning = warnings.length > 0;
-  return { blockers, warnings, hasBlocker, hasWarning, isAllClear: !hasBlocker && !hasWarning };
+  return { blockers, warnings, hasBlocker: blockers.length > 0, hasWarning: warnings.length > 0, isAllClear: blockers.length === 0 && warnings.length === 0 };
 }
 
-// ============================================================
-// RENDER COMPLIANCE OUTPUT (Modal)
-// ============================================================
 function renderModalComplianceOutput(ev) {
-  const { blockers, warnings, hasBlocker, isAllClear } = runComplianceChecks(ev);
+  const { blockers, warnings, isAllClear, hasBlocker } = runComplianceChecks(ev);
   let html = '';
-
   if (isAllClear) {
-    html = `
-      <div class="clear-box">
-        <div class="clear-box-icon">✅</div>
-        <div>
-          <div class="clear-box-text">All compliance checks passed</div>
-          <div class="clear-box-sub">This activity meets all requirements of the UTM Student Activity Guidebook. Can be approved.</div>
-        </div>
-      </div>`;
+    html = `<div class="clear-box"><div class="clear-box-icon">✅</div><div><div class="clear-box-text">All compliance checks passed</div><div class="clear-box-sub">This activity meets all UTM Student Activity Guidebook requirements.</div></div></div>`;
   } else {
     if (blockers.length > 0) {
-      html += `
-        <div class="hard-block-box">
-          <div class="hard-block-title">🚫 ABSOLUTE BLOCKERS — Cannot Be Approved Until Resolved</div>
-          ${blockers.map(b => `
-            <div class="hard-block-item">
-              <div class="hb-icon">❌</div>
-              <div class="hb-body">
-                <div class="hb-rule">${b.rule}</div>
-                <div class="hb-detail">${b.detail}</div>
-                <div style="margin-top:6px"><span class="hb-ref">📖 ${b.section}</span></div>
-                <div class="hb-action">📌 Action Required: ${b.action}</div>
-                <div style="margin-top:6px;font-size:11px;color:#991b1b"><strong>Authority:</strong> ${b.authority}</div>
-                <div class="ra-btn-wrap">
-                  <button class="btn-waiver" onclick="openWaiverModal(${ev.id},'${b.id}','${b.rule.replace(/'/g,"\\'")}','${b.authority}')">
-                    📝 Record Permission Received
-                  </button>
-                </div>
-              </div>
-            </div>`).join('')}
-        </div>`;
+      html += `<div class="hard-block-box"><div class="hard-block-title">🚫 ABSOLUTE BLOCKERS — Cannot Be Approved</div>
+        ${blockers.map(b => `<div class="hard-block-item"><div class="hb-icon">❌</div><div class="hb-body">
+          <div class="hb-rule">${b.rule}</div><div class="hb-detail">${b.detail}</div>
+          <div style="margin-top:5px"><span class="hb-ref">📖 ${b.section}</span></div>
+          <div class="hb-action">📌 ${b.action}</div>
+          <div style="margin-top:5px;font-size:11px;color:#991b1b"><strong>Authority:</strong> ${b.authority}</div>
+          <div style="margin-top:7px"><button class="btn-waiver" onclick="openWaiverModal(${ev.id},'${b.id}','${b.rule.replace(/'/g,"\\'")}','${b.authority}')">📝 Record Permission Received</button></div>
+        </div></div>`).join('')}
+      </div>`;
     }
-
     if (warnings.length > 0) {
-      html += `
-        <div class="warn-box" style="margin-top:10px">
-          <div class="warn-box-title">⚠️ REQUIRES SPECIAL ACTION — Can Be Approved After Permission Is Recorded</div>
-          ${warnings.map(w => `
-            <div class="warn-item">
-              <div class="warn-icon">⚠️</div>
-              <div class="warn-body">
-                <div class="warn-rule">${w.rule}</div>
-                <div class="warn-detail">${w.detail}</div>
-                <div style="margin-top:4px"><span style="font-size:10px;color:#b45309;font-style:italic">📖 ${w.section}</span></div>
-                <div style="margin-top:5px;font-size:12px;font-weight:600;color:#7c4f00;background:rgba(245,158,11,.1);padding:5px 8px;border-radius:5px;border-left:3px solid #f59e0b">
-                  📌 ${w.action}
-                </div>
-                <div style="margin-top:4px;font-size:11px;color:#92400e"><strong>Authority:</strong> ${w.authority}</div>
-                ${w.id !== 'W2_NEAR' ? `
-                <div class="ra-btn-wrap">
-                  <button class="btn-waiver" onclick="openWaiverModal(${ev.id},'${w.id}','${w.rule.replace(/'/g,"\\'")}','${w.authority}')">
-                    📝 Record Permission Received
-                  </button>
-                  ${WAIVERS[ev.id+'_'+w.id] ? `<span style="font-size:11px;color:var(--green);font-weight:600">✅ Permission Recorded</span>` : ''}
-                </div>` : ''}
-              </div>
-            </div>`).join('')}
-        </div>`;
+      html += `<div class="warn-box" style="margin-top:10px"><div class="warn-box-title">⚠️ REQUIRES SPECIAL ACTION</div>
+        ${warnings.map(w => `<div class="warn-item"><div class="warn-icon">⚠️</div><div class="warn-body">
+          <div class="warn-rule">${w.rule}</div><div class="warn-detail">${w.detail}</div>
+          <div style="margin-top:3px"><span class="warn-ref">📖 ${w.section}</span></div>
+          <div style="margin-top:5px;font-size:12px;font-weight:500;color:#7c4f00;background:rgba(245,158,11,.1);padding:5px 8px;border-radius:5px;border-left:3px solid #f59e0b">📌 ${w.action}</div>
+          <div style="margin-top:3px;font-size:11px;color:#92400e"><strong>Authority:</strong> ${w.authority}</div>
+          ${w.id !== 'W2_NEAR' ? `<div style="margin-top:7px">
+            <button class="btn-waiver" onclick="openWaiverModal(${ev.id},'${w.id}','${w.rule.replace(/'/g,"\\'")}','${w.authority}')">📝 Record Permission Received</button>
+            ${WAIVERS[ev.id+'_'+w.id] ? `<span style="font-size:11px;color:var(--green);font-weight:600;margin-left:8px">✅ Recorded</span>` : ''}
+          </div>` : ''}
+        </div></div>`).join('')}
+      </div>`;
     }
   }
-
   document.getElementById('mComplianceOutput').innerHTML = html;
   return hasBlocker;
 }
 
 function renderApprovalFlow(ev) {
   const steps = [
-    { icon:'👤', label:'Society\nPresident', status: 'done' },
+    { icon:'👤', label:'Society\nPresident', status:'done' },
     { icon:'📝', label:'Advisor /\nPrincipal', status: ev.advisor_approved === true ? 'done' : ev.advisor_approved === false ? 'rejected' : 'current' },
     { icon:'🏛️', label:'Student\nAffairs / HEMA', status: ev.status === 'approved' ? 'done' : ev.status === 'rejected' ? 'rejected' : 'waiting' }
   ];
-  const statusLabel = { done:'Approved', current:'Pending', waiting:'Not Yet Reached', rejected:'Rejected' };
+  const statusLabel = { done:'Approved', current:'Pending', waiting:'Awaiting', rejected:'Rejected' };
   document.getElementById('mApprovalFlow').innerHTML = steps.map((s, i) => `
     ${i > 0 ? '<div class="af-arrow">→</div>' : ''}
     <div class="af-step">
       <div class="af-circle ${s.status}">${s.icon}</div>
       <div class="af-label">${s.label.replace('\n','<br>')}</div>
-      <div style="font-size:10px;color:var(--muted);margin-top:3px">${statusLabel[s.status]}</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:2px">${statusLabel[s.status]}</div>
     </div>`).join('');
   document.getElementById('mApprovalNote').textContent =
-    ev.status === 'approved' ? '✅ All approval stages have been completed.' :
-    ev.status === 'rejected' ? '❌ This application has been rejected.' :
-    '⏳ Awaiting approval at stage: Student Affairs / HEMA.';
+    ev.status === 'approved' ? '✅ All approval stages completed.' :
+    ev.status === 'rejected' ? '❌ Application has been rejected.' :
+    '⏳ Awaiting review at: Student Affairs / HEMA.';
 }
 
-// ============================================================
-// WAIVER MODAL
-// ============================================================
 function openWaiverModal(eventId, ruleId, ruleName, authority) {
-  waiverEventId = eventId;
-  waiverRuleId  = ruleId;
-  document.getElementById('waiverModalTitle').textContent = 'Record Special Permission — ' + ruleId;
-  document.getElementById('waiverContext').innerHTML =
-    `<strong>Rule:</strong> ${ruleName}<br><strong>Authority:</strong> ${authority}`;
-  document.getElementById('waiverType').value  = '';
-  document.getElementById('waiverRef').value   = '';
-  document.getElementById('waiverDate').value  = new Date().toISOString().slice(0,10);
-  document.getElementById('waiverNote').value  = '';
+  waiverEventId = eventId; waiverRuleId = ruleId;
+  document.getElementById('waiverModalTitle').textContent = 'Record Permission — ' + ruleId;
+  document.getElementById('waiverContext').innerHTML = `<strong>Rule:</strong> ${ruleName}<br><strong>Authority:</strong> ${authority}`;
+  document.getElementById('waiverType').value = '';
+  document.getElementById('waiverRef').value  = '';
+  document.getElementById('waiverDate').value = new Date().toISOString().slice(0,10);
+  document.getElementById('waiverNote').value = '';
   document.getElementById('waiverOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
-function closeWaiverModal() {
-  document.getElementById('waiverOverlay').classList.remove('open');
-}
-
-function handleWaiverOverlay(e) {
-  if (e.target === document.getElementById('waiverOverlay')) closeWaiverModal();
-}
-
+function closeWaiverModal() { document.getElementById('waiverOverlay').classList.remove('open'); }
+function handleWaiverOverlay(e) { if (e.target === document.getElementById('waiverOverlay')) closeWaiverModal(); }
 function saveWaiver() {
   const type = document.getElementById('waiverType').value;
   const ref  = document.getElementById('waiverRef').value.trim();
-  const date = document.getElementById('waiverDate').value;
-  const note = document.getElementById('waiverNote').value.trim();
-  if (!type || !ref) { alert('Please fill in the permission type and reference number.'); return; }
-  const key = `${waiverEventId}_${waiverRuleId}`;
-  WAIVERS[key] = { type, ref, date, note, savedAt: new Date().toISOString() };
+  if (!type || !ref) { alert('Please fill in permission type and reference number.'); return; }
+  WAIVERS[`${waiverEventId}_${waiverRuleId}`] = { type, ref, date: document.getElementById('waiverDate').value, note: document.getElementById('waiverNote').value.trim(), savedAt: new Date().toISOString() };
   closeWaiverModal();
-  showToast('✅ Permission has been recorded for ' + waiverRuleId, 'success');
-  if (currentEventModal) {
-    const hasBlocker = renderModalComplianceOutput(currentEventModal);
-    const approveBtn = document.querySelector('.btn-modal-approve');
-    if (approveBtn) approveBtn.disabled = hasBlocker;
-  }
-  renderComplianceTable();
-  renderDashboard();
+  showToast('✅ Permission recorded for ' + waiverRuleId, 'success');
+  if (currentEventModal) { const hasBlocker = renderModalComplianceOutput(currentEventModal); const btn = document.querySelector('.btn-modal-approve'); if (btn) btn.disabled = hasBlocker; }
+  renderComplianceTable(); renderDashboard();
 }
 
-// ============================================================
-// INIT
-// ============================================================
 async function initAdmin() {
   const isAdmin = sessionStorage.getItem('utm_admin');
   if (!isAdmin) { window.location.href = '/Login/login.html'; return; }
-  document.getElementById('sbName').textContent     = 'Administrator';
-  document.getElementById('sbAvatar').textContent   = 'AD';
-  document.getElementById('topbarAv').textContent   = 'AD';
-  document.getElementById('topbarName').textContent = 'Administrator';
   await Promise.all([loadEvents(), loadUsers(), loadFeedback()]);
-  renderDashboard();
-  renderPendingTable();
-  renderAllEventsTable();
-  renderFeedbackCards();
-  renderUsersTable();
-  renderComplianceTable();
-  updatePendingBadge();
+  renderDashboard(); renderPendingTable(); renderAllEventsTable();
+  renderFeedbackCards(); renderUsersTable(); renderComplianceTable();
+  updatePendingBadge(); updateQiCounts();
 }
 
-// ============================================================
-// DATA LOADERS
-// ============================================================
 async function loadEvents() {
   const { data, error } = await sb.from('events').select('*').order('created_at', { ascending: false });
   if (!error && data) EVENTS = data;
@@ -1106,27 +808,16 @@ async function loadUsers() {
   if (!error && data) USERS = data;
 }
 async function loadFeedback() {
-  try {
-    const { data, error } = await sb.from('feedback').select('*').order('created_at', { ascending: false });
-    if (!error && data) FEEDBACK = data;
-  } catch (e) { FEEDBACK = []; }
+  try { const { data, error } = await sb.from('feedback').select('*').order('created_at', { ascending: false }); if (!error && data) FEEDBACK = data; } catch(e) { FEEDBACK = []; }
 }
 
-// ============================================================
-// APPROVE / REJECT
-// ============================================================
 async function approveEvent(id) {
   const ev = EVENTS.find(e => e.id === id);
   const { hasBlocker } = runComplianceChecks(ev);
-  if (hasBlocker) {
-    showToast('🚫 Cannot be approved — there are compliance blockers. Resolve them first.', 'error');
-    return;
-  }
+  if (hasBlocker) { showToast('🚫 Compliance blockers must be resolved first.', 'error'); return; }
   const { error } = await sb.from('events').update({ status: 'approved' }).eq('id', id);
-  if (error) { showToast('Failed to approve activity.', 'error'); return; }
-  closeEventModal();
-  await loadEvents();
-  refreshAllTables();
+  if (error) { showToast('Failed to approve.', 'error'); return; }
+  closeEventModal(); await loadEvents(); refreshAllTables();
   showToast('✓ "' + (ev?.title || 'Activity') + '" approved and published.', 'success');
 }
 
@@ -1134,29 +825,24 @@ async function confirmReject(id) {
   const reason = document.getElementById('rejectReason').value.trim();
   if (!reason) { alert('Please state the reason for rejection.'); return; }
   const { error } = await sb.from('events').update({ status: 'rejected', reject_reason: reason }).eq('id', id);
-  if (error) { showToast('Failed to reject activity.', 'error'); return; }
-  closeEventModal();
-  await loadEvents();
-  refreshAllTables();
+  if (error) { showToast('Failed to reject.', 'error'); return; }
+  closeEventModal(); await loadEvents(); refreshAllTables();
   showToast('✕ Activity has been rejected.', 'error');
 }
 
-// ============================================================
-// DASHBOARD
-// ============================================================
 function renderDashboard() {
   const total    = EVENTS.length;
   const pending  = EVENTS.filter(e => e.status === 'pending').length;
   const approved = EVENTS.filter(e => e.status === 'approved').length;
-  const totalReg = EVENTS.reduce((a, e) => a + ((e.slots || 0) - (e.slots_left || 0)), 0);
-  const slotsLeft = EVENTS.reduce((a, e) => a + (e.slots_left || 0), 0);
+  const totalReg = EVENTS.reduce((a, e) => a + ((e.slots||0)-(e.slots_left||0)), 0);
+  const slotsLeft= EVENTS.reduce((a, e) => a + (e.slots_left||0), 0);
   const totalFb  = FEEDBACK.length;
   const posCount = FEEDBACK.filter(f => f.sentiment === 'positive').length;
   const neuCount = FEEDBACK.filter(f => f.sentiment === 'neutral').length;
   const negCount = FEEDBACK.filter(f => f.sentiment === 'negative').length;
-  const posPct   = totalFb ? Math.round((posCount / totalFb) * 100) : 0;
-  const neuPct   = totalFb ? Math.round((neuCount / totalFb) * 100) : 0;
-  const negPct   = totalFb ? Math.round((negCount / totalFb) * 100) : 0;
+  const posPct   = totalFb ? Math.round((posCount/totalFb)*100) : 0;
+  const neuPct   = totalFb ? Math.round((neuCount/totalFb)*100) : 0;
+  const negPct   = totalFb ? Math.round((negCount/totalFb)*100) : 0;
   const compIssues = EVENTS.filter(e => e.status === 'pending' && runComplianceChecks(e).hasBlocker).length;
 
   document.getElementById('dTotalEvents').textContent   = total;
@@ -1167,8 +853,10 @@ function renderDashboard() {
   document.getElementById('dPosSentiment').textContent  = totalFb ? posPct + '%' : '–';
   document.getElementById('dSlotsLeft').textContent     = slotsLeft.toLocaleString();
   document.getElementById('dComplianceIssues').textContent = compIssues || '0';
-  document.getElementById('topChipApproved').textContent   = approved + ' Live';
-  document.getElementById('topChipPendingTxt').textContent = pending + ' Pending';
+  document.getElementById('chipApproved').textContent  = approved + ' Live';
+  document.getElementById('chipPending').textContent   = pending + ' Pending';
+  document.getElementById('chipBlockers').textContent  = compIssues + ' Blockers';
+  document.getElementById('chipFeedback').textContent  = totalFb + ' Feedback';
   document.getElementById('sentPos').style.width = posPct + '%';
   document.getElementById('sentNeu').style.width = neuPct + '%';
   document.getElementById('sentNeg').style.width = negPct + '%';
@@ -1177,170 +865,59 @@ function renderDashboard() {
   document.getElementById('sentNegPct').textContent = negPct + '%';
 
   const kwEl = document.getElementById('kwTags');
-  if (totalFb === 0) {
-    kwEl.innerHTML = '<span class="kw-tag">No feedback yet</span>';
-  } else {
-    const posKws = [...new Set(FEEDBACK.filter(f => f.keywords).flatMap(f => f.keywords))].slice(0, 6);
-    kwEl.innerHTML = posKws.length
-      ? posKws.map(k => `<span class="kw-tag pos">${k}</span>`).join('')
-      : '<span class="kw-tag">No keywords</span>';
-  }
+  if (totalFb === 0) { kwEl.innerHTML = '<span class="kw-tag">No feedback yet</span>'; }
+  else { const kws = [...new Set(FEEDBACK.filter(f => f.keywords).flatMap(f => f.keywords))].slice(0, 6); kwEl.innerHTML = kws.length ? kws.map(k => `<span class="kw-tag pos">${k}</span>`).join('') : '<span class="kw-tag">No keywords</span>'; }
 
   const pendingEvs = EVENTS.filter(e => e.status === 'pending');
   const pl = document.getElementById('dashPendingList');
-  if (!pendingEvs.length) {
-    pl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div><h3>No pending activities</h3><p>All have been reviewed.</p></div>';
-  } else {
+  if (!pendingEvs.length) { pl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div><h3>No pending activities</h3><p>All events reviewed.</p></div>'; }
+  else {
     pl.innerHTML = pendingEvs.map(e => {
       const { hasBlocker, blockers, warnings } = runComplianceChecks(e);
-      const tag = hasBlocker
-        ? `<span style="color:#dc2626;font-weight:700;font-size:10.5px">🚫 ${blockers.length} absolute blockers</span>`
-        : warnings.length > 0
-          ? `<span style="color:#92400e;font-weight:700;font-size:10.5px">⚠️ ${warnings.length} requires action</span>`
-          : `<span style="color:var(--green);font-weight:700;font-size:10.5px">✅ Can be approved</span>`;
-      return `
-        <div class="event-mini">
-          <div class="event-mini-emoji">${e.emoji || '📅'}</div>
-          <div class="event-mini-body">
-            <div class="event-mini-title">${e.title}</div>
-            <div class="event-mini-meta">📅 ${e.date || '–'} &nbsp;·&nbsp; ${(e.created_at || '').slice(0,10) || '–'} &nbsp;·&nbsp; ${tag}</div>
-          </div>
-          <div class="event-mini-status">
-            <button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">Review</button>
-          </div>
-        </div>`;
+      const tag = hasBlocker ? `<span style="color:#dc2626;font-weight:600;font-size:10.5px">🚫 ${blockers.length} blockers</span>` : warnings.length > 0 ? `<span style="color:#92400e;font-weight:600;font-size:10.5px">⚠️ ${warnings.length} actions needed</span>` : `<span style="color:var(--green);font-weight:600;font-size:10.5px">✅ Ready to approve</span>`;
+      return `<div class="event-mini"><div class="event-mini-emoji">${e.emoji||'📅'}</div><div class="event-mini-body"><div class="event-mini-title">${e.title}</div><div class="event-mini-meta">📅 ${e.date||'–'} &nbsp;·&nbsp; ${tag}</div></div><div class="event-mini-status"><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">Review</button></div></div>`;
     }).join('');
   }
 
-  const chartData = EVENTS
-    .filter(e => (e.slots || 0) - (e.slots_left || 0) > 0)
-    .sort((a, b) => ((b.slots||0)-(b.slots_left||0)) - ((a.slots||0)-(a.slots_left||0)))
-    .slice(0, 6);
+  const chartData = EVENTS.filter(e => (e.slots||0)-(e.slots_left||0) > 0).sort((a,b) => ((b.slots||0)-(b.slots_left||0))-((a.slots||0)-(a.slots_left||0))).slice(0,6);
   const maxReg = Math.max(...chartData.map(e => (e.slots||0)-(e.slots_left||0)), 1);
   const chartEl = document.getElementById('dashRegChart');
-  if (!chartData.length) {
-    chartEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No registrations yet</h3></div>';
-  } else {
-    chartEl.innerHTML = chartData.map(e => {
-      const reg = (e.slots||0) - (e.slots_left||0);
-      const label = (e.title || '').length > 28 ? e.title.slice(0,28)+'…' : (e.title || '–');
-      return `
-        <div class="chart-bar-row">
-          <div class="chart-bar-lbl">${e.emoji||'📅'} ${label}</div>
-          <div class="chart-bar-track"><div class="chart-bar-fill" style="width:${(reg/maxReg)*100}%;background:var(--red)"></div></div>
-          <div class="chart-bar-pct">${reg}</div>
-        </div>`;
-    }).join('');
-  }
+  if (!chartData.length) { chartEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No registrations yet</h3></div>'; }
+  else { chartEl.innerHTML = chartData.map(e => { const reg = (e.slots||0)-(e.slots_left||0); const label = (e.title||'').length > 28 ? e.title.slice(0,28)+'…' : (e.title||'–'); return `<div class="chart-bar-row"><div class="chart-bar-lbl">${e.emoji||'📅'} ${label}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${(reg/maxReg)*100}%;background:var(--red)"></div></div><div class="chart-bar-pct">${reg}</div></div>`; }).join(''); }
 }
 
-// ============================================================
-// PENDING TABLE
-// ============================================================
 function renderPendingTable() {
   const rows = EVENTS.filter(e => e.status === 'pending');
-  const q    = (document.getElementById('pendingSearch')?.value || '').toLowerCase();
-  const filtered = q
-    ? rows.filter(e => (e.title||'').toLowerCase().includes(q) || (e.organizer_name||'').toLowerCase().includes(q))
-    : rows;
+  const q = (document.getElementById('pendingSearch')?.value || '').toLowerCase();
+  const filtered = q ? rows.filter(e => (e.title||'').toLowerCase().includes(q) || (e.organizer_name||'').toLowerCase().includes(q)) : rows;
   const tbody = document.getElementById('pendingTbody');
-  if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>No pending activities</h3></div></td></tr>`;
-    return;
-  }
+  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>No pending activities</h3></div></td></tr>`; return; }
   tbody.innerHTML = filtered.map(e => {
     const { blockers, warnings, hasBlocker } = runComplianceChecks(e);
-    let compCell;
-    if (hasBlocker) {
-      compCell = `<div style="display:flex;flex-direction:column;gap:3px">
-        <span class="cf-chip fail">🚫 ${blockers.length} absolute blockers</span>
-        ${blockers.slice(0,2).map(b=>`<span style="font-size:10px;color:#991b1b">• ${b.section}</span>`).join('')}
-      </div>`;
-    } else if (warnings.length > 0) {
-      compCell = `<div style="display:flex;flex-direction:column;gap:3px">
-        <span class="cf-chip warn">⚠️ ${warnings.length} requires action</span>
-        ${warnings.slice(0,2).map(w=>`<span style="font-size:10px;color:#92400e">• ${w.section}</span>`).join('')}
-      </div>`;
-    } else {
-      compCell = `<span class="cf-chip ok">✅ Passed</span>`;
-    }
-    return `
-      <tr style="${hasBlocker?'background:#fff8f8':''}">
-        <td><strong>${e.emoji||'📅'} ${e.title||'–'}</strong></td>
-        <td><span class="badge badge-${e.category}">${cap(e.category)}</span></td>
-        <td>${e.organizer_name || '–'}</td>
-        <td>${e.date || '–'}</td>
-        <td>${e.slots || '–'}</td>
-        <td>${compCell}</td>
-        <td>${(e.created_at||'').slice(0,10) || '–'}</td>
-        <td style="display:flex;gap:6px;flex-wrap:wrap">
-          <button class="btn btn-approve btn-sm" onclick="approveEvent(${e.id})" ${hasBlocker?'disabled style="opacity:.45;cursor:not-allowed;pointer-events:none"':''}>✓ Approve</button>
-          <button class="btn btn-reject btn-sm"  onclick="openEventModal(${e.id})">✕ Reject</button>
-          <button class="btn btn-view btn-sm"    onclick="openEventModal(${e.id})">Review</button>
-        </td>
-      </tr>`;
+    let compCell = hasBlocker ? `<div><span class="cf-chip fail">🚫 ${blockers.length} blockers</span><br>${blockers.slice(0,2).map(b=>`<span style="font-size:10px;color:#991b1b">• ${b.section}</span>`).join('<br>')}</div>` : warnings.length > 0 ? `<span class="cf-chip warn">⚠️ ${warnings.length} actions</span>` : `<span class="cf-chip ok">✅ Passed</span>`;
+    return `<tr style="${hasBlocker?'background:#fff8f8':''}"><td><strong>${e.emoji||'📅'} ${e.title||'–'}</strong></td><td><span class="badge badge-${e.category}">${cap(e.category)}</span></td><td>${e.organizer_name||'–'}</td><td>${e.date||'–'}</td><td>${e.slots||'–'}</td><td>${compCell}</td><td>${(e.created_at||'').slice(0,10)||'–'}</td><td style="display:flex;gap:5px;flex-wrap:wrap"><button class="btn btn-approve btn-sm" onclick="approveEvent(${e.id})" ${hasBlocker?'disabled style="opacity:.4;cursor:not-allowed"':''}>✓ Approve</button><button class="btn btn-reject btn-sm" onclick="openEventModal(${e.id})">✕ Reject</button><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">View</button></td></tr>`;
   }).join('');
 }
-
 function filterPending() { renderPendingTable(); }
 
-// ============================================================
-// ALL EVENTS TABLE
-// ============================================================
 function renderAllEventsTable() {
   const q = (document.getElementById('allEventsSearch')?.value || '').toLowerCase();
   let rows = allEventsFilter === 'all' ? EVENTS : EVENTS.filter(e => e.status === allEventsFilter);
   if (q) rows = rows.filter(e => (e.title||'').toLowerCase().includes(q) || (e.location||'').toLowerCase().includes(q));
   const tbody = document.getElementById('allEventsTbody');
-  if (!rows.length) {
-    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">📋</div><h3>No activities found</h3></div></td></tr>`;
-    return;
-  }
-  tbody.innerHTML = rows.map(e => {
-    const reg = (e.slots||0) - (e.slots_left||0);
-    return `
-      <tr>
-        <td><strong>${e.emoji||'📅'} ${e.title||'–'}</strong><div style="font-size:11.5px;color:var(--muted);margin-top:2px">${e.organizer_name||'–'}</div></td>
-        <td><span class="badge badge-${e.category}">${cap(e.category)}</span></td>
-        <td>${e.date||'–'}</td>
-        <td style="font-size:12.5px">${(e.location||'–').split(',')[0]}</td>
-        <td>${e.slots||'–'}</td>
-        <td><div style="font-weight:600">${reg}</div><div style="font-size:11px;color:var(--muted)">${e.slots_left||0} remaining</div></td>
-        <td><span class="badge badge-${e.status}">${cap(e.status)}</span></td>
-        <td><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">View</button></td>
-      </tr>`;
-  }).join('');
+  if (!rows.length) { tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">📋</div><h3>No events found</h3></div></td></tr>`; return; }
+  tbody.innerHTML = rows.map(e => { const reg = (e.slots||0)-(e.slots_left||0); return `<tr><td><strong>${e.emoji||'📅'} ${e.title||'–'}</strong><div style="font-size:11.5px;color:var(--muted);margin-top:1px">${e.organizer_name||'–'}</div></td><td><span class="badge badge-${e.category}">${cap(e.category)}</span></td><td>${e.date||'–'}</td><td style="font-size:12.5px">${(e.location||'–').split(',')[0]}</td><td>${e.slots||'–'}</td><td><strong>${reg}</strong><div style="font-size:11px;color:var(--muted)">${e.slots_left||0} remaining</div></td><td><span class="badge badge-${e.status}">${cap(e.status)}</span></td><td><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">View</button></td></tr>`; }).join('');
 }
-
-function filterAllEvents(status, btn) {
-  allEventsFilter = status;
-  document.querySelectorAll('#sec-all-events .filter-tab').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  renderAllEventsTable();
-}
+function filterAllEvents(status, btn) { allEventsFilter = status; document.querySelectorAll('#sec-all-events .filter-tab').forEach(b => b.classList.remove('active')); if (btn) btn.classList.add('active'); renderAllEventsTable(); }
 function filterAllEventsSearch() { renderAllEventsTable(); }
 
-// ============================================================
-// COMPLIANCE TABLE
-// ============================================================
 function renderComplianceTable() {
   const q = (document.getElementById('complianceSearch')?.value || '').toLowerCase();
   let rows = EVENTS.filter(e => e.status === 'pending');
-
-  if (complianceFilter === 'blocker') {
-    rows = rows.filter(e => runComplianceChecks(e).hasBlocker);
-  } else if (complianceFilter === 'warn') {
-    rows = rows.filter(e => { const r = runComplianceChecks(e); return !r.hasBlocker && r.hasWarning; });
-  } else if (complianceFilter === 'clear') {
-    rows = rows.filter(e => runComplianceChecks(e).isAllClear);
-  }
-
-  if (q) {
-    rows = rows.filter(e =>
-      (e.title||'').toLowerCase().includes(q) ||
-      (e.organizer_name||'').toLowerCase().includes(q)
-    );
-  }
+  if (complianceFilter === 'blocker') rows = rows.filter(e => runComplianceChecks(e).hasBlocker);
+  else if (complianceFilter === 'warn') rows = rows.filter(e => { const r = runComplianceChecks(e); return !r.hasBlocker && r.hasWarning; });
+  else if (complianceFilter === 'clear') rows = rows.filter(e => runComplianceChecks(e).isAllClear);
+  if (q) rows = rows.filter(e => (e.title||'').toLowerCase().includes(q) || (e.organizer_name||'').toLowerCase().includes(q));
 
   const allPending   = EVENTS.filter(e => e.status === 'pending');
   const blockerCount = allPending.filter(e => runComplianceChecks(e).hasBlocker).length;
@@ -1348,273 +925,146 @@ function renderComplianceTable() {
   const clearCount   = allPending.filter(e => runComplianceChecks(e).isAllClear).length;
 
   document.getElementById('compStatRow').innerHTML = `
-    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--red-light)">📋</div><div><div class="stat-num" style="font-size:20px">${allPending.length}</div><div class="stat-lbl">Total Pending</div></div></div>
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:#fff0f0">📋</div><div><div class="stat-num" style="font-size:20px">${allPending.length}</div><div class="stat-lbl">Total Pending</div></div></div>
     <div class="comp-stat"><div class="comp-stat-icon" style="background:#fef2f2">🚫</div><div><div class="stat-num" style="font-size:20px;color:#dc2626">${blockerCount}</div><div class="stat-lbl">Absolute Blockers</div></div></div>
-    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--gold-light)">⚠️</div><div><div class="stat-num" style="font-size:20px;color:var(--gold)">${warnCount}</div><div class="stat-lbl">Requires Special Action</div></div></div>
-    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--green-light)">✅</div><div><div class="stat-num" style="font-size:20px;color:var(--green)">${clearCount}</div><div class="stat-lbl">Can Be Approved</div></div></div>
-  `;
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--gold-light)">⚠️</div><div><div class="stat-num" style="font-size:20px;color:var(--gold)">${warnCount}</div><div class="stat-lbl">Requires Action</div></div></div>
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--green-light)">✅</div><div><div class="stat-num" style="font-size:20px;color:var(--green)">${clearCount}</div><div class="stat-lbl">Can Be Approved</div></div></div>`;
 
   const cb = document.getElementById('complianceBadge');
-  cb.textContent   = blockerCount;
-  cb.style.display = blockerCount > 0 ? 'inline-flex' : 'none';
+  cb.textContent = blockerCount; cb.style.display = blockerCount > 0 ? 'inline-flex' : 'none';
   document.getElementById('dComplianceIssues').textContent = blockerCount;
 
   const tbody = document.getElementById('complianceTbody');
-  if (!rows.length) {
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>No records found</h3></div></td></tr>`;
-    return;
-  }
+  if (!rows.length) { tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>No records found</h3></div></td></tr>`; return; }
 
-  const checkIcon = { pass:'✅', fail:'❌', warn:'⚠️', na:'➖', unknown:'❓' };
+  const checkIcon  = { pass:'✅', fail:'❌', warn:'⚠️', na:'➖', unknown:'❓' };
   const checkColor = { pass:'var(--green)', fail:'#dc2626', warn:'#f59e0b', na:'#888', unknown:'#888' };
 
   tbody.innerHTML = rows.map(ev => {
     const { blockers, warnings, hasBlocker } = runComplianceChecks(ev);
-
-    const adv = ev.advisor_approved === true ? 'pass' : ev.advisor_approved === false ? 'fail' : 'unknown';
+    const adv   = ev.advisor_approved === true ? 'pass' : ev.advisor_approved === false ? 'fail' : 'unknown';
     const isRel = ev.category === 'religious' || (ev.tags||[]).includes('religious');
     const multi = isRel ? 'na' : ev.multiracial === true ? 'pass' : ev.multiracial === false ? 'fail' : 'unknown';
     const hasExt = ev.has_external_sponsor || ev.has_external_participants;
-    const minD = hasExt ? 30 : 14;
-    const sub = ev.created_at ? ev.created_at.slice(0,10) : null;
-    let notice = 'unknown';
-    let noticeDays = '?';
-    if (sub && ev.date) {
-      const wd = workingDaysBetween(sub, ev.date);
-      if (wd !== null) {
-        noticeDays = wd;
-        notice = wd >= minD ? 'pass' : wd >= 14 && hasExt ? 'warn' : 'fail';
-      }
-    }
-    const rep = hasPendingReport(ev.organizer_name, ev.id) ? 'fail' : 'pass';
-    const sc  = countSemesterActivities(ev.organizer_name, ev.id);
-    const lim = sc >= 4 ? 'warn' : 'pass';
-
-    const col = (status, title) => `<td title="${title}" style="color:${checkColor[status]};font-size:16px;text-align:center">${checkIcon[status]}</td>`;
-
-    return `
-      <tr style="${hasBlocker?'background:#fff8f8':''}">
-        <td>
-          <div style="font-weight:600">${ev.emoji||'📅'} ${ev.title||'–'}</div>
-          <div style="font-size:11.5px;color:var(--muted)">${ev.organizer_name||'–'}</div>
-          ${hasBlocker ? `<div style="margin-top:4px"><span style="font-size:10px;background:#fef2f2;color:#dc2626;padding:2px 6px;border-radius:3px;font-weight:700">${blockers.length} blockers</span></div>` : ''}
-        </td>
-        ${col(adv, adv==='fail'?'No advisor approval (Sec. 3.2.4(b))':'Advisor approval')}
-        ${col(multi, multi==='fail'?'Not multiracial (Sec. 3.2.4(d))':multi==='na'?'Exempted (religious society)':'Multiracial')}
-        ${col(notice, `${noticeDays} working days (required ≥${minD}) — Sec. ${hasExt?'3.1.6':'3.1.5'}`)}
-        ${col(rep, rep==='fail'?'Previous report not submitted (Sec. 3.4.4)':'No outstanding reports')}
-        ${col(lim, `${sc}/4 activities this semester — Sec. 3.1.9`)}
-        <td>
-          ${hasBlocker
-            ? `<span class="badge badge-rejected" style="font-size:10px">🚫 ${blockers.length} Blockers</span>`
-            : warnings.length > 0
-              ? `<span class="badge badge-pending" style="font-size:10px">⚠️ ${warnings.length} Actions</span>`
-              : `<span class="badge badge-approved" style="font-size:10px">✅ Can Be Approved</span>`
-          }
-          <button class="btn btn-view btn-sm" style="margin-top:4px;display:block" onclick="openEventModal(${ev.id})">Review & Act</button>
-        </td>
-      </tr>`;
+    const minD   = hasExt ? 30 : 14;
+    const sub    = ev.created_at ? ev.created_at.slice(0,10) : null;
+    let notice = 'unknown', noticeDays = '?';
+    if (sub && ev.date) { const wd = workingDaysBetween(sub, ev.date); if (wd !== null) { noticeDays = wd; notice = wd >= minD ? 'pass' : wd >= 14 && hasExt ? 'warn' : 'fail'; } }
+    const rep  = hasPendingReport(ev.organizer_name, ev.id) ? 'fail' : 'pass';
+    const sc   = countSemesterActivities(ev.organizer_name, ev.id);
+    const lim  = sc >= 4 ? 'warn' : 'pass';
+    const col  = (status, title) => `<td title="${title}" style="color:${checkColor[status]};font-size:16px;text-align:center">${checkIcon[status]}</td>`;
+    return `<tr style="${hasBlocker?'background:#fff8f8':''}">
+      <td><div style="font-weight:500">${ev.emoji||'📅'} ${ev.title||'–'}</div><div style="font-size:11.5px;color:var(--muted)">${ev.organizer_name||'–'}</div>${hasBlocker?`<div style="margin-top:3px"><span style="font-size:10px;background:#fef2f2;color:#dc2626;padding:2px 6px;border-radius:3px;font-weight:600">${blockers.length} blockers</span></div>`:''}</td>
+      ${col(adv, adv==='fail'?'No advisor approval (Sec. 3.2.4(b))':'Advisor approval')}
+      ${col(multi, multi==='fail'?'Not multiracial (Sec. 3.2.4(d))':multi==='na'?'Exempted (religious)':'Multiracial')}
+      ${col(notice, `${noticeDays} working days (required ≥${minD})`)}
+      ${col(rep, rep==='fail'?'Previous report not submitted (Sec. 3.4.4)':'No outstanding reports')}
+      ${col(lim, `${sc}/4 activities this semester`)}
+      <td>${hasBlocker?`<span class="badge badge-rejected" style="font-size:10px">🚫 ${blockers.length} Blockers</span>`:warnings.length>0?`<span class="badge badge-pending" style="font-size:10px">⚠️ ${warnings.length} Actions</span>`:`<span class="badge badge-approved" style="font-size:10px">✅ Ready</span>`}
+        <button class="btn btn-view btn-sm" style="margin-top:4px;display:block" onclick="openEventModal(${ev.id})">Review</button>
+      </td></tr>`;
   }).join('');
 }
+function filterCompliance(filter, btn) { complianceFilter = filter; document.querySelectorAll('#sec-compliance .filter-tab').forEach(b => b.classList.remove('active')); if (btn) btn.classList.add('active'); renderComplianceTable(); }
 
-function filterCompliance(filter, btn) {
-  complianceFilter = filter;
-  document.querySelectorAll('#sec-compliance .filter-tab').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  renderComplianceTable();
-}
-
-// ============================================================
-// FEEDBACK CARDS
-// ============================================================
 function renderFeedbackCards() {
   const el = document.getElementById('feedbackCards');
-  if (!FEEDBACK.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><h3>No feedback yet</h3><p>Feedback from students will appear here.</p></div>';
-    return;
-  }
+  if (!FEEDBACK.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><h3>No feedback yet</h3><p>Student feedback will appear here.</p></div>'; return; }
   const grouped = {};
-  FEEDBACK.forEach(f => {
-    const eid = f.event_id || 'unknown';
-    if (!grouped[eid]) grouped[eid] = [];
-    grouped[eid].push(f);
-  });
+  FEEDBACK.forEach(f => { const eid = f.event_id || 'unknown'; if (!grouped[eid]) grouped[eid] = []; grouped[eid].push(f); });
   el.innerHTML = Object.entries(grouped).map(([eid, fbs]) => {
     const ev  = EVENTS.find(e => e.id == eid);
     const pos = fbs.filter(f => f.sentiment === 'positive').length;
     const neu = fbs.filter(f => f.sentiment === 'neutral').length;
     const neg = fbs.filter(f => f.sentiment === 'negative').length;
     const tot = fbs.length;
-    return `
-      <div class="card" style="margin-bottom:16px">
-        <div class="card-head">
-          <div class="card-head-left"><div class="card-head-bar"></div>
-            <span class="card-title">${ev ? (ev.emoji||'📅') + ' ' + ev.title : 'Event #' + eid}</span>
-            <span class="card-sub">${tot} feedback</span>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="sentiment-row"><span class="sentiment-lbl">Positive</span><div class="sentiment-track"><div class="sentiment-fill fill-pos" style="width:${tot?Math.round(pos/tot*100):0}%"></div></div><span class="sentiment-pct" style="color:var(--green)">${tot?Math.round(pos/tot*100):0}%</span></div>
-          <div class="sentiment-row"><span class="sentiment-lbl">Neutral</span><div class="sentiment-track"><div class="sentiment-fill fill-neu" style="width:${tot?Math.round(neu/tot*100):0}%"></div></div><span class="sentiment-pct">${tot?Math.round(neu/tot*100):0}%</span></div>
-          <div class="sentiment-row"><span class="sentiment-lbl">Negative</span><div class="sentiment-track"><div class="sentiment-fill fill-neg" style="width:${tot?Math.round(neg/tot*100):0}%"></div></div><span class="sentiment-pct" style="color:#c0392b">${tot?Math.round(neg/tot*100):0}%</span></div>
-          <div style="margin-top:12px">
-            ${fbs.slice(0,3).map(f => `
-              <div style="padding:8px 12px;background:#f8fafc;border-radius:6px;margin-bottom:6px;font-size:12.5px;color:var(--muted);border-left:3px solid ${f.sentiment==='positive'?'var(--green)':f.sentiment==='negative'?'#c0392b':'#aaa'}">
-                "${f.comment || f.text || '–'}"
-              </div>`).join('')}
-          </div>
-        </div>
-      </div>`;
+    return `<div class="card" style="margin-bottom:12px"><div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">${ev?(ev.emoji||'📅')+' '+ev.title:'Event #'+eid}</span><span class="card-sub">${tot} feedback</span></div></div><div class="card-body">
+      <div class="sentiment-row"><span class="sentiment-lbl">Positive</span><div class="sentiment-track"><div class="sentiment-fill fill-pos" style="width:${tot?Math.round(pos/tot*100):0}%"></div></div><span class="sentiment-pct" style="color:var(--green)">${tot?Math.round(pos/tot*100):0}%</span></div>
+      <div class="sentiment-row"><span class="sentiment-lbl">Neutral</span><div class="sentiment-track"><div class="sentiment-fill fill-neu" style="width:${tot?Math.round(neu/tot*100):0}%"></div></div><span class="sentiment-pct">${tot?Math.round(neu/tot*100):0}%</span></div>
+      <div class="sentiment-row"><span class="sentiment-lbl">Negative</span><div class="sentiment-track"><div class="sentiment-fill fill-neg" style="width:${tot?Math.round(neg/tot*100):0}%"></div></div><span class="sentiment-pct" style="color:#c0392b">${tot?Math.round(neg/tot*100):0}%</span></div>
+      <div style="margin-top:11px">${fbs.slice(0,3).map(f=>`<div style="padding:8px 12px;background:#f8fafc;border-radius:7px;margin-bottom:6px;font-size:12.5px;color:var(--muted);border-left:3px solid ${f.sentiment==='positive'?'var(--green)':f.sentiment==='negative'?'#c0392b':'#aaa'}">"${f.comment||f.text||'–'}"</div>`).join('')}</div>
+    </div></div>`;
   }).join('');
 }
 
-// ============================================================
-// USERS TABLE
-// ============================================================
 function renderUsersTable() {
   const rows = usersFilter === 'all' ? USERS : USERS.filter(u => u.role === usersFilter);
   const q    = (document.getElementById('usersSearch')?.value || '').toLowerCase();
-  const filtered = q
-    ? rows.filter(u => (u.name||'').toLowerCase().includes(q) || (u.email||'').toLowerCase().includes(q) || (u.matrix||'').toLowerCase().includes(q))
-    : rows;
+  const filtered = q ? rows.filter(u => (u.name||'').toLowerCase().includes(q) || (u.email||'').toLowerCase().includes(q) || (u.matrix||'').toLowerCase().includes(q)) : rows;
   const tbody = document.getElementById('usersTbody');
-  if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">👥</div><h3>No users found</h3></div></td></tr>`;
-    return;
-  }
+  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">👥</div><h3>No users found</h3></div></td></tr>`; return; }
   tbody.innerHTML = filtered.map(u => {
-    const initials = (u.name || u.email || '?').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
-    const avColor  = u.role === 'admin' ? 'red' : u.role === 'organizer' ? 'green' : 'blue';
-    const roleBg   = u.role === 'admin' ? 'var(--red-light)' : u.role === 'organizer' ? 'var(--gold-light)' : 'var(--blue-light)';
+    const initials = (u.name||u.email||'?').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+    const avColor  = u.role === 'admin' ? '' : u.role === 'organizer' ? 'green' : 'blue';
+    const roleBg   = u.role === 'admin' ? '#fff0f0' : u.role === 'organizer' ? 'var(--gold-light)' : 'var(--blue-light)';
     const roleClr  = u.role === 'admin' ? 'var(--red)' : u.role === 'organizer' ? 'var(--gold)' : 'var(--blue)';
-    return `
-      <tr>
-        <td><div style="display:flex;align-items:center"><span class="user-av-cell ${avColor}">${initials}</span><span style="font-weight:600">${u.name||'–'}</span></div></td>
-        <td style="font-family:monospace;font-size:12.5px">${u.matrix || u.email || '–'}</td>
-        <td style="font-size:12.5px">${u.faculty||'–'}</td>
-        <td><span class="badge" style="background:${roleBg};color:${roleClr}">${cap(u.role)}</span></td>
-        <td><span class="badge badge-approved">Active</span></td>
-        <td style="font-size:12.5px;color:var(--muted)">${(u.created_at||'').slice(0,10)||'–'}</td>
-      </tr>`;
+    return `<tr><td><div style="display:flex;align-items:center"><span class="user-av-cell ${avColor}">${initials}</span><span style="font-weight:500">${u.name||'–'}</span></div></td><td style="font-family:monospace;font-size:12.5px">${u.matrix||u.email||'–'}</td><td style="font-size:12.5px">${u.faculty||'–'}</td><td><span class="badge" style="background:${roleBg};color:${roleClr}">${cap(u.role)}</span></td><td><span class="badge badge-approved">Active</span></td><td style="font-size:12.5px;color:var(--muted)">${(u.created_at||'').slice(0,10)||'–'}</td></tr>`;
   }).join('');
 }
+function filterUsers(role, btn) { usersFilter = role; document.querySelectorAll('#sec-users .filter-tab').forEach(b => b.classList.remove('active')); if (btn) btn.classList.add('active'); renderUsersTable(); }
 
-function filterUsers(role, btn) {
-  usersFilter = role;
-  document.querySelectorAll('#sec-users .filter-tab').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  renderUsersTable();
-}
-
-// ============================================================
-// MODAL
-// ============================================================
 function openEventModal(id) {
   const ev = EVENTS.find(e => e.id === id);
   if (!ev) return;
   currentEventModal = ev;
-
-  document.getElementById('mCatBadge').textContent    = cap(ev.category);
-  document.getElementById('mCatBadge').className      = `badge badge-${ev.category}`;
+  document.getElementById('mCatBadge').textContent   = cap(ev.category);
+  document.getElementById('mCatBadge').className     = `badge badge-${ev.category}`;
   document.getElementById('mStatusBadge').textContent = cap(ev.status);
-  document.getElementById('mStatusBadge').className   = `badge badge-${ev.status}`;
-  document.getElementById('mTitle').textContent       = ev.title || '–';
-  document.getElementById('mDate').textContent        = ev.date     || '–';
-  document.getElementById('mTime').textContent        = (ev.time || ev.start_time || '–') + (ev.end_time ? ' – ' + ev.end_time : '');
-  document.getElementById('mVenue').textContent       = ev.location || '–';
-  document.getElementById('mFaculty').textContent     = ev.faculty  || '–';
-  document.getElementById('mOrganiser').textContent   = ev.organizer_name || '–';
-  document.getElementById('mSlots').textContent       = (ev.slots || '–') + ' slots';
-  document.getElementById('mDesc').textContent        = ev.description || '–';
-
+  document.getElementById('mStatusBadge').className  = `badge badge-${ev.status}`;
+  document.getElementById('mTitle').textContent      = ev.title||'–';
+  document.getElementById('mDate').textContent       = ev.date||'–';
+  document.getElementById('mTime').textContent       = (ev.time||ev.start_time||'–') + (ev.end_time?' – '+ev.end_time:'');
+  document.getElementById('mVenue').textContent      = ev.location||'–';
+  document.getElementById('mFaculty').textContent    = ev.faculty||'–';
+  document.getElementById('mOrganiser').textContent  = ev.organizer_name||'–';
+  document.getElementById('mSlots').textContent      = (ev.slots||'–') + ' slots';
+  document.getElementById('mDesc').textContent       = ev.description||'–';
   const hasBlocker = renderModalComplianceOutput(ev);
   renderApprovalFlow(ev);
-
   document.getElementById('rejectReasonBox').classList.remove('show');
   document.getElementById('rejectReason').value = '';
-
   const actions = document.getElementById('mActions');
   if (ev.status === 'pending') {
-    actions.innerHTML = `
-      <button class="btn-modal-approve" onclick="approveEvent(${ev.id})" ${hasBlocker?'disabled':''}>
-        ${hasBlocker ? '🚫 Cannot Be Approved' : '✓ Approve Activity'}
-      </button>
-      <button class="btn-modal-reject"  onclick="showRejectBox(${ev.id})">✕ Reject</button>
-      <button class="btn-modal-close"   onclick="closeEventModal()">Close</button>`;
-  } else {
-    actions.innerHTML = `<button class="btn-modal-close" style="width:100%" onclick="closeEventModal()">Close</button>`;
-  }
-
+    actions.innerHTML = `<button class="btn-modal-approve" onclick="approveEvent(${ev.id})" ${hasBlocker?'disabled':''}>${hasBlocker?'🚫 Cannot Be Approved':'✓ Approve Activity'}</button><button class="btn-modal-reject" onclick="showRejectBox(${ev.id})">✕ Reject</button><button class="btn-modal-close" onclick="closeEventModal()">Close</button>`;
+  } else { actions.innerHTML = `<button class="btn-modal-close" style="width:100%" onclick="closeEventModal()">Close</button>`; }
   document.getElementById('eventOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
 function showRejectBox(id) {
   document.getElementById('rejectReasonBox').classList.add('show');
-  document.getElementById('mActions').innerHTML = `
-    <button class="btn-modal-approve" onclick="approveEvent(${id})">✓ Approve</button>
-    <button class="btn-modal-reject"  onclick="confirmReject(${id})">✕ Confirm Reject</button>
-    <button class="btn-modal-close"   onclick="closeEventModal()">Cancel</button>`;
+  document.getElementById('mActions').innerHTML = `<button class="btn-modal-approve" onclick="approveEvent(${id})">✓ Approve</button><button class="btn-modal-reject" onclick="confirmReject(${id})">✕ Confirm Reject</button><button class="btn-modal-close" onclick="closeEventModal()">Cancel</button>`;
+}
+function closeEventModal() { document.getElementById('eventOverlay').classList.remove('open'); document.body.style.overflow = ''; currentEventModal = null; }
+function handleOverlay(e) { if (e.target === document.getElementById('eventOverlay')) closeEventModal(); }
+
+function updateQiCounts() {
+  const total   = EVENTS.length;
+  const pending = EVENTS.filter(e => e.status === 'pending').length;
+  const blockers= EVENTS.filter(e => e.status === 'pending' && runComplianceChecks(e).hasBlocker).length;
+  document.getElementById('qiTotal').textContent     = total + ' total';
+  document.getElementById('qiPending').textContent   = pending + ' events';
+  document.getElementById('qiAll').textContent       = total + ' events';
+  document.getElementById('qiCompliance').textContent= blockers + ' issues';
+  document.getElementById('qiFeedback').textContent  = FEEDBACK.length + ' received';
+  document.getElementById('qiUsers').textContent     = USERS.length + ' users';
 }
 
-function closeEventModal() {
-  document.getElementById('eventOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-  currentEventModal = null;
-}
-
-function handleOverlay(e) {
-  if (e.target === document.getElementById('eventOverlay')) closeEventModal();
-}
-
-// ============================================================
-// HELPERS
-// ============================================================
-function refreshAllTables() {
-  renderDashboard();
-  renderPendingTable();
-  renderAllEventsTable();
-  renderComplianceTable();
-  updatePendingBadge();
-}
-
-function updatePendingBadge() {
-  const count = EVENTS.filter(e => e.status === 'pending').length;
-  const badge = document.getElementById('pendingBadge');
-  badge.textContent   = count;
-  badge.style.display = count > 0 ? 'inline-flex' : 'none';
-}
+function refreshAllTables() { renderDashboard(); renderPendingTable(); renderAllEventsTable(); renderComplianceTable(); updatePendingBadge(); updateQiCounts(); }
+function updatePendingBadge() { const count = EVENTS.filter(e => e.status === 'pending').length; const badge = document.getElementById('pendingBadge'); badge.textContent = count; badge.style.display = count > 0 ? 'inline-flex' : 'none'; }
 
 function showSection(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
-  document.getElementById('sec-' + id).classList.add('active');
-  if (btn) btn.classList.add('active');
-  const labels = {
-    'dashboard':  ['Dashboard','Overview'],
-    'pending':    ['Pending Approval','Events'],
-    'all-events': ['All Events','Events'],
-    'compliance': ['Compliance Review','Student Affairs'],
-    'feedback':   ['Feedback & AI','Analytics'],
-    'users':      ['Users','System']
-  };
-  const [page, sub] = labels[id] || [id,''];
-  document.getElementById('topbarPage').textContent = page;
-  document.getElementById('topbarSub').textContent  = sub;
+  document.querySelectorAll('.qi-card').forEach(b => b.classList.remove('active-qi'));
+  document.getElementById('sec-'+id).classList.add('active');
+  if (btn && btn.classList.contains('sb-item')) btn.classList.add('active');
+  const qiMap = { 'dashboard':'qi-dashboard','pending':'qi-pending','all-events':'qi-all','compliance':'qi-compliance','feedback':'qi-feedback','users':'qi-users' };
+  if (qiMap[id]) { const qi = document.getElementById(qiMap[id]); if (qi) qi.classList.add('active-qi'); }
 }
 
-function showToast(msg, type='info') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className   = `toast ${type} show`;
-  setTimeout(() => t.classList.remove('show'), 3500);
-}
-
-function doLogout() {
-  sessionStorage.removeItem('utm_admin');
-  window.location.href = '/Login/login.html';
-}
-
+function showToast(msg, type='info') { const t = document.getElementById('toast'); t.textContent = msg; t.className = `toast ${type} show`; setTimeout(() => t.classList.remove('show'), 3500); }
+function doLogout() { sessionStorage.removeItem('utm_admin'); window.location.href = '/Login/login.html'; }
 function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : '–'; }
 
 initAdmin();
