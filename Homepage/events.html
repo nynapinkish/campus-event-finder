@@ -741,29 +741,27 @@ Format:
 
   try {
 const res = await fetch(
-  `${SUPABASE_URL}/functions/v1/ai-recommend`,
+  `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent`,
   {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${SUPABASE_ANON}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'x-goog-api-key': 'API_KEY_KORANG_LETAK_SINI'
     },
-    body: JSON.stringify({ prompt })
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }]
+    })
   }
 );
 
 if (!res.ok) throw new Error('AI error ' + res.status);
-
 const data = await res.json();
-console.log('RAW GEMINI RESPONSE:', data); // tambah ni
 const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
-console.log('RAW TEXT:', raw); // tambah ni
 const clean = raw.replace(/```json|```/g,'').trim();
-console.log('PICKS:', JSON.parse(clean)); // tambah ni
 const picks = JSON.parse(clean);
+renderRecommendations(picks, evs, user);
 
-    renderRecommendations(picks, evs, user);
-  } catch (err) {
+} catch (err) {
     console.warn('AI recommendation failed:', err);
     /* Silently hide section — don't break the page */
     document.getElementById('aiRecOuter').style.display = 'none';
