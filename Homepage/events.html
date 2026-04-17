@@ -760,7 +760,7 @@ const res = await fetch(`${GEMINI_URL}?key=${GEMINI_KEY}`, {
 
     const clean = raw.replace(/```json|```/g,'').trim();
     const picks = JSON.parse(clean);
-    
+
     renderRecommendations(picks, evs, user);
   } catch (err) {
     console.warn('AI recommendation failed:', err);
@@ -778,7 +778,7 @@ function renderRecommendations(picks, evs, user) {
   /* update subtitle with faculty name */
   const faculty = user?.faculty ? `for ${user.faculty} students` : 'based on your profile';
   document.getElementById('aiRecSubtitle').textContent =
-    `Personalised picks ${faculty} · Powered by Claude AI`;
+    `Personalised picks ${faculty} · Powered by Gemini AI`;
 
   const html = picks.map((pick, i) => {
     const ev = evs.find(e => e.id === pick.id);
@@ -982,51 +982,5 @@ function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
 
 init();
 </script>
-
-<!--
-═══════════════════════════════════════════════════════════════════
-  ⚠️  CORS / DEPLOYMENT NOTE
-═══════════════════════════════════════════════════════════════════
-  Calling the Anthropic API directly from the browser WILL work
-  locally / on claude.ai previews, but in PRODUCTION you should
-  proxy the call through a Supabase Edge Function to:
-    1. Keep your API key server-side (not exposed in JS source)
-    2. Avoid any CORS issues in some browser environments
-
-  Edge Function skeleton (supabase/functions/ai-recommend/index.ts):
-  ──────────────────────────────────────────────────────────────────
-  import { serve } from "https://deno.land/std/http/server.ts"
-  serve(async (req) => {
-    const { prompt } = await req.json()
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": Deno.env.get("ANTHROPIC_KEY"),
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 400,
-        messages: [{ role: "user", content: prompt }]
-      })
-    })
-    const data = await r.json()
-    return new Response(JSON.stringify(data), {
-      headers: { "Content-Type": "application/json",
-                 "Access-Control-Allow-Origin": "*" }
-    })
-  })
-  ──────────────────────────────────────────────────────────────────
-  Then in loadAIRecommendations(), replace the fetch URL with:
-  const res = await fetch(
-    `${SUPABASE_URL}/functions/v1/ai-recommend`,
-    { method:'POST',
-      headers:{ 'Authorization':'Bearer '+SUPABASE_ANON,
-                'Content-Type':'application/json' },
-      body: JSON.stringify({ prompt }) }
-  )
-═══════════════════════════════════════════════════════════════════
--->
 </body>
 </html>
