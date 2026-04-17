@@ -50,11 +50,15 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .ptb-right{display:flex;gap:8px;align-items:center}
 .ptb-tag{font-size:11.5px;font-weight:600;background:var(--red-light);color:var(--red);border:1px solid rgba(139,0,0,.15);border-radius:3px;padding:4px 11px;}
 
-.cat-tabs{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+.cat-tabs{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;align-items:stretch}
 .cat-tabs::-webkit-scrollbar{display:none}
 .ct-btn{padding:11px 18px;font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:none;font-family:'Open Sans',sans-serif;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;}
 .ct-btn:hover{color:var(--text)}
 .ct-btn.active{color:var(--red);border-bottom-color:var(--red);font-weight:600}
+.ct-sep{width:1px;background:var(--border);margin:10px 4px;flex-shrink:0}
+.ct-btn.archived-btn{color:var(--light);font-style:italic}
+.ct-btn.archived-btn.active{color:#888;border-bottom-color:#888;font-style:normal;font-weight:500}
+.ct-btn.archived-btn .arch-count{display:inline-block;background:#eee;color:var(--muted);font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;margin-left:4px}
 
 .wrap{max-width:1320px;margin:0 auto;padding:24px 24px 60px;display:grid;grid-template-columns:230px 1fr;gap:20px;align-items:start;}
 
@@ -86,13 +90,18 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .ar-sb-btn:hover{opacity:.9}
 .back-link{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:4px;padding:9px 14px;font-size:13px;color:var(--muted);text-decoration:none;transition:all .15s;}
 .back-link:hover{color:var(--red);border-color:rgba(139,0,0,.3)}
-.sb-pref-btn{display:flex;align-items:center;gap:8px;background:#fff;border:1px dashed rgba(139,0,0,.4);border-radius:4px;padding:10px 14px;font-size:12.5px;color:var(--red);cursor:pointer;text-align:left;font-family:'Open Sans',sans-serif;transition:all .15s;width:100%;}
+.sb-pref-btn{display:flex;align-items:center;gap:8px;background:#fff;border:1px dashed rgba(139,0,0,.4);border-radius:4px;padding:10px 14px;font-size:12.5px;color:var(--red);cursor:pointer;text-align:left;font-family:'Open Sans',sans-serif;transition:all .15s;width:100%}
 .sb-pref-btn:hover{background:var(--red-light);border-color:var(--red)}
 .sb-pref-btn span{font-size:14px}
+.sb-archived-btn{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:4px;padding:10px 14px;font-size:12.5px;color:var(--light);cursor:pointer;text-align:left;font-family:'Open Sans',sans-serif;transition:all .15s;width:100%}
+.sb-archived-btn:hover{border-color:#aaa;color:var(--muted)}
+.sb-archived-btn span{font-size:14px}
 
 .ev-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
 .ev-toolbar-left h2{font-size:16px;font-weight:700;color:var(--text)}
 .ev-toolbar-left p{font-size:12.5px;color:var(--muted);margin-top:2px}
+.ev-toolbar-badge{display:inline-flex;align-items:center;gap:5px;background:#f0f0f0;color:var(--muted);font-size:11px;font-weight:600;padding:3px 10px;border-radius:3px;margin-left:10px}
+.ev-toolbar-badge.live{background:#e8f5ed;color:var(--green)}
 
 .ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
 .ev-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .2s;animation:fadeUp .3s ease both;}
@@ -103,10 +112,13 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .ev-card.cat-cultural{border-top:3px solid var(--red)}
 .ev-card.cat-career{border-top:3px solid #b35900}
 .ev-card.cat-volunteer{border-top:3px solid #5b2b91}
-.ev-card.is-registered{border-color:#b7dfca;background:#fafffe;}
+.ev-card.is-registered{border-color:#b7dfca;background:#fafffe}
 .ev-card.is-registered .ev-card-body{position:relative}
-.registered-ribbon{position:absolute;top:0;right:0;background:var(--green);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 0 4px;}
-.ev-card-body{padding:16px;position:relative;}
+.ev-card.is-expired{opacity:.65}
+.ev-card.is-expired .ev-card-body{position:relative}
+.expired-ribbon{position:absolute;top:0;right:0;background:#999;color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 0 4px}
+.registered-ribbon{position:absolute;top:0;right:0;background:var(--green);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 0 4px}
+.ev-card-body{padding:16px;position:relative}
 .ev-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
 .ev-badge{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:3px;}
 .badge-academic{background:#e8eef8;color:#003087}
@@ -115,28 +127,29 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .badge-career{background:#fef4e8;color:#b35900}
 .badge-volunteer{background:#f2ecf9;color:#5b2b91}
 .ev-emoji{font-size:26px;line-height:1}
-.ev-title{font-size:15px;font-weight:600;color:var(--text);line-height:1.35;margin-bottom:12px;}
+.ev-title{font-size:15px;font-weight:600;color:var(--text);line-height:1.35;margin-bottom:12px}
 .ev-meta{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
 .ev-meta-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
 .ev-meta-ic{width:14px;text-align:center;flex-shrink:0;opacity:.6}
-.ev-card-foot{border-top:1px solid var(--border);padding-top:11px;display:flex;align-items:center;justify-content:space-between;}
+.ev-card-foot{border-top:1px solid var(--border);padding-top:11px;display:flex;align-items:center;justify-content:space-between}
 .ev-slots{flex:1;margin-right:12px}
 .ev-slots-txt{font-size:11.5px;color:var(--muted);margin-bottom:4px}
 .ev-slots-txt b{color:var(--red)}
 .ev-slots-txt.ok b{color:#1a5c38}
 .ev-bar{height:3px;background:#eee;border-radius:2px;overflow:hidden}
 .ev-bar-fill{height:100%;border-radius:2px;transition:width .7s}
-.ev-btn{background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:12.5px;font-weight:600;padding:7px 16px;border-radius:3px;cursor:pointer;white-space:nowrap;transition:all .15s;}
+.ev-btn{background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:12.5px;font-weight:600;padding:7px 16px;border-radius:3px;cursor:pointer;white-space:nowrap;transition:all .15s}
 .ev-btn:hover{background:var(--red2)}
 .ev-btn.outline{background:none;color:var(--red);border:1px solid rgba(139,0,0,.4)}
 .ev-btn.outline:hover{background:var(--red);color:#fff}
-.ev-btn.registered{background:#e8f5ed;color:var(--green);border:1.5px solid #b7dfca;font-weight:700;cursor:pointer;}
-.ev-btn.registered:hover{background:var(--green);color:#fff;border-color:var(--green);}
-.full-tag{font-size:11px;font-weight:700;color:#c0392b;background:#fef2f2;padding:3px 8px;border-radius:3px;border:1px solid #fca5a5;}
+.ev-btn.registered{background:#e8f5ed;color:var(--green);border:1.5px solid #b7dfca;font-weight:700;cursor:pointer}
+.ev-btn.registered:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.ev-btn.disabled-btn{background:#f0f0f0;color:#999;border:none;cursor:not-allowed}
+.full-tag{font-size:11px;font-weight:700;color:#c0392b;background:#fef2f2;padding:3px 8px;border-radius:3px;border:1px solid #fca5a5}
 
-.state-box{grid-column:1/-1;text-align:center;padding:64px 20px;color:var(--muted);}
+.state-box{grid-column:1/-1;text-align:center;padding:64px 20px;color:var(--muted)}
 .state-box h3{font-size:16px;color:var(--text);margin-bottom:6px}
-.spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px;}
+.spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 .ai-rec-outer{background:#fff;border-bottom:1px solid var(--border)}
@@ -147,7 +160,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .ai-rec-title h3{font-size:15px;font-weight:700;color:var(--text)}
 .ai-rec-title p{font-size:11.5px;color:var(--muted);margin-top:1px}
 .ai-rec-badge{font-size:10px;font-weight:700;letter-spacing:.6px;background:linear-gradient(90deg,#8B0000,#c0392b);color:#fff;padding:3px 10px;border-radius:20px;text-transform:uppercase;flex-shrink:0}
-.ai-rec-edit{font-size:11.5px;color:var(--red);cursor:pointer;background:none;border:none;font-family:'Open Sans',sans-serif;text-decoration:underline;text-underline-offset:2px;transition:opacity .15s;white-space:nowrap;}
+.ai-rec-edit{font-size:11.5px;color:var(--red);cursor:pointer;background:none;border:none;font-family:'Open Sans',sans-serif;text-decoration:underline;text-underline-offset:2px;transition:opacity .15s;white-space:nowrap}
 .ai-rec-edit:hover{opacity:.7}
 .ai-rec-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .ai-rec-scroll::-webkit-scrollbar{height:4px}
@@ -176,13 +189,13 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .skel-line{background:#f0f0f0;border-radius:3px;margin-bottom:8px;animation:shimmer 1.4s ease infinite;background-size:200% 100%;background-image:linear-gradient(90deg,#f0f0f0 25%,#e4e4e4 50%,#f0f0f0 75%)}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center;padding:20px;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center;padding:20px}
 .overlay.open{display:flex}
-.modal{background:#fff;border-radius:4px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.2);animation:mIn .2s ease;}
+.modal{background:#fff;border-radius:4px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.2);animation:mIn .2s ease}
 @keyframes mIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.m-nav{background:var(--red);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-radius:4px 4px 0 0;}
+.m-nav{background:var(--red);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-radius:4px 4px 0 0}
 .m-nav-title{color:#fff;font-size:13.5px;font-weight:700}
-.m-nav-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:3px;font-size:13px;cursor:pointer;transition:background .15s;}
+.m-nav-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:3px;font-size:13px;cursor:pointer;transition:background .15s}
 .m-nav-close:hover{background:rgba(255,255,255,.3)}
 .m-body{padding:20px}
 .m-cat-badge{display:inline-block;margin-bottom:10px}
@@ -192,20 +205,20 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .m-info-lbl{font-size:10.5px;color:var(--light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
 .m-info-val{font-size:13px;font-weight:600;color:var(--text)}
 .m-desc-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--light);margin-bottom:7px}
-.m-desc-body{font-size:13.5px;line-height:1.7;color:var(--muted);background:#f8f8f8;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 3px 3px 0;margin-bottom:18px;}
+.m-desc-body{font-size:13.5px;line-height:1.7;color:var(--muted);background:#f8f8f8;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 3px 3px 0;margin-bottom:18px}
 .m-footer{display:flex;gap:10px}
-.m-btn-reg{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:3px;cursor:pointer;transition:background .15s;}
+.m-btn-reg{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:3px;cursor:pointer;transition:background .15s}
 .m-btn-reg:hover{background:var(--red2)}
 .m-btn-reg:disabled{opacity:.4;cursor:not-allowed}
-.m-btn-reg.registered{background:var(--green);opacity:1;cursor:pointer;}
+.m-btn-reg.registered{background:var(--green);opacity:1;cursor:pointer}
 .m-btn-reg.registered:hover{background:#134a2c}
-.m-registered-note{background:var(--green-light);border:1px solid #b7dfca;border-radius:3px;padding:10px 14px;font-size:12.5px;color:var(--green);margin-bottom:14px;display:none;align-items:center;gap:8px;font-weight:500;}
+.m-registered-note{background:var(--green-light);border:1px solid #b7dfca;border-radius:3px;padding:10px 14px;font-size:12.5px;color:var(--green);margin-bottom:14px;display:none;align-items:center;gap:8px;font-weight:500}
 .m-registered-note.show{display:flex}
-.m-btn-close{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 18px;border-radius:3px;cursor:pointer;transition:all .15s;}
+.m-btn-close{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 18px;border-radius:3px;cursor:pointer;transition:all .15s}
 .m-btn-close:hover{border-color:var(--red);color:var(--red)}
 
-.footer{background:#1f1f1f;padding:36px 24px 28px;margin-top:auto;}
-.footer-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px;}
+.footer{background:#1f1f1f;padding:36px 24px 28px;margin-top:auto}
+.footer-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px}
 .fi-brand-utm{font-size:22px;font-weight:700;color:#fff;line-height:1;margin-bottom:6px}
 .fi-brand-full{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.3px;margin-bottom:12px}
 .fi-brand-text{font-size:12.5px;color:rgba(255,255,255,.45);line-height:1.6}
@@ -213,17 +226,17 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .fi-links{display:flex;flex-direction:column;gap:8px}
 .fi-links a{font-size:12.5px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .15s}
 .fi-links a:hover{color:#fff}
-.footer-bottom{max-width:1320px;margin:0 auto;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.footer-bottom{max-width:1320px;margin:0 auto;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
 .footer-copy{font-size:12px;color:rgba(255,255,255,.3)}
 .footer-bottom-links{display:flex;gap:16px}
 .footer-bottom-links a{font-size:12px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s}
 .footer-bottom-links a:hover{color:rgba(255,255,255,.7)}
 
-/* ── PREFERENCE ONBOARDING MODAL ─────────────────────── */
-.pref-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center;padding:20px;}
+/* Preference Onboarding Modal */
+.pref-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center;padding:20px}
 .pref-overlay.open{display:flex}
-.pref-modal{background:#fff;border-radius:8px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:mIn .25s ease;}
-.pref-head{background:linear-gradient(135deg,#8B0000,#a50000);padding:22px 24px 18px;border-radius:8px 8px 0 0;text-align:center;}
+.pref-modal{background:#fff;border-radius:8px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:mIn .25s ease}
+.pref-head{background:linear-gradient(135deg,#8B0000,#a50000);padding:22px 24px 18px;border-radius:8px 8px 0 0;text-align:center}
 .pref-head-icon{font-size:32px;margin-bottom:8px}
 .pref-head h2{color:#fff;font-size:18px;font-weight:700;margin-bottom:4px}
 .pref-head p{color:rgba(255,255,255,.7);font-size:13px;line-height:1.4}
@@ -232,26 +245,26 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .pref-section:last-child{margin-bottom:0}
 .pref-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--light);margin-bottom:10px}
 .pref-cats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pref-cat-card{display:flex;align-items:center;gap:10px;padding:12px 14px;border:2px solid var(--border);border-radius:6px;cursor:pointer;transition:all .15s;background:#fff;user-select:none;}
+.pref-cat-card{display:flex;align-items:center;gap:10px;padding:12px 14px;border:2px solid var(--border);border-radius:6px;cursor:pointer;transition:all .15s;background:#fff;user-select:none}
 .pref-cat-card:hover{border-color:rgba(139,0,0,.3);background:#fefbfb}
 .pref-cat-card.selected{border-color:var(--red);background:var(--red-light)}
 .pref-cat-icon{font-size:22px;line-height:1;flex-shrink:0}
 .pref-cat-info{flex:1}
 .pref-cat-name{font-size:13px;font-weight:600;color:var(--text)}
 .pref-cat-desc{font-size:11px;color:var(--light);margin-top:1px}
-.pref-cat-check{width:20px;height:20px;border-radius:50%;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;font-size:11px;color:#fff;}
+.pref-cat-check{width:20px;height:20px;border-radius:50%;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;font-size:11px;color:#fff}
 .pref-cat-card.selected .pref-cat-check{background:var(--red);border-color:var(--red)}
 .pref-freq{display:flex;gap:8px;flex-wrap:wrap}
-.pref-freq-pill{padding:8px 16px;border:2px solid var(--border);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;background:#fff;user-select:none;}
+.pref-freq-pill{padding:8px 16px;border:2px solid var(--border);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;background:#fff;user-select:none}
 .pref-freq-pill:hover{border-color:rgba(139,0,0,.3)}
 .pref-freq-pill.selected{border-color:var(--red);background:var(--red);color:#fff}
 .pref-tags-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
-.pref-tag{display:flex;align-items:center;gap:5px;background:var(--red-light);color:var(--red);border:1px solid rgba(139,0,0,.15);border-radius:16px;padding:4px 10px 4px 12px;font-size:12px;font-weight:500;}
+.pref-tag{display:flex;align-items:center;gap:5px;background:var(--red-light);color:var(--red);border:1px solid rgba(139,0,0,.15);border-radius:16px;padding:4px 10px 4px 12px;font-size:12px;font-weight:500}
 .pref-tag-x{cursor:pointer;font-size:13px;opacity:.6;transition:opacity .15s;line-height:1}
 .pref-tag-x:hover{opacity:1}
 .pref-input-row{display:flex;gap:8px}
 .pref-input{flex:1;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;font-family:'Open Sans',sans-serif;outline:none;color:var(--text);transition:border-color .15s}
-.pref-input:focus{border-color:var(--red)}
+.pref-input:focus{border-color:#8B0000}
 .pref-input::placeholder{color:#bbb}
 .pref-add-btn{background:none;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;color:var(--muted);cursor:pointer;font-family:'Open Sans',sans-serif;transition:all .15s;white-space:nowrap}
 .pref-add-btn:hover{border-color:var(--red);color:var(--red)}
@@ -261,15 +274,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .pref-btn-skip{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 20px;border-radius:4px;cursor:pointer;transition:all .15s}
 .pref-btn-skip:hover{border-color:var(--red);color:var(--red)}
 
-/* ── CHATBOT WIDGET ─────────────────────────────────── */
-#utm-chat-fab{
-  position:fixed;bottom:28px;right:28px;z-index:9999;
-  width:56px;height:56px;border-radius:50%;
-  background:#8B0000;border:none;cursor:pointer;
-  box-shadow:0 4px 20px rgba(139,0,0,.45);
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .2s,box-shadow .2s;
-}
+/* Chatbot Widget */
+#utm-chat-fab{position:fixed;bottom:28px;right:28px;z-index:9999;width:56px;height:56px;border-radius:50%;background:#8B0000;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(139,0,0,.45);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s}
 #utm-chat-fab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(139,0,0,.55)}
 #utm-chat-fab svg{width:26px;height:26px;fill:#fff;transition:opacity .2s}
 #utm-chat-fab .fab-close{display:none}
@@ -384,12 +390,16 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 </div>
 
 <div class="cat-tabs">
-  <button class="ct-btn active" onclick="setCat('all',this)">All Events</button>
-  <button class="ct-btn" onclick="setCat('academic',this)">Academic</button>
-  <button class="ct-btn" onclick="setCat('sports',this)">Sports</button>
-  <button class="ct-btn" onclick="setCat('cultural',this)">Cultural</button>
-  <button class="ct-btn" onclick="setCat('career',this)">Career</button>
-  <button class="ct-btn" onclick="setCat('volunteer',this)">Volunteer</button>
+  <button class="ct-btn active" data-mode="upcoming" onclick="switchMode('upcoming',this)">All Events</button>
+  <button class="ct-btn" data-mode="upcoming" onclick="setCat('academic',this)">Academic</button>
+  <button class="ct-btn" data-mode="upcoming" onclick="setCat('sports',this)">Sports</button>
+  <button class="ct-btn" data-mode="upcoming" onclick="setCat('cultural',this)">Cultural</button>
+  <button class="ct-btn" data-mode="upcoming" onclick="setCat('career',this)">Career</button>
+  <button class="ct-btn" data-mode="upcoming" onclick="setCat('volunteer',this)">Volunteer</button>
+  <div class="ct-sep"></div>
+  <button class="ct-btn archived-btn" id="archTabBtn" onclick="switchToArchived()">
+    📜 Archived <span class="arch-count" id="archCountBadge">0</span>
+  </button>
 </div>
 
 <!-- AI RECOMMENDATION SECTION -->
@@ -480,19 +490,26 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     <div class="sb-card">
       <div class="sb-card-head">Overview</div>
       <div class="sb-stats">
-        <div class="sb-stat"><div class="sb-stat-num" id="statTotal">–</div><div class="sb-stat-lbl">Total</div></div>
+        <div class="sb-stat"><div class="sb-stat-num" id="statTotal">–</div><div class="sb-stat-lbl">Upcoming</div></div>
         <div class="sb-stat"><div class="sb-stat-num" id="statOpen">–</div><div class="sb-stat-lbl">Open</div></div>
         <div class="sb-stat"><div class="sb-stat-num" id="statSlots">–</div><div class="sb-stat-lbl">Slots</div></div>
-        <div class="sb-stat"><div class="sb-stat-num" style="font-size:17px;color:#c8982a">AR</div><div class="sb-stat-lbl">Enabled</div></div>
+        <div class="sb-stat"><div class="sb-stat-num" id="statArchived" style="color:#999">–</div><div class="sb-stat-lbl">Archived</div></div>
       </div>
     </div>
 
-    <!-- Edit preferences shortcut in sidebar -->
     <button class="sb-pref-btn" onclick="openPrefModal()">
       <span>🎯</span>
       <div>
         <div style="font-weight:600">My Interests</div>
         <div id="sbPrefSummary" style="font-size:11px;color:var(--light);margin-top:1px">Not set yet</div>
+      </div>
+    </button>
+
+    <button class="sb-archived-btn" onclick="switchToArchived()">
+      <span>📜</span>
+      <div>
+        <div style="font-weight:500;color:var(--muted)">Past / Archived Events</div>
+        <div id="sbArchSummary" style="font-size:11px;color:var(--light);margin-top:1px">Click to view</div>
       </div>
     </button>
 
@@ -508,9 +525,10 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   <div class="events-area">
     <div class="ev-toolbar">
       <div class="ev-toolbar-left">
-        <h2>Upcoming Events</h2>
+        <h2 id="evTitle">Upcoming Events</h2>
         <p id="evMeta">Loading events from Supabase...</p>
       </div>
+      <span class="ev-toolbar-badge live" id="evBadge">● Live</span>
     </div>
     <div class="ev-grid" id="evGrid">
       <div class="state-box"><div class="spinner"></div><p>Connecting to database...</p></div>
@@ -593,9 +611,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     PREFERENCE ONBOARDING MODAL
-     ═══════════════════════════════════════════════════════════════ -->
+<!-- Preference Onboarding Modal -->
 <div class="pref-overlay" id="prefOverlay">
   <div class="pref-modal">
     <div class="pref-head">
@@ -604,54 +620,36 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
       <p>This helps our AI recommend events you'll actually enjoy. You can change this anytime.</p>
     </div>
     <div class="pref-body">
-      <!-- Section 1: Categories -->
       <div class="pref-section">
         <div class="pref-label">What types of events interest you?</div>
         <div class="pref-cats">
           <div class="pref-cat-card" data-cat="academic" onclick="togglePrefCat(this)">
             <div class="pref-cat-icon">📚</div>
-            <div class="pref-cat-info">
-              <div class="pref-cat-name">Academic</div>
-              <div class="pref-cat-desc">Workshops, seminars, talks</div>
-            </div>
+            <div class="pref-cat-info"><div class="pref-cat-name">Academic</div><div class="pref-cat-desc">Workshops, seminars, talks</div></div>
             <div class="pref-cat-check">✓</div>
           </div>
           <div class="pref-cat-card" data-cat="sports" onclick="togglePrefCat(this)">
             <div class="pref-cat-icon">⚽</div>
-            <div class="pref-cat-info">
-              <div class="pref-cat-name">Sports</div>
-              <div class="pref-cat-desc">Tournaments, friendly matches</div>
-            </div>
+            <div class="pref-cat-info"><div class="pref-cat-name">Sports</div><div class="pref-cat-desc">Tournaments, friendly matches</div></div>
             <div class="pref-cat-check">✓</div>
           </div>
           <div class="pref-cat-card" data-cat="cultural" onclick="togglePrefCat(this)">
             <div class="pref-cat-icon">🎭</div>
-            <div class="pref-cat-info">
-              <div class="pref-cat-name">Cultural</div>
-              <div class="pref-cat-desc">Performances, festivals, arts</div>
-            </div>
+            <div class="pref-cat-info"><div class="pref-cat-name">Cultural</div><div class="pref-cat-desc">Performances, festivals, arts</div></div>
             <div class="pref-cat-check">✓</div>
           </div>
           <div class="pref-cat-card" data-cat="career" onclick="togglePrefCat(this)">
             <div class="pref-cat-icon">💼</div>
-            <div class="pref-cat-info">
-              <div class="pref-cat-name">Career</div>
-              <div class="pref-cat-desc">Job fairs, networking, CV talks</div>
-            </div>
+            <div class="pref-cat-info"><div class="pref-cat-name">Career</div><div class="pref-cat-desc">Job fairs, networking, CV talks</div></div>
             <div class="pref-cat-check">✓</div>
           </div>
           <div class="pref-cat-card" data-cat="volunteer" onclick="togglePrefCat(this)">
             <div class="pref-cat-icon">🤝</div>
-            <div class="pref-cat-info">
-              <div class="pref-cat-name">Volunteer</div>
-              <div class="pref-cat-desc">CSR, community service, outreach</div>
-            </div>
+            <div class="pref-cat-info"><div class="pref-cat-name">Volunteer</div><div class="pref-cat-desc">CSR, community service, outreach</div></div>
             <div class="pref-cat-check">✓</div>
           </div>
         </div>
       </div>
-
-      <!-- Section 2: Frequency -->
       <div class="pref-section">
         <div class="pref-label">How often do you attend events?</div>
         <div class="pref-freq">
@@ -661,8 +659,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           <div class="pref-freq-pill" data-freq="occasionally" onclick="togglePrefFreq(this)">Occasionally</div>
         </div>
       </div>
-
-      <!-- Section 3: Keywords -->
       <div class="pref-section">
         <div class="pref-label">Specific interests? <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--light)">(optional)</span></div>
         <div class="pref-tags-wrap" id="prefTagsWrap"></div>
@@ -679,7 +675,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   </div>
 </div>
 
-<!-- CHATBOT WIDGET -->
+<!-- Chatbot Widget -->
 <button id="utm-chat-fab" onclick="toggleChat()" aria-label="Open UTM AI Assistant">
   <span id="chat-badge" class="hidden">1</span>
   <svg class="fab-open" viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-2 10H6v-2h12v2zm0-3H6V7h12v2z"/></svg>
@@ -691,10 +687,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     <div class="cw-av">🤖</div>
     <div class="cw-head-info">
       <div class="cw-head-name">UTM AI Assistant</div>
-      <div class="cw-head-status">
-        <div class="cw-status-dot"></div>
-        Online · Powered by Groq AI
-      </div>
+      <div class="cw-head-status"><div class="cw-status-dot"></div>Online · Powered by Groq AI</div>
     </div>
     <button class="cw-head-close" onclick="toggleChat()">✕</button>
   </div>
@@ -706,8 +699,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     <button class="qr-btn" onclick="sendQuick('Show me all events')">📋 All events</button>
   </div>
   <div class="cw-input-row">
-    <input class="cw-input" id="cwInput" placeholder="Ask anything about events..."
-           onkeydown="if(event.key==='Enter')sendMsg()"/>
+    <input class="cw-input" id="cwInput" placeholder="Ask anything about events..." onkeydown="if(event.key==='Enter')sendMsg()"/>
     <button class="cw-send" id="cwSend" onclick="sendMsg()">
       <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
     </button>
@@ -729,12 +721,27 @@ const badgeClass = {
   academic:'badge-academic', sports:'badge-sports',
   cultural:'badge-cultural', career:'badge-career', volunteer:'badge-volunteer'
 };
-
 const catEmojis = { academic:'📚', sports:'⚽', cultural:'🎭', career:'💼', volunteer:'🤝' };
 
 let curCat = 'all', curQ = '';
 let currentUser = null;
-let userPrefs = null;  /* loaded from localStorage */
+let userPrefs = null;
+
+/* Two separate event pools */
+let upcomingEvents = [];   /* date >= today */
+let archivedEvents = [];   /* date < today — lazy loaded */
+let viewMode = 'upcoming'; /* 'upcoming' or 'archived' */
+
+/* Helper: today as YYYY-MM-DD string */
+function todayStr() {
+  return new Date().toISOString().split('T')[0];
+}
+
+/* Helper: check if event date is past */
+function isExpired(ev) {
+  if (!ev.date) return false;
+  return ev.date < todayStr();
+}
 
 /* ══════════════════════════════════════════════════════════════
    PREFERENCE MANAGEMENT
@@ -743,7 +750,7 @@ const PREF_KEY = 'utm_event_prefs';
 
 function loadPrefs() {
   try {
-    const raw = localStorage.getItem(PREF_KEY);
+    var raw = localStorage.getItem(PREF_KEY);
     userPrefs = raw ? JSON.parse(raw) : null;
   } catch(e) { userPrefs = null; }
   updatePrefUI();
@@ -762,9 +769,7 @@ function updatePrefUI() {
     el.textContent = 'Not set yet';
   } else {
     var parts = [];
-    if (userPrefs.categories.length) {
-      parts.push(userPrefs.categories.map(function(c){ return catEmojis[c] || ''; }).join(' '));
-    }
+    if (userPrefs.categories.length) parts.push(userPrefs.categories.map(function(c){ return catEmojis[c] || ''; }).join(' '));
     if (userPrefs.keywords.length) {
       parts.push(userPrefs.keywords.slice(0,3).join(', '));
       if (userPrefs.keywords.length > 3) parts.push('+' + (userPrefs.keywords.length - 3));
@@ -773,28 +778,19 @@ function updatePrefUI() {
   }
 }
 
-/* Open the preference modal */
 function openPrefModal() {
   var ov = document.getElementById('prefOverlay');
   ov.classList.add('open');
   document.body.style.overflow = 'hidden';
-
-  /* Pre-fill from saved prefs */
   var cats = (userPrefs && userPrefs.categories) ? userPrefs.categories : [];
   var freq = (userPrefs && userPrefs.frequency) ? userPrefs.frequency : '';
   var tags = (userPrefs && userPrefs.keywords) ? userPrefs.keywords : [];
-
-  /* Reset cards */
   document.querySelectorAll('.pref-cat-card').forEach(function(card) {
     card.classList.toggle('selected', cats.indexOf(card.dataset.cat) !== -1);
   });
-
-  /* Reset frequency */
   document.querySelectorAll('.pref-freq-pill').forEach(function(pill) {
     pill.classList.toggle('selected', pill.dataset.freq === freq);
   });
-
-  /* Reset tags */
   renderPrefTags(tags);
 }
 
@@ -803,145 +799,107 @@ function closePrefModal() {
   document.body.style.overflow = '';
 }
 
-/* Toggle category card */
-function togglePrefCat(card) {
-  card.classList.toggle('selected');
-}
+function togglePrefCat(card) { card.classList.toggle('selected'); }
 
-/* Toggle frequency pill (only one at a time) */
 function togglePrefFreq(pill) {
   var wasSelected = pill.classList.contains('selected');
-  document.querySelectorAll('.pref-freq-pill').forEach(function(p) {
-    p.classList.remove('selected');
-  });
+  document.querySelectorAll('.pref-freq-pill').forEach(function(p) { p.classList.remove('selected'); });
   if (!wasSelected) pill.classList.add('selected');
 }
 
-/* Tag management */
 var tempTags = [];
 
 function renderPrefTags(tags) {
   tempTags = tags || [];
-  var wrap = document.getElementById('prefTagsWrap');
-  wrap.innerHTML = tempTags.map(function(t, i) {
-    return '<div class="pref-tag">' + escHtml(t) +
-      '<span class="pref-tag-x" onclick="removePrefTag(' + i + ')">×</span></div>';
+  document.getElementById('prefTagsWrap').innerHTML = tempTags.map(function(t, i) {
+    return '<div class="pref-tag">' + escHtml(t) + '<span class="pref-tag-x" onclick="removePrefTag(' + i + ')">×</span></div>';
   }).join('');
 }
 
 function addPrefTag() {
   var input = document.getElementById('prefTagInput');
   var val = input.value.trim().toLowerCase();
-  if (!val) return;
-  if (tempTags.indexOf(val) !== -1) { input.value = ''; return; }
-  if (tempTags.length >= 8) return;
+  if (!val || tempTags.indexOf(val) !== -1 || tempTags.length >= 8) { input.value = ''; return; }
   tempTags.push(val);
   renderPrefTags(tempTags);
   input.value = '';
   input.focus();
 }
 
-function removePrefTag(idx) {
-  tempTags.splice(idx, 1);
-  renderPrefTags(tempTags);
-}
+function removePrefTag(idx) { tempTags.splice(idx, 1); renderPrefTags(tempTags); }
 
-/* Save button */
 function savePreferences() {
   var cats = [];
-  document.querySelectorAll('.pref-cat-card.selected').forEach(function(c) {
-    cats.push(c.dataset.cat);
-  });
-
+  document.querySelectorAll('.pref-cat-card.selected').forEach(function(c) { cats.push(c.dataset.cat); });
   var freqEl = document.querySelector('.pref-freq-pill.selected');
-  var freq = freqEl ? freqEl.dataset.freq : 'occasionally';
-
-  var data = {
-    categories: cats,
-    frequency: freq,
-    keywords: tempTags.slice(),
-    savedAt: new Date().toISOString()
-  };
-
-  savePrefsToStorage(data);
+  savePrefsToStorage({ categories: cats, frequency: freqEl ? freqEl.dataset.freq : 'occasionally', keywords: tempTags.slice(), savedAt: new Date().toISOString() });
   closePrefModal();
-
-  /* Re-run AI recommendations with new prefs */
-  var evs = window.EVENTS || [];
-  if (evs.length) {
-    var myEventIds = new Set();
-    if (currentUser && currentUser.matrix) {
-      evs.forEach(function(e) { if (e.registered) myEventIds.add(e.id); });
-    }
-    loadAIRecommendations(currentUser, myEventIds);
-  }
+  var myEventIds = new Set();
+  upcomingEvents.forEach(function(e) { if (e.registered) myEventIds.add(e.id); });
+  loadAIRecommendations(currentUser, myEventIds);
 }
 
-/* Skip button */
 function skipPreferences() {
-  /* Save empty prefs so we don't ask again */
-  savePrefsToStorage({
-    categories: [],
-    frequency: 'occasionally',
-    keywords: [],
-    savedAt: new Date().toISOString(),
-    skipped: true
-  });
+  savePrefsToStorage({ categories: [], frequency: 'occasionally', keywords: [], savedAt: new Date().toISOString(), skipped: true });
   closePrefModal();
 }
 
-function escHtml(s) {
-  var d = document.createElement('div');
-  d.textContent = s;
-  return d.innerHTML;
-}
+function escHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
 /* ══════════════════════════════════════════════════════════════
    INIT
    ══════════════════════════════════════════════════════════════ */
 async function init() {
-  /* Load preferences first */
   loadPrefs();
 
   const { data: { session } } = await sb.auth.getSession();
   if (!session) { window.location.href = '/Login/login.html'; return; }
 
-  const { data: user } = await sb.from('users')
-    .select('*').eq('email', session.user.email).single();
+  const { data: user } = await sb.from('users').select('*').eq('email', session.user.email).single();
   currentUser = user;
 
   if (user?.name) {
-    document.getElementById('headerAvatar').textContent =
-      (user.name||'').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-    document.getElementById('headerName').textContent =
-      user.matrix || user.name || session.user.email;
+    document.getElementById('headerAvatar').textContent = (user.name||'').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    document.getElementById('headerName').textContent = user.matrix || user.name || session.user.email;
   }
 
   let myEventIds = new Set();
   if (user?.matrix) {
-    const { data: regs } = await sb.from('registrations')
-      .select('event_id').ilike('matric_no', user.matrix);
+    const { data: regs } = await sb.from('registrations').select('event_id').ilike('matric_no', user.matrix);
     if (regs) regs.forEach(r => myEventIds.add(r.event_id));
   }
 
+  /* ── KEY CHANGE: Only fetch events where date >= today ── */
+  const today = todayStr();
   const { data: events, error } = await sb.from('events')
-    .select('*').eq('status','approved')
-    .order('created_at',{ ascending:false });
+    .select('*')
+    .eq('status', 'approved')
+    .gte('date', today)
+    .order('date', { ascending: true });
 
   if (error || !events) {
-    document.getElementById('evGrid').innerHTML =
-      '<div class="state-box"><h3>⚠️ Failed to load events</h3><p>Check your internet connection.</p></div>';
+    document.getElementById('evGrid').innerHTML = '<div class="state-box"><h3>⚠️ Failed to load events</h3><p>Check your internet connection.</p></div>';
     return;
   }
 
-  window.EVENTS = events.map(e => ({ ...e, registered: myEventIds.has(e.id) }));
+  upcomingEvents = events.map(e => ({ ...e, registered: myEventIds.has(e.id) }));
+
+  /* ── Also get archived count (lightweight: just count, not full rows) ── */
+  const { count: archCount } = await sb.from('events')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'approved')
+    .lt('date', today);
+
+  document.getElementById('archCountBadge').textContent = archCount || 0;
+  document.getElementById('statArchived').textContent = archCount || 0;
+  document.getElementById('sbArchSummary').textContent = (archCount || 0) + ' past event' + ((archCount || 0) !== 1 ? 's' : '') + ' available';
+
+  /* Set global EVENTS to upcoming for AI/chatbot */
+  window.EVENTS = upcomingEvents;
 
   boot();
 
-  /* Show preference popup if first visit (no saved prefs) */
-  if (!userPrefs) {
-    setTimeout(function() { openPrefModal(); }, 600);
-  }
+  if (!userPrefs) setTimeout(function() { openPrefModal(); }, 600);
 
   loadAIRecommendations(user, myEventIds);
 }
@@ -950,229 +908,245 @@ async function init() {
    BOOT
    ══════════════════════════════════════════════════════════════ */
 function boot() {
-  const evs   = window.EVENTS || [];
-  const total = evs.length;
-  const open  = evs.filter(e => e.slots_left > 0).length;
-  const slots = evs.reduce((a,e) => a + (e.slots_left||0), 0);
+  var evs   = upcomingEvents;
+  var total = evs.length;
+  var open  = evs.filter(function(e){ return e.slots_left > 0; }).length;
+  var slots = evs.reduce(function(a,e){ return a + (e.slots_left||0); }, 0);
 
   document.getElementById('statTotal').textContent = total;
   document.getElementById('statOpen').textContent  = open;
   document.getElementById('statSlots').textContent = slots >= 1000 ? (slots/1000).toFixed(1)+'k' : slots;
 
-  ['all','academic','sports','cultural','career','volunteer'].forEach(c => {
-    const el = document.getElementById('fc-'+c);
-    if (el) el.textContent = c==='all' ? total : evs.filter(e=>e.category===c).length;
+  ['all','academic','sports','cultural','career','volunteer'].forEach(function(c) {
+    var el = document.getElementById('fc-' + c);
+    if (el) el.textContent = c === 'all' ? total : evs.filter(function(e){ return e.category === c; }).length;
   });
 
-  const urlCat = new URLSearchParams(window.location.search).get('cat');
-  if (urlCat) {
-    curCat = urlCat;
-    document.querySelectorAll('.ct-btn').forEach(b =>
-      b.classList.toggle('active', b.textContent.trim().toLowerCase() === urlCat));
-    document.querySelectorAll('.sb-item').forEach(b => {
-      const t = b.querySelector('.sb-item-left')?.textContent?.trim().toLowerCase()||'';
-      b.classList.toggle('active', t === urlCat);
-    });
-  }
   render();
 }
 
 /* ══════════════════════════════════════════════════════════════
-   AI RECOMMENDATIONS — now includes user preferences
+   VIEW MODE SWITCHING: Upcoming ↔ Archived
+   ══════════════════════════════════════════════════════════════ */
+function switchMode(mode, btn) {
+  viewMode = 'upcoming';
+  curCat = 'all';
+  window.EVENTS = upcomingEvents;
+
+  /* Update tab UI */
+  document.querySelectorAll('.ct-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+
+  /* Update sidebar */
+  document.querySelectorAll('.sb-item').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelector('.sb-item').classList.add('active');
+
+  /* Update toolbar */
+  document.getElementById('evTitle').textContent = 'Upcoming Events';
+  document.getElementById('evBadge').className = 'ev-toolbar-badge live';
+  document.getElementById('evBadge').innerHTML = '● Live';
+  document.getElementById('aiRecOuter').style.display = '';
+
+  render();
+}
+
+function switchToArchived() {
+  viewMode = 'archived';
+  curCat = 'all';
+
+  /* Update tab UI */
+  document.querySelectorAll('.ct-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('archTabBtn').classList.add('active');
+
+  /* Update sidebar */
+  document.querySelectorAll('.sb-item').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelector('.sb-item').classList.add('active');
+
+  /* Update toolbar */
+  document.getElementById('evTitle').textContent = 'Past / Archived Events';
+  document.getElementById('evBadge').className = 'ev-toolbar-badge';
+  document.getElementById('evBadge').innerHTML = '📜 Archived';
+
+  /* Hide AI recs for archived view */
+  document.getElementById('aiRecOuter').style.display = 'none';
+
+  /* If not loaded yet, fetch now */
+  if (!archivedEvents.length) {
+    document.getElementById('evGrid').innerHTML = '<div class="state-box"><div class="spinner"></div><p>Loading archived events...</p></div>';
+
+    sb.from('events')
+      .select('*')
+      .eq('status', 'approved')
+      .lt('date', todayStr())
+      .order('date', { ascending: false })
+      .then(function(res) {
+        var myEventIds = new Set();
+        if (currentUser && currentUser.matrix) {
+          /* We don't re-fetch registrations — use what we already know */
+          upcomingEvents.forEach(function(e) { if (e.registered) myEventIds.add(e.id); });
+        }
+        archivedEvents = (res.data || []).map(function(e) { return Object.assign({}, e, { registered: myEventIds.has(e.id) }); });
+        window.EVENTS = archivedEvents;
+        render();
+      });
+  } else {
+    window.EVENTS = archivedEvents;
+    render();
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   AI RECOMMENDATIONS
    ══════════════════════════════════════════════════════════════ */
 async function loadAIRecommendations(user, myEventIds) {
-  const evs = window.EVENTS || [];
+  var evs = upcomingEvents;
   if (!evs.length) return;
 
   document.getElementById('aiRecOuter').style.display = 'block';
 
-  const eventSummaries = evs
-    .filter(e => e.slots_left > 0 && !myEventIds.has(e.id))
+  var eventSummaries = evs
+    .filter(function(e){ return e.slots_left > 0 && !myEventIds.has(e.id); })
     .slice(0, 30)
-    .map(e => ({
-      id: e.id,
-      title: e.title,
-      category: e.category,
-      faculty: e.faculty || 'Open to all',
-      date: e.date,
-      slots: e.slots_left,
-      description: (e.description || '').substring(0, 80)
-    }));
+    .map(function(e) {
+      return { id: e.id, title: e.title, category: e.category, faculty: e.faculty || 'Open to all', date: e.date, slots: e.slots_left, description: (e.description || '').substring(0, 80) };
+    });
 
-  if (!eventSummaries.length) {
-    document.getElementById('aiRecOuter').style.display = 'none';
-    return;
-  }
+  if (!eventSummaries.length) { document.getElementById('aiRecOuter').style.display = 'none'; return; }
 
-  /* Build preference context */
   var prefCats = (userPrefs && userPrefs.categories) ? userPrefs.categories : [];
   var prefFreq = (userPrefs && userPrefs.frequency) ? userPrefs.frequency : 'unknown';
   var prefKeys = (userPrefs && userPrefs.keywords) ? userPrefs.keywords : [];
-  var userPastCats = evs
-    .filter(e => myEventIds.has(e.id))
-    .map(e => e.category)
-    .filter(Boolean);
+  var userPastCats = evs.filter(function(e){ return myEventIds.has(e.id); }).map(function(e){ return e.category; }).filter(Boolean);
 
-  /* Update subtitle to reflect actual data used */
   var subtitleParts = [];
   if (prefCats.length) subtitleParts.push('interests: ' + prefCats.join(', '));
   if (prefKeys.length) subtitleParts.push('keywords: ' + prefKeys.slice(0,4).join(', '));
   if (userPastCats.length) subtitleParts.push('past: ' + userPastCats.join(', '));
   if (!subtitleParts.length) subtitleParts.push('explore and discover');
-  document.getElementById('aiRecSubtitle').textContent =
-    'Based on your ' + subtitleParts.join(' · ');
+  document.getElementById('aiRecSubtitle').textContent = 'Based on your ' + subtitleParts.join(' · ');
 
-  const prompt = `You are a helpful university event recommendation engine for UTM (Universiti Teknologi Malaysia).
-
-Student profile:
-- Faculty: ${user?.faculty || 'Unknown'}
-- Preferred event categories: ${prefCats.length ? prefCats.join(', ') : 'None specified'}
-- Attendance frequency: ${prefFreq}
-- Specific interest keywords: ${prefKeys.length ? prefKeys.join(', ') : 'None specified'}
-- Past event categories attended: ${userPastCats.length ? userPastCats.join(', ') : 'None yet'}
-
-IMPORTANT RULES for picking recommendations:
-1. If the student has preferred categories, PRIORITIZE events from those categories.
-2. If they have interest keywords, look for events whose title or description matches those keywords.
-3. If they attend events frequently (weekly/biweekly), prioritize upcoming events sooner.
-4. Always consider their faculty — faculty-specific events are highly relevant.
-5. Mix it up: if they only picked 1-2 categories, include 1 wildcard from another category to help them discover new things.
-6. If no preferences are set at all, pick a diverse mix from different categories.
-
-Available upcoming events (JSON array):
- ${JSON.stringify(eventSummaries, null, 2)}
-
-Task: Pick the TOP 4 most relevant events for this student.
-For each pick, write a short reason (max 12 words) explaining why it suits them based on their profile.
-
-Respond ONLY with a valid JSON array. No markdown, no explanation outside the array.
-Format:
-[
-  { "id": <event_id_number>, "reason": "Short personalised reason here" },
-  ...
-]`;
+  var prompt = 'You are a helpful university event recommendation engine for UTM.\n\n' +
+    'Student profile:\n' +
+    '- Faculty: ' + (user?.faculty || 'Unknown') + '\n' +
+    '- Preferred event categories: ' + (prefCats.length ? prefCats.join(', ') : 'None specified') + '\n' +
+    '- Attendance frequency: ' + prefFreq + '\n' +
+    '- Specific interest keywords: ' + (prefKeys.length ? prefKeys.join(', ') : 'None specified') + '\n' +
+    '- Past event categories attended: ' + (userPastCats.length ? userPastCats.join(', ') : 'None yet') + '\n\n' +
+    'IMPORTANT RULES:\n' +
+    '1. If the student has preferred categories, PRIORITIZE events from those categories.\n' +
+    '2. If they have interest keywords, look for events whose title or description matches those keywords.\n' +
+    '3. If they attend frequently (weekly/biweekly), prioritize upcoming events sooner.\n' +
+    '4. Always consider their faculty.\n' +
+    '5. Mix it up: if they only picked 1-2 categories, include 1 wildcard from another category.\n' +
+    '6. If no preferences are set, pick a diverse mix from different categories.\n' +
+    '7. NEVER pick events with 0 slots remaining.\n\n' +
+    'Available upcoming events (JSON):\n' + JSON.stringify(eventSummaries, null, 2) + '\n\n' +
+    'Task: Pick TOP 4 events. For each, write a short reason (max 12 words).\n\n' +
+    'Respond ONLY with a valid JSON array. No markdown.\n' +
+    '[{ "id": <number>, "reason": "Short reason" }, ...]';
 
   try {
-    const res = await fetch(`${SUPABASE_URL}/functions/v1/ai-recommend`, {
+    var res = await fetch(SUPABASE_URL + '/functions/v1/ai-recommend', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${SUPABASE_ANON}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ prompt })
+      headers: { 'Authorization': 'Bearer ' + SUPABASE_ANON, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: prompt })
     });
-
     if (!res.ok) throw new Error('AI error ' + res.status);
-    const data = await res.json();
-    const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
-    const clean = raw.replace(/```json|```/g,'').trim();
-    const picks = JSON.parse(clean);
-    renderRecommendations(picks, evs, user);
-
+    var data = await res.json();
+    var raw = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) || '[]';
+    var clean = raw.replace(/```json|```/g,'').trim();
+    var picks = JSON.parse(clean);
+    renderRecommendations(picks, evs);
   } catch (err) {
     console.warn('AI recommendation failed:', err);
     document.getElementById('aiRecOuter').style.display = 'none';
   }
 }
 
-function renderRecommendations(picks, evs, user) {
-  if (!picks || !picks.length) {
-    document.getElementById('aiRecOuter').style.display = 'none';
-    return;
-  }
-
-  const html = picks.map((pick, i) => {
-    const ev = evs.find(e => e.id === pick.id);
+function renderRecommendations(picks, evs) {
+  if (!picks || !picks.length) { document.getElementById('aiRecOuter').style.display = 'none'; return; }
+  document.getElementById('aiRecScroll').innerHTML = picks.map(function(pick, i) {
+    var ev = evs.find(function(e){ return e.id === pick.id; });
     if (!ev) return '';
-    const emoji = ev.emoji || '📌';
-
-    return `
-      <div class="rec-card cat-${ev.category||'academic'}" onclick="openModal(${ev.id})"
-           style="animation:fadeUp .3s ease ${i * .08}s both">
-        <div class="rec-card-body">
-          <div class="rec-card-top">
-            <span class="ev-badge ${badgeClass[ev.category]||'badge-academic'}">${cap(ev.category)}</span>
-            <span style="font-size:22px;line-height:1">${emoji}</span>
-          </div>
-          <div class="rec-ai-reason">
-            <span class="rec-ai-reason-icon">✦</span>
-            <span>${pick.reason}</span>
-          </div>
-          <div class="rec-title">${ev.title||'Untitled Event'}</div>
-          <div class="rec-meta-row"><span class="rec-meta-ic">📅</span>${ev.date||'–'}</div>
-          <div class="rec-meta-row"><span class="rec-meta-ic">📍</span>${ev.location||'–'}</div>
-        </div>
-        <div class="rec-foot">
-          <span class="rec-slots"><b>${ev.slots_left}</b> slots left</span>
-          <button class="rec-btn" onclick="event.stopPropagation();goRegister(${ev.id})">Register</button>
-        </div>
-      </div>`;
+    return '<div class="rec-card cat-' + (ev.category||'academic') + '" onclick="openModal(' + ev.id + ')" style="animation:fadeUp .3s ease ' + (i*.08) + 's both">' +
+      '<div class="rec-card-body">' +
+        '<div class="rec-card-top"><span class="ev-badge ' + (badgeClass[ev.category]||'badge-academic') + '">' + cap(ev.category) + '</span><span style="font-size:22px;line-height:1">' + (ev.emoji||'📌') + '</span></div>' +
+        '<div class="rec-ai-reason"><span class="rec-ai-reason-icon">✦</span><span>' + pick.reason + '</span></div>' +
+        '<div class="rec-title">' + (ev.title||'Untitled Event') + '</div>' +
+        '<div class="rec-meta-row"><span class="rec-meta-ic">📅</span>' + (ev.date||'–') + '</div>' +
+        '<div class="rec-meta-row"><span class="rec-meta-ic">📍</span>' + (ev.location||'–') + '</div>' +
+      '</div>' +
+      '<div class="rec-foot"><span class="rec-slots"><b>' + ev.slots_left + '</b> slots left</span>' +
+        '<button class="rec-btn" onclick="event.stopPropagation();goRegister(' + ev.id + ')">Register</button></div></div>';
   }).join('');
-
-  document.getElementById('aiRecScroll').innerHTML = html;
 }
 
 /* ══════════════════════════════════════════════════════════════
    RENDER
    ══════════════════════════════════════════════════════════════ */
 function render() {
-  const evs  = window.EVENTS || [];
-  const list = evs.filter(e => {
-    const mc = curCat === 'all' || e.category === curCat;
-    const ms = !curQ ||
-      (e.title||'').toLowerCase().includes(curQ) ||
-      (e.location||'').toLowerCase().includes(curQ) ||
-      (e.faculty||'').toLowerCase().includes(curQ);
+  var evs = window.EVENTS || [];
+  var isArchView = (viewMode === 'archived');
+
+  var list = evs.filter(function(e) {
+    var mc = curCat === 'all' || e.category === curCat;
+    var ms = !curQ ||
+      (e.title||'').toLowerCase().indexOf(curQ) !== -1 ||
+      (e.location||'').toLowerCase().indexOf(curQ) !== -1 ||
+      (e.faculty||'').toLowerCase().indexOf(curQ) !== -1;
     return mc && ms;
   });
 
+  var label = isArchView ? 'archived event' : 'upcoming event';
   document.getElementById('evMeta').textContent =
-    list.length + ' event' + (list.length !== 1 ? 's' : '') + ' found · Live from Supabase';
+    list.length + ' ' + label + (list.length !== 1 ? 's' : '') + ' found' + (isArchView ? '' : ' · Live from Supabase');
 
   if (!list.length) {
-    document.getElementById('evGrid').innerHTML =
-      '<div class="state-box"><h3>No events found</h3><p>Try a different filter or search term.</p></div>';
+    document.getElementById('evGrid').innerHTML = '<div class="state-box"><h3>' + (isArchView ? 'No archived events found' : 'No events found') + '</h3><p>' + (isArchView ? 'Past events will appear here.' : 'Try a different filter or search term.') + '</p></div>';
     return;
   }
 
-  document.getElementById('evGrid').innerHTML = list.map((ev, i) => {
-    const pct  = ev.slots > 0 ? Math.round((ev.slots_left / ev.slots) * 100) : 0;
-    const full = parseInt(ev.slots_left) <= 0;
-    const low  = !full && pct <= 20;
-    const fc   = full ? '#dc2626' : low ? '#e67e22' : '#1a5c38';
-    const emoji = ev.emoji || '📌';
-    const isReg = !!ev.registered;
+  document.getElementById('evGrid').innerHTML = list.map(function(ev, i) {
+    var pct  = ev.slots > 0 ? Math.round((ev.slots_left / ev.slots) * 100) : 0;
+    var full = parseInt(ev.slots_left) <= 0;
+    var low  = !full && pct <= 20;
+    var fc   = full ? '#dc2626' : low ? '#e67e22' : '#1a5c38';
+    var emoji = ev.emoji || '📌';
+    var isReg = !!ev.registered;
 
-    return `
-      <div class="ev-card cat-${ev.category||'academic'}${isReg?' is-registered':''}"
-           style="animation-delay:${i*.04}s" onclick="openModal(${ev.id})">
-        <div class="ev-card-body">
-          ${isReg ? `<div class="registered-ribbon">✓ Registered</div>` : ''}
-          <div class="ev-card-top">
-            <span class="ev-badge ${badgeClass[ev.category]||'badge-academic'}">${cap(ev.category)}</span>
-            <span class="ev-emoji">${emoji}</span>
-          </div>
-          <div class="ev-title">${ev.title||'Untitled Event'}</div>
-          <div class="ev-meta">
-            <div class="ev-meta-row"><span class="ev-meta-ic">📅</span>${ev.date||'–'}</div>
-            <div class="ev-meta-row"><span class="ev-meta-ic">🕐</span>${ev.time||'–'}</div>
-            <div class="ev-meta-row"><span class="ev-meta-ic">📍</span>${ev.location||'–'}</div>
-          </div>
-          <div class="ev-card-foot">
-            ${isReg
-              ? `<div class="ev-slots"><div class="ev-slots-txt ok"><b>You're in!</b> Registration confirmed</div><div class="ev-bar"><div class="ev-bar-fill" style="width:${pct}%;background:${fc}"></div></div></div>`
-              : full
-                ? `<span class="full-tag">Registration Full</span>`
-                : `<div class="ev-slots"><div class="ev-slots-txt ${low?'':'ok'}"><b>${ev.slots_left}</b> slots remaining</div><div class="ev-bar"><div class="ev-bar-fill" style="width:${pct}%;background:${fc}"></div></div></div>`
-            }
-            <button
-              class="ev-btn${isReg?' registered':full?' outline':''}"
-              onclick="event.stopPropagation();${isReg?`viewTicket(${ev.id})`:full?`openModal(${ev.id})`:`goRegister(${ev.id})`}">
-              ${isReg ? '🎟 View Ticket' : full ? 'View Details' : 'Register'}
-            </button>
-          </div>
-        </div>
-      </div>`;
+    var cardExtra = '';
+    var ribbonHtml = '';
+    var footHtml = '';
+
+    if (isArchView) {
+      /* Archived: show expired ribbon, disabled button */
+      cardExtra = ' is-expired';
+      ribbonHtml = '<div class="expired-ribbon">Expired</div>';
+      footHtml = '<span class="full-tag" style="color:#888;background:#f5f5f5;border-color:#ddd">Event has passed</span>';
+    } else if (isReg) {
+      cardExtra = ' is-registered';
+      ribbonHtml = '<div class="registered-ribbon">✓ Registered</div>';
+      footHtml = '<div class="ev-slots"><div class="ev-slots-txt ok"><b>You\'re in!</b> Registration confirmed</div><div class="ev-bar"><div class="ev-bar-fill" style="width:' + pct + '%;background:' + fc + '"></div></div></div>' +
+        '<button class="ev-btn registered" onclick="event.stopPropagation();viewTicket(' + ev.id + ')">🎟 View Ticket</button>';
+    } else if (full) {
+      footHtml = '<span class="full-tag">Registration Full</span>' +
+        '<button class="ev-btn outline" onclick="event.stopPropagation();openModal(' + ev.id + ')">View Details</button>';
+    } else {
+      footHtml = '<div class="ev-slots"><div class="ev-slots-txt ' + (low?'':'ok') + '"><b>' + ev.slots_left + '</b> slots remaining</div><div class="ev-bar"><div class="ev-bar-fill" style="width:' + pct + '%;background:' + fc + '"></div></div></div>' +
+        '<button class="ev-btn" onclick="event.stopPropagation();goRegister(' + ev.id + ')">Register</button>';
+    }
+
+    return '<div class="ev-card cat-' + (ev.category||'academic') + cardExtra + '" style="animation-delay:' + (i*.04) + 's" onclick="openModal(' + ev.id + ')">' +
+      '<div class="ev-card-body">' + ribbonHtml +
+        '<div class="ev-card-top"><span class="ev-badge ' + (badgeClass[ev.category]||'badge-academic') + '">' + cap(ev.category) + '</span><span class="ev-emoji">' + emoji + '</span></div>' +
+        '<div class="ev-title">' + (ev.title||'Untitled Event') + '</div>' +
+        '<div class="ev-meta">' +
+          '<div class="ev-meta-row"><span class="ev-meta-ic">📅</span>' + (ev.date||'–') + '</div>' +
+          '<div class="ev-meta-row"><span class="ev-meta-ic">🕐</span>' + (ev.time||'–') + '</div>' +
+          '<div class="ev-meta-row"><span class="ev-meta-ic">📍</span>' + (ev.location||'–') + '</div>' +
+        '</div>' +
+        '<div class="ev-card-foot">' + footHtml + '</div>' +
+      '</div></div>';
   }).join('');
 }
 
@@ -1180,19 +1154,25 @@ function render() {
    FILTERS
    ══════════════════════════════════════════════════════════════ */
 function setCat(c, btn) {
+  if (viewMode === 'archived') {
+    /* If user clicks a category while in archived view, stay in archived */
+  } else {
+    viewMode = 'upcoming';
+    window.EVENTS = upcomingEvents;
+  }
   curCat = c;
-  document.querySelectorAll('.ct-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.ct-btn').forEach(function(b) { b.classList.remove('active'); });
   if (btn) btn.classList.add('active');
   render();
 }
 
 function setCatSb(c, btn) {
   curCat = c;
-  document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(function(b) { b.classList.remove('active'); });
   btn.classList.add('active');
-  document.querySelectorAll('.ct-btn').forEach(b => {
-    const t = b.textContent.trim().toLowerCase();
-    b.classList.toggle('active', c==='all' ? t==='all events' : t===c);
+  document.querySelectorAll('.ct-btn:not(.archived-btn)').forEach(function(b) {
+    var t = b.textContent.trim().toLowerCase();
+    b.classList.toggle('active', viewMode === 'archived' ? false : (c === 'all' ? t === 'all events' : t === c));
   });
   render();
 }
@@ -1211,9 +1191,12 @@ async function doLogout() {
    MODAL
    ══════════════════════════════════════════════════════════════ */
 function openModal(id) {
-  const ev = (window.EVENTS||[]).find(e => e.id === id);
+  /* Search both pools */
+  var ev = upcomingEvents.find(function(e){ return e.id === id; }) ||
+           archivedEvents.find(function(e){ return e.id === id; });
   if (!ev) return;
-  const isReg = !!ev.registered;
+  var isReg = !!ev.registered;
+  var expired = isExpired(ev);
 
   document.getElementById('mBadge').textContent  = cap(ev.category);
   document.getElementById('mBadge').className    = 'm-cat-badge ev-badge ' + (badgeClass[ev.category]||'badge-academic');
@@ -1222,31 +1205,40 @@ function openModal(id) {
   document.getElementById('mTime').textContent   = ev.time||'–';
   document.getElementById('mLoc').textContent    = ev.location||'–';
   document.getElementById('mFac').textContent    = ev.faculty||'–';
-  document.getElementById('mSlots').textContent  = ev.slots_left > 0 ? ev.slots_left + ' slots remaining' : 'Registration Full';
+  document.getElementById('mSlots').textContent  = expired ? 'Event has passed' : (ev.slots_left > 0 ? ev.slots_left + ' slots remaining' : 'Registration Full');
   document.getElementById('mOrg').textContent    = ev.organizer_name||'–';
   document.getElementById('mDesc').textContent   = ev.description||'–';
   document.getElementById('mRegisteredNote').classList.toggle('show', isReg);
 
-  const fbBtn = document.getElementById('mFeedback');
+  var fbBtn = document.getElementById('mFeedback');
   fbBtn.style.display = isReg ? 'block' : 'none';
-  fbBtn.onclick = () => { closeModal(); window.location.href = '../Feedback/feedback_form.html?id=' + id; };
+  fbBtn.onclick = function() { closeModal(); window.location.href = '../Feedback/feedback_form.html?id=' + id; };
 
-  const btn = document.getElementById('mReg');
-  if (isReg) {
+  var btn = document.getElementById('mReg');
+  if (expired) {
+    btn.textContent = 'Event Has Passed';
+    btn.className = 'm-btn-reg';
+    btn.disabled = true;
+    btn.onclick = null;
+    btn.style.background = '#999';
+  } else if (isReg) {
     btn.textContent = '🎟 View My Ticket';
-    btn.className   = 'm-btn-reg registered';
-    btn.disabled    = false;
-    btn.onclick     = () => { closeModal(); viewTicket(ev.id); };
+    btn.className = 'm-btn-reg registered';
+    btn.disabled = false;
+    btn.style.background = '';
+    btn.onclick = function() { closeModal(); viewTicket(ev.id); };
   } else if (ev.slots_left <= 0) {
     btn.textContent = 'Registration Closed';
-    btn.className   = 'm-btn-reg';
-    btn.disabled    = true;
-    btn.onclick     = null;
+    btn.className = 'm-btn-reg';
+    btn.disabled = true;
+    btn.style.background = '';
+    btn.onclick = null;
   } else {
     btn.textContent = 'Register Now';
-    btn.className   = 'm-btn-reg';
-    btn.disabled    = false;
-    btn.onclick     = () => goRegister(ev.id);
+    btn.className = 'm-btn-reg';
+    btn.disabled = false;
+    btn.style.background = '';
+    btn.onclick = function() { goRegister(ev.id); };
   }
 
   document.getElementById('overlay').classList.add('open');
@@ -1254,17 +1246,15 @@ function openModal(id) {
 }
 
 function goRegister(id) {
-  const ev = (window.EVENTS||[]).find(e => e.id === id);
+  var ev = (window.EVENTS||[]).find(function(e){ return e.id === id; });
   if (!ev) return;
-  const p = new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
-  window.location.href = '../Login/register.html?' + p;
+  window.location.href = '../Login/register.html?' + new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
 }
 
 function viewTicket(id) {
-  const ev = (window.EVENTS||[]).find(e => e.id === id);
+  var ev = (window.EVENTS||[]).find(function(e){ return e.id === id; });
   if (!ev) return;
-  const p = new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
-  window.location.href = '../Login/register.html?' + p;
+  window.location.href = '../Login/register.html?' + new URLSearchParams({ id: ev.id, title: ev.title, date: ev.date, location: ev.location, time: ev.time });
 }
 
 function closeModal() {
@@ -1281,13 +1271,10 @@ function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
 init();
 </script>
 
-<!-- CHATBOT WIDGET SCRIPT -->
+<!-- Chatbot Widget Script -->
 <script>
 (function(){
-  var chatOpen    = false;
-  var chatHistory = [];
-  var eventsCtx   = '';
-  var firstOpen   = true;
+  var chatOpen = false, chatHistory = [], eventsCtx = '', firstOpen = true;
 
   function buildEventsContext() {
     var evs = window.EVENTS || [];
@@ -1302,7 +1289,6 @@ init();
     document.getElementById('utm-chat-fab').classList.toggle('open', chatOpen);
     document.getElementById('utm-chat-win').classList.toggle('open', chatOpen);
     document.getElementById('chat-badge').classList.add('hidden');
-
     if (chatOpen && firstOpen) {
       firstOpen = false;
       eventsCtx = buildEventsContext();
@@ -1318,121 +1304,79 @@ init();
 
   window.sendMsg = async function() {
     var input = document.getElementById('cwInput');
-    var text  = input.value.trim();
+    var text = input.value.trim();
     if (!text) return;
     input.value = '';
-
     document.getElementById('cwQuick').style.display = 'none';
-
     addUserMsg(text);
     chatHistory.push({ role: 'user', content: text });
-
     var typId = addTyping();
     document.getElementById('cwSend').disabled = true;
-
     try {
-      var systemMsg = 'You are UTM AI Assistant, a friendly chatbot for Universiti Teknologi Malaysia\'s Campus Event Finder.\n\n' +
-        'Current campus events data:\n' + (eventsCtx || buildEventsContext()) + '\n\n' +
-        'Rules:\n' +
-        '- Answer in English.\n' +
-        '- If asked about events, reference the data above accurately.\n' +
-        '- Keep answers concise and helpful (max 3-4 sentences).\n' +
-        '- If no relevant event found, say so politely.\n' +
-        '- For registration questions, tell them to click "Register" on the event card.\n' +
-        '- Be warm, friendly, and encouraging.\n' +
-        '- Never make up events that aren\'t in the data.';
-
+      var systemMsg = 'You are UTM AI Assistant, a friendly chatbot for UTM\'s Campus Event Finder.\n\n' +
+        'Current campus events data (upcoming only):\n' + (eventsCtx || buildEventsContext()) + '\n\n' +
+        'Rules:\n- Answer in English.\n- Reference the data above accurately.\n- Keep answers concise (max 3-4 sentences).\n- If no relevant event found, say so politely.\n- For registration, tell them to click "Register" on the event card.\n- Be warm and friendly.\n- Never make up events.';
       var res = await fetch(SUPABASE_URL + '/functions/v1/ai-recommend', {
         method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + SUPABASE_ANON,
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Authorization': 'Bearer ' + SUPABASE_ANON, 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: buildChatPrompt(systemMsg, chatHistory) })
       });
-
       removeTyping(typId);
-
       if (!res.ok) throw new Error('HTTP ' + res.status);
-      var data  = await res.json();
+      var data = await res.json();
       var reply = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) || 'Sorry, I\'m unable to respond right now.';
-
       addBotMsg(reply);
       chatHistory.push({ role: 'assistant', content: reply });
-
     } catch(e) {
       removeTyping(typId);
-      addBotMsg('Sorry, there\'s a technical issue. Please try again in a moment. 🙏');
-      console.warn('Chat error:', e);
+      addBotMsg('Sorry, there\'s a technical issue. Please try again. 🙏');
     }
-
     document.getElementById('cwSend').disabled = false;
     document.getElementById('cwInput').focus();
   };
 
   function buildChatPrompt(systemMsg, history) {
     var lines = ['SYSTEM: ' + systemMsg, ''];
-    for (var i = 0; i < history.length; i++) {
-      var m = history[i];
-      lines.push((m.role === 'user' ? 'Student' : 'Assistant') + ': ' + m.content);
-    }
+    for (var i = 0; i < history.length; i++) lines.push((history[i].role === 'user' ? 'Student' : 'Assistant') + ': ' + history[i].content);
     lines.push('Assistant:');
     return lines.join('\n');
   }
 
-  function now() {
-    return new Date().toLocaleTimeString('en-MY', { hour: '2-digit', minute: '2-digit' });
-  }
+  function now() { return new Date().toLocaleTimeString('en-MY', { hour: '2-digit', minute: '2-digit' }); }
 
   function addBotMsg(text) {
     var msgs = document.getElementById('cwMsgs');
-    var div  = document.createElement('div');
+    var div = document.createElement('div');
     div.className = 'msg bot';
-    div.innerHTML = '<div class="msg-av">🤖</div>' +
-      '<div><div class="msg-bubble">' + text.replace(/\n/g, '<br>') + '</div>' +
-      '<div class="msg-time">' + now() + '</div></div>';
+    div.innerHTML = '<div class="msg-av">🤖</div><div><div class="msg-bubble">' + text.replace(/\n/g, '<br>') + '</div><div class="msg-time">' + now() + '</div></div>';
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
-
-    if (!chatOpen) {
-      document.getElementById('chat-badge').classList.remove('hidden');
-    }
+    if (!chatOpen) document.getElementById('chat-badge').classList.remove('hidden');
   }
 
   function addUserMsg(text) {
     var msgs = document.getElementById('cwMsgs');
-    var div  = document.createElement('div');
+    var div = document.createElement('div');
     div.className = 'msg user';
-    div.innerHTML = '<div><div class="msg-bubble">' + text + '</div>' +
-      '<div class="msg-time" style="text-align:right">' + now() + '</div></div>';
+    div.innerHTML = '<div><div class="msg-bubble">' + text + '</div><div class="msg-time" style="text-align:right">' + now() + '</div></div>';
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
   }
 
   function addTyping() {
     var msgs = document.getElementById('cwMsgs');
-    var id   = 'typ-' + Date.now();
-    var div  = document.createElement('div');
-    div.className = 'msg bot';
-    div.id = id;
-    div.innerHTML = '<div class="msg-av">🤖</div>' +
-      '<div class="msg-bubble" style="padding:10px 14px">' +
-      '<div class="typing-dots"><span></span><span></span><span></span></div></div>';
+    var id = 'typ-' + Date.now();
+    var div = document.createElement('div');
+    div.className = 'msg bot'; div.id = id;
+    div.innerHTML = '<div class="msg-av">🤖</div><div class="msg-bubble" style="padding:10px 14px"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
     return id;
   }
 
-  function removeTyping(id) {
-    var el = document.getElementById(id);
-    if (el) el.remove();
-  }
+  function removeTyping(id) { var el = document.getElementById(id); if (el) el.remove(); }
 
-  setTimeout(function() {
-    if (!chatOpen) {
-      document.getElementById('chat-badge').classList.remove('hidden');
-    }
-  }, 3000);
+  setTimeout(function() { if (!chatOpen) document.getElementById('chat-badge').classList.remove('hidden'); }, 3000);
 })();
 </script>
 </body>
