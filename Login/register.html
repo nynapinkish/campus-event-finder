@@ -286,7 +286,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
         </div>
         <div class="success-actions">
           <button class="btn-portal" onclick="window.location.href='events.html'">← Back to Events</button>
-          <button class="btn-new" onclick="window.location.href='../Feedback/feedback_form.html?id='+eventId">📝 Give Feedback</button>
+          <button class="btn-new" id="btnFeedback" onclick="goToFeedback()">📝 Give Feedback</button>
         </div>
       </div>
     </div>
@@ -685,6 +685,10 @@ async function prefillFromSupabase(matrix) {
     if (r) r.checked = true;
   }
   document.getElementById('autofillBanner').classList.add('show');
+}
+
+function goToFeedback() {
+  window.location.href = '../Homepage/feedback.html?id=' + eventId;
 }
 
 function fillField(id, val, isSelect) {
