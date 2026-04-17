@@ -86,6 +86,9 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .ar-sb-btn:hover{opacity:.9}
 .back-link{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:4px;padding:9px 14px;font-size:13px;color:var(--muted);text-decoration:none;transition:all .15s;}
 .back-link:hover{color:var(--red);border-color:rgba(139,0,0,.3)}
+.sb-pref-btn{display:flex;align-items:center;gap:8px;background:#fff;border:1px dashed rgba(139,0,0,.4);border-radius:4px;padding:10px 14px;font-size:12.5px;color:var(--red);cursor:pointer;text-align:left;font-family:'Open Sans',sans-serif;transition:all .15s;width:100%;}
+.sb-pref-btn:hover{background:var(--red-light);border-color:var(--red)}
+.sb-pref-btn span{font-size:14px}
 
 .ev-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
 .ev-toolbar-left h2{font-size:16px;font-weight:700;color:var(--text)}
@@ -144,6 +147,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .ai-rec-title h3{font-size:15px;font-weight:700;color:var(--text)}
 .ai-rec-title p{font-size:11.5px;color:var(--muted);margin-top:1px}
 .ai-rec-badge{font-size:10px;font-weight:700;letter-spacing:.6px;background:linear-gradient(90deg,#8B0000,#c0392b);color:#fff;padding:3px 10px;border-radius:20px;text-transform:uppercase;flex-shrink:0}
+.ai-rec-edit{font-size:11.5px;color:var(--red);cursor:pointer;background:none;border:none;font-family:'Open Sans',sans-serif;text-decoration:underline;text-underline-offset:2px;transition:opacity .15s;white-space:nowrap;}
+.ai-rec-edit:hover{opacity:.7}
 .ai-rec-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .ai-rec-scroll::-webkit-scrollbar{height:4px}
 .ai-rec-scroll::-webkit-scrollbar-track{background:transparent}
@@ -214,6 +219,48 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .footer-bottom-links a{font-size:12px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s}
 .footer-bottom-links a:hover{color:rgba(255,255,255,.7)}
 
+/* ── PREFERENCE ONBOARDING MODAL ─────────────────────── */
+.pref-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center;padding:20px;}
+.pref-overlay.open{display:flex}
+.pref-modal{background:#fff;border-radius:8px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:mIn .25s ease;}
+.pref-head{background:linear-gradient(135deg,#8B0000,#a50000);padding:22px 24px 18px;border-radius:8px 8px 0 0;text-align:center;}
+.pref-head-icon{font-size:32px;margin-bottom:8px}
+.pref-head h2{color:#fff;font-size:18px;font-weight:700;margin-bottom:4px}
+.pref-head p{color:rgba(255,255,255,.7);font-size:13px;line-height:1.4}
+.pref-body{padding:22px 24px 24px}
+.pref-section{margin-bottom:20px}
+.pref-section:last-child{margin-bottom:0}
+.pref-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--light);margin-bottom:10px}
+.pref-cats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pref-cat-card{display:flex;align-items:center;gap:10px;padding:12px 14px;border:2px solid var(--border);border-radius:6px;cursor:pointer;transition:all .15s;background:#fff;user-select:none;}
+.pref-cat-card:hover{border-color:rgba(139,0,0,.3);background:#fefbfb}
+.pref-cat-card.selected{border-color:var(--red);background:var(--red-light)}
+.pref-cat-icon{font-size:22px;line-height:1;flex-shrink:0}
+.pref-cat-info{flex:1}
+.pref-cat-name{font-size:13px;font-weight:600;color:var(--text)}
+.pref-cat-desc{font-size:11px;color:var(--light);margin-top:1px}
+.pref-cat-check{width:20px;height:20px;border-radius:50%;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;font-size:11px;color:#fff;}
+.pref-cat-card.selected .pref-cat-check{background:var(--red);border-color:var(--red)}
+.pref-freq{display:flex;gap:8px;flex-wrap:wrap}
+.pref-freq-pill{padding:8px 16px;border:2px solid var(--border);border-radius:20px;font-size:12.5px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;background:#fff;user-select:none;}
+.pref-freq-pill:hover{border-color:rgba(139,0,0,.3)}
+.pref-freq-pill.selected{border-color:var(--red);background:var(--red);color:#fff}
+.pref-tags-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.pref-tag{display:flex;align-items:center;gap:5px;background:var(--red-light);color:var(--red);border:1px solid rgba(139,0,0,.15);border-radius:16px;padding:4px 10px 4px 12px;font-size:12px;font-weight:500;}
+.pref-tag-x{cursor:pointer;font-size:13px;opacity:.6;transition:opacity .15s;line-height:1}
+.pref-tag-x:hover{opacity:1}
+.pref-input-row{display:flex;gap:8px}
+.pref-input{flex:1;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;font-family:'Open Sans',sans-serif;outline:none;color:var(--text);transition:border-color .15s}
+.pref-input:focus{border-color:var(--red)}
+.pref-input::placeholder{color:#bbb}
+.pref-add-btn{background:none;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;color:var(--muted);cursor:pointer;font-family:'Open Sans',sans-serif;transition:all .15s;white-space:nowrap}
+.pref-add-btn:hover{border-color:var(--red);color:var(--red)}
+.pref-foot{display:flex;gap:10px;padding:0 24px 22px}
+.pref-btn-save{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:4px;cursor:pointer;transition:background .15s}
+.pref-btn-save:hover{background:var(--red2)}
+.pref-btn-skip{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 20px;border-radius:4px;cursor:pointer;transition:all .15s}
+.pref-btn-skip:hover{border-color:var(--red);color:var(--red)}
+
 /* ── CHATBOT WIDGET ─────────────────────────────────── */
 #utm-chat-fab{
   position:fixed;bottom:28px;right:28px;z-index:9999;
@@ -228,130 +275,49 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 #utm-chat-fab .fab-close{display:none}
 #utm-chat-fab.open .fab-open{display:none}
 #utm-chat-fab.open .fab-close{display:block}
-
-#utm-chat-fab::before{
-  content:'';position:absolute;inset:-4px;border-radius:50%;
-  border:2px solid rgba(139,0,0,.35);
-  animation:chatPulse 2.4s ease-out infinite;
-}
+#utm-chat-fab::before{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(139,0,0,.35);animation:chatPulse 2.4s ease-out infinite}
 @keyframes chatPulse{0%{transform:scale(1);opacity:.8}70%{transform:scale(1.35);opacity:0}100%{opacity:0}}
 #utm-chat-fab.open::before{display:none}
-
-#chat-badge{
-  position:absolute;top:-2px;right:-2px;
-  width:18px;height:18px;border-radius:50%;
-  background:#c8982a;color:#fff;font-size:10px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Open Sans',sans-serif;
-  border:2px solid #fff;
-  transition:transform .2s;
-}
+#chat-badge{position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:#c8982a;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Open Sans',sans-serif;border:2px solid #fff}
 #chat-badge.hidden{display:none}
-
-#utm-chat-win{
-  position:fixed;bottom:96px;right:28px;z-index:9998;
-  width:360px;max-height:520px;
-  background:#fff;border-radius:12px;
-  box-shadow:0 12px 48px rgba(0,0,0,.18);
-  display:flex;flex-direction:column;overflow:hidden;
-  opacity:0;transform:translateY(12px) scale(.97);
-  pointer-events:none;
-  transition:opacity .22s ease,transform .22s ease;
-  font-family:'Open Sans',sans-serif;
-}
+#utm-chat-win{position:fixed;bottom:96px;right:28px;z-index:9998;width:360px;max-height:520px;background:#fff;border-radius:12px;box-shadow:0 12px 48px rgba(0,0,0,.18);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(12px) scale(.97);pointer-events:none;transition:opacity .22s ease,transform .22s ease;font-family:'Open Sans',sans-serif}
 #utm-chat-win.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
-
-.cw-head{
-  background:#8B0000;padding:14px 16px;
-  display:flex;align-items:center;gap:10px;flex-shrink:0;
-}
-.cw-av{
-  width:34px;height:34px;border-radius:50%;
-  background:rgba(255,255,255,.15);
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;flex-shrink:0;
-}
+.cw-head{background:#8B0000;padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.cw-av{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .cw-head-info{flex:1}
 .cw-head-name{font-size:13.5px;font-weight:700;color:#fff;line-height:1.2}
 .cw-head-status{font-size:11px;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:5px}
 .cw-status-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;flex-shrink:0}
-.cw-head-close{background:rgba(255,255,255,.15);border:none;color:#fff;
-  width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:14px;
-  display:flex;align-items:center;justify-content:center;transition:background .15s;}
+.cw-head-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .15s}
 .cw-head-close:hover{background:rgba(255,255,255,.3)}
-
-.cw-msgs{
-  flex:1;overflow-y:auto;padding:14px;
-  display:flex;flex-direction:column;gap:10px;
-  scrollbar-width:thin;scrollbar-color:#e0e0e0 transparent;
-}
+.cw-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;scrollbar-color:#e0e0e0 transparent}
 .cw-msgs::-webkit-scrollbar{width:4px}
 .cw-msgs::-webkit-scrollbar-thumb{background:#e0e0e0;border-radius:2px}
-
 .msg{display:flex;gap:8px;align-items:flex-end;max-width:88%}
 .msg.bot{align-self:flex-start}
 .msg.user{align-self:flex-end;flex-direction:row-reverse}
-.msg-av{
-  width:26px;height:26px;border-radius:50%;flex-shrink:0;
-  background:#8B0000;color:#fff;font-size:11px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
-}
-.msg-bubble{
-  padding:9px 12px;border-radius:12px;font-size:13px;line-height:1.5;
-  max-width:260px;word-break:break-word;
-}
-.msg.bot .msg-bubble{
-  background:#f5f5f5;color:#222;border-radius:4px 12px 12px 12px;
-}
-.msg.user .msg-bubble{
-  background:#8B0000;color:#fff;border-radius:12px 4px 12px 12px;
-}
+.msg-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;background:#8B0000;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.msg-bubble{padding:9px 12px;border-radius:12px;font-size:13px;line-height:1.5;max-width:260px;word-break:break-word}
+.msg.bot .msg-bubble{background:#f5f5f5;color:#222;border-radius:4px 12px 12px 12px}
+.msg.user .msg-bubble{background:#8B0000;color:#fff;border-radius:12px 4px 12px 12px}
 .msg-time{font-size:10px;color:#bbb;flex-shrink:0;margin-bottom:2px}
-
 .typing-dots{display:flex;gap:4px;padding:4px 2px}
-.typing-dots span{
-  width:6px;height:6px;border-radius:50%;background:#aaa;
-  animation:typDot 1.2s ease infinite;
-}
+.typing-dots span{width:6px;height:6px;border-radius:50%;background:#aaa;animation:typDot 1.2s ease infinite}
 .typing-dots span:nth-child(2){animation-delay:.2s}
 .typing-dots span:nth-child(3){animation-delay:.4s}
 @keyframes typDot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
-
-.cw-quick{
-  padding:8px 14px 4px;display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0;
-}
-.qr-btn{
-  font-size:11.5px;font-family:'Open Sans',sans-serif;
-  border:1px solid rgba(139,0,0,.3);color:#8B0000;background:#fdf5f5;
-  border-radius:16px;padding:5px 11px;cursor:pointer;white-space:nowrap;
-  transition:all .15s;
-}
+.cw-quick{padding:8px 14px 4px;display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0}
+.qr-btn{font-size:11.5px;font-family:'Open Sans',sans-serif;border:1px solid rgba(139,0,0,.3);color:#8B0000;background:#fdf5f5;border-radius:16px;padding:5px 11px;cursor:pointer;white-space:nowrap;transition:all .15s}
 .qr-btn:hover{background:#8B0000;color:#fff;border-color:#8B0000}
-
-.cw-input-row{
-  padding:10px 12px;border-top:1px solid #eee;
-  display:flex;gap:8px;align-items:center;flex-shrink:0;
-}
-.cw-input{
-  flex:1;border:1px solid #e0e0e0;border-radius:20px;
-  padding:8px 14px;font-size:13px;font-family:'Open Sans',sans-serif;
-  outline:none;color:#222;transition:border-color .15s;
-}
+.cw-input-row{padding:10px 12px;border-top:1px solid #eee;display:flex;gap:8px;align-items:center;flex-shrink:0}
+.cw-input{flex:1;border:1px solid #e0e0e0;border-radius:20px;padding:8px 14px;font-size:13px;font-family:'Open Sans',sans-serif;outline:none;color:#222;transition:border-color .15s}
 .cw-input:focus{border-color:#8B0000}
 .cw-input::placeholder{color:#bbb}
-.cw-send{
-  width:34px;height:34px;border-radius:50%;background:#8B0000;border:none;
-  color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:background .15s,transform .15s;flex-shrink:0;
-}
+.cw-send{width:34px;height:34px;border-radius:50%;background:#8B0000;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,transform .15s;flex-shrink:0}
 .cw-send:hover{background:#6d0000;transform:scale(1.05)}
 .cw-send:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .cw-send svg{width:15px;height:15px;fill:#fff}
-
-.cw-powered{
-  text-align:center;font-size:10px;color:#bbb;
-  padding:6px 0 8px;flex-shrink:0;
-}
+.cw-powered{text-align:center;font-size:10px;color:#bbb;padding:6px 0 8px;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -434,10 +400,13 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
         <div class="ai-rec-title-icon">🤖</div>
         <div>
           <h3>Recommended For You</h3>
-          <p id="aiRecSubtitle">Personalised picks based on your faculty and interests</p>
+          <p id="aiRecSubtitle">Personalised picks based on your interests</p>
         </div>
       </div>
-      <span class="ai-rec-badge">AI Picks</span>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="ai-rec-edit" onclick="openPrefModal()">✏️ Edit interests</button>
+        <span class="ai-rec-badge">AI Picks</span>
+      </div>
     </div>
     <div class="ai-rec-scroll" id="aiRecScroll">
       <div class="rec-skeleton">
@@ -517,6 +486,15 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
         <div class="sb-stat"><div class="sb-stat-num" style="font-size:17px;color:#c8982a">AR</div><div class="sb-stat-lbl">Enabled</div></div>
       </div>
     </div>
+
+    <!-- Edit preferences shortcut in sidebar -->
+    <button class="sb-pref-btn" onclick="openPrefModal()">
+      <span>🎯</span>
+      <div>
+        <div style="font-weight:600">My Interests</div>
+        <div id="sbPrefSummary" style="font-size:11px;color:var(--light);margin-top:1px">Not set yet</div>
+      </div>
+    </button>
 
     <div class="ar-sb">
       <div class="ar-sb-title">📱 AR Event Map</div>
@@ -616,8 +594,92 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     CHATBOT WIDGET — HTML ELEMENTS
+     PREFERENCE ONBOARDING MODAL
      ═══════════════════════════════════════════════════════════════ -->
+<div class="pref-overlay" id="prefOverlay">
+  <div class="pref-modal">
+    <div class="pref-head">
+      <div class="pref-head-icon">🎯</div>
+      <h2>Tell Us What You Like</h2>
+      <p>This helps our AI recommend events you'll actually enjoy. You can change this anytime.</p>
+    </div>
+    <div class="pref-body">
+      <!-- Section 1: Categories -->
+      <div class="pref-section">
+        <div class="pref-label">What types of events interest you?</div>
+        <div class="pref-cats">
+          <div class="pref-cat-card" data-cat="academic" onclick="togglePrefCat(this)">
+            <div class="pref-cat-icon">📚</div>
+            <div class="pref-cat-info">
+              <div class="pref-cat-name">Academic</div>
+              <div class="pref-cat-desc">Workshops, seminars, talks</div>
+            </div>
+            <div class="pref-cat-check">✓</div>
+          </div>
+          <div class="pref-cat-card" data-cat="sports" onclick="togglePrefCat(this)">
+            <div class="pref-cat-icon">⚽</div>
+            <div class="pref-cat-info">
+              <div class="pref-cat-name">Sports</div>
+              <div class="pref-cat-desc">Tournaments, friendly matches</div>
+            </div>
+            <div class="pref-cat-check">✓</div>
+          </div>
+          <div class="pref-cat-card" data-cat="cultural" onclick="togglePrefCat(this)">
+            <div class="pref-cat-icon">🎭</div>
+            <div class="pref-cat-info">
+              <div class="pref-cat-name">Cultural</div>
+              <div class="pref-cat-desc">Performances, festivals, arts</div>
+            </div>
+            <div class="pref-cat-check">✓</div>
+          </div>
+          <div class="pref-cat-card" data-cat="career" onclick="togglePrefCat(this)">
+            <div class="pref-cat-icon">💼</div>
+            <div class="pref-cat-info">
+              <div class="pref-cat-name">Career</div>
+              <div class="pref-cat-desc">Job fairs, networking, CV talks</div>
+            </div>
+            <div class="pref-cat-check">✓</div>
+          </div>
+          <div class="pref-cat-card" data-cat="volunteer" onclick="togglePrefCat(this)">
+            <div class="pref-cat-icon">🤝</div>
+            <div class="pref-cat-info">
+              <div class="pref-cat-name">Volunteer</div>
+              <div class="pref-cat-desc">CSR, community service, outreach</div>
+            </div>
+            <div class="pref-cat-check">✓</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Frequency -->
+      <div class="pref-section">
+        <div class="pref-label">How often do you attend events?</div>
+        <div class="pref-freq">
+          <div class="pref-freq-pill" data-freq="weekly" onclick="togglePrefFreq(this)">Every week</div>
+          <div class="pref-freq-pill" data-freq="biweekly" onclick="togglePrefFreq(this)">Every 2 weeks</div>
+          <div class="pref-freq-pill" data-freq="monthly" onclick="togglePrefFreq(this)">Once a month</div>
+          <div class="pref-freq-pill" data-freq="occasionally" onclick="togglePrefFreq(this)">Occasionally</div>
+        </div>
+      </div>
+
+      <!-- Section 3: Keywords -->
+      <div class="pref-section">
+        <div class="pref-label">Specific interests? <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--light)">(optional)</span></div>
+        <div class="pref-tags-wrap" id="prefTagsWrap"></div>
+        <div class="pref-input-row">
+          <input class="pref-input" id="prefTagInput" placeholder="e.g. coding, badminton, photography..." onkeydown="if(event.key==='Enter'){event.preventDefault();addPrefTag()}"/>
+          <button class="pref-add-btn" onclick="addPrefTag()">+ Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="pref-foot">
+      <button class="pref-btn-save" onclick="savePreferences()">Save Preferences</button>
+      <button class="pref-btn-skip" onclick="skipPreferences()">Skip</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHATBOT WIDGET -->
 <button id="utm-chat-fab" onclick="toggleChat()" aria-label="Open UTM AI Assistant">
   <span id="chat-badge" class="hidden">1</span>
   <svg class="fab-open" viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-2 10H6v-2h12v2zm0-3H6V7h12v2z"/></svg>
@@ -636,16 +698,13 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     </div>
     <button class="cw-head-close" onclick="toggleChat()">✕</button>
   </div>
-
   <div class="cw-msgs" id="cwMsgs"></div>
-
   <div class="cw-quick" id="cwQuick">
     <button class="qr-btn" onclick="sendQuick('What events are on this week?')">📅 Events this week</button>
     <button class="qr-btn" onclick="sendQuick('Are there any sports events?')">⚽ Sports events</button>
     <button class="qr-btn" onclick="sendQuick('How do I register for an event?')">📝 How to register</button>
     <button class="qr-btn" onclick="sendQuick('Show me all events')">📋 All events</button>
   </div>
-
   <div class="cw-input-row">
     <input class="cw-input" id="cwInput" placeholder="Ask anything about events..."
            onkeydown="if(event.key==='Enter')sendMsg()"/>
@@ -659,7 +718,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* ══════════════════════════════════════════════════════════════
-   SUPABASE CONFIG (shared — chatbot also uses these)
+   SUPABASE CONFIG
    ══════════════════════════════════════════════════════════════ */
 const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2x04YE_K5n0KrWd2YCg';
@@ -671,13 +730,179 @@ const badgeClass = {
   cultural:'badge-cultural', career:'badge-career', volunteer:'badge-volunteer'
 };
 
+const catEmojis = { academic:'📚', sports:'⚽', cultural:'🎭', career:'💼', volunteer:'🤝' };
+
 let curCat = 'all', curQ = '';
 let currentUser = null;
+let userPrefs = null;  /* loaded from localStorage */
+
+/* ══════════════════════════════════════════════════════════════
+   PREFERENCE MANAGEMENT
+   ══════════════════════════════════════════════════════════════ */
+const PREF_KEY = 'utm_event_prefs';
+
+function loadPrefs() {
+  try {
+    const raw = localStorage.getItem(PREF_KEY);
+    userPrefs = raw ? JSON.parse(raw) : null;
+  } catch(e) { userPrefs = null; }
+  updatePrefUI();
+}
+
+function savePrefsToStorage(data) {
+  userPrefs = data;
+  localStorage.setItem(PREF_KEY, JSON.stringify(data));
+  updatePrefUI();
+}
+
+function updatePrefUI() {
+  var el = document.getElementById('sbPrefSummary');
+  if (!el) return;
+  if (!userPrefs || (!userPrefs.categories.length && !userPrefs.keywords.length)) {
+    el.textContent = 'Not set yet';
+  } else {
+    var parts = [];
+    if (userPrefs.categories.length) {
+      parts.push(userPrefs.categories.map(function(c){ return catEmojis[c] || ''; }).join(' '));
+    }
+    if (userPrefs.keywords.length) {
+      parts.push(userPrefs.keywords.slice(0,3).join(', '));
+      if (userPrefs.keywords.length > 3) parts.push('+' + (userPrefs.keywords.length - 3));
+    }
+    el.textContent = parts.join(' · ') || 'Not set yet';
+  }
+}
+
+/* Open the preference modal */
+function openPrefModal() {
+  var ov = document.getElementById('prefOverlay');
+  ov.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  /* Pre-fill from saved prefs */
+  var cats = (userPrefs && userPrefs.categories) ? userPrefs.categories : [];
+  var freq = (userPrefs && userPrefs.frequency) ? userPrefs.frequency : '';
+  var tags = (userPrefs && userPrefs.keywords) ? userPrefs.keywords : [];
+
+  /* Reset cards */
+  document.querySelectorAll('.pref-cat-card').forEach(function(card) {
+    card.classList.toggle('selected', cats.indexOf(card.dataset.cat) !== -1);
+  });
+
+  /* Reset frequency */
+  document.querySelectorAll('.pref-freq-pill').forEach(function(pill) {
+    pill.classList.toggle('selected', pill.dataset.freq === freq);
+  });
+
+  /* Reset tags */
+  renderPrefTags(tags);
+}
+
+function closePrefModal() {
+  document.getElementById('prefOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* Toggle category card */
+function togglePrefCat(card) {
+  card.classList.toggle('selected');
+}
+
+/* Toggle frequency pill (only one at a time) */
+function togglePrefFreq(pill) {
+  var wasSelected = pill.classList.contains('selected');
+  document.querySelectorAll('.pref-freq-pill').forEach(function(p) {
+    p.classList.remove('selected');
+  });
+  if (!wasSelected) pill.classList.add('selected');
+}
+
+/* Tag management */
+var tempTags = [];
+
+function renderPrefTags(tags) {
+  tempTags = tags || [];
+  var wrap = document.getElementById('prefTagsWrap');
+  wrap.innerHTML = tempTags.map(function(t, i) {
+    return '<div class="pref-tag">' + escHtml(t) +
+      '<span class="pref-tag-x" onclick="removePrefTag(' + i + ')">×</span></div>';
+  }).join('');
+}
+
+function addPrefTag() {
+  var input = document.getElementById('prefTagInput');
+  var val = input.value.trim().toLowerCase();
+  if (!val) return;
+  if (tempTags.indexOf(val) !== -1) { input.value = ''; return; }
+  if (tempTags.length >= 8) return;
+  tempTags.push(val);
+  renderPrefTags(tempTags);
+  input.value = '';
+  input.focus();
+}
+
+function removePrefTag(idx) {
+  tempTags.splice(idx, 1);
+  renderPrefTags(tempTags);
+}
+
+/* Save button */
+function savePreferences() {
+  var cats = [];
+  document.querySelectorAll('.pref-cat-card.selected').forEach(function(c) {
+    cats.push(c.dataset.cat);
+  });
+
+  var freqEl = document.querySelector('.pref-freq-pill.selected');
+  var freq = freqEl ? freqEl.dataset.freq : 'occasionally';
+
+  var data = {
+    categories: cats,
+    frequency: freq,
+    keywords: tempTags.slice(),
+    savedAt: new Date().toISOString()
+  };
+
+  savePrefsToStorage(data);
+  closePrefModal();
+
+  /* Re-run AI recommendations with new prefs */
+  var evs = window.EVENTS || [];
+  if (evs.length) {
+    var myEventIds = new Set();
+    if (currentUser && currentUser.matrix) {
+      evs.forEach(function(e) { if (e.registered) myEventIds.add(e.id); });
+    }
+    loadAIRecommendations(currentUser, myEventIds);
+  }
+}
+
+/* Skip button */
+function skipPreferences() {
+  /* Save empty prefs so we don't ask again */
+  savePrefsToStorage({
+    categories: [],
+    frequency: 'occasionally',
+    keywords: [],
+    savedAt: new Date().toISOString(),
+    skipped: true
+  });
+  closePrefModal();
+}
+
+function escHtml(s) {
+  var d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
 
 /* ══════════════════════════════════════════════════════════════
    INIT
    ══════════════════════════════════════════════════════════════ */
 async function init() {
+  /* Load preferences first */
+  loadPrefs();
+
   const { data: { session } } = await sb.auth.getSession();
   if (!session) { window.location.href = '/Login/login.html'; return; }
 
@@ -712,6 +937,12 @@ async function init() {
   window.EVENTS = events.map(e => ({ ...e, registered: myEventIds.has(e.id) }));
 
   boot();
+
+  /* Show preference popup if first visit (no saved prefs) */
+  if (!userPrefs) {
+    setTimeout(function() { openPrefModal(); }, 600);
+  }
+
   loadAIRecommendations(user, myEventIds);
 }
 
@@ -747,7 +978,7 @@ function boot() {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   AI RECOMMENDATIONS
+   AI RECOMMENDATIONS — now includes user preferences
    ══════════════════════════════════════════════════════════════ */
 async function loadAIRecommendations(user, myEventIds) {
   const evs = window.EVENTS || [];
@@ -759,12 +990,13 @@ async function loadAIRecommendations(user, myEventIds) {
     .filter(e => e.slots_left > 0 && !myEventIds.has(e.id))
     .slice(0, 30)
     .map(e => ({
-      id      : e.id,
-      title   : e.title,
+      id: e.id,
+      title: e.title,
       category: e.category,
-      faculty : e.faculty || 'Open to all',
-      date    : e.date,
-      slots   : e.slots_left
+      faculty: e.faculty || 'Open to all',
+      date: e.date,
+      slots: e.slots_left,
+      description: (e.description || '').substring(0, 80)
     }));
 
   if (!eventSummaries.length) {
@@ -772,23 +1004,46 @@ async function loadAIRecommendations(user, myEventIds) {
     return;
   }
 
-  const userFaculty       = user?.faculty || 'Unknown';
-  const userPastCategories = evs
+  /* Build preference context */
+  var prefCats = (userPrefs && userPrefs.categories) ? userPrefs.categories : [];
+  var prefFreq = (userPrefs && userPrefs.frequency) ? userPrefs.frequency : 'unknown';
+  var prefKeys = (userPrefs && userPrefs.keywords) ? userPrefs.keywords : [];
+  var userPastCats = evs
     .filter(e => myEventIds.has(e.id))
     .map(e => e.category)
     .filter(Boolean);
 
+  /* Update subtitle to reflect actual data used */
+  var subtitleParts = [];
+  if (prefCats.length) subtitleParts.push('interests: ' + prefCats.join(', '));
+  if (prefKeys.length) subtitleParts.push('keywords: ' + prefKeys.slice(0,4).join(', '));
+  if (userPastCats.length) subtitleParts.push('past: ' + userPastCats.join(', '));
+  if (!subtitleParts.length) subtitleParts.push('explore and discover');
+  document.getElementById('aiRecSubtitle').textContent =
+    'Based on your ' + subtitleParts.join(' · ');
+
   const prompt = `You are a helpful university event recommendation engine for UTM (Universiti Teknologi Malaysia).
 
 Student profile:
-- Faculty: ${userFaculty}
-- Past event categories attended: ${userPastCategories.length ? userPastCategories.join(', ') : 'None yet'}
+- Faculty: ${user?.faculty || 'Unknown'}
+- Preferred event categories: ${prefCats.length ? prefCats.join(', ') : 'None specified'}
+- Attendance frequency: ${prefFreq}
+- Specific interest keywords: ${prefKeys.length ? prefKeys.join(', ') : 'None specified'}
+- Past event categories attended: ${userPastCats.length ? userPastCats.join(', ') : 'None yet'}
+
+IMPORTANT RULES for picking recommendations:
+1. If the student has preferred categories, PRIORITIZE events from those categories.
+2. If they have interest keywords, look for events whose title or description matches those keywords.
+3. If they attend events frequently (weekly/biweekly), prioritize upcoming events sooner.
+4. Always consider their faculty — faculty-specific events are highly relevant.
+5. Mix it up: if they only picked 1-2 categories, include 1 wildcard from another category to help them discover new things.
+6. If no preferences are set at all, pick a diverse mix from different categories.
 
 Available upcoming events (JSON array):
  ${JSON.stringify(eventSummaries, null, 2)}
 
 Task: Pick the TOP 4 most relevant events for this student.
-For each pick, write a short reason (max 12 words) explaining why it suits them.
+For each pick, write a short reason (max 12 words) explaining why it suits them based on their profile.
 
 Respond ONLY with a valid JSON array. No markdown, no explanation outside the array.
 Format:
@@ -825,10 +1080,6 @@ function renderRecommendations(picks, evs, user) {
     document.getElementById('aiRecOuter').style.display = 'none';
     return;
   }
-
-  const faculty = user?.faculty ? `for ${user.faculty} students` : 'based on your profile';
-  document.getElementById('aiRecSubtitle').textContent =
-    `Personalised picks ${faculty} · Powered by Gemini AI`;
 
   const html = picks.map((pick, i) => {
     const ev = evs.find(e => e.id === pick.id);
@@ -1030,9 +1281,7 @@ function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
 init();
 </script>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     CHATBOT WIDGET — SCRIPT (separate IIFE, uses global SUPABASE vars)
-     ═══════════════════════════════════════════════════════════════ -->
+<!-- CHATBOT WIDGET SCRIPT -->
 <script>
 (function(){
   var chatOpen    = false;
