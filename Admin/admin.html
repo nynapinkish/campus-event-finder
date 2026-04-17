@@ -813,7 +813,7 @@ function renderDashboard() {
   const pending  = EVENTS.filter(e => e.status === 'pending').length;
   const approved = EVENTS.filter(e => e.status === 'approved').length;
   const totalReg = EVENTS.reduce((a, e) => a + ((e.slots || 0) - (e.slots_left || 0)), 0);
-  const slotsLeft = EVENTS.reduce((a, e) => a + (e.slots_left || 0), 0);
+  const slotsLeft = EVENTS.reduce((a, e) => a + (parseInt(e.slots_left) || 0), 0);
 
   const totalFb  = FEEDBACK.length;
   const posCount = FEEDBACK.filter(f => f.sentiment === 'positive').length;
