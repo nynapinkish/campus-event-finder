@@ -21,11 +21,33 @@
   --sidebar:240px;--topbar:64px;
   --sb-bg:#6d0000;--sb-darker:#580000;--sb-darkest:#460000;--sb-accent:#c8982a;
 }
+html, body {
+  height: 100%;
+}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh}
-.layout{display:flex;min-height:100vh}
+
+/* LAYOUT FIX: sidebar fixed, main takes remaining width */
+.layout{
+  display: flex;
+  min-height: 100vh;
+}
 
 /* SIDEBAR */
-.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--red);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;}
+.sidebar{
+  width:var(--sidebar);
+  flex-shrink:0;
+  background:var(--red);
+  display:flex;
+  flex-direction:column;
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  z-index:100;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-width:none;
+}
 .sidebar::-webkit-scrollbar{display:none}
 .sb-brand{background:var(--red);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,.1);padding:12px 16px;}
 .sb-brand img{height:44px;object-fit:contain;}
@@ -51,9 +73,19 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .sb-footer{margin-top:auto;padding:10px 10px;border-top:1px solid rgba(255,255,255,.07);}
 .sb-logout{display:flex;align-items:center;gap:9px;color:rgba(255,255,255,.45);font-size:12.5px;cursor:pointer;transition:all .15s;border:none;background:none;font-family:'Plus Jakarta Sans',sans-serif;width:100%;text-align:left;padding:6px 10px;border-radius:8px;font-weight:500;}
 .sb-logout:hover{color:#fff;background:rgba(255,255,255,.07);}
-.sb-logout-icon { width:28px; height:28px; border-radius:7px; background:rgba(255,255,255,.07); display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
-/* MAIN */
-.main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh;}
+.sb-logout-icon{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+
+/* MAIN — key fix: margin-left equals sidebar width, takes remaining space */
+.main{
+  margin-left: var(--sidebar);
+  flex: 1;
+  min-width: 0;          /* prevent overflow */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: calc(100% - var(--sidebar));
+}
+
 .topbar{background:var(--red);position:sticky;top:0;z-index:50;box-shadow:0 3px 12px rgba(0,0,0,.3);}
 .topbar-upper{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:58px;}
 .topbar-lower{background:#6d0000;padding:5px 24px;font-size:11.5px;color:rgba(255,255,255,.7);font-weight:500;letter-spacing:.2px;}
@@ -128,9 +160,7 @@ tr:hover td{background:#fafbfc}
 .filter-search input{border:none;outline:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--text);background:transparent;width:180px;}
 .filter-search input::placeholder{color:#bbb}
 
-/* ============================================================
-   COMPLIANCE PANEL
-   ============================================================ */
+/* COMPLIANCE PANEL */
 .compliance-panel{background:#fffbf0;border:1.5px solid #f5d87a;border-radius:10px;padding:14px 18px;margin-bottom:14px;}
 .compliance-panel-title{font-size:12px;font-weight:700;color:#78450a;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
 .compliance-checks{display:flex;flex-direction:column;gap:8px;}
@@ -154,10 +184,56 @@ tr:hover td{background:#fafbfc}
 .af-label{font-size:10.5px;font-weight:600;color:var(--muted);margin-top:5px;text-align:center;line-height:1.3}
 .af-arrow{font-size:16px;color:var(--light);margin:0 4px;padding-bottom:20px;}
 
-/* SEMESTER TRACKER */
-.sem-tracker{display:flex;align-items:center;gap:8px;margin-top:6px}
-.sem-slot{width:30px;height:10px;border-radius:3px;}
-.sem-slot.used{background:var(--red)}.sem-slot.avail{background:#e5e7eb}
+/* SENTIMENT */
+.sentiment-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.sentiment-lbl{font-size:12px;color:var(--muted);width:68px;text-align:right;flex-shrink:0}
+.sentiment-track{flex:1;height:8px;background:#eee;border-radius:4px;overflow:hidden}
+.sentiment-fill{height:100%;border-radius:4px;transition:width .7s ease}
+.fill-pos{background:var(--green)}.fill-neu{background:#aaa}.fill-neg{background:#c0392b}
+.sentiment-pct{font-size:12px;font-weight:700;width:34px;flex-shrink:0}
+.kw-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.kw-tag{font-size:11.5px;padding:3px 9px;border-radius:4px;border:1px solid var(--border);background:#f5f5f5;color:var(--text)}
+.kw-tag.pos{background:var(--green-light);color:var(--green);border-color:rgba(26,92,56,.2)}
+.kw-tag.neg{background:#fef2f2;color:#c0392b;border-color:rgba(192,57,43,.2)}
+
+/* DASHBOARD */
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted)}.empty-state-icon{font-size:40px;margin-bottom:12px;opacity:.4}.empty-state h3{font-size:15px;color:var(--text);margin-bottom:6px}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.event-mini{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border2);}
+.event-mini:last-child{border-bottom:none;padding-bottom:0}
+.event-mini-emoji{width:36px;height:36px;border-radius:8px;background:var(--red-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.event-mini-body{flex:1;min-width:0}.event-mini-title{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.event-mini-meta{font-size:11.5px;color:var(--muted);margin-top:2px}
+.event-mini-status{flex-shrink:0}
+.chart-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.chart-bar-lbl{font-size:12.5px;color:var(--text);width:160px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chart-bar-track{flex:1;height:10px;background:#eee;border-radius:5px;overflow:hidden}
+.chart-bar-fill{height:100%;border-radius:5px;transition:width .8s ease}
+.chart-bar-pct{font-size:12px;font-weight:700;color:var(--muted);width:36px;text-align:right;flex-shrink:0}
+.user-av-cell{width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-right:8px;}
+.user-av-cell.green{background:var(--green)}.user-av-cell.blue{background:var(--blue)}
+.toast{position:fixed;bottom:24px;right:24px;z-index:500;background:#1a1a1a;color:#fff;padding:12px 20px;border-radius:8px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(80px);opacity:0;transition:all .3s ease;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1}.toast.success{border-left:4px solid var(--green)}.toast.error{border-left:4px solid #ef4444}.toast.info{border-left:4px solid var(--gold)}
+
+/* PAGE FOOTER — full width, pinned to bottom of .main */
+.page-footer{
+  background:#fff;
+  border-top:1px solid var(--border);
+  padding:12px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  margin-top:auto;
+}
+.page-footer-copy{font-size:12px;color:var(--light)}
+
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:#f5f5f5}::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:#bbb}
+
+/* COMPLIANCE SECTION */
+.section#sec-compliance .comp-table-wrap{overflow-x:auto}
+.comp-stat-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.comp-stat{flex:1;min-width:140px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.comp-stat-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
 
 /* MODAL */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);}
@@ -191,47 +267,6 @@ tr:hover td{background:#fafbfc}
 .compliance-flags{display:flex;flex-wrap:wrap;gap:4px}
 .cf-chip{font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;white-space:nowrap;}
 .cf-chip.ok{background:var(--green-light);color:var(--green)}.cf-chip.warn{background:#fef9ec;color:#92400e}.cf-chip.fail{background:#fef2f2;color:#c0392b}
-
-/* SENTIMENT */
-.sentiment-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.sentiment-lbl{font-size:12px;color:var(--muted);width:68px;text-align:right;flex-shrink:0}
-.sentiment-track{flex:1;height:8px;background:#eee;border-radius:4px;overflow:hidden}
-.sentiment-fill{height:100%;border-radius:4px;transition:width .7s ease}
-.fill-pos{background:var(--green)}.fill-neu{background:#aaa}.fill-neg{background:#c0392b}
-.sentiment-pct{font-size:12px;font-weight:700;width:34px;flex-shrink:0}
-.kw-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.kw-tag{font-size:11.5px;padding:3px 9px;border-radius:4px;border:1px solid var(--border);background:#f5f5f5;color:var(--text)}
-.kw-tag.pos{background:var(--green-light);color:var(--green);border-color:rgba(26,92,56,.2)}
-.kw-tag.neg{background:#fef2f2;color:#c0392b;border-color:rgba(192,57,43,.2)}
-
-/* DASHBOARD */
-.empty-state{text-align:center;padding:48px 20px;color:var(--muted)}.empty-state-icon{font-size:40px;margin-bottom:12px;opacity:.4}.empty-state h3{font-size:15px;color:var(--text);margin-bottom:6px}
-.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
-.event-mini{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--border2);}
-.event-mini:last-child{border-bottom:none;padding-bottom:0}
-.event-mini-emoji{width:36px;height:36px;border-radius:8px;background:var(--red-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
-.event-mini-body{flex:1;min-width:0}.event-mini-title{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.event-mini-meta{font-size:11.5px;color:var(--muted);margin-top:2px}
-.event-mini-status{flex-shrink:0}
-.chart-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.chart-bar-lbl{font-size:12.5px;color:var(--text);width:160px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chart-bar-track{flex:1;height:10px;background:#eee;border-radius:5px;overflow:hidden}
-.chart-bar-fill{height:100%;border-radius:5px;transition:width .8s ease}
-.chart-bar-pct{font-size:12px;font-weight:700;color:var(--muted);width:36px;text-align:right;flex-shrink:0}
-.user-av-cell{width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-right:8px;}
-.user-av-cell.green{background:var(--green)}.user-av-cell.blue{background:var(--blue)}
-.toast{position:fixed;bottom:24px;right:24px;z-index:500;background:#1a1a1a;color:#fff;padding:12px 20px;border-radius:8px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(80px);opacity:0;transition:all .3s ease;pointer-events:none;}
-.toast.show{transform:translateY(0);opacity:1}.toast.success{border-left:4px solid var(--green)}.toast.error{border-left:4px solid #ef4444}.toast.info{border-left:4px solid var(--gold)}
-.page-footer{background:#fff;border-top:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
-.page-footer-copy{font-size:12px;color:var(--light)}
-::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:#f5f5f5}::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:#bbb}
-
-/* ============================================================
-   COMPLIANCE SECTION
-   ============================================================ */
-.section#sec-compliance .comp-table-wrap{overflow-x:auto}
-.comp-stat-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-.comp-stat{flex:1;min-width:140px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;}
-.comp-stat-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
 </style>
 </head>
 <body>
@@ -343,7 +378,7 @@ tr:hover td{background:#fafbfc}
         <div class="stat-card"><div class="stat-icon gold">😊</div><div><div class="stat-num" id="dPosSentiment">–</div><div class="stat-lbl">Positive Sentiment</div></div></div>
         <div class="stat-card"><div class="stat-icon red">🎟</div><div><div class="stat-num" id="dSlotsLeft">–</div><div class="stat-lbl">Slots Available</div></div></div>
         <div class="stat-card" style="cursor:pointer" onclick="showSection('compliance', document.querySelector('.sb-item[onclick*=compliance]'))">
-          <div class="stat-icon orange">⚠️</div><div><div class="stat-num" id="dComplianceIssues">–</div><div class="stat-lbl">Compliance Issues</div><div class="stat-sub">Click to review</div></div></div>
+          <div class="stat-icon orange">⚠️</div><div><div class="stat-num" id="dComplianceIssues">–</div><div class="stat-lbl">Compliance Issues</div><div class="stat-sub">Click to review</div></div>
         </div>
       </div>
       <div class="dash-grid">
@@ -469,7 +504,11 @@ tr:hover td{background:#fafbfc}
     </div>
 
   </div>
-  <div class="page-footer"><div class="page-footer-copy">© 2025 Universiti Teknologi Malaysia — Campus Event Finder Admin</div></div>
+
+  <!-- FOOTER — inside .main, after .content -->
+  <div class="page-footer">
+    <div class="page-footer-copy">© 2025 Universiti Teknologi Malaysia — Campus Event Finder Admin</div>
+  </div>
 </div>
 </div>
 
@@ -490,7 +529,6 @@ tr:hover td{background:#fafbfc}
       </div>
       <div class="modal-desc" id="mDesc"></div>
 
-      <!-- COMPLIANCE PANEL -->
       <div class="modal-section-title">📋 HEP Compliance Review</div>
       <div class="compliance-panel" id="mCompliancePanel">
         <div class="compliance-checks" id="mComplianceChecks"></div>
@@ -499,7 +537,6 @@ tr:hover td{background:#fafbfc}
         </div>
       </div>
 
-      <!-- APPROVAL FLOW -->
       <div class="modal-section-title">🔄 Approval Flow (Section 3.1.7)</div>
       <div style="background:#f8fafc;border-radius:8px;padding:14px;margin-bottom:16px">
         <div class="approval-flow" id="mApprovalFlow"></div>
@@ -533,10 +570,6 @@ let currentEventModal = null;
 // ============================================================
 // COMPLIANCE ENGINE
 // ============================================================
-
-/**
- * Calculate working days between two dates (excludes Saturday & Sunday)
- */
 function workingDaysBetween(dateStrSubmit, dateStrEvent) {
   try {
     let d1 = new Date(dateStrSubmit);
@@ -553,10 +586,6 @@ function workingDaysBetween(dateStrSubmit, dateStrEvent) {
   } catch(e) { return null; }
 }
 
-/**
- * Count approved/pending events for the same organizer in the current semester
- * Semester: Jan–Jun or Jul–Dec
- */
 function countSemesterActivities(organizerName, excludeId) {
   if (!organizerName) return 0;
   const now = new Date();
@@ -576,9 +605,6 @@ function countSemesterActivities(organizerName, excludeId) {
   }).length;
 }
 
-/**
- * Check if the organizer has outstanding unsubmitted reports
- */
 function hasPendingReport(organizerName, excludeId) {
   const pastApproved = EVENTS.filter(e =>
     e.id !== excludeId &&
@@ -589,15 +615,10 @@ function hasPendingReport(organizerName, excludeId) {
   return pastApproved.length > 0;
 }
 
-/**
- * Run all 5 compliance checks for a single event
- * Returns: { checks: [...], hasBlocker: bool }
- */
 function runComplianceChecks(ev) {
   const checks = [];
   let hasBlocker = false;
 
-  // ── Check 1: Advisor Approval
   const advisorApproved = ev.advisor_approved;
   if (advisorApproved === true) {
     checks.push({ id:'advisor', label:'Advisor/Principal Approval', status:'pass', note:'Advisor has approved' });
@@ -608,7 +629,6 @@ function runComplianceChecks(ev) {
     checks.push({ id:'advisor', label:'Advisor/Principal Approval', status:'warn', note:'Information not provided' });
   }
 
-  // ── Check 2: Multiracial Participation
   const isReligious = ev.category === 'religious' || (ev.tags || []).includes('religious');
   if (isReligious) {
     checks.push({ id:'multiracial', label:'Multiracial Participation', status:'na', note:'Exempted (religious society)' });
@@ -621,7 +641,6 @@ function runComplianceChecks(ev) {
     checks.push({ id:'multiracial', label:'Multiracial Participation', status:'warn', note:'Information not provided' });
   }
 
-  // ── Check 3: Notice Period (14/30 working days)
   const hasExternal = ev.has_external_sponsor || ev.has_external_participants;
   const minDays = hasExternal ? 30 : 14;
   const submitDate = ev.created_at ? ev.created_at.slice(0,10) : null;
@@ -640,7 +659,6 @@ function runComplianceChecks(ev) {
     checks.push({ id:'notice', label:'Notice Period (14/30 working days)', status:'warn', note:'Submission date not available' });
   }
 
-  // ── Check 4: Previous Event Report
   const pendingRep = hasPendingReport(ev.organizer_name, ev.id);
   if (pendingRep) {
     checks.push({ id:'report', label:'Previous Event Report Submitted', status:'fail', note:'Organizer has unsubmitted reports' });
@@ -649,7 +667,6 @@ function runComplianceChecks(ev) {
     checks.push({ id:'report', label:'Previous Event Report Submitted', status:'pass', note:'No outstanding reports' });
   }
 
-  // ── Check 5: Semester Activity Limit (max 4)
   const semCount = countSemesterActivities(ev.organizer_name, ev.id);
   if (semCount >= 4) {
     checks.push({ id:'semLimit', label:'Semester Activity Limit (max 4)', status:'fail', note:`${semCount} other activities this semester — requires HEMA permission` });
@@ -663,12 +680,9 @@ function runComplianceChecks(ev) {
   return { checks, hasBlocker };
 }
 
-/**
- * Render compliance panel inside modal
- */
 function renderModalCompliance(ev) {
   const { checks, hasBlocker } = runComplianceChecks(ev);
-  const statusIcon = { pass:'✅', fail:'❌', warn:'⚠️', na:'➖' };
+  const statusIcon  = { pass:'✅', fail:'❌', warn:'⚠️', na:'➖' };
   const statusClass = { pass:'pass', fail:'fail', warn:'warn', na:'na' };
 
   document.getElementById('mComplianceChecks').innerHTML = checks.map(c => `
@@ -688,30 +702,13 @@ function renderModalCompliance(ev) {
   return hasBlocker;
 }
 
-/**
- * Render 3-stage approval flow (Section 3.1.7)
- * President → Advisor → HEMA
- */
 function renderApprovalFlow(ev) {
   const steps = [
-    {
-      icon: '👤',
-      label: 'Society\nPresident',
-      status: ev.president_approved ? 'done' : ev.status === 'rejected' ? 'rejected' : 'done'
-    },
-    {
-      icon: '📝',
-      label: 'Advisor /\nPrincipal',
-      status: ev.advisor_approved === true ? 'done' : ev.advisor_approved === false ? 'rejected' : 'current'
-    },
-    {
-      icon: '🏛️',
-      label: 'HEP / HEMA',
-      status: ev.status === 'approved' ? 'done' : ev.status === 'rejected' ? 'rejected' : 'waiting'
-    }
+    { icon:'👤', label:'Society\nPresident', status: ev.president_approved ? 'done' : ev.status === 'rejected' ? 'rejected' : 'done' },
+    { icon:'📝', label:'Advisor /\nPrincipal', status: ev.advisor_approved === true ? 'done' : ev.advisor_approved === false ? 'rejected' : 'current' },
+    { icon:'🏛️', label:'HEP / HEMA', status: ev.status === 'approved' ? 'done' : ev.status === 'rejected' ? 'rejected' : 'waiting' }
   ];
-
-  const statusLabel = { done: 'Approved', current: 'Waiting', waiting: 'Not Reached', rejected: 'Rejected' };
+  const statusLabel = { done:'Approved', current:'Waiting', waiting:'Not Reached', rejected:'Rejected' };
 
   document.getElementById('mApprovalFlow').innerHTML = steps.map((s, i) => `
     ${i > 0 ? '<div class="af-arrow">→</div>' : ''}
@@ -1231,12 +1228,12 @@ function showSection(id, btn) {
   document.getElementById('sec-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
   const labels = {
-    'dashboard':   ['Dashboard','Overview'],
-    'pending':     ['Pending Approval','Events'],
-    'all-events':  ['All Events','Events'],
-    'compliance':  ['Compliance Review','HEP'],
-    'feedback':    ['Feedback & AI','Analytics'],
-    'users':       ['Users','System']
+    'dashboard':  ['Dashboard','Overview'],
+    'pending':    ['Pending Approval','Events'],
+    'all-events': ['All Events','Events'],
+    'compliance': ['Compliance Review','HEP'],
+    'feedback':   ['Feedback & AI','Analytics'],
+    'users':      ['Users','System']
   };
   const [page, sub] = labels[id] || [id,''];
   document.getElementById('topbarPage').textContent = page;
