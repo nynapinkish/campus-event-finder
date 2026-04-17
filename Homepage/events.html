@@ -755,8 +755,11 @@ const res = await fetch(
 if (!res.ok) throw new Error('AI error ' + res.status);
 
 const data = await res.json();
-const raw  = data?.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+console.log('RAW GEMINI RESPONSE:', data); // tambah ni
+const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
+console.log('RAW TEXT:', raw); // tambah ni
 const clean = raw.replace(/```json|```/g,'').trim();
+console.log('PICKS:', JSON.parse(clean)); // tambah ni
 const picks = JSON.parse(clean);
 
     renderRecommendations(picks, evs, user);
