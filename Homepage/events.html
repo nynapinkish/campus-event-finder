@@ -15,12 +15,10 @@
   --green:#1a5c38;--green-light:#e8f5ed;
 }
 body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
-
 .topbar{background:var(--red);height:38px;display:flex;align-items:center;justify-content:flex-end;padding:0 24px;gap:20px}
 .topbar a{color:rgba(255,255,255,.8);font-size:12.5px;text-decoration:none}
 .topbar a:hover{color:#fff}
 .topbar-sep{color:rgba(255,255,255,.3);font-size:11px}
-
 .header{background:#fff;border-bottom:4px solid var(--red);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:80px}
 .header-logo{display:flex;align-items:center;gap:16px;text-decoration:none}
 .logo-img{width:60px;height:60px;border-radius:50%;background:var(--red);border:2px solid #c8982a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px}
@@ -36,200 +34,176 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .header-right{display:flex;align-items:center;gap:10px}
 .user-pill{display:flex;align-items:center;gap:8px;background:#f5f5f5;border:1px solid var(--border);border-radius:20px;padding:5px 14px 5px 5px;font-size:13px;color:var(--muted);cursor:pointer}
 .user-av{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
-
 .section-nav{background:#1f1f1f;padding:0 24px;display:flex;gap:0}
 .sn-item{color:rgba(255,255,255,.6);font-size:13px;padding:10px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
 .sn-item:hover{color:#fff}
 .sn-item.active{color:#fff;border-bottom-color:#c8982a}
-
-/* ── NEW: BREADCRUMB + TITLE (slimmer) ── */
-.page-head{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.ph-left{display:flex;align-items:center;gap:16px}
-.ph-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--light)}
-.ph-breadcrumb a{color:var(--muted);text-decoration:none}
-.ph-breadcrumb a:hover{color:var(--red)}
-.ph-sep{color:#ddd;font-size:10px}
-.ph-title{font-size:18px;font-weight:700;color:var(--text)}
-.ph-right{display:flex;gap:8px;align-items:center}
-.ph-tag{font-size:10.5px;font-weight:600;background:var(--red-light);color:var(--red);border:1px solid rgba(139,0,0,.12);border-radius:20px;padding:3px 10px}
-
-/* ── NEW: UNIFIED FILTER BAR (replaces sidebar + tabs) ── */
-.filter-bar{
-  background:#fff;border-bottom:1px solid var(--border);
-  padding:14px 24px;
-  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-  position:sticky;top:0;z-index:50;
-  box-shadow:0 2px 8px rgba(0,0,0,.04);
-}
-.fb-search{
-  position:relative;flex:0 0 240px;
-}
-.fb-search input{
-  width:100%;border:1px solid var(--border);border-radius:8px;
-  padding:8px 12px 8px 34px;font-size:13px;font-family:'Open Sans',sans-serif;
-  outline:none;color:var(--text);background:#fafafa;transition:all .15s;
-}
-.fb-search input:focus{border-color:var(--red);background:#fff}
-.fb-search input::placeholder{color:#bbb}
-.fb-search-ic{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#bbb;font-size:13px;pointer-events:none}
-.fb-div{width:1px;height:28px;background:var(--border);flex-shrink:0}
-.fb-pills{display:flex;gap:6px;flex-wrap:wrap;flex:1}
-.fp{padding:6px 14px;font-size:12.5px;font-weight:500;color:var(--muted);cursor:pointer;border:1px solid var(--border);border-radius:20px;background:#fff;font-family:'Open Sans',sans-serif;transition:all .15s;white-space:nowrap;user-select:none}
-.fp:hover{border-color:var(--red);color:var(--red)}
-.fp.active{background:var(--red);color:#fff;border-color:var(--red)}
-.fp.arch{color:var(--light);font-style:italic;border-style:dashed}
-.fp.arch.active{color:#fff;background:#888;border-style:solid;font-style:normal}
-.fp .arch-cnt{display:inline-block;background:rgba(255,255,255,.25);font-size:10px;font-weight:700;padding:0 5px;border-radius:8px;margin-left:3px}
-.fb-actions{display:flex;gap:6px;align-items:center;flex-shrink:0;margin-left:auto}
-.fb-stat{font-size:11px;color:var(--light);white-space:nowrap}
-.fb-stat b{color:var(--muted);font-weight:600}
-.fb-btn{padding:6px 12px;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;border:1px solid var(--border);border-radius:8px;background:#fff;font-family:'Open Sans',sans-serif;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:5px}
-.fb-btn:hover{border-color:var(--red);color:var(--red)}
-.fb-btn span{font-size:13px}
-
-/* ── NEW: MAIN CONTENT AREA (full width, no sidebar) ── */
-.main-content{max-width:1320px;margin:0 auto;padding:20px 24px 60px}
-
-/* ── AI RECOMMENDATION (horizontal scroll, cleaner) ── */
-.ai-section{margin-bottom:24px}
-.ai-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.ai-head-left{display:flex;align-items:center;gap:10px}
-.ai-icon{width:32px;height:32px;background:linear-gradient(135deg,#8B0000,#c0392b);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
-.ai-head h3{font-size:15px;font-weight:700;color:var(--text)}
-.ai-head p{font-size:11.5px;color:var(--muted);margin-top:1px}
-.ai-head-right{display:flex;align-items:center;gap:10px}
-.ai-edit{font-size:11.5px;color:var(--red);cursor:pointer;background:none;border:none;font-family:'Open Sans',sans-serif;text-decoration:underline;text-underline-offset:2px}
-.ai-edit:hover{opacity:.7}
-.ai-badge{font-size:9px;font-weight:700;letter-spacing:.6px;background:linear-gradient(90deg,#8B0000,#c0392b);color:#fff;padding:3px 9px;border-radius:20px;text-transform:uppercase}
-.ai-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
-.ai-scroll::-webkit-scrollbar{height:4px}
-.ai-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-
-/* ── NEW: EVENT CARDS (horizontal layout, left accent) ── */
-.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px}
-.ev-card{
-  background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;
-  cursor:pointer;transition:box-shadow .2s,transform .15s;animation:fadeUp .3s ease both;
-  display:flex;
-}
-.ev-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.08);transform:translateY(-2px)}
+.page-title-bar{background:#fff;border-bottom:1px solid var(--border);padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+.ptb-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--light);margin-bottom:5px}
+.ptb-breadcrumb a{color:var(--muted);text-decoration:none}
+.ptb-breadcrumb a:hover{color:var(--red)}
+.ptb-title{font-size:20px;font-weight:700;color:var(--text)}
+.ptb-right{display:flex;gap:8px;align-items:center}
+.ptb-tag{font-size:11.5px;font-weight:600;background:var(--red-light);color:var(--red);border:1px solid rgba(139,0,0,.15);border-radius:3px;padding:4px 11px}
+.cat-tabs{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;align-items:stretch}
+.cat-tabs::-webkit-scrollbar{display:none}
+.ct-btn{padding:11px 18px;font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:none;font-family:'Open Sans',sans-serif;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+.ct-btn:hover{color:var(--text)}
+.ct-btn.active{color:var(--red);border-bottom-color:var(--red);font-weight:600}
+.ct-sep{width:1px;background:var(--border);margin:10px 4px;flex-shrink:0}
+.ct-btn.archived-btn{color:var(--light);font-style:italic}
+.ct-btn.archived-btn.active{color:#888;border-bottom-color:#888;font-style:normal;font-weight:500}
+.ct-btn.archived-btn .arch-count{display:inline-block;background:#eee;color:var(--muted);font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;margin-left:4px}
+.wrap{max-width:1320px;margin:0 auto;padding:24px 24px 60px;display:grid;grid-template-columns:230px 1fr;gap:20px;align-items:start}
+.sidebar{display:flex;flex-direction:column;gap:14px}
+.sb-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.sb-card-head{background:var(--red);padding:10px 14px;font-size:12px;font-weight:700;color:#fff;letter-spacing:.5px;text-transform:uppercase}
+.sb-search{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--border)}
+.sb-search input{flex:1;border:none;outline:none;font-family:'Open Sans',sans-serif;font-size:13px;color:var(--text);background:transparent}
+.sb-search input::placeholder{color:#bbb}
+.sb-item{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;font-size:13px;color:var(--muted);cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:'Open Sans',sans-serif;border-bottom:1px solid #fafafa;transition:all .15s}
+.sb-item:last-child{border-bottom:none}
+.sb-item:hover{background:#fdf5f5;color:var(--red)}
+.sb-item.active{color:var(--red);background:var(--red-light);font-weight:600}
+.sb-item-left{display:flex;align-items:center;gap:9px}
+.sb-dot{width:7px;height:7px;border-radius:50%;background:#ddd;flex-shrink:0;transition:background .15s}
+.sb-item.active .sb-dot{background:var(--red)}
+.sb-cnt{font-size:11px;font-weight:700;background:#eee;color:var(--muted);padding:1px 8px;border-radius:10px}
+.sb-item.active .sb-cnt{background:rgba(139,0,0,.1);color:var(--red)}
+.sb-stats{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border)}
+.sb-stat{padding:12px;text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.sb-stat:nth-child(2n){border-right:none}
+.sb-stat:nth-child(3),.sb-stat:nth-child(4){border-bottom:none}
+.sb-stat-num{font-size:22px;font-weight:700;color:var(--red);line-height:1}
+.sb-stat-lbl{font-size:10.5px;color:var(--light);margin-top:2px;text-transform:uppercase;letter-spacing:.4px}
+.ar-sb{background:var(--red);border-radius:4px;padding:16px}
+.ar-sb-title{font-size:13.5px;font-weight:700;color:#fff;margin-bottom:6px}
+.ar-sb-text{font-size:12px;color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:12px}
+.ar-sb-btn{width:100%;background:#fff;color:var(--red);border:none;font-family:'Open Sans',sans-serif;font-size:13px;font-weight:700;padding:9px;border-radius:3px;cursor:pointer;transition:opacity .15s}
+.ar-sb-btn:hover{opacity:.9}
+.back-link{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:4px;padding:9px 14px;font-size:13px;color:var(--muted);text-decoration:none;transition:all .15s}
+.back-link:hover{color:var(--red);border-color:rgba(139,0,0,.3)}
+.sb-pref-btn{display:flex;align-items:center;gap:8px;background:#fff;border:1px dashed rgba(139,0,0,.4);border-radius:4px;padding:10px 14px;font-size:12.5px;color:var(--red);cursor:pointer;text-align:left;font-family:'Open Sans',sans-serif;transition:all .15s;width:100%}
+.sb-pref-btn:hover{background:var(--red-light);border-color:var(--red)}
+.sb-pref-btn span{font-size:14px}
+.sb-archived-btn{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:4px;padding:10px 14px;font-size:12.5px;color:var(--light);cursor:pointer;text-align:left;font-family:'Open Sans',sans-serif;transition:all .15s;width:100%}
+.sb-archived-btn:hover{border-color:#aaa;color:var(--muted)}
+.sb-archived-btn span{font-size:14px}
+.ev-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.ev-toolbar-left h2{font-size:16px;font-weight:700;color:var(--text)}
+.ev-toolbar-left p{font-size:12.5px;color:var(--muted);margin-top:2px}
+.ev-toolbar-badge{display:inline-flex;align-items:center;gap:5px;background:#f0f0f0;color:var(--muted);font-size:11px;font-weight:600;padding:3px 10px;border-radius:3px;margin-left:10px}
+.ev-toolbar-badge.live{background:#e8f5ed;color:var(--green)}
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.ev-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .2s;animation:fadeUp .3s ease both}
+.ev-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);transform:translateY(-2px)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-/* Left accent block */
-.ev-accent{
-  width:72px;flex-shrink:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:20px 12px;gap:10px;
-  position:relative;
-}
-.ev-accent-emoji{font-size:32px;line-height:1}
-.ev-accent-badge{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 8px;border-radius:4px;text-align:center;line-height:1.2}
+.ev-card.cat-academic{border-top:3px solid #003087}
+.ev-card.cat-sports{border-top:3px solid #1a5c38}
+.ev-card.cat-cultural{border-top:3px solid var(--red)}
+.ev-card.cat-career{border-top:3px solid #b35900}
+.ev-card.cat-volunteer{border-top:3px solid #5b2b91}
+.ev-card.is-registered{border-color:#b7dfca;background:#fafffe}
+.ev-card.is-registered .ev-card-body{position:relative}
+.ev-card.is-expired{opacity:.65}
+.ev-card.is-expired .ev-card-body{position:relative}
+.expired-ribbon{position:absolute;top:0;right:0;background:#999;color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 0 4px}
+.registered-ribbon{position:absolute;top:0;right:0;background:var(--green);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 0 4px}
+.ev-card-body{padding:16px;position:relative}
+.ev-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.ev-badge{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:3px}
 .badge-academic{background:#e8eef8;color:#003087}
 .badge-sports{background:#e8f5ed;color:#1a5c38}
 .badge-cultural{background:var(--red-light);color:var(--red)}
 .badge-career{background:#fef4e8;color:#b35900}
 .badge-volunteer{background:#f2ecf9;color:#5b2b91}
-.ev-accent-catline{position:absolute;bottom:0;left:12px;right:12px;height:3px;border-radius:2px}
-.cat-academic .ev-accent{background:linear-gradient(180deg,#e8eef8,#f0f4fb)}
-.cat-academic .ev-accent-catline{background:#003087}
-.cat-sports .ev-accent{background:linear-gradient(180deg,#e8f5ed,#f0fbf4)}
-.cat-sports .ev-accent-catline{background:#1a5c38}
-.cat-cultural .ev-accent{background:linear-gradient(180deg,#fdf5f5,#fef8f8)}
-.cat-cultural .ev-accent-catline{background:var(--red)}
-.cat-career .ev-accent{background:linear-gradient(180deg,#fef4e8,#fef9f0)}
-.cat-career .ev-accent-catline{background:#b35900}
-.cat-volunteer .ev-accent{background:linear-gradient(180deg,#f2ecf9,#f8f4fc)}
-.cat-volunteer .ev-accent-catline{background:#5b2b91}
-
-/* Right content */
-.ev-body{flex:1;padding:18px 20px;display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0}
-.ev-title{font-size:15px;font-weight:600;color:var(--text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.ev-meta{display:flex;flex-wrap:wrap;gap:4px 14px}
-.ev-meta-item{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px}
-.ev-meta-item span:first-child{font-size:11px;opacity:.5}
-.ev-foot{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding-top:10px;border-top:1px solid #f5f5f5}
+.ev-emoji{font-size:26px;line-height:1}
+.ev-title{font-size:15px;font-weight:600;color:var(--text);line-height:1.35;margin-bottom:12px}
+.ev-meta{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.ev-meta-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+.ev-meta-ic{width:14px;text-align:center;flex-shrink:0;opacity:.6}
+.ev-card-foot{border-top:1px solid var(--border);padding-top:11px;display:flex;align-items:center;justify-content:space-between}
 .ev-slots{flex:1;margin-right:12px}
-.ev-slots-txt{font-size:11px;color:var(--muted);margin-bottom:3px}
+.ev-slots-txt{font-size:11.5px;color:var(--muted);margin-bottom:4px}
 .ev-slots-txt b{color:var(--red)}
 .ev-slots-txt.ok b{color:#1a5c38}
 .ev-bar{height:3px;background:#eee;border-radius:2px;overflow:hidden}
 .ev-bar-fill{height:100%;border-radius:2px;transition:width .7s}
-
-/* Card states */
-.ev-card.is-registered{border-color:#b7dfca;background:#fafffe}
-.ev-card.is-expired{opacity:.55}
-.ev-card.is-expired .ev-accent{filter:grayscale(.5)}
-.ev-ribbon{position:absolute;top:8px;right:8px;font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:3px 8px;border-radius:4px;z-index:2}
-.ev-ribbon.registered{background:var(--green);color:#fff}
-.ev-ribbon.expired{background:#999;color:#fff}
-
-.ev-btn{background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:12px;font-weight:600;padding:7px 16px;border-radius:6px;cursor:pointer;white-space:nowrap;transition:all .15s}
+.ev-btn{background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:12.5px;font-weight:600;padding:7px 16px;border-radius:3px;cursor:pointer;white-space:nowrap;transition:all .15s}
 .ev-btn:hover{background:var(--red2)}
-.ev-btn.outline{background:none;color:var(--red);border:1px solid rgba(139,0,0,.3)}
+.ev-btn.outline{background:none;color:var(--red);border:1px solid rgba(139,0,0,.4)}
 .ev-btn.outline:hover{background:var(--red);color:#fff}
-.ev-btn.registered{background:var(--green-light);color:var(--green);border:1.5px solid #b7dfca;font-weight:700}
-.ev-btn.registered:hover{background:var(--green);color:#fff}
-.full-tag{font-size:11px;font-weight:700;color:#c0392b;background:#fef2f2;padding:4px 10px;border-radius:4px;border:1px solid #fca5a5}
-
-/* Rec cards (slim horizontal) */
-.rec-card{flex:0 0 300px;background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .2s;display:flex}
-.rec-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-2px)}
-.rec-card.cat-academic .rec-accent{background:linear-gradient(180deg,#e8eef8,#f0f4fb)}
-.rec-card.cat-sports .rec-accent{background:linear-gradient(180deg,#e8f5ed,#f0fbf4)}
-.rec-card.cat-cultural .rec-accent{background:linear-gradient(180deg,#fdf5f5,#fef8f8)}
-.rec-card.cat-career .rec-accent{background:linear-gradient(180deg,#fef4e8,#fef9f0)}
-.rec-card.cat-volunteer .rec-accent{background:linear-gradient(180deg,#f2ecf9,#f8f4fc)}
-.rec-accent{width:56px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;gap:8px}
-.rec-accent-emoji{font-size:24px;line-height:1}
-.rec-accent-badge{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 6px;border-radius:3px;text-align:center;line-height:1.2}
-.rec-body{flex:1;padding:12px 14px;display:flex;flex-direction:column;justify-content:center;gap:4px;min-width:0}
-.rec-reason{font-size:10.5px;color:#8B0000;background:var(--red-light);border:1px solid rgba(139,0,0,.1);border-radius:4px;padding:4px 8px;line-height:1.35}
-.rec-title{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.rec-meta{font-size:11.5px;color:var(--muted);display:flex;gap:8px}
-.rec-foot{padding:8px 14px;border-top:1px solid #f5f5f5;display:flex;align-items:center;justify-content:space-between}
-.rec-slots{font-size:11px;color:var(--muted)}
-.rec-slots b{color:#1a5c38}
-.rec-btn{background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:11px;font-weight:600;padding:5px 12px;border-radius:5px;cursor:pointer;transition:background .15s}
-.rec-btn:hover{background:var(--red2)}
-.rec-matched{display:inline-block;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;background:#e8f5ed;color:#1a5c38;padding:2px 6px;border-radius:3px}
-.rec-skeleton{flex:0 0 300px;background:#fff;border:1px solid var(--border);border-radius:10px;display:flex;overflow:hidden}
-.skel-line{background:#f0f0f0;border-radius:3px;animation:shimmer 1.4s ease infinite;background-size:200% 100%;background-image:linear-gradient(90deg,#f0f0f0 25%,#e4e4e4 50%,#f0f0f0 75%)}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
-.state-box{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--muted)}
+.ev-btn.registered{background:#e8f5ed;color:var(--green);border:1.5px solid #b7dfca;font-weight:700;cursor:pointer}
+.ev-btn.registered:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.full-tag{font-size:11px;font-weight:700;color:#c0392b;background:#fef2f2;padding:3px 8px;border-radius:3px;border:1px solid #fca5a5}
+.state-box{grid-column:1/-1;text-align:center;padding:64px 20px;color:var(--muted)}
 .state-box h3{font-size:16px;color:var(--text);margin-bottom:6px}
-.state-box p{font-size:13px}
 .spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
-
+.ai-rec-outer{background:#fff;border-bottom:1px solid var(--border)}
+.ai-rec-wrap{max-width:1320px;margin:0 auto;padding:20px 24px 22px}
+.ai-rec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ai-rec-title{display:flex;align-items:center;gap:10px}
+.ai-rec-title-icon{width:30px;height:30px;background:linear-gradient(135deg,#8B0000,#c0392b);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.ai-rec-title h3{font-size:15px;font-weight:700;color:var(--text)}
+.ai-rec-title p{font-size:11.5px;color:var(--muted);margin-top:1px}
+.ai-rec-badge{font-size:10px;font-weight:700;letter-spacing:.6px;background:linear-gradient(90deg,#8B0000,#c0392b);color:#fff;padding:3px 10px;border-radius:20px;text-transform:uppercase;flex-shrink:0}
+.ai-rec-edit{font-size:11.5px;color:var(--red);cursor:pointer;background:none;border:none;font-family:'Open Sans',sans-serif;text-decoration:underline;text-underline-offset:2px;transition:opacity .15s;white-space:nowrap}
+.ai-rec-edit:hover{opacity:.7}
+.ai-rec-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.ai-rec-scroll::-webkit-scrollbar{height:4px}
+.ai-rec-scroll::-webkit-scrollbar-track{background:transparent}
+.ai-rec-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.rec-card{flex:0 0 260px;background:#fff;border:1px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .2s;position:relative}
+.rec-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);transform:translateY(-2px)}
+.rec-card.cat-academic{border-top:3px solid #003087}
+.rec-card.cat-sports{border-top:3px solid #1a5c38}
+.rec-card.cat-cultural{border-top:3px solid var(--red)}
+.rec-card.cat-career{border-top:3px solid #b35900}
+.rec-card.cat-volunteer{border-top:3px solid #5b2b91}
+.rec-card-body{padding:13px 14px 14px}
+.rec-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.rec-ai-reason{font-size:10.5px;color:#8B0000;background:var(--red-light);border:1px solid rgba(139,0,0,.15);border-radius:3px;padding:3px 8px;margin-bottom:8px;line-height:1.4;display:flex;align-items:flex-start;gap:5px}
+.rec-ai-reason-icon{flex-shrink:0;margin-top:1px;font-size:11px}
+.rec-title{font-size:13.5px;font-weight:600;color:var(--text);line-height:1.35;margin-bottom:8px}
+.rec-meta-row{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-bottom:3px}
+.rec-meta-ic{opacity:.6;font-size:11px;width:13px;text-align:center}
+.rec-foot{border-top:1px solid var(--border);padding:9px 14px;display:flex;align-items:center;justify-content:space-between}
+.rec-slots{font-size:11.5px;color:var(--muted)}
+.rec-slots b{color:#1a5c38}
+.rec-btn{background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:11.5px;font-weight:600;padding:5px 13px;border-radius:3px;cursor:pointer;transition:background .15s}
+.rec-btn:hover{background:var(--red2)}
+.rec-skeleton{flex:0 0 260px;background:#fff;border:1px solid var(--border);border-radius:6px;border-top:3px solid #eee;padding:13px 14px 14px;overflow:hidden}
+.skel-line{background:#f0f0f0;border-radius:3px;margin-bottom:8px;animation:shimmer 1.4s ease infinite;background-size:200% 100%;background-image:linear-gradient(90deg,#f0f0f0 25%,#e4e4e4 50%,#f0f0f0 75%)}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.rec-matched{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;background:#e8f5ed;color:#1a5c38;padding:2px 7px;border-radius:3px}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center;padding:20px}
 .overlay.open{display:flex}
-.modal{background:#fff;border-radius:10px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:mIn .2s ease}
+.modal{background:#fff;border-radius:4px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.2);animation:mIn .2s ease}
 @keyframes mIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.m-nav{background:var(--red);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-radius:10px 10px 0 0}
-.m-nav-title{color:#fff;font-size:14px;font-weight:700}
-.m-nav-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:6px;font-size:14px;cursor:pointer;transition:background .15s;display:flex;align-items:center;justify-content:center}
+.m-nav{background:var(--red);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-radius:4px 4px 0 0}
+.m-nav-title{color:#fff;font-size:13.5px;font-weight:700}
+.m-nav-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:3px;font-size:13px;cursor:pointer;transition:background .15s}
 .m-nav-close:hover{background:rgba(255,255,255,.3)}
-.m-body{padding:24px}
+.m-body{padding:20px}
 .m-cat-badge{display:inline-block;margin-bottom:10px}
-.m-title{font-size:19px;font-weight:700;color:var(--text);margin-bottom:16px;line-height:1.3}
+.m-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:16px;line-height:1.3}
 .m-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.m-info-cell{background:#f8f8f8;border:1px solid var(--border);border-radius:6px;padding:10px 14px}
+.m-info-cell{background:#f8f8f8;border:1px solid var(--border);border-radius:3px;padding:9px 12px}
 .m-info-lbl{font-size:10.5px;color:var(--light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
 .m-info-val{font-size:13px;font-weight:600;color:var(--text)}
 .m-desc-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--light);margin-bottom:7px}
-.m-desc-body{font-size:13.5px;line-height:1.7;color:var(--muted);background:#f8f8f8;border-left:3px solid var(--red);padding:14px 16px;border-radius:0 6px 6px 0;margin-bottom:18px}
+.m-desc-body{font-size:13.5px;line-height:1.7;color:var(--muted);background:#f8f8f8;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 3px 3px 0;margin-bottom:18px}
 .m-footer{display:flex;gap:10px}
-.m-btn-reg{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:6px;cursor:pointer;transition:background .15s}
+.m-btn-reg{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:3px;cursor:pointer;transition:background .15s}
 .m-btn-reg:hover{background:var(--red2)}
 .m-btn-reg:disabled{opacity:.4;cursor:not-allowed}
 .m-btn-reg.registered{background:var(--green);opacity:1;cursor:pointer}
 .m-btn-reg.registered:hover{background:#134a2c}
-.m-registered-note{background:var(--green-light);border:1px solid #b7dfca;border-radius:6px;padding:10px 14px;font-size:12.5px;color:var(--green);margin-bottom:14px;display:none;align-items:center;gap:8px;font-weight:500}
+.m-registered-note{background:var(--green-light);border:1px solid #b7dfca;border-radius:3px;padding:10px 14px;font-size:12.5px;color:var(--green);margin-bottom:14px;display:none;align-items:center;gap:8px;font-weight:500}
 .m-registered-note.show{display:flex}
-.m-btn-close{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 20px;border-radius:6px;cursor:pointer;transition:all .15s}
+.m-btn-close{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 18px;border-radius:3px;cursor:pointer;transition:all .15s}
 .m-btn-close:hover{border-color:var(--red);color:var(--red)}
-
 .footer{background:#1f1f1f;padding:36px 24px 28px;margin-top:auto}
 .footer-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px}
 .fi-brand-utm{font-size:22px;font-weight:700;color:#fff;line-height:1;margin-bottom:6px}
@@ -244,21 +218,19 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .footer-bottom-links{display:flex;gap:16px}
 .footer-bottom-links a{font-size:12px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s}
 .footer-bottom-links a:hover{color:rgba(255,255,255,.7)}
-
-/* Preference Modal */
 .pref-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center;padding:20px}
 .pref-overlay.open{display:flex}
-.pref-modal{background:#fff;border-radius:12px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:mIn .25s ease}
-.pref-head{background:linear-gradient(135deg,#8B0000,#a50000);padding:24px 28px 20px;border-radius:12px 12px 0 0;text-align:center}
+.pref-modal{background:#fff;border-radius:8px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:mIn .25s ease}
+.pref-head{background:linear-gradient(135deg,#8B0000,#a50000);padding:22px 24px 18px;border-radius:8px 8px 0 0;text-align:center}
 .pref-head-icon{font-size:32px;margin-bottom:8px}
 .pref-head h2{color:#fff;font-size:18px;font-weight:700;margin-bottom:4px}
 .pref-head p{color:rgba(255,255,255,.7);font-size:13px;line-height:1.4}
-.pref-body{padding:24px 28px}
-.pref-section{margin-bottom:22px}
+.pref-body{padding:22px 24px 24px}
+.pref-section{margin-bottom:20px}
 .pref-section:last-child{margin-bottom:0}
-.pref-label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--light);margin-bottom:10px}
+.pref-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--light);margin-bottom:10px}
 .pref-cats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pref-cat-card{display:flex;align-items:center;gap:10px;padding:12px 14px;border:2px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;background:#fff;user-select:none}
+.pref-cat-card{display:flex;align-items:center;gap:10px;padding:12px 14px;border:2px solid var(--border);border-radius:6px;cursor:pointer;transition:all .15s;background:#fff;user-select:none}
 .pref-cat-card:hover{border-color:rgba(139,0,0,.3);background:#fefbfb}
 .pref-cat-card.selected{border-color:var(--red);background:var(--red-light)}
 .pref-cat-icon{font-size:22px;line-height:1;flex-shrink:0}
@@ -281,16 +253,14 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .pref-input::placeholder{color:#bbb}
 .pref-add-btn{background:none;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;color:var(--muted);cursor:pointer;font-family:'Open Sans',sans-serif;transition:all .15s;white-space:nowrap}
 .pref-add-btn:hover{border-color:var(--red);color:var(--red)}
-.pref-foot{display:flex;gap:10px;padding:0 28px 24px}
-.pref-btn-save{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:6px;cursor:pointer;transition:background .15s}
+.pref-foot{display:flex;gap:10px;padding:0 24px 22px}
+.pref-btn-save{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:4px;cursor:pointer;transition:background .15s}
 .pref-btn-save:hover{background:var(--red2)}
-.pref-btn-skip{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 20px;border-radius:6px;cursor:pointer;transition:all .15s}
+.pref-btn-skip{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 20px;border-radius:4px;cursor:pointer;transition:all .15s}
 .pref-btn-skip:hover{border-color:var(--red);color:var(--red)}
-
-/* Chatbot */
 #utm-chat-fab{position:fixed;bottom:28px;right:28px;z-index:9999;width:56px;height:56px;border-radius:50%;background:#8B0000;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(139,0,0,.45);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s}
 #utm-chat-fab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(139,0,0,.55)}
-#utm-chat-fab svg{width:26px;height:26px;fill:#fff}
+#utm-chat-fab svg{width:26px;height:26px;fill:#fff;transition:opacity .2s}
 #utm-chat-fab .fab-close{display:none}
 #utm-chat-fab.open .fab-open{display:none}
 #utm-chat-fab.open .fab-close{display:block}
@@ -364,60 +334,75 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   <div class="sn-item active">Campus Events</div><div class="sn-item">Student Life</div><div class="sn-item">Academic Calendar</div><div class="sn-item">HEP</div><div class="sn-item">Facilities</div>
 </div>
 
-<div class="page-head">
-  <div class="ph-left">
-    <div class="ph-breadcrumb"><a href="../Homepage/homepage.html">Home</a><span class="ph-sep">›</span><a href="#">Student Affairs</a><span class="ph-sep">›</span><span>Campus Event Finder</span></div>
-    <div class="ph-title">Campus Event Finder</div>
+<div class="page-title-bar">
+  <div class="ptb-left">
+    <div class="ptb-breadcrumb"><a href="../Homepage/homepage.html">Home</a><span>›</span><a href="#">Student Affairs</a><span>›</span><span>Campus Event Finder</span></div>
+    <div class="ptb-title">Campus Event Finder</div>
   </div>
-  <div class="ph-right"><span class="ph-tag">🤖 AI-Powered</span><span class="ph-tag">📱 AR Navigation</span></div>
+  <div class="ptb-right"><span class="ptb-tag">🤖 AI-Powered</span><span class="ptb-tag">📱 AR Navigation</span></div>
 </div>
 
-<!-- ═══ NEW: Unified Filter Bar ═══ -->
-<div class="filter-bar" id="filterBar">
-  <div class="fb-search">
-    <span class="fb-search-ic">🔍</span>
-    <input type="text" id="searchInput" placeholder="Search events..." oninput="filterEvents()"/>
-  </div>
-  <div class="fb-div"></div>
-  <div class="fb-pills" id="catPills">
-    <button class="fp active" data-cat="all" onclick="setCat('all',this)">All</button>
-    <button class="fp" data-cat="academic" onclick="setCat('academic',this)">Academic</button>
-    <button class="fp" data-cat="sports" onclick="setCat('sports',this)">Sports</button>
-    <button class="fp" data-cat="cultural" onclick="setCat('cultural',this)">Cultural</button>
-    <button class="fp" data-cat="career" onclick="setCat('career',this)">Career</button>
-    <button class="fp" data-cat="volunteer" onclick="setCat('volunteer',this)">Volunteer</button>
-    <button class="fp arch" id="archPill" onclick="switchToArchived()">📜 Archived <span class="arch-cnt" id="archCountBadge">0</span></button>
-  </div>
-  <div class="fb-div"></div>
-  <div class="fb-actions">
-    <span class="fb-stat" id="fbStat"><b>–</b> events</span>
-    <button class="fb-btn" onclick="openPrefModal()"><span>🎯</span> Interests</button>
+<div class="cat-tabs">
+  <button class="ct-btn active" onclick="switchMode('upcoming',this)">All Events</button>
+  <button class="ct-btn" onclick="setCat('academic',this)">Academic</button>
+  <button class="ct-btn" onclick="setCat('sports',this)">Sports</button>
+  <button class="ct-btn" onclick="setCat('cultural',this)">Cultural</button>
+  <button class="ct-btn" onclick="setCat('career',this)">Career</button>
+  <button class="ct-btn" onclick="setCat('volunteer',this)">Volunteer</button>
+  <div class="ct-sep"></div>
+  <button class="ct-btn archived-btn" id="archTabBtn" onclick="switchToArchived()">📜 Archived <span class="arch-count" id="archCountBadge">0</span></button>
+</div>
+
+<!-- AI RECOMMENDATION -->
+<div class="ai-rec-outer" id="aiRecOuter" style="display:none">
+  <div class="ai-rec-wrap">
+    <div class="ai-rec-header">
+      <div class="ai-rec-title">
+        <div class="ai-rec-title-icon">🤖</div>
+        <div><h3>Recommended For You</h3><p id="aiRecSubtitle">Personalised picks based on your interests</p></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="ai-rec-edit" onclick="openPrefModal()">✏️ Edit interests</button>
+        <span class="ai-rec-badge">AI Picks</span>
+      </div>
+    </div>
+    <div class="ai-rec-scroll" id="aiRecScroll">
+      <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
+      <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
+      <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
+    </div>
   </div>
 </div>
 
-<div class="main-content">
-  <!-- AI Recommendations -->
-  <div class="ai-section" id="aiRecOuter" style="display:none">
-    <div class="ai-head">
-      <div class="ai-head-left">
-        <div class="ai-icon">🤖</div>
-        <div><h3>Recommended For You</h3><p id="aiRecSubtitle">Based on your interests</p></div>
-      </div>
-      <div class="ai-head-right">
-        <button class="ai-edit" onclick="openPrefModal()">✏️ Edit</button>
-        <span class="ai-badge">AI Picks</span>
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="sb-card">
+      <div class="sb-card-head">Filter Events</div>
+      <div class="sb-search"><span style="color:#bbb;font-size:14px">🔍</span><input type="text" id="searchInput" placeholder="Search events..." oninput="filterEvents()"/></div>
+      <button class="sb-item active" onclick="setCatSb('all',this)"><div class="sb-item-left"><div class="sb-dot"></div>All Events</div><span class="sb-cnt" id="fc-all">–</span></button>
+      <button class="sb-item" onclick="setCatSb('academic',this)"><div class="sb-item-left"><div class="sb-dot"></div>Academic</div><span class="sb-cnt" id="fc-academic">–</span></button>
+      <button class="sb-item" onclick="setCatSb('sports',this)"><div class="sb-item-left"><div class="sb-dot"></div>Sports</div><span class="sb-cnt" id="fc-sports">–</span></button>
+      <button class="sb-item" onclick="setCatSb('cultural',this)"><div class="sb-item-left"><div class="sb-dot"></div>Cultural</div><span class="sb-cnt" id="fc-cultural">–</span></button>
+      <button class="sb-item" onclick="setCatSb('career',this)"><div class="sb-item-left"><div class="sb-dot"></div>Career</div><span class="sb-cnt" id="fc-career">–</span></button>
+      <button class="sb-item" onclick="setCatSb('volunteer',this)"><div class="sb-item-left"><div class="sb-dot"></div>Volunteer</div><span class="sb-cnt" id="fc-volunteer">–</span></button>
+    </div>
+    <div class="sb-card">
+      <div class="sb-card-head">Overview</div>
+      <div class="sb-stats">
+        <div class="sb-stat"><div class="sb-stat-num" id="statTotal">–</div><div class="sb-stat-lbl">Upcoming</div></div>
+        <div class="sb-stat"><div class="sb-stat-num" id="statOpen">–</div><div class="sb-stat-lbl">Open</div></div>
+        <div class="sb-stat"><div class="sb-stat-num" id="statSlots">–</div><div class="sb-stat-lbl">Slots</div></div>
+        <div class="sb-stat"><div class="sb-stat-num" id="statArchived" style="color:#999">–</div><div class="sb-stat-lbl">Archived</div></div>
       </div>
     </div>
-    <div class="ai-scroll" id="aiRecScroll">
-      <div class="rec-skeleton"><div class="skel-line" style="width:60px;height:50px;border-radius:8px;margin-bottom:8px"></div><div style="flex:1"><div class="skel-line" style="width:90%;height:12px;margin-bottom:6px"></div><div class="skel-line" style="width:70%;height:12px;margin-bottom:10px"></div><div class="skel-line" style="width:50%;height:10px"></div></div></div>
-      <div class="rec-skeleton"><div class="skel-line" style="width:60px;height:50px;border-radius:8px;margin-bottom:8px"></div><div style="flex:1"><div class="skel-line" style="width:90%;height:12px;margin-bottom:6px"></div><div class="skel-line" style="width:70%;height:12px;margin-bottom:10px"></div><div class="skel-line" style="width:50%;height:10px"></div></div></div>
-      <div class="rec-skeleton"><div class="skel-line" style="width:60px;height:50px;border-radius:8px;margin-bottom:8px"></div><div style="flex:1"><div class="skel-line" style="width:90%;height:12px;margin-bottom:6px"></div><div class="skel-line" style="width:70%;height:12px;margin-bottom:10px"></div><div class="skel-line" style="width:50%;height:10px"></div></div></div>
-    </div>
-  </div>
-
-  <!-- Event Grid -->
-  <div class="ev-grid" id="evGrid">
-    <div class="state-box"><div class="spinner"></div><p>Connecting to database...</p></div>
+    <button class="sb-pref-btn" onclick="openPrefModal()"><span>🎯</span><div><div style="font-weight:600">My Interests</div><div id="sbPrefSummary" style="font-size:11px;color:var(--light);margin-top:1px">Not set yet</div></div></button>
+    <button class="sb-archived-btn" onclick="switchToArchived()"><span>📜</span><div><div style="font-weight:500;color:var(--muted)">Past / Archived Events</div><div id="sbArchSummary" style="font-size:11px;color:var(--light);margin-top:1px">Click to view</div></div></button>
+    <div class="ar-sb"><div class="ar-sb-title">📱 AR Event Map</div><div class="ar-sb-text">Scan the UTM campus map marker using your mobile device to explore event locations in 3D Augmented Reality.</div><button class="ar-sb-btn">Launch AR Viewer</button></div>
+    <a class="back-link" href="../Homepage/homepage.html">← Back to myUTM Portal</a>
+  </aside>
+  <div class="events-area">
+    <div class="ev-toolbar"><div class="ev-toolbar-left"><h2 id="evTitle">Upcoming Events</h2><p id="evMeta">Loading events from Supabase...</p></div><span class="ev-toolbar-badge live" id="evBadge">● Live</span></div>
+    <div class="ev-grid" id="evGrid"><div class="state-box"><div class="spinner"></div><p>Connecting to database...</p></div></div>
   </div>
 </div>
 
@@ -444,7 +429,7 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
         <div class="m-info-cell"><div class="m-info-lbl">Time</div><div class="m-info-val" id="mTime"></div></div>
         <div class="m-info-cell"><div class="m-info-lbl">Venue</div><div class="m-info-val" id="mLoc"></div></div>
         <div class="m-info-cell"><div class="m-info-lbl">Faculty</div><div class="m-info-val" id="mFac"></div></div>
-        <div class="m-info-cell"><div class="m-info-lbl">Slots</div><div class="m-info-val" id="mSlots"></div></div>
+        <div class="m-info-cell"><div class="m-info-lbl">Slots Available</div><div class="m-info-val" id="mSlots"></div></div>
         <div class="m-info-cell"><div class="m-info-lbl">Organizer</div><div class="m-info-val" id="mOrg"></div></div>
       </div>
       <div class="m-desc-lbl">About This Event</div>
@@ -461,18 +446,20 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 <!-- Preference Modal -->
 <div class="pref-overlay" id="prefOverlay">
   <div class="pref-modal">
-    <div class="pref-head"><div class="pref-head-icon">🎯</div><h2>Tell Us What You Like</h2><p>This helps our AI recommend events you'll actually enjoy.</p></div>
+    <div class="pref-head"><div class="pref-head-icon">🎯</div><h2>Tell Us What You Like</h2><p>This helps our AI recommend events you'll actually enjoy. You can change this anytime.</p></div>
     <div class="pref-body">
-      <div class="pref-section"><div class="pref-label">What types of events interest you?</div>
+      <div class="pref-section">
+        <div class="pref-label">What types of events interest you?</div>
         <div class="pref-cats">
           <div class="pref-cat-card" data-cat="academic" onclick="togglePrefCat(this)"><div class="pref-cat-icon">📚</div><div class="pref-cat-info"><div class="pref-cat-name">Academic</div><div class="pref-cat-desc">Workshops, seminars, talks</div></div><div class="pref-cat-check">✓</div></div>
-          <div class="pref-cat-card" data-cat="sports" onclick="togglePrefCat(this)"><div class="pref-cat-icon">⚽</div><div class="pref-cat-info"><div class="pref-cat-name">Sports</div><div class="pref-cat-desc">Tournaments, matches</div></div><div class="pref-cat-check">✓</div></div>
-          <div class="pref-cat-card" data-cat="cultural" onclick="togglePrefCat(this)"><div class="pref-cat-icon">🎭</div><div class="pref-cat-info"><div class="pref-cat-name">Cultural</div><div class="pref-cat-desc">Performances, festivals</div></div><div class="pref-cat-check">✓</div></div>
-          <div class="pref-cat-card" data-cat="career" onclick="togglePrefCat(this)"><div class="pref-cat-icon">💼</div><div class="pref-cat-info"><div class="pref-cat-name">Career</div><div class="pref-cat-desc">Job fairs, networking</div></div><div class="pref-cat-check">✓</div></div>
-          <div class="pref-cat-card" data-cat="volunteer" onclick="togglePrefCat(this)"><div class="pref-cat-icon">🤝</div><div class="pref-cat-info"><div class="pref-cat-name">Volunteer</div><div class="pref-cat-desc">CSR, community service</div></div><div class="pref-cat-check">✓</div></div>
+          <div class="pref-cat-card" data-cat="sports" onclick="togglePrefCat(this)"><div class="pref-cat-icon">⚽</div><div class="pref-cat-info"><div class="pref-cat-name">Sports</div><div class="pref-cat-desc">Tournaments, friendly matches</div></div><div class="pref-cat-check">✓</div></div>
+          <div class="pref-cat-card" data-cat="cultural" onclick="togglePrefCat(this)"><div class="pref-cat-icon">🎭</div><div class="pref-cat-info"><div class="pref-cat-name">Cultural</div><div class="pref-cat-desc">Performances, festivals, arts</div></div><div class="pref-cat-check">✓</div></div>
+          <div class="pref-cat-card" data-cat="career" onclick="togglePrefCat(this)"><div class="pref-cat-icon">💼</div><div class="pref-cat-info"><div class="pref-cat-name">Career</div><div class="pref-cat-desc">Job fairs, networking, CV talks</div></div><div class="pref-cat-check">✓</div></div>
+          <div class="pref-cat-card" data-cat="volunteer" onclick="togglePrefCat(this)"><div class="pref-cat-icon">🤝</div><div class="pref-cat-info"><div class="pref-cat-name">Volunteer</div><div class="pref-cat-desc">CSR, community service, outreach</div></div><div class="pref-cat-check">✓</div></div>
         </div>
       </div>
-      <div class="pref-section"><div class="pref-label">How often do you attend events?</div>
+      <div class="pref-section">
+        <div class="pref-label">How often do you attend events?</div>
         <div class="pref-freq">
           <div class="pref-freq-pill" data-freq="weekly" onclick="togglePrefFreq(this)">Every week</div>
           <div class="pref-freq-pill" data-freq="biweekly" onclick="togglePrefFreq(this)">Every 2 weeks</div>
@@ -480,9 +467,10 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
           <div class="pref-freq-pill" data-freq="occasionally" onclick="togglePrefFreq(this)">Occasionally</div>
         </div>
       </div>
-      <div class="pref-section"><div class="pref-label">Specific interests? <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--light)">(optional)</span></div>
+      <div class="pref-section">
+        <div class="pref-label">Specific interests? <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--light)">(optional)</span></div>
         <div class="pref-tags-wrap" id="prefTagsWrap"></div>
-        <div class="pref-input-row"><input class="pref-input" id="prefTagInput" placeholder="e.g. coding, badminton..." onkeydown="if(event.key==='Enter'){event.preventDefault();addPrefTag()}"/><button class="pref-add-btn" onclick="addPrefTag()">+ Add</button></div>
+        <div class="pref-input-row"><input class="pref-input" id="prefTagInput" placeholder="e.g. coding, badminton, photography..." onkeydown="if(event.key==='Enter'){event.preventDefault();addPrefTag()}"/><button class="pref-add-btn" onclick="addPrefTag()">+ Add</button></div>
       </div>
     </div>
     <div class="pref-foot"><button class="pref-btn-save" onclick="savePreferences()">Save Preferences</button><button class="pref-btn-skip" onclick="skipPreferences()">Skip</button></div>
@@ -496,16 +484,16 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   <svg class="fab-close" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
 </button>
 <div id="utm-chat-win">
-  <div class="cw-head"><div class="cw-av">🤖</div><div class="cw-head-info"><div class="cw-head-name">UTM AI Assistant</div><div class="cw-head-status"><div class="cw-status-dot"></div>Online · Groq AI</div></div><button class="cw-head-close" onclick="toggleChat()">✕</button></div>
+  <div class="cw-head"><div class="cw-av">🤖</div><div class="cw-head-info"><div class="cw-head-name">UTM AI Assistant</div><div class="cw-head-status"><div class="cw-status-dot"></div>Online · Powered by Groq AI</div></div><button class="cw-head-close" onclick="toggleChat()">✕</button></div>
   <div class="cw-msgs" id="cwMsgs"></div>
   <div class="cw-quick" id="cwQuick">
-    <button class="qr-btn" onclick="sendQuick('What events are on this week?')">📅 This week</button>
-    <button class="qr-btn" onclick="sendQuick('Any sports events?')">⚽ Sports</button>
-    <button class="qr-btn" onclick="sendQuick('How to register?')">📝 Register</button>
-    <button class="qr-btn" onclick="sendQuick('Show all events')">📋 All</button>
+    <button class="qr-btn" onclick="sendQuick('What events are on this week?')">📅 Events this week</button>
+    <button class="qr-btn" onclick="sendQuick('Are there any sports events?')">⚽ Sports events</button>
+    <button class="qr-btn" onclick="sendQuick('How do I register for an event?')">📝 How to register</button>
+    <button class="qr-btn" onclick="sendQuick('Show me all events')">📋 All events</button>
   </div>
   <div class="cw-input-row"><input class="cw-input" id="cwInput" placeholder="Ask anything about events..." onkeydown="if(event.key==='Enter')sendMsg()"/><button class="cw-send" id="cwSend" onclick="sendMsg()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button></div>
-  <div class="cw-powered">UTM Campus Event Finder · AI by Groq</div>
+  <div class="cw-powered">UTM Campus Event Finder · AI by Groq (Llama 3)</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -517,15 +505,17 @@ const badgeClass={academic:'badge-academic',sports:'badge-sports',cultural:'badg
 const catEmojis={academic:'📚',sports:'⚽',cultural:'🎭',career:'💼',volunteer:'🤝'};
 let curCat='all',curQ='',currentUser=null,userPrefs=null;
 let upcomingEvents=[],archivedEvents=[],viewMode='upcoming';
+
 function todayStr(){return new Date().toISOString().split('T')[0]}
 function isExpired(ev){return ev.date&&ev.date<todayStr()}
 function cap(s){return s?s[0].toUpperCase()+s.slice(1):''}
 function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
+/* ═════════════ PREFERENCES ═════════════ */
 const PREF_KEY='utm_event_prefs';
 function loadPrefs(){try{var r=localStorage.getItem(PREF_KEY);userPrefs=r?JSON.parse(r):null}catch(e){userPrefs=null}updatePrefUI()}
 function savePrefsToStorage(d){userPrefs=d;localStorage.setItem(PREF_KEY,JSON.stringify(d));updatePrefUI()}
-function updatePrefUI(){/* nothing visible to update in new layout */}
+function updatePrefUI(){var el=document.getElementById('sbPrefSummary');if(!el)return;if(!userPrefs||(!userPrefs.categories.length&&!userPrefs.keywords.length)){el.textContent='Not set yet';return}var p=[];if(userPrefs.categories.length)p.push(userPrefs.categories.map(function(c){return catEmojis[c]||''}).join(' '));if(userPrefs.keywords.length){p.push(userPrefs.keywords.slice(0,3).join(', '));if(userPrefs.keywords.length>3)p.push('+' +(userPrefs.keywords.length-3))}el.textContent=p.join(' · ')||'Not set yet'}
 function openPrefModal(){document.getElementById('prefOverlay').classList.add('open');document.body.style.overflow='hidden';var cats=(userPrefs&&userPrefs.categories)||[],freq=(userPrefs&&userPrefs.frequency)||'',tags=(userPrefs&&userPrefs.keywords)||[];document.querySelectorAll('.pref-cat-card').forEach(function(c){c.classList.toggle('selected',cats.indexOf(c.dataset.cat)!==-1)});document.querySelectorAll('.pref-freq-pill').forEach(function(p){p.classList.toggle('selected',p.dataset.freq===freq)});renderPrefTags(tags)}
 function closePrefModal(){document.getElementById('prefOverlay').classList.remove('open');document.body.style.overflow=''}
 function togglePrefCat(c){c.classList.toggle('selected')}
@@ -537,6 +527,7 @@ function removePrefTag(i){tempTags.splice(i,1);renderPrefTags(tempTags)}
 function savePreferences(){var cats=[];document.querySelectorAll('.pref-cat-card.selected').forEach(function(c){cats.push(c.dataset.cat)});var fe=document.querySelector('.pref-freq-pill.selected');savePrefsToStorage({categories:cats,frequency:fe?fe.dataset.freq:'occasionally',keywords:tempTags.slice(),savedAt:new Date().toISOString()});closePrefModal();var myIds=new Set();upcomingEvents.forEach(function(e){if(e.registered)myIds.add(e.id)});loadAIRecommendations(currentUser,myIds)}
 function skipPreferences(){savePrefsToStorage({categories:[],frequency:'occasionally',keywords:[],savedAt:new Date().toISOString(),skipped:true});closePrefModal()}
 
+/* ═════════════ INIT ═════════════ */
 async function init(){
   loadPrefs();
   const{data:{session}}=await sb.auth.getSession();
@@ -548,10 +539,12 @@ async function init(){
   if(user?.matrix){const{data:regs}=await sb.from('registrations').select('event_id').ilike('matric_no',user.matrix);if(regs)regs.forEach(function(r){myEventIds.add(r.event_id)})}
   const today=todayStr();
   const{data:events,error}=await sb.from('events').select('*').eq('status','approved').gte('date',today).order('date',{ascending:true});
-  if(error||!events){document.getElementById('evGrid').innerHTML='<div class="state-box"><h3>⚠️ Failed to load events</h3><p>Check your connection.</p></div>';return}
+  if(error||!events){document.getElementById('evGrid').innerHTML='<div class="state-box"><h3>⚠️ Failed to load events</h3><p>Check your internet connection.</p></div>';return}
   upcomingEvents=events.map(function(e){return Object.assign({},e,{registered:myEventIds.has(e.id)})});
   const{count:archCount}=await sb.from('events').select('*',{count:'exact',head:true}).eq('status','approved').lt('date',today);
   document.getElementById('archCountBadge').textContent=archCount||0;
+  document.getElementById('statArchived').textContent=archCount||0;
+  document.getElementById('sbArchSummary').textContent=(archCount||0)+' past event'+((archCount||0)!==1?'s':'')+' available';
   window.EVENTS=upcomingEvents;
   boot();
   if(!userPrefs)setTimeout(function(){openPrefModal()},600);
@@ -560,120 +553,220 @@ async function init(){
 
 function boot(){
   var evs=upcomingEvents,total=evs.length,open=evs.filter(function(e){return e.slots_left>0}).length,slots=evs.reduce(function(a,e){return a+(e.slots_left||0)},0);
-  document.getElementById('fbStat').innerHTML='<b>'+total+'</b> event'+(total!==1?'s':'')+' · <b>'+open+'</b> open';
+  document.getElementById('statTotal').textContent=total;
+  document.getElementById('statOpen').textContent=open;
+  document.getElementById('statSlots').textContent=slots>=1000?(slots/1000).toFixed(1)+'k':slots;
+  ['all','academic','sports','cultural','career','volunteer'].forEach(function(c){var el=document.getElementById('fc-'+c);if(el)el.textContent=c==='all'?total:evs.filter(function(e){return e.category===c}).length});
   render();
 }
 
-function switchToArchived(){
-  viewMode='archived';curCat='all';
-  document.querySelectorAll('.fp').forEach(function(b){b.classList.remove('active')});
-  document.getElementById('archPill').classList.add('active');
-  document.getElementById('fbStat').innerHTML='Loading...';
-  document.getElementById('aiRecOuter').style.display='none';
-  if(!archivedEvents.length){
-    document.getElementById('evGrid').innerHTML='<div class="state-box"><div class="spinner"></div><p>Loading archived events...</p></div>';
-    sb.from('events').select('*').eq('status','approved').lt('date',todayStr()).order('date',{ascending:false}).then(function(res){
-      var myIds=new Set();upcomingEvents.forEach(function(e){if(e.registered)myIds.add(e.id)});
-      archivedEvents=(res.data||[]).map(function(e){return Object.assign({},e,{registered:myIds.has(e.id)})});
-      window.EVENTS=archivedEvents;
-      document.getElementById('fbStat').innerHTML='<b>'+(archivedEvents.length)+'</b> archived events';
-      render();
+/* ═════════════ VIEW MODE ═════════════ */
+function switchMode(mode,btn){viewMode='upcoming';curCat='all';window.EVENTS=upcomingEvents;document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});if(btn)btn.classList.add('active');document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});document.querySelector('.sb-item').classList.add('active');document.getElementById('evTitle').textContent='Upcoming Events';document.getElementById('evBadge').className='ev-toolbar-badge live';document.getElementById('evBadge').innerHTML='● Live';document.getElementById('aiRecOuter').style.display='';render()}
+function switchToArchived(){viewMode='archived';curCat='all';document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});document.getElementById('archTabBtn').classList.add('active');document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});document.querySelector('.sb-item').classList.add('active');document.getElementById('evTitle').textContent='Past / Archived Events';document.getElementById('evBadge').className='ev-toolbar-badge';document.getElementById('evBadge').innerHTML='📜 Archived';document.getElementById('aiRecOuter').style.display='none';if(!archivedEvents.length){document.getElementById('evGrid').innerHTML='<div class="state-box"><div class="spinner"></div><p>Loading archived events...</p></div>';sb.from('events').select('*').eq('status','approved').lt('date',todayStr()).order('date',{ascending:false}).then(function(res){var myIds=new Set();upcomingEvents.forEach(function(e){if(e.registered)myIds.add(e.id)});archivedEvents=(res.data||[]).map(function(e){return Object.assign({},e,{registered:myIds.has(e.id)})});window.EVENTS=archivedEvents;render()})}else{window.EVENTS=archivedEvents;render()}}
+
+/* ═════════════════════════════════════════════════════════════════════
+   AI RECOMMENDATIONS — CLIENT-SIDE FILTER. NEVER TRUST AI OUTPUT.
+   ═════════════════════════════════════════════════════════════════════ */
+async function loadAIRecommendations(user, myEventIds) {
+  var evs = upcomingEvents;
+  if (!evs.length) return;
+
+  var prefCats = (userPrefs && userPrefs.categories && userPrefs.categories.length) ? userPrefs.categories : [];
+  var prefKeys = (userPrefs && userPrefs.keywords) ? userPrefs.keywords : [];
+  var prefFreq = (userPrefs && userPrefs.frequency) ? userPrefs.frequency : 'unknown';
+  var userPastCats = evs.filter(function(e){ return myEventIds.has(e.id); }).map(function(e){ return e.category; }).filter(Boolean);
+
+  /*
+    ══════════════════════════════════════════════════════════
+    STRATEGY: Don't rely on AI for category filtering.
+    Do it CLIENT-SIDE instead.
+    ══════════════════════════════════════════════════════════
+
+    If user HAS preferences:
+      1. Filter events to ONLY their preferred categories (hard filter)
+      2. If keywords exist, rank keyword-matching events higher
+      3. Send ONLY those filtered events to AI for ranking + reasons
+      4. AI cannot possibly return wrong categories because we
+         only gave it events from correct categories
+      5. After AI responds, filter AGAIN just to be safe
+      6. If 0 events in preferred categories → hide section entirely
+
+    If user has NO preferences:
+      1. Send all events to AI for diverse picks
+      2. Show whatever comes back (no filtering)
+  */
+
+  if (prefCats.length > 0) {
+    /* ── HARD FILTER: only events matching preferred categories ── */
+    var filtered = evs.filter(function(e) {
+      return prefCats.indexOf(e.category) !== -1 && e.slots_left > 0 && !myEventIds.has(e.id);
     });
-  }else{
-    window.EVENTS=archivedEvents;
-    document.getElementById('fbStat').innerHTML='<b>'+(archivedEvents.length)+'</b> archived events';
-    render();
-  }
-}
-function exitArchived(){
-  viewMode='upcoming';curCat='all';window.EVENTS=upcomingEvents;
-  document.querySelectorAll('.fp:not(.arch)').forEach(function(b){b.classList.toggle('active',b.dataset.cat==='all')});
-  document.getElementById('archPill').classList.remove('active');
-  document.getElementById('fbStat').innerHTML='<b>'+upcomingEvents.length+'</b> event'+(upcomingEvents.length!==1?'s':'')+' · <b>'+upcomingEvents.filter(function(e){return e.slots_left>0}).length+'</b> open';
-  document.getElementById('aiRecOuter').style.display='';
-  render();
-}
 
-/* ═══ AI RECOMMENDATIONS (client-side filtered) ═══ */
-async function loadAIRecommendations(user,myEventIds){
-  var evs=upcomingEvents;if(!evs.length)return;
-  var prefCats=(userPrefs&&userPrefs.categories&&userPrefs.categories.length)?userPrefs.categories:[];
-  var prefKeys=(userPrefs&&userPrefs.keywords)?userPrefs.keywords:[];
-  var prefFreq=(userPrefs&&userPrefs.frequency)?userPrefs.frequency:'unknown';
-  var userPastCats=evs.filter(function(e){return myEventIds.has(e.id)}).map(function(e){return e.category}).filter(Boolean);
-
-  if(prefCats.length>0){
-    var filtered=evs.filter(function(e){return prefCats.indexOf(e.category)!==-1&&e.slots_left>0&&!myEventIds.has(e.id)});
-    if(prefKeys.length>0){
-      var kwLower=prefKeys.map(function(k){return k.toLowerCase()});
-      filtered.sort(function(a,b){var aT=((a.title||'')+' '+(a.description||'')).toLowerCase(),bT=((b.title||'')+' '+(b.description||'')).toLowerCase();return(bT.split(kwLower.some(function(k){return bT.indexOf(k)!==-1})?1:0))-(aT.split(kwLower.some(function(k){return aT.indexOf(k)!==-1})?1:0))});
+    /* If keywords exist, sort keyword-matching events to the top */
+    if (prefKeys.length > 0) {
+      var kwLower = prefKeys.map(function(k){ return k.toLowerCase(); });
+      filtered.sort(function(a, b) {
+        var aText = ((a.title || '') + ' ' + (a.description || '')).toLowerCase();
+        var bText = ((b.title || '') + ' ' + (b.description || '')).toLowerCase();
+        var aMatch = kwLower.some(function(k){ return aText.indexOf(k) !== -1; }) ? 1 : 0;
+        var bMatch = kwLower.some(function(k){ return bText.indexOf(k) !== -1; }) ? 1 : 0;
+        return bMatch - aMatch; // keyword matches first
+      });
     }
-    if(!filtered.length){document.getElementById('aiRecOuter').style.display='none';return}
-    document.getElementById('aiRecOuter').style.display='block';
-    document.getElementById('aiRecSubtitle').textContent='Only '+prefCats.map(cap).join(', ')+' events';
-    var summaries=filtered.slice(0,10).map(function(e){return{id:e.id,title:e.title,category:e.category,faculty:e.faculty||'Open',date:e.date,slots:e.slots_left,description:(e.description||'').substring(0,100)}});
-    var prompt='You are a UTM event recommender.\nStudent interests: '+prefCats.map(cap).join(', ')+'\nKeywords: '+(prefKeys.length?prefKeys.join(', '):'None')+'\nFaculty: '+(user?.faculty||'Unknown')+'\nFrequency: '+prefFreq+'\n\nAvailable events (ALL from preferred categories only):\n'+JSON.stringify(summaries,null,2)+'\n\nPick up to 4. Write a reason (max 12 words) for each.\nRespond ONLY with JSON array. No markdown.\n[{"id":<number>,"reason":"reason"},...]';
-    try{
-      var res=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt})});
-      if(!res.ok)throw new Error(res.status);
-      var data=await res.json();
-      var raw=(data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'[]';
-      var picks=JSON.parse(raw.replace(/```json|```/g,'').trim());
-      var safe=picks.filter(function(p){var ev=evs.find(function(e){return e.id===p.id});return ev&&prefCats.indexOf(ev.category)!==-1});
-      renderRecs(safe,evs,prefCats);
-    }catch(e){console.warn('AI failed:',e);document.getElementById('aiRecOuter').style.display='none'}
-  }else{
-    var summaries=evs.filter(function(e){return e.slots_left>0&&!myEventIds.has(e.id)}).slice(0,30).map(function(e){return{id:e.id,title:e.title,category:e.category,faculty:e.faculty||'Open',date:e.date,slots:e.slots_left}});
-    if(!summaries.length){document.getElementById('aiRecOuter').style.display='none';return}
-    document.getElementById('aiRecOuter').style.display='block';
-    document.getElementById('aiRecSubtitle').textContent='Discover new events';
-    var prompt='UTM event recommender. Student has no category preferences.\nFaculty: '+(user?.faculty||'Unknown')+'\n\nPick 4 events from DIFFERENT categories. Max 1 per category.\n\nEvents:\n'+JSON.stringify(summaries,null,2)+'\n\nJSON only: [{"id":<number>,"reason":"reason"},...]';
-    try{
-      var res=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt})});
-      if(!res.ok)throw new Error(res.status);
-      var data=await res.json();
-      var raw=(data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'[]';
-      var picks=JSON.parse(raw.replace(/```json|```/g,'').trim());
-      renderRecs(picks,evs,[]);
-    }catch(e){console.warn('AI failed:',e);document.getElementById('aiRecOuter').style.display='none'}
+
+    /* If nothing matches → hide section, don't even call AI */
+    if (filtered.length === 0) {
+      document.getElementById('aiRecOuter').style.display = 'none';
+      return;
+    }
+
+    /* Show section with subtitle */
+    var catLabels = prefCats.map(function(c){ return cap(c); }).join(', ');
+    document.getElementById('aiRecOuter').style.display = 'block';
+    document.getElementById('aiRecSubtitle').textContent =
+      'Showing only ' + catLabels + ' events you selected';
+
+    /* Send ONLY filtered events to AI — it physically cannot pick wrong categories */
+    var eventSummaries = filtered.slice(0, 10).map(function(e){
+      return { id:e.id, title:e.title, category:e.category, faculty:e.faculty||'Open to all', date:e.date, slots:e.slots_left, description:(e.description||'').substring(0, 100) };
+    });
+
+    var prompt =
+      'You are a university event recommender for UTM.\n\n' +
+      'Student interests: ' + catLabels + '\n' +
+      'Keywords: ' + (prefKeys.length ? prefKeys.join(', ') : 'None') + '\n' +
+      'Faculty: ' + (user?.faculty || 'Unknown') + '\n' +
+      'Frequency: ' + prefFreq + '\n' +
+      'Past categories: ' + (userPastCats.length ? userPastCats.join(', ') : 'None') + '\n\n' +
+      'Available events (ALL are from the student\'s preferred categories):\n' +
+      JSON.stringify(eventSummaries, null, 2) + '\n\n' +
+      'Pick up to 4 events. Rank by relevance to the student.\n' +
+      'For each, write a reason (max 12 words) explaining why it fits.\n' +
+      'NEVER pick events outside the listed categories.\n\n' +
+      'Respond ONLY with JSON array. No markdown.\n' +
+      '[{ "id": <number>, "reason": "Short reason" }, ...]';
+
+    try {
+      var res = await fetch(SUPABASE_URL + '/functions/v1/ai-recommend', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + SUPABASE_ANON, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: prompt })
+      });
+      if (!res.ok) throw new Error('AI error ' + res.status);
+      var data = await res.json();
+      var raw = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) || '[]';
+      var clean = raw.replace(/```json|```/g, '').trim();
+      var picks = JSON.parse(clean);
+
+      /* ═══ SAFETY FILTER: double-check every pick's category ═══ */
+      var safePicks = picks.filter(function(pick) {
+        var ev = evs.find(function(e){ return e.id === pick.id; });
+        if (!ev) return false; // invalid ID
+        if (prefCats.indexOf(ev.category) === -1) {
+          console.warn('AI returned wrong category "' + ev.category + '" — blocked.');
+          return false; // WRONG CATEGORY — BLOCKED
+        }
+        return true;
+      });
+
+      renderRecommendations(safePicks, evs, prefCats);
+
+    } catch(err) {
+      console.warn('AI recommendation failed:', err);
+      document.getElementById('aiRecOuter').style.display = 'none';
+    }
+
+  } else {
+    /* ═══ NO PREFERENCES SET — diverse mix, no filtering ═══ */
+    var eventSummaries = evs
+      .filter(function(e){ return e.slots_left > 0 && !myEventIds.has(e.id); })
+      .slice(0, 30)
+      .map(function(e){
+        return { id:e.id, title:e.title, category:e.category, faculty:e.faculty||'Open to all', date:e.date, slots:e.slots_left };
+      });
+
+    if (!eventSummaries.length) { document.getElementById('aiRecOuter').style.display = 'none'; return; }
+
+    document.getElementById('aiRecOuter').style.display = 'block';
+    document.getElementById('aiRecSubtitle').textContent = 'Explore and discover new events';
+
+    var prompt =
+      'You are a university event recommender for UTM.\n\n' +
+      'Student has NO preferred categories set.\n' +
+      'Faculty: ' + (user?.faculty || 'Unknown') + '\n\n' +
+      'Pick 4 events from DIFFERENT categories for variety.\n' +
+      'Do not pick more than 1 from the same category.\n\n' +
+      'Available events:\n' + JSON.stringify(eventSummaries, null, 2) + '\n\n' +
+      'Respond ONLY with JSON array. No markdown.\n' +
+      '[{ "id": <number>, "reason": "Short reason" }, ...]';
+
+    try {
+      var res = await fetch(SUPABASE_URL + '/functions/v1/ai-recommend', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + SUPABASE_ANON, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: prompt })
+      });
+      if (!res.ok) throw new Error('AI error ' + res.status);
+      var data = await res.json();
+      var raw = (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) || '[]';
+      var clean = raw.replace(/```json|```/g, '').trim();
+      var picks = JSON.parse(clean);
+      renderRecommendations(picks, evs, []);
+    } catch(err) {
+      console.warn('AI recommendation failed:', err);
+      document.getElementById('aiRecOuter').style.display = 'none';
+    }
   }
 }
 
-function renderRecs(picks,evs,prefCats){
-  if(!picks||!picks.length){document.getElementById('aiRecOuter').style.display='none';return}
-  document.getElementById('aiRecScroll').innerHTML=picks.map(function(p,i){
-    var ev=evs.find(function(e){return e.id===p.id});if(!ev)return'';
-    return'<div class="rec-card cat-'+(ev.category||'academic')+'" onclick="openModal('+ev.id+')" style="animation:fadeUp .3s ease '+(i*.08)+'s both"><div class="rec-accent"><div class="rec-accent-emoji">'+(ev.emoji||'📌')+'</div><div class="rec-accent-badge ev-badge '+(badgeClass[ev.category]||'badge-academic')+'">'+cap(ev.category)+'</div></div><div class="rec-body"><div class="rec-reason">✦ '+p.reason+'</div><div class="rec-title">'+(ev.title||'Untitled')+'</div><div class="rec-meta"><span>📅 '+((ev.date||'–').substring(5))+'</span><span>📍 '+((ev.location||'–').substring(0,20))+'</span></div></div><div class="rec-foot"><span class="rec-slots"><b>'+ev.slots_left+'</b> slots</span><button class="rec-btn" onclick="event.stopPropagation();goRegister('+ev.id+')">Register</button></div></div>';
+function renderRecommendations(picks, evs, prefCats) {
+  if (!picks || !picks.length) { document.getElementById('aiRecOuter').style.display = 'none'; return; }
+  document.getElementById('aiRecScroll').innerHTML = picks.map(function(pick, i){
+    var ev = evs.find(function(e){ return e.id === pick.id; });
+    if (!ev) return '';
+    return '<div class="rec-card cat-'+(ev.category||'academic')+'" onclick="openModal('+ev.id+')" style="animation:fadeUp .3s ease '+(i*.08)+'s both">'+
+      '<div class="rec-card-body">'+
+        '<div class="rec-card-top"><span class="ev-badge '+(badgeClass[ev.category]||'badge-academic')+'">'+cap(ev.category)+'</span>'+
+        '<div class="rec-matched">✓ Match</div>'+
+        '<span style="font-size:22px;line-height:1">'+(ev.emoji||'📌')+'</span></div>'+
+        '<div class="rec-ai-reason"><span class="rec-ai-reason-icon">✦</span><span>'+pick.reason+'</span></div>'+
+        '<div class="rec-title">'+(ev.title||'Untitled Event')+'</div>'+
+        '<div class="rec-meta-row"><span class="rec-meta-ic">📅</span>'+(ev.date||'–')+'</div>'+
+        '<div class="rec-meta-row"><span class="rec-meta-ic">📍</span>'+(ev.location||'–')+'</div>'+
+      '</div>'+
+      '<div class="rec-foot"><span class="rec-slots"><b>'+ev.slots_left+'</b> slots left</span>'+
+        '<button class="rec-btn" onclick="event.stopPropagation();goRegister('+ev.id+')">Register</button></div></div>';
   }).join('');
 }
 
-/* ═══ RENDER ═══ */
+/* ═════════════ RENDER GRID ═════════════ */
 function render(){
   var evs=window.EVENTS||[],isArch=(viewMode==='archived');
   var list=evs.filter(function(e){var mc=curCat==='all'||e.category===curCat;var ms=!curQ||(e.title||'').toLowerCase().indexOf(curQ)!==-1||(e.location||'').toLowerCase().indexOf(curQ)!==-1||(e.faculty||'').toLowerCase().indexOf(curQ)!==-1;return mc&&ms});
-  if(!list.length){document.getElementById('evGrid').innerHTML='<div class="state-box"><h3>'+(isArch?'No archived events':'No events found')+'</h3><p>'+(isArch?'Past events appear here.':'Try different filters.')+'</p></div>';return}
+  document.getElementById('evMeta').textContent=list.length+' '+(isArch?'archived':'upcoming')+' event'+(list.length!==1?'s':'')+' found'+(isArch?'':' · Live from Supabase');
+  if(!list.length){document.getElementById('evGrid').innerHTML='<div class="state-box"><h3>'+(isArch?'No archived events':'No events found')+'</h3><p>'+(isArch?'Past events will appear here.':'Try a different filter.')+'</p></div>';return}
   document.getElementById('evGrid').innerHTML=list.map(function(ev,i){
-    var pct=ev.slots>0?Math.round((ev.slots_left/ev.slots)*100):0,full=parseInt(ev.slots_left)<=0,low=!full&&pct<=20,fc=full?'#dc2626':low?'#e67e22':'#1a5c38',isReg=!!ev.registered,expired=isExpired(ev);
-    var ribbon='',foot='',extra='';
-    if(expired){extra=' is-expired';ribbon='<div class="ev-ribbon expired">Expired</div>';foot='<span class="full-tag" style="color:#888;background:#f5f5f5;border-color:#ddd">Event passed</span>'}
-    else if(isReg){extra=' is-registered';ribbon='<div class="ev-ribbon registered">✓ Registered</div>';foot='<button class="ev-btn registered" onclick="event.stopPropagation();viewTicket('+ev.id+')" style="font-size:11px;padding:6px 12px">🎟 Ticket</button>'}
-    else if(full){foot='<span class="full-tag">Full</span>'}
-    else{foot='<div class="ev-slots"><div class="ev-slots-txt '+(low?'':'ok')+'"><b>'+ev.slots_left+'</b> slots left</div><div class="ev-bar"><div class="ev-bar-fill" style="width:'+pct+'%;background:'+fc+'"></div></div></div><button class="ev-btn" onclick="event.stopPropagation();goRegister('+ev.id+')">Register</button>'}
-    return'<div class="ev-card cat-'+(ev.category||'academic')+extra+'" style="animation-delay:'+(i*.04)+'s" onclick="openModal('+ev.id+')">'+ribbon+'<div class="ev-accent"><div class="ev-accent-emoji">'+(ev.emoji||'📌')+'</div><div class="ev-accent-badge ev-badge '+(badgeClass[ev.category]||'badge-accent')+'">'+cap(ev.category)+'</div><div class="ev-accent-catline"></div></div><div class="ev-body"><div class="ev-title">'+(ev.title||'Untitled')+'</div><div class="ev-meta"><div class="ev-meta-item"><span>📅</span>'+(ev.date||'–')+'</div><div class="ev-meta-item"><span>🕐</span>'+(ev.time||'–')+'</div><div class="ev-meta-item"><span>📍</span>'+(ev.location||'–')+'</div></div><div class="ev-foot">'+foot+'</div></div></div>'
-  }).join('');
+    var pct=ev.slots>0?Math.round((ev.slots_left/ev.slots)*100):0,full=parseInt(ev.slots_left)<=0,low=!full&&pct<=20,fc=full?'#dc2626':low?'#e67e22':'#1a5c38',emoji=ev.emoji||'📌',isReg=!!ev.registered;
+    var extra='',ribbon='',foot='';
+    if(isArch){extra=' is-expired';ribbon='<div class="expired-ribbon">Expired</div>';foot='<span class="full-tag" style="color:#888;background:#f5f5f5;border-color:#ddd">Event has passed</span>'}
+    else if(isReg){extra=' is-registered';ribbon='<div class="registered-ribbon">✓ Registered</div>';foot='<div class="ev-slots"><div class="ev-slots-txt ok"><b>You\'re in!</b></div><div class="ev-bar"><div class="ev-bar-fill" style="width:'+pct+'%;background:'+fc+'"></div></div></div><button class="ev-btn registered" onclick="event.stopPropagation();viewTicket('+ev.id+')">🎟 View Ticket</button>'}
+    else if(full){foot='<span class="full-tag">Registration Full</span><button class="ev-btn outline" onclick="event.stopPropagation();openModal('+ev.id+')">View Details</button>'}
+    else{foot='<div class="ev-slots"><div class="ev-slots-txt '+(low?'':'ok')+'"><b>'+ev.slots_left+'</b> slots remaining</div><div class="ev-bar"><div class="ev-bar-fill" style="width:'+pct+'%;background:'+fc+'"></div></div></div><button class="ev-btn" onclick="event.stopPropagation();goRegister('+ev.id+')">Register</button>'}
+    return '<div class="ev-card cat-'+(ev.category||'academic')+extra+'" style="animation-delay:'+(i*.04)+'s" onclick="openModal('+ev.id+')"><div class="ev-card-body">'+ribbon+
+      '<div class="ev-card-top"><span class="ev-badge '+(badgeClass[ev.category]||'badge-academic')+'">'+cap(ev.category)+'</span><span class="ev-emoji">'+emoji+'</span></div>'+
+      '<div class="ev-title">'+(ev.title||'Untitled Event')+'</div>'+
+      '<div class="ev-meta"><div class="ev-meta-row"><span class="ev-meta-ic">📅</span>'+(ev.date||'–')+'</div><div class="ev-meta-row"><span class="ev-meta-ic">🕐</span>'+(ev.time||'–')+'</div><div class="ev-meta-row"><span class="ev-meta-ic">📍</span>'+(ev.location||'–')+'</div></div>'+
+      '<div class="ev-card-foot">'+foot+'</div></div></div>'
+  }).join('')
 }
 
-/* ═══ FILTERS ═══ */
-function setCat(c,btn){
-  if(viewMode==='archived'){exitArchived()}
-  curCat=c;
-  document.querySelectorAll('.fp:not(.arch)').forEach(function(b){b.classList.toggle('active',b.dataset.cat===c)});
-  render();
-}
+/* ═════════════ FILTERS ═════════════ */
+function setCat(c,btn){if(viewMode!=='archived'){viewMode='upcoming';window.EVENTS=upcomingEvents}curCat=c;document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});if(btn)btn.classList.add('active');render()}
+function setCatSb(c,btn){curCat=c;document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('.ct-btn:not(.archived-btn)').forEach(function(b){var t=b.textContent.trim().toLowerCase();b.classList.toggle('active',viewMode==='archived'?false:(c==='all'?t==='all events':t===c))});render()}
 function filterEvents(){curQ=document.getElementById('searchInput').value.toLowerCase().trim();render()}
 async function doLogout(){await sb.auth.signOut();window.location.href='/Login/login.html'}
 
-/* ═══ MODAL ═══ */
+/* ═════════════ MODAL ═════════════ */
 function openModal(id){
   var ev=upcomingEvents.find(function(e){return e.id===id})||archivedEvents.find(function(e){return e.id===id});
   if(!ev)return;var isReg=!!ev.registered,expired=isExpired(ev);
@@ -685,11 +778,11 @@ function openModal(id){
   document.getElementById('mRegisteredNote').classList.toggle('show',isReg);
   var fb=document.getElementById('mFeedback');fb.style.display=isReg?'block':'none';fb.onclick=function(){closeModal();window.location.href='../Feedback/feedback_form.html?id='+id};
   var btn=document.getElementById('mReg');btn.style.background='';
-  if(expired){btn.textContent='Event Has Passed';btn.className='m-btn-reg';btn.disabled=true;btn.style.background='#999'}
+  if(expired){btn.textContent='Event Has Passed';btn.className='m-btn-reg';btn.disabled=true;btn.onclick=null;btn.style.background='#999'}
   else if(isReg){btn.textContent='🎟 View My Ticket';btn.className='m-btn-reg registered';btn.disabled=false;btn.onclick=function(){closeModal();viewTicket(ev.id)}}
-  else if(ev.slots_left<=0){btn.textContent='Registration Closed';btn.className='m-btn-reg';btn.disabled=true}
+  else if(ev.slots_left<=0){btn.textContent='Registration Closed';btn.className='m-btn-reg';btn.disabled=true;btn.onclick=null}
   else{btn.textContent='Register Now';btn.className='m-btn-reg';btn.disabled=false;btn.onclick=function(){goRegister(ev.id)}}
-  document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden';
+  document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden'
 }
 function goRegister(id){var ev=(window.EVENTS||[]).find(function(e){return e.id===id});if(!ev)return;window.location.href='../Login/register.html?'+new URLSearchParams({id:ev.id,title:ev.title,date:ev.date,location:ev.location,time:ev.time})}
 function viewTicket(id){goRegister(id)}
@@ -703,8 +796,8 @@ init();
 <script>
 (function(){
   var chatOpen=false,chatHistory=[],eventsCtx='',firstOpen=true;
-  function buildCtx(){var e=window.EVENTS||[];if(!e.length)return'No events.';return e.slice(0,20).map(function(e){return'['+(e.category||'').toUpperCase()+'] '+e.title+' | '+e.date+' '+(e.time||'')+' | '+(e.location||'–')+' | Slots: '+e.slots_left}).join('\n')}
-  window.toggleChat=function(){chatOpen=!chatOpen;document.getElementById('utm-chat-fab').classList.toggle('open',chatOpen);document.getElementById('utm-chat-win').classList.toggle('open',chatOpen);document.getElementById('chat-badge').classList.add('hidden');if(chatOpen&&firstOpen){firstOpen=false;eventsCtx=buildCtx();addBot("Hi! I'm the UTM AI Assistant 👋\n\nI can help you find events, check slots, or answer anything about the Campus Event Finder.\n\nWhat would you like to know?");document.getElementById('cwInput').focus()}};
+  function buildCtx(){var e=window.EVENTS||[];if(!e.length)return'No events loaded.';return e.slice(0,20).map(function(e){return'['+(e.category||'').toUpperCase()+'] '+e.title+' | '+e.date+' '+(e.time||'')+' | '+(e.location||'–')+' | Slots: '+e.slots_left}).join('\n')}
+  window.toggleChat=function(){chatOpen=!chatOpen;document.getElementById('utm-chat-fab').classList.toggle('open',chatOpen);document.getElementById('utm-chat-win').classList.toggle('open',chatOpen);document.getElementById('chat-badge').classList.add('hidden');if(chatOpen&&firstOpen){firstOpen=false;eventsCtx=buildCtx();addBot("Hi! I'm the UTM AI Assistant 👋\n\nI can help you find events, check available slots, or answer anything about the Campus Event Finder.\n\nWhat would you like to know?");document.getElementById('cwInput').focus()}};
   window.sendQuick=function(t){document.getElementById('cwInput').value=t;sendMsg()};
   window.sendMsg=async function(){var inp=document.getElementById('cwInput'),t=inp.value.trim();if(!t)return;inp.value='';document.getElementById('cwQuick').style.display='none';addUsr(t);chatHistory.push({role:'user',content:t});var tid=addTyp();document.getElementById('cwSend').disabled=true;try{var sys='You are UTM AI Assistant for Campus Event Finder.\n\nCurrent events:\n'+(eventsCtx||buildCtx())+'\n\nRules:\n- Answer in English.\n- Reference data accurately.\n- Keep concise (max 3-4 sentences).\n- Never make up events.';var r=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({prompt:'SYSTEM: '+sys+'\n\n'+chatHistory.map(function(m){return(m.role==='user'?'Student':'Assistant')+': '+m.content}).join('\n')+'\nAssistant:'})});rmTyp(tid);if(!r.ok)throw new Error(r.status);var d=await r.json();var rep=(d&&d.candidates&&d.candidates[0]&&d.candidates[0].content&&d.candidates[0].content.parts&&d.candidates[0].content.parts[0]&&d.candidates[0].content.parts[0].text)||"Sorry, I can't respond right now.";addBot(rep);chatHistory.push({role:'assistant',content:rep})}catch(e){rmTyp(tid);addBot("Sorry, there's a technical issue. Please try again. 🙏")}document.getElementById('cwSend').disabled=false;document.getElementById('cwInput').focus()};
   function now(){return new Date().toLocaleTimeString('en-MY',{hour:'2-digit',minute:'2-digit'})}
