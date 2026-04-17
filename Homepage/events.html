@@ -387,9 +387,11 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
       <div class="m-desc-body" id="mDesc"></div>
       <div class="m-footer">
         <button class="m-btn-reg" id="mReg">Register Now</button>
+        <button class="m-btn-close" id="mFeedback" onclick="closeModal()" style="display:none">📝 Feedback</button>
         <button class="m-btn-close" onclick="closeModal()">Close</button>
       </div>
-    </div>
+
+</div>
   </div>
 </div>
 
@@ -595,6 +597,10 @@ function openModal(id) {
   document.getElementById('mDesc').textContent   = ev.description||'–';
 
   document.getElementById('mRegisteredNote').classList.toggle('show', isReg);
+
+  const fbBtn = document.getElementById('mFeedback');
+    fbBtn.style.display = isReg ? 'block' : 'none';
+    fbBtn.onclick = () => { closeModal(); window.location.href = '../Feedback/feedback_form.html?id=' + id; };
 
   const btn = document.getElementById('mReg');
   if (isReg) {
