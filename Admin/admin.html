@@ -23,89 +23,127 @@
   --blue:#1d4ed8;--blue-light:#eff6ff;
   --orange-c:#b35900;--orange-light:#fef4e8;
   --purple:#5b2b91;--purple-light:#f2ecf9;
-  --sidebar:250px;
+  --navbar-h:56px;
+  --sidebar-w:235px;
 }
 html,body{height:100%;font-family:'Roboto',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
 
-/* ── TOP BAND ── */
-.top-band{
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.20) 55%, rgba(238,240,243,0.95) 100%),
-    url("https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=1600&auto=format&fit=crop&q=80") center top/cover no-repeat;
-  position:relative;
+/* ══════════════════════════════════════════
+   LAYOUT SHELL — full viewport, no page scroll
+   ══════════════════════════════════════════ */
+.layout-shell{
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  overflow:hidden;
 }
-.top-band::before{
-  content:'';position:absolute;inset:0;z-index:0;
-  background:
-    linear-gradient(to bottom,rgba(0,0,0,.24) 0%,rgba(0,0,0,.14) 60%,rgba(238,240,243,1) 100%),
-    linear-gradient(150deg,#2d5a27 0%,#1a3d1a 35%,#0d2b0d 65%,#1a3520 100%);
-  opacity:.55;
-}
-.top-band>*{position:relative;z-index:1;}
 
 /* ── NAVBAR ── */
-.navbar{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:300;background:rgba(15,35,15,0.88);backdrop-filter:blur(8px);}
+.navbar{
+  height:var(--navbar-h);
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+  background:rgba(10,28,10,0.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(255,255,255,0.07);
+  z-index:300;
+  position:relative;
+}
 .nav-logo{display:flex;flex-direction:column}
 .logo-row{display:flex;align-items:baseline;line-height:1}
 .l-my{color:var(--orange);font-size:19px;font-weight:300;font-style:italic}
 .l-utm{color:#fff;font-size:19px;font-weight:700}
 .l-portal{color:var(--orange);font-size:19px;font-weight:400}
-.l-tag{color:var(--orange2);font-size:8px;letter-spacing:2.5px;display:block;margin-top:1px}
-.nav-ticker{position:absolute;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:12px;white-space:nowrap;pointer-events:none;display:flex;align-items:center;gap:6px;}
-.nav-ticker-badge{background:rgba(200,152,42,.25);border:1px solid rgba(200,152,42,.4);color:var(--gold);font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase;}
+.l-tag{color:rgba(200,152,42,.65);font-size:8px;letter-spacing:2.5px;display:block;margin-top:1px}
+.nav-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px;pointer-events:none;}
+.nav-ticker-badge{background:rgba(200,152,42,.22);border:1px solid rgba(200,152,42,.38);color:var(--gold);font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase;}
+.nav-center-text{color:rgba(255,255,255,.6);font-size:12px;white-space:nowrap;}
 .nav-right{display:flex;align-items:center;gap:10px}
-.nav-icon-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.8);font-size:13px;cursor:pointer;padding:5px 10px;border-radius:6px;font-family:'Roboto',sans-serif;transition:all .15s;}
-.nav-icon-btn:hover{background:rgba(255,255,255,.22);color:#fff}
-.nav-uname{color:rgba(255,255,255,.8);font-size:13px;font-weight:500}
-.nav-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;cursor:pointer;border:2px solid rgba(255,255,255,.3);}
+.nav-icon-btn{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.78);font-size:12px;cursor:pointer;padding:5px 10px;border-radius:6px;font-family:'Roboto',sans-serif;transition:all .15s;}
+.nav-icon-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+.nav-uname{color:rgba(255,255,255,.78);font-size:13px;font-weight:500}
+.nav-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,.28);}
 
-/* ── QUICK ICONS ── */
-.qi-row{display:flex;justify-content:center;gap:6px;padding:16px 20px 0;flex-wrap:wrap;}
-.qi-card{background:var(--white);border-radius:var(--radius);border:none;padding:14px 12px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:105px;cursor:pointer;box-shadow:var(--shadow);transition:all .2s;font-family:'Roboto',sans-serif;}
-.qi-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
-.qi-card.active-qi{border:2px solid var(--red);background:#fff5f5;}
-.qi-icon{font-size:22px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px;}
-.qi-icon.red-bg{background:#fff0f0;color:var(--red)}
-.qi-icon.gold-bg{background:var(--gold-light);color:var(--gold)}
-.qi-icon.green-bg{background:var(--green-light);color:var(--green)}
-.qi-icon.blue-bg{background:var(--blue-light);color:var(--blue)}
-.qi-icon.orange-bg{background:var(--orange-light);color:var(--orange-c)}
-.qi-label{font-size:11.5px;color:var(--text);font-weight:400;text-align:center;line-height:1.25}
-.qi-count{font-size:10px;font-weight:700;color:var(--muted)}
+/* ── QUICK ICON STRIP (below navbar, flush) ── */
+.qi-strip{
+  flex-shrink:0;
+  background:rgba(8,22,8,0.88);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;gap:4px;
+  padding:7px 16px;
+  flex-wrap:wrap;
+}
+.qi-btn{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.11);
+  color:rgba(255,255,255,.7);
+  font-size:11.5px;font-weight:400;
+  padding:5px 12px;border-radius:6px;
+  cursor:pointer;font-family:'Roboto',sans-serif;
+  transition:all .15s;
+  white-space:nowrap;
+}
+.qi-btn:hover{background:rgba(245,166,35,.16);border-color:rgba(245,166,35,.35);color:var(--orange);}
+.qi-btn.active{background:rgba(245,166,35,.2);border-color:rgba(245,166,35,.45);color:var(--orange);font-weight:500;}
+.qi-btn-icon{font-size:13px}
+.qi-count{font-size:10px;opacity:.7;font-weight:400}
 
-/* ── LAYOUT ── */
-.layout-shell { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-.body-row { display: flex; flex: 1; overflow: hidden; }
-.sidebar { width: 230px; height: 100%; overflow-y: auto; border-right: 1px solid #e8e8e8; }
-.content-area { flex: 1; overflow-y: auto; padding: 12px; }
+/* ── BODY ROW — sidebar + content, fills remaining height ── */
+.body-row{
+  display:flex;
+  flex:1;
+  overflow:hidden;
+  min-height:0;
+}
 
 /* ── SIDEBAR ── */
-.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;padding:16px 0 12px;}
-.sb-head{padding:0 16px 12px;border-bottom:1px solid #f0f0f0;margin-bottom:8px}
-.sb-title{font-size:14px;font-weight:600;color:var(--text)}
-.sb-sub{font-size:11.5px;color:var(--light);margin-top:1px}
-.sb-section-lbl{padding:10px 16px 4px;font-size:9.5px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:1.5px;}
-.sb-item{display:flex;align-items:center;gap:9px;padding:7px 16px;margin:1px 0;font-size:13px;font-weight:400;color:var(--muted);cursor:pointer;transition:all .15s;border:none;background:none;width:100%;text-align:left;font-family:'Roboto',sans-serif;position:relative;}
+.sidebar{
+  width:var(--sidebar-w);
+  flex-shrink:0;
+  background:var(--white);
+  border-right:1px solid #e6e6e6;
+  display:flex;flex-direction:column;
+  overflow-y:auto;
+  height:100%;
+}
+.sb-head{padding:13px 15px 10px;border-bottom:1px solid #f0f0f0;flex-shrink:0}
+.sb-title{font-size:13.5px;font-weight:600;color:var(--text)}
+.sb-sub{font-size:11px;color:var(--light);margin-top:1px}
+.sb-nav{flex:1;padding-bottom:4px}
+.sb-section-lbl{padding:10px 15px 3px;font-size:9px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:1.6px;}
+.sb-item{display:flex;align-items:center;gap:9px;padding:7px 15px;margin:0;font-size:12.5px;font-weight:400;color:var(--muted);cursor:pointer;transition:all .12s;border:none;background:none;width:100%;text-align:left;font-family:'Roboto',sans-serif;position:relative;border-left:3px solid transparent;}
 .sb-item:hover{color:var(--red);background:#fff5f5;}
-.sb-item.active{color:var(--red);background:#fff0f0;font-weight:600;border-left:3px solid var(--red);}
-.sb-item-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0;}
+.sb-item.active{color:var(--red);background:#fff0f0;font-weight:600;border-left-color:var(--red);}
+.sb-item-icon{font-size:13px;width:18px;text-align:center;flex-shrink:0;}
 .sb-item-label{flex:1}
-.sb-badge{font-size:9.5px;font-weight:700;background:var(--red-badge);color:#fff;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center;}
+.sb-badge{font-size:9px;font-weight:700;background:var(--red-badge);color:#fff;padding:1px 6px;border-radius:9px;min-width:18px;text-align:center;}
 .sb-badge.gold{background:var(--gold)}
-.sb-divider{height:1px;background:#f0f0f0;margin:6px 0}
-.sb-footer{padding:12px 16px 0;border-top:1px solid #f0f0f0;margin-top:8px}
-.sb-logout{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:13px;cursor:pointer;transition:all .15s;border:none;background:none;font-family:'Roboto',sans-serif;width:100%;text-align:left;padding:7px 0;}
+.sb-divider{height:1px;background:#f0f0f0;margin:5px 0}
+.sb-footer{flex-shrink:0;padding:8px 0 6px;border-top:1px solid #f0f0f0;}
+.sb-logout{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12.5px;cursor:pointer;transition:all .15s;border:none;background:none;font-family:'Roboto',sans-serif;width:100%;text-align:left;padding:7px 15px;}
 .sb-logout:hover{color:var(--red-badge)}
 
-/* ── MAIN CONTENT ── */
-.content-wrap{flex:1;display:flex;flex-direction:column;gap:10px;}
-.section{display:none}.section.active{display:block}
+/* ── CONTENT AREA ── */
+.content-area{
+  flex:1;
+  overflow-y:auto;
+  min-width:0;
+  padding:14px 12px 36px;
+}
 
-/* ── STATUS BAR (above cards) ── */
-.status-bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
-.status-chip{display:flex;align-items:center;gap:6px;background:var(--white);border-radius:20px;padding:5px 13px;font-size:12px;font-weight:500;color:var(--text);box-shadow:var(--shadow);}
+/* ── STATUS BAR ── */
+.status-bar{display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap;}
+.status-chip{display:flex;align-items:center;gap:6px;background:var(--white);border-radius:20px;padding:5px 12px;font-size:11.5px;font-weight:500;color:var(--text);box-shadow:var(--shadow);}
 .chip-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
 .chip-dot.green{background:#22c55e}.chip-dot.gold{background:var(--gold)}.chip-dot.red{background:var(--red-badge)}.chip-dot.blue{background:var(--blue)}
+
+/* ── SECTIONS ── */
+.section{display:none}.section.active{display:block}
+.page-heading{margin-bottom:14px}
+.page-heading h1{font-size:18px;font-weight:600;color:var(--text);margin-bottom:2px}
+.page-heading p{font-size:12.5px;color:var(--muted)}
 
 /* ── STATS GRID ── */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
@@ -279,12 +317,7 @@ tr:hover td{background:#fafbfc}
 .toast.error{border-left:4px solid #ef4444}
 .toast.info{border-left:4px solid var(--gold)}
 
-/* ── PAGE SECTION HEADING ── */
-.page-heading{margin-bottom:14px}
-.page-heading h1{font-size:18px;font-weight:600;color:var(--text);margin-bottom:2px}
-.page-heading p{font-size:12.5px;color:var(--muted)}
-
-::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:#f0f0f0}
 ::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:#bbb}
@@ -292,8 +325,9 @@ tr:hover td{background:#fafbfc}
 </head>
 <body>
 
-<!-- TOP BAND -->
-<div class="top-band">
+<div class="layout-shell">
+
+  <!-- ① NAVBAR -->
   <nav class="navbar">
     <div class="nav-logo">
       <div class="logo-row">
@@ -301,9 +335,9 @@ tr:hover td{background:#fafbfc}
       </div>
       <span class="l-tag">ADMIN DASHBOARD</span>
     </div>
-    <div class="nav-ticker">
+    <div class="nav-center">
       <span class="nav-ticker-badge">Admin</span>
-      <span style="color:rgba(255,255,255,.65);font-size:12px">Student Affairs &amp; Campus Event Management</span>
+      <span class="nav-center-text">Student Affairs &amp; Campus Event Management</span>
     </div>
     <div class="nav-right">
       <button class="nav-icon-btn" onclick="window.location.href='/Homepage/homepage.html'">🌐 View Site</button>
@@ -312,242 +346,233 @@ tr:hover td{background:#fafbfc}
     </div>
   </nav>
 
-  <div class="qi-row">
-    <button class="qi-card" onclick="showSection('dashboard',this)" id="qi-dashboard">
-      <div class="qi-icon red-bg">📊</div>
-      <span class="qi-label">Dashboard</span>
-      <span class="qi-count" id="qiTotal">—</span>
+  <!-- ② QUICK ICON STRIP -->
+  <div class="qi-strip">
+    <button class="qi-btn active" onclick="showSection('dashboard',this)" id="qi-dashboard">
+      <span class="qi-btn-icon">📊</span> Dashboard <span class="qi-count" id="qiTotal">—</span>
     </button>
-    <button class="qi-card" onclick="showSection('pending',this)" id="qi-pending">
-      <div class="qi-icon gold-bg">⏳</div>
-      <span class="qi-label">Pending</span>
-      <span class="qi-count" id="qiPending">—</span>
+    <button class="qi-btn" onclick="showSection('pending',this)" id="qi-pending">
+      <span class="qi-btn-icon">⏳</span> Pending <span class="qi-count" id="qiPending">—</span>
     </button>
-    <button class="qi-card" onclick="showSection('all-events',this)" id="qi-all">
-      <div class="qi-icon blue-bg">📋</div>
-      <span class="qi-label">All Events</span>
-      <span class="qi-count" id="qiAll">—</span>
+    <button class="qi-btn" onclick="showSection('all-events',this)" id="qi-all">
+      <span class="qi-btn-icon">📋</span> All Events <span class="qi-count" id="qiAll">—</span>
     </button>
-    <button class="qi-card" onclick="showSection('compliance',this)" id="qi-compliance">
-      <div class="qi-icon orange-bg">✅</div>
-      <span class="qi-label">Compliance</span>
-      <span class="qi-count" id="qiCompliance">—</span>
+    <button class="qi-btn" onclick="showSection('compliance',this)" id="qi-compliance">
+      <span class="qi-btn-icon">✅</span> Compliance <span class="qi-count" id="qiCompliance">—</span>
     </button>
-    <button class="qi-card" onclick="showSection('feedback',this)" id="qi-feedback">
-      <div class="qi-icon red-bg">🤖</div>
-      <span class="qi-label">AI Feedback</span>
-      <span class="qi-count" id="qiFeedback">—</span>
+    <button class="qi-btn" onclick="showSection('feedback',this)" id="qi-feedback">
+      <span class="qi-btn-icon">🤖</span> AI Feedback <span class="qi-count" id="qiFeedback">—</span>
     </button>
-    <button class="qi-card" onclick="showSection('users',this)" id="qi-users">
-      <div class="qi-icon green-bg">👥</div>
-      <span class="qi-label">Users</span>
-      <span class="qi-count" id="qiUsers">—</span>
+    <button class="qi-btn" onclick="showSection('users',this)" id="qi-users">
+      <span class="qi-btn-icon">👥</span> Users <span class="qi-count" id="qiUsers">—</span>
     </button>
   </div>
-</div>
 
-<!-- MAIN GRID -->
-<div class="main-grid">
+  <!-- ③ BODY ROW -->
+  <div class="body-row">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sb-head">
-      <div class="sb-title">Navigation</div>
-      <div class="sb-sub">Admin Controls</div>
-    </div>
-
-    <div class="sb-section-lbl">Main</div>
-    <button class="sb-item active" onclick="showSection('dashboard',this)">
-      <span class="sb-item-icon">📊</span>
-      <span class="sb-item-label">Dashboard</span>
-    </button>
-
-    <div class="sb-section-lbl">Events</div>
-    <button class="sb-item" onclick="showSection('pending',this)">
-      <span class="sb-item-icon">⏳</span>
-      <span class="sb-item-label">Pending Approval</span>
-      <span class="sb-badge" id="pendingBadge" style="display:none">0</span>
-    </button>
-    <button class="sb-item" onclick="showSection('all-events',this)">
-      <span class="sb-item-icon">📋</span>
-      <span class="sb-item-label">All Events</span>
-    </button>
-
-    <div class="sb-section-lbl">Compliance</div>
-    <button class="sb-item" onclick="showSection('compliance',this)">
-      <span class="sb-item-icon">✅</span>
-      <span class="sb-item-label">Compliance Review</span>
-      <span class="sb-badge gold" id="complianceBadge" style="display:none">0</span>
-    </button>
-
-    <div class="sb-section-lbl">Analytics</div>
-    <button class="sb-item" onclick="showSection('feedback',this)">
-      <span class="sb-item-icon">🤖</span>
-      <span class="sb-item-label">Feedback &amp; AI</span>
-    </button>
-
-    <div class="sb-section-lbl">System</div>
-    <button class="sb-item" onclick="showSection('users',this)">
-      <span class="sb-item-icon">👥</span>
-      <span class="sb-item-label">Users</span>
-    </button>
-
-    <div class="sb-divider"></div>
-    <button class="sb-item" onclick="window.location.href='/Homepage/homepage.html'">
-      <span class="sb-item-icon">🌐</span>
-      <span class="sb-item-label">View Event Site</span>
-    </button>
-
-    <div class="sb-footer">
-      <button class="sb-logout" onclick="doLogout()">
-        <span>🚪</span> Log Out
-      </button>
-    </div>
-  </aside>
-
-  <!-- CONTENT AREA -->
-  <div class="content-wrap">
-
-    <!-- STATUS BAR -->
-    <div class="status-bar" id="statusBar">
-      <div class="status-chip"><div class="chip-dot green"></div><span id="chipApproved">0 Live</span></div>
-      <div class="status-chip"><div class="chip-dot gold"></div><span id="chipPending">0 Pending</span></div>
-      <div class="status-chip"><div class="chip-dot red"></div><span id="chipBlockers">0 Blockers</span></div>
-      <div class="status-chip"><div class="chip-dot blue"></div><span id="chipFeedback">0 Feedback</span></div>
-    </div>
-
-    <!-- DASHBOARD -->
-    <div class="section active" id="sec-dashboard">
-      <div class="page-heading"><h1>Dashboard Overview</h1><p>Welcome back! Current status of UTM Campus Event Finder.</p></div>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-icon red">📅</div><div><div class="stat-num" id="dTotalEvents">–</div><div class="stat-lbl">Total Events</div><div class="stat-sub">All categories</div></div></div>
-        <div class="stat-card"><div class="stat-icon gold">⏳</div><div><div class="stat-num" id="dPending">–</div><div class="stat-lbl">Pending Approval</div><div class="stat-sub">Requires review</div></div></div>
-        <div class="stat-card"><div class="stat-icon green">✅</div><div><div class="stat-num" id="dApproved">–</div><div class="stat-lbl">Approved Events</div><div class="stat-sub">Active on platform</div></div></div>
-        <div class="stat-card"><div class="stat-icon blue">💬</div><div><div class="stat-num" id="dFeedback">–</div><div class="stat-lbl">Feedback</div><div class="stat-sub">From students</div></div></div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sb-head">
+        <div class="sb-title">Navigation</div>
+        <div class="sb-sub">Admin Controls</div>
       </div>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-icon green">👥</div><div><div class="stat-num" id="dRegistrations">–</div><div class="stat-lbl">Total Registrations</div></div></div>
-        <div class="stat-card"><div class="stat-icon gold">😊</div><div><div class="stat-num" id="dPosSentiment">–</div><div class="stat-lbl">Positive Sentiment</div></div></div>
-        <div class="stat-card"><div class="stat-icon red">🎟</div><div><div class="stat-num" id="dSlotsLeft">–</div><div class="stat-lbl">Slots Available</div></div></div>
-        <div class="stat-card" style="cursor:pointer" onclick="showSection('compliance',null)">
-          <div class="stat-icon orange">⚠️</div><div><div class="stat-num" id="dComplianceIssues">–</div><div class="stat-lbl">Compliance Issues</div><div class="stat-sub">Click to review</div></div>
+
+      <div class="sb-nav">
+        <div class="sb-section-lbl">Main</div>
+        <button class="sb-item active" onclick="showSection('dashboard',this)">
+          <span class="sb-item-icon">📊</span>
+          <span class="sb-item-label">Dashboard</span>
+        </button>
+
+        <div class="sb-section-lbl">Events</div>
+        <button class="sb-item" onclick="showSection('pending',this)">
+          <span class="sb-item-icon">⏳</span>
+          <span class="sb-item-label">Pending Approval</span>
+          <span class="sb-badge" id="pendingBadge" style="display:none">0</span>
+        </button>
+        <button class="sb-item" onclick="showSection('all-events',this)">
+          <span class="sb-item-icon">📋</span>
+          <span class="sb-item-label">All Events</span>
+        </button>
+
+        <div class="sb-section-lbl">Compliance</div>
+        <button class="sb-item" onclick="showSection('compliance',this)">
+          <span class="sb-item-icon">✅</span>
+          <span class="sb-item-label">Compliance Review</span>
+          <span class="sb-badge gold" id="complianceBadge" style="display:none">0</span>
+        </button>
+
+        <div class="sb-section-lbl">Analytics</div>
+        <button class="sb-item" onclick="showSection('feedback',this)">
+          <span class="sb-item-icon">🤖</span>
+          <span class="sb-item-label">Feedback &amp; AI</span>
+        </button>
+
+        <div class="sb-section-lbl">System</div>
+        <button class="sb-item" onclick="showSection('users',this)">
+          <span class="sb-item-icon">👥</span>
+          <span class="sb-item-label">Users</span>
+        </button>
+
+        <div class="sb-divider"></div>
+        <button class="sb-item" onclick="window.location.href='/Homepage/homepage.html'">
+          <span class="sb-item-icon">🌐</span>
+          <span class="sb-item-label">View Event Site</span>
+        </button>
+      </div>
+
+      <div class="sb-footer">
+        <button class="sb-logout" onclick="doLogout()">
+          <span>🚪</span> Log Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- CONTENT AREA -->
+    <main class="content-area">
+
+      <!-- STATUS BAR -->
+      <div class="status-bar" id="statusBar">
+        <div class="status-chip"><div class="chip-dot green"></div><span id="chipApproved">0 Live</span></div>
+        <div class="status-chip"><div class="chip-dot gold"></div><span id="chipPending">0 Pending</span></div>
+        <div class="status-chip"><div class="chip-dot red"></div><span id="chipBlockers">0 Blockers</span></div>
+        <div class="status-chip"><div class="chip-dot blue"></div><span id="chipFeedback">0 Feedback</span></div>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div class="section active" id="sec-dashboard">
+        <div class="page-heading"><h1>Dashboard Overview</h1><p>Welcome back! Current status of UTM Campus Event Finder.</p></div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-icon red">📅</div><div><div class="stat-num" id="dTotalEvents">–</div><div class="stat-lbl">Total Events</div><div class="stat-sub">All categories</div></div></div>
+          <div class="stat-card"><div class="stat-icon gold">⏳</div><div><div class="stat-num" id="dPending">–</div><div class="stat-lbl">Pending Approval</div><div class="stat-sub">Requires review</div></div></div>
+          <div class="stat-card"><div class="stat-icon green">✅</div><div><div class="stat-num" id="dApproved">–</div><div class="stat-lbl">Approved Events</div><div class="stat-sub">Active on platform</div></div></div>
+          <div class="stat-card"><div class="stat-icon blue">💬</div><div><div class="stat-num" id="dFeedback">–</div><div class="stat-lbl">Feedback</div><div class="stat-sub">From students</div></div></div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-icon green">👥</div><div><div class="stat-num" id="dRegistrations">–</div><div class="stat-lbl">Total Registrations</div></div></div>
+          <div class="stat-card"><div class="stat-icon gold">😊</div><div><div class="stat-num" id="dPosSentiment">–</div><div class="stat-lbl">Positive Sentiment</div></div></div>
+          <div class="stat-card"><div class="stat-icon red">🎟</div><div><div class="stat-num" id="dSlotsLeft">–</div><div class="stat-lbl">Slots Available</div></div></div>
+          <div class="stat-card" style="cursor:pointer" onclick="showSection('compliance',null)">
+            <div class="stat-icon orange">⚠️</div><div><div class="stat-num" id="dComplianceIssues">–</div><div class="stat-lbl">Compliance Issues</div><div class="stat-sub">Click to review</div></div>
+          </div>
+        </div>
+        <div class="dash-grid">
+          <div class="card">
+            <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">Pending Approval</span></div><button class="btn btn-view btn-sm" onclick="showSection('pending',null)">View All →</button></div>
+            <div class="card-body" id="dashPendingList"><div class="empty-state"><div class="empty-state-icon">⏳</div><h3>Loading...</h3></div></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">AI Sentiment Analysis</span></div></div>
+            <div class="card-body">
+              <div style="margin-bottom:16px">
+                <div class="sentiment-row"><span class="sentiment-lbl">Positive</span><div class="sentiment-track"><div class="sentiment-fill fill-pos" style="width:0%" id="sentPos"></div></div><span class="sentiment-pct" style="color:var(--green)" id="sentPosPct">–%</span></div>
+                <div class="sentiment-row"><span class="sentiment-lbl">Neutral</span><div class="sentiment-track"><div class="sentiment-fill fill-neu" style="width:0%" id="sentNeu"></div></div><span class="sentiment-pct" id="sentNeuPct">–%</span></div>
+                <div class="sentiment-row"><span class="sentiment-lbl">Negative</span><div class="sentiment-track"><div class="sentiment-fill fill-neg" style="width:0%" id="sentNeg"></div></div><span class="sentiment-pct" style="color:#c0392b" id="sentNegPct">–%</span></div>
+              </div>
+              <div style="font-size:10.5px;color:var(--light);margin-bottom:7px;font-weight:600;text-transform:uppercase;letter-spacing:.6px">Top Keywords</div>
+              <div class="kw-tags" id="kwTags"><span class="kw-tag">No feedback yet</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card"><div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">Registrations by Event</span></div></div><div class="card-body" id="dashRegChart"></div></div>
+      </div>
+
+      <!-- PENDING -->
+      <div class="section" id="sec-pending">
+        <div class="page-heading"><h1>Pending Approval</h1><p>Review, approve, or reject event applications.</p></div>
+        <div class="card">
+          <div class="filter-bar">
+            <span style="font-size:13px;color:var(--muted)">Events awaiting review</span>
+            <div class="filter-search">🔍<input type="text" id="pendingSearch" placeholder="Search events..." oninput="filterPending()"/></div>
+          </div>
+          <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Category</th><th>Organizer</th><th>Date</th><th>Slots</th><th>Compliance</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="pendingTbody"></tbody></table></div></div>
         </div>
       </div>
-      <div class="dash-grid">
+
+      <!-- ALL EVENTS -->
+      <div class="section" id="sec-all-events">
+        <div class="page-heading"><h1>All Events</h1><p>View and manage all campus events on the platform.</p></div>
         <div class="card">
-          <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">Pending Approval</span></div><button class="btn btn-view btn-sm" onclick="showSection('pending',null)">View All →</button></div>
-          <div class="card-body" id="dashPendingList"><div class="empty-state"><div class="empty-state-icon">⏳</div><h3>Loading...</h3></div></div>
+          <div class="filter-bar">
+            <button class="filter-tab active" onclick="filterAllEvents('all',this)">All</button>
+            <button class="filter-tab" onclick="filterAllEvents('approved',this)">Approved</button>
+            <button class="filter-tab" onclick="filterAllEvents('pending',this)">Pending</button>
+            <button class="filter-tab" onclick="filterAllEvents('rejected',this)">Rejected</button>
+            <div class="filter-search">🔍<input type="text" id="allEventsSearch" placeholder="Search events..." oninput="filterAllEventsSearch()"/></div>
+          </div>
+          <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Category</th><th>Date</th><th>Venue</th><th>Slots</th><th>Registrations</th><th>Status</th><th>Actions</th></tr></thead><tbody id="allEventsTbody"></tbody></table></div></div>
         </div>
-        <div class="card">
-          <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">AI Sentiment Analysis</span></div></div>
+      </div>
+
+      <!-- COMPLIANCE -->
+      <div class="section" id="sec-compliance">
+        <div class="page-heading"><h1>Student Affairs Compliance Review</h1><p>Review based on <strong>UTM Student Activity Guidebook (2013)</strong>.</p></div>
+        <div class="comp-stat-row" id="compStatRow"></div>
+        <div class="card" style="margin-bottom:14px">
+          <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">📖 Reference: UTM Student Activity Guidebook (2013)</span></div></div>
           <div class="card-body">
-            <div style="margin-bottom:16px">
-              <div class="sentiment-row"><span class="sentiment-lbl">Positive</span><div class="sentiment-track"><div class="sentiment-fill fill-pos" style="width:0%" id="sentPos"></div></div><span class="sentiment-pct" style="color:var(--green)" id="sentPosPct">–%</span></div>
-              <div class="sentiment-row"><span class="sentiment-lbl">Neutral</span><div class="sentiment-track"><div class="sentiment-fill fill-neu" style="width:0%" id="sentNeu"></div></div><span class="sentiment-pct" id="sentNeuPct">–%</span></div>
-              <div class="sentiment-row"><span class="sentiment-lbl">Negative</span><div class="sentiment-track"><div class="sentiment-fill fill-neg" style="width:0%" id="sentNeg"></div></div><span class="sentiment-pct" style="color:#c0392b" id="sentNegPct">–%</span></div>
-            </div>
-            <div style="font-size:10.5px;color:var(--light);margin-bottom:7px;font-weight:600;text-transform:uppercase;letter-spacing:.6px">Top Keywords</div>
-            <div class="kw-tags" id="kwTags"><span class="kw-tag">No feedback yet</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="card"><div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">Registrations by Event</span></div></div><div class="card-body" id="dashRegChart"></div></div>
-    </div>
-
-    <!-- PENDING -->
-    <div class="section" id="sec-pending">
-      <div class="page-heading"><h1>Pending Approval</h1><p>Review, approve, or reject event applications.</p></div>
-      <div class="card">
-        <div class="filter-bar">
-          <span style="font-size:13px;color:var(--muted)">Events awaiting review</span>
-          <div class="filter-search">🔍<input type="text" id="pendingSearch" placeholder="Search events..." oninput="filterPending()"/></div>
-        </div>
-        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Category</th><th>Organizer</th><th>Date</th><th>Slots</th><th>Compliance</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="pendingTbody"></tbody></table></div></div>
-      </div>
-    </div>
-
-    <!-- ALL EVENTS -->
-    <div class="section" id="sec-all-events">
-      <div class="page-heading"><h1>All Events</h1><p>View and manage all campus events on the platform.</p></div>
-      <div class="card">
-        <div class="filter-bar">
-          <button class="filter-tab active" onclick="filterAllEvents('all',this)">All</button>
-          <button class="filter-tab" onclick="filterAllEvents('approved',this)">Approved</button>
-          <button class="filter-tab" onclick="filterAllEvents('pending',this)">Pending</button>
-          <button class="filter-tab" onclick="filterAllEvents('rejected',this)">Rejected</button>
-          <div class="filter-search">🔍<input type="text" id="allEventsSearch" placeholder="Search events..." oninput="filterAllEventsSearch()"/></div>
-        </div>
-        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Category</th><th>Date</th><th>Venue</th><th>Slots</th><th>Registrations</th><th>Status</th><th>Actions</th></tr></thead><tbody id="allEventsTbody"></tbody></table></div></div>
-      </div>
-    </div>
-
-    <!-- COMPLIANCE -->
-    <div class="section" id="sec-compliance">
-      <div class="page-heading"><h1>Student Affairs Compliance Review</h1><p>Review based on <strong>UTM Student Activity Guidebook (2013)</strong>.</p></div>
-      <div class="comp-stat-row" id="compStatRow"></div>
-      <div class="card" style="margin-bottom:14px">
-        <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">📖 Reference: UTM Student Activity Guidebook (2013)</span></div></div>
-        <div class="card-body">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div style="background:#fef2f2;border-radius:8px;padding:12px 14px;border-left:3px solid #dc2626">
-              <div style="font-size:11px;font-weight:600;color:#991b1b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">🚫 Absolute Blockers (CANNOT Be Approved)</div>
-              <div style="font-size:12px;color:#7f1d1d;line-height:2">
-                <div>❌ <strong>Sec. 3.2.4(b)</strong> — No approval from Advisor/Principal</div>
-                <div>❌ <strong>Sec. 3.2.4(d)</strong> — Non-multiracial participation</div>
-                <div>❌ <strong>Sec. 3.1.5</strong> — Less than 14 working days notice</div>
-                <div>❌ <strong>Sec. 3.4.4</strong> — Previous activity report not submitted</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div style="background:#fef2f2;border-radius:8px;padding:12px 14px;border-left:3px solid #dc2626">
+                <div style="font-size:11px;font-weight:600;color:#991b1b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">🚫 Absolute Blockers (CANNOT Be Approved)</div>
+                <div style="font-size:12px;color:#7f1d1d;line-height:2">
+                  <div>❌ <strong>Sec. 3.2.4(b)</strong> — No approval from Advisor/Principal</div>
+                  <div>❌ <strong>Sec. 3.2.4(d)</strong> — Non-multiracial participation</div>
+                  <div>❌ <strong>Sec. 3.1.5</strong> — Less than 14 working days notice</div>
+                  <div>❌ <strong>Sec. 3.4.4</strong> — Previous activity report not submitted</div>
+                </div>
               </div>
-            </div>
-            <div style="background:#fffbf0;border-radius:8px;padding:12px 14px;border-left:3px solid #f59e0b">
-              <div style="font-size:11px;font-weight:600;color:#7c4f00;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">⚠️ Requires Special Action</div>
-              <div style="font-size:12px;color:#92400e;line-height:2">
-                <div>⚠️ <strong>Sec. 3.1.6</strong> — External sponsorship → 30 working days</div>
-                <div>⚠️ <strong>Sec. 3.1.9</strong> — Exceeds 4 activities/semester</div>
-                <div>⚠️ <strong>Sec. 3.2.5</strong> — During revision/exam week</div>
-                <div>⚠️ <strong>Sec. 3.2.10</strong> — Activity past midnight</div>
-                <div>⚠️ <strong>Sec. 3.2.6</strong> — External invitation/sponsorship → VC approval</div>
+              <div style="background:#fffbf0;border-radius:8px;padding:12px 14px;border-left:3px solid #f59e0b">
+                <div style="font-size:11px;font-weight:600;color:#7c4f00;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">⚠️ Requires Special Action</div>
+                <div style="font-size:12px;color:#92400e;line-height:2">
+                  <div>⚠️ <strong>Sec. 3.1.6</strong> — External sponsorship → 30 working days</div>
+                  <div>⚠️ <strong>Sec. 3.1.9</strong> — Exceeds 4 activities/semester</div>
+                  <div>⚠️ <strong>Sec. 3.2.5</strong> — During revision/exam week</div>
+                  <div>⚠️ <strong>Sec. 3.2.10</strong> — Activity past midnight</div>
+                  <div>⚠️ <strong>Sec. 3.2.6</strong> — External invitation/sponsorship → VC approval</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="filter-bar">
-          <button class="filter-tab active" onclick="filterCompliance('all',this)">All</button>
-          <button class="filter-tab" onclick="filterCompliance('blocker',this)">🚫 Blockers</button>
-          <button class="filter-tab" onclick="filterCompliance('warn',this)">⚠️ Requires Action</button>
-          <button class="filter-tab" onclick="filterCompliance('clear',this)">✅ Can Approve</button>
-          <div class="filter-search">🔍<input type="text" id="complianceSearch" placeholder="Search..." oninput="renderComplianceTable()"/></div>
+        <div class="card">
+          <div class="filter-bar">
+            <button class="filter-tab active" onclick="filterCompliance('all',this)">All</button>
+            <button class="filter-tab" onclick="filterCompliance('blocker',this)">🚫 Blockers</button>
+            <button class="filter-tab" onclick="filterCompliance('warn',this)">⚠️ Requires Action</button>
+            <button class="filter-tab" onclick="filterCompliance('clear',this)">✅ Can Approve</button>
+            <div class="filter-search">🔍<input type="text" id="complianceSearch" placeholder="Search..." oninput="renderComplianceTable()"/></div>
+          </div>
+          <div class="card-body no-pad"><div class="tbl-wrap"><table>
+            <thead><tr><th>Activity / Organizer</th><th>Advisor</th><th>Multiracial</th><th>Notice Period</th><th>Prev. Report</th><th>Act. Limit</th><th>Status &amp; Action</th></tr></thead>
+            <tbody id="complianceTbody"></tbody>
+          </table></div></div>
         </div>
-        <div class="card-body no-pad"><div class="tbl-wrap"><table>
-          <thead><tr><th>Activity / Organizer</th><th>Advisor</th><th>Multiracial</th><th>Notice Period</th><th>Prev. Report</th><th>Act. Limit</th><th>Status &amp; Action</th></tr></thead>
-          <tbody id="complianceTbody"></tbody>
-        </table></div></div>
       </div>
-    </div>
 
-    <!-- FEEDBACK -->
-    <div class="section" id="sec-feedback">
-      <div class="page-heading"><h1>Feedback &amp; AI Analysis</h1><p>Student feedback analyzed by AI sentiment engine.</p></div>
-      <div id="feedbackCards"></div>
-    </div>
+      <!-- FEEDBACK -->
+      <div class="section" id="sec-feedback">
+        <div class="page-heading"><h1>Feedback &amp; AI Analysis</h1><p>Student feedback analyzed by AI sentiment engine.</p></div>
+        <div id="feedbackCards"></div>
+      </div>
 
-    <!-- USERS -->
-    <div class="section" id="sec-users">
-      <div class="page-heading"><h1>User Management</h1><p>View registered students, organizers, and admin accounts.</p></div>
-      <div class="card">
-        <div class="filter-bar">
-          <button class="filter-tab active" onclick="filterUsers('all',this)">All</button>
-          <button class="filter-tab" onclick="filterUsers('student',this)">Student</button>
-          <button class="filter-tab" onclick="filterUsers('organizer',this)">Organizer</button>
-          <div class="filter-search">🔍<input type="text" id="usersSearch" placeholder="Search users..." oninput="renderUsersTable()"/></div>
+      <!-- USERS -->
+      <div class="section" id="sec-users">
+        <div class="page-heading"><h1>User Management</h1><p>View registered students, organizers, and admin accounts.</p></div>
+        <div class="card">
+          <div class="filter-bar">
+            <button class="filter-tab active" onclick="filterUsers('all',this)">All</button>
+            <button class="filter-tab" onclick="filterUsers('student',this)">Student</button>
+            <button class="filter-tab" onclick="filterUsers('organizer',this)">Organizer</button>
+            <div class="filter-search">🔍<input type="text" id="usersSearch" placeholder="Search users..." oninput="renderUsersTable()"/></div>
+          </div>
+          <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>User</th><th>Matrix / Email</th><th>Faculty</th><th>Role</th><th>Status</th><th>Registered</th></tr></thead><tbody id="usersTbody"></tbody></table></div></div>
         </div>
-        <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>User</th><th>Matrix / Email</th><th>Faculty</th><th>Role</th><th>Status</th><th>Registered</th></tr></thead><tbody id="usersTbody"></tbody></table></div></div>
       </div>
-    </div>
 
-  </div><!-- /content-wrap -->
-</div><!-- /main-grid -->
+    </main>
+  </div><!-- /body-row -->
+</div><!-- /layout-shell -->
 
 <!-- EVENT REVIEW MODAL -->
 <div class="overlay" id="eventOverlay" onclick="handleOverlay(event)">
@@ -1059,11 +1084,15 @@ function updatePendingBadge() { const count = EVENTS.filter(e => e.status === 'p
 function showSection(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.qi-card').forEach(b => b.classList.remove('active-qi'));
+  document.querySelectorAll('.qi-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('sec-'+id).classList.add('active');
   if (btn && btn.classList.contains('sb-item')) btn.classList.add('active');
+  else {
+    const map = { 'dashboard':'Dashboard','pending':'Pending Approval','all-events':'All Events','compliance':'Compliance Review','feedback':'Feedback & AI','users':'Users' };
+    document.querySelectorAll('.sb-item').forEach(b => { if (b.querySelector('.sb-item-label')?.textContent.trim() === map[id]) b.classList.add('active'); });
+  }
   const qiMap = { 'dashboard':'qi-dashboard','pending':'qi-pending','all-events':'qi-all','compliance':'qi-compliance','feedback':'qi-feedback','users':'qi-users' };
-  if (qiMap[id]) { const qi = document.getElementById(qiMap[id]); if (qi) qi.classList.add('active-qi'); }
+  if (qiMap[id]) { const qi = document.getElementById(qiMap[id]); if (qi) qi.classList.add('active'); }
 }
 
 function showToast(msg, type='info') { const t = document.getElementById('toast'); t.textContent = msg; t.className = `toast ${type} show`; setTimeout(() => t.classList.remove('show'), 3500); }
