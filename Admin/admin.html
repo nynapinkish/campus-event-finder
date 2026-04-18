@@ -65,30 +65,7 @@ html,body{height:100%;font-family:'Roboto',sans-serif;background:var(--bg);color
 .nav-uname{color:rgba(255,255,255,.78);font-size:13px;font-weight:500}
 .nav-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,.28);}
 
-/* ── QUICK ICON STRIP (below navbar, flush) ── */
-.qi-strip{
-  flex-shrink:0;
-  background:rgba(8,22,8,0.88);
-  border-bottom:1px solid rgba(255,255,255,.06);
-  display:flex;align-items:center;gap:4px;
-  padding:7px 16px;
-  flex-wrap:wrap;
-}
-.qi-btn{
-  display:flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.11);
-  color:rgba(255,255,255,.7);
-  font-size:11.5px;font-weight:400;
-  padding:5px 12px;border-radius:6px;
-  cursor:pointer;font-family:'Roboto',sans-serif;
-  transition:all .15s;
-  white-space:nowrap;
-}
-.qi-btn:hover{background:rgba(245,166,35,.16);border-color:rgba(245,166,35,.35);color:var(--orange);}
-.qi-btn.active{background:rgba(245,166,35,.2);border-color:rgba(245,166,35,.45);color:var(--orange);font-weight:500;}
-.qi-btn-icon{font-size:13px}
-.qi-count{font-size:10px;opacity:.7;font-weight:400}
+/* qi-strip removed */
 
 /* ── BODY ROW — sidebar + content, fills remaining height ── */
 .body-row{
@@ -116,13 +93,18 @@ html,body{height:100%;font-family:'Roboto',sans-serif;background:var(--bg);color
 .sb-item{display:flex;align-items:center;gap:9px;padding:7px 15px;margin:0;font-size:12.5px;font-weight:400;color:var(--muted);cursor:pointer;transition:all .12s;border:none;background:none;width:100%;text-align:left;font-family:'Roboto',sans-serif;position:relative;border-left:3px solid transparent;}
 .sb-item:hover{color:var(--red);background:#fff5f5;}
 .sb-item.active{color:var(--red);background:#fff0f0;font-weight:600;border-left-color:var(--red);}
-.sb-item-icon{font-size:13px;width:18px;text-align:center;flex-shrink:0;}
+.sb-item-icon{width:18px;height:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.sb-item-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.stat-icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.empty-state-icon svg{width:40px;height:40px;stroke:#ccc;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.sb-logout svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.nav-icon-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:3px;}
 .sb-item-label{flex:1}
 .sb-badge{font-size:9px;font-weight:700;background:var(--red-badge);color:#fff;padding:1px 6px;border-radius:9px;min-width:18px;text-align:center;}
 .sb-badge.gold{background:var(--gold)}
 .sb-divider{height:1px;background:#f0f0f0;margin:5px 0}
 .sb-footer{flex-shrink:0;padding:8px 0 6px;border-top:1px solid #f0f0f0;}
-.sb-logout{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12.5px;cursor:pointer;transition:all .15s;border:none;background:none;font-family:'Roboto',sans-serif;width:100%;text-align:left;padding:7px 15px;}
+.sb-logout{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12.5px;cursor:pointer;transition:all .15s;border:none;background:none;font-family:'Roboto',sans-serif;width:100%;text-align:left;padding:7px 15px;} .sb-logout-icon{width:15px;height:15px;flex-shrink:0;display:flex;} .sb-logout-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .sb-logout:hover{color:var(--red-badge)}
 
 /* ── CONTENT AREA ── */
@@ -272,7 +254,7 @@ tr:hover td{background:#fafbfc}
 .user-av-cell{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-right:7px}
 .user-av-cell.green{background:var(--green)}.user-av-cell.blue{background:var(--blue)}
 .empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
-.empty-state-icon{font-size:36px;margin-bottom:10px;opacity:.4}
+.empty-state-icon{font-size:36px;margin-bottom:10px;opacity:.35;display:flex;justify-content:center;} .empty-state-icon svg{width:38px;height:38px;}
 .empty-state h3{font-size:14px;color:var(--text);margin-bottom:4px}
 
 /* ── MODAL ── */
@@ -340,33 +322,13 @@ tr:hover td{background:#fafbfc}
       <span class="nav-center-text">Student Affairs &amp; Campus Event Management</span>
     </div>
     <div class="nav-right">
-      <button class="nav-icon-btn" onclick="window.location.href='/Homepage/homepage.html'">🌐 View Site</button>
+      <button class="nav-icon-btn" onclick="window.location.href='/Homepage/homepage.html'"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:4px"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a15.3 15.3 0 0 1 4 9 15.3 15.3 0 0 1-4 9 15.3 15.3 0 0 1-4-9 15.3 15.3 0 0 1 4-9z"/></svg>View Site</button>
       <span class="nav-uname" id="navUname">Administrator</span>
       <div class="nav-avatar" id="navAvatar">AD</div>
     </div>
   </nav>
 
-  <!-- ② QUICK ICON STRIP -->
-  <div class="qi-strip">
-    <button class="qi-btn active" onclick="showSection('dashboard',this)" id="qi-dashboard">
-      <span class="qi-btn-icon">📊</span> Dashboard <span class="qi-count" id="qiTotal">—</span>
-    </button>
-    <button class="qi-btn" onclick="showSection('pending',this)" id="qi-pending">
-      <span class="qi-btn-icon">⏳</span> Pending <span class="qi-count" id="qiPending">—</span>
-    </button>
-    <button class="qi-btn" onclick="showSection('all-events',this)" id="qi-all">
-      <span class="qi-btn-icon">📋</span> All Events <span class="qi-count" id="qiAll">—</span>
-    </button>
-    <button class="qi-btn" onclick="showSection('compliance',this)" id="qi-compliance">
-      <span class="qi-btn-icon">✅</span> Compliance <span class="qi-count" id="qiCompliance">—</span>
-    </button>
-    <button class="qi-btn" onclick="showSection('feedback',this)" id="qi-feedback">
-      <span class="qi-btn-icon">🤖</span> AI Feedback <span class="qi-count" id="qiFeedback">—</span>
-    </button>
-    <button class="qi-btn" onclick="showSection('users',this)" id="qi-users">
-      <span class="qi-btn-icon">👥</span> Users <span class="qi-count" id="qiUsers">—</span>
-    </button>
-  </div>
+
 
   <!-- ③ BODY ROW -->
   <div class="body-row">
@@ -381,50 +343,50 @@ tr:hover td{background:#fafbfc}
       <div class="sb-nav">
         <div class="sb-section-lbl">Main</div>
         <button class="sb-item active" onclick="showSection('dashboard',this)">
-          <span class="sb-item-icon">📊</span>
+          <span class="sb-item-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
           <span class="sb-item-label">Dashboard</span>
         </button>
 
         <div class="sb-section-lbl">Events</div>
         <button class="sb-item" onclick="showSection('pending',this)">
-          <span class="sb-item-icon">⏳</span>
+          <span class="sb-item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg></span>
           <span class="sb-item-label">Pending Approval</span>
           <span class="sb-badge" id="pendingBadge" style="display:none">0</span>
         </button>
         <button class="sb-item" onclick="showSection('all-events',this)">
-          <span class="sb-item-icon">📋</span>
+          <span class="sb-item-icon"><svg viewBox="0 0 24 24"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1" fill="currentColor" stroke="none"/></svg></span>
           <span class="sb-item-label">All Events</span>
         </button>
 
         <div class="sb-section-lbl">Compliance</div>
         <button class="sb-item" onclick="showSection('compliance',this)">
-          <span class="sb-item-icon">✅</span>
+          <span class="sb-item-icon"><svg viewBox="0 0 24 24"><path d="M12 2l7 4v5c0 5-3.5 9.3-7 11-3.5-1.7-7-6-7-11V6l7-4z"/><polyline points="9 12 11 14 15 10"/></svg></span>
           <span class="sb-item-label">Compliance Review</span>
           <span class="sb-badge gold" id="complianceBadge" style="display:none">0</span>
         </button>
 
         <div class="sb-section-lbl">Analytics</div>
         <button class="sb-item" onclick="showSection('feedback',this)">
-          <span class="sb-item-icon">🤖</span>
+          <span class="sb-item-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
           <span class="sb-item-label">Feedback &amp; AI</span>
         </button>
 
         <div class="sb-section-lbl">System</div>
         <button class="sb-item" onclick="showSection('users',this)">
-          <span class="sb-item-icon">👥</span>
+          <span class="sb-item-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
           <span class="sb-item-label">Users</span>
         </button>
 
         <div class="sb-divider"></div>
         <button class="sb-item" onclick="window.location.href='/Homepage/homepage.html'">
-          <span class="sb-item-icon">🌐</span>
+          <span class="sb-item-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a15.3 15.3 0 0 1 4 9 15.3 15.3 0 0 1-4 9 15.3 15.3 0 0 1-4-9 15.3 15.3 0 0 1 4-9z"/></svg></span>
           <span class="sb-item-label">View Event Site</span>
         </button>
       </div>
 
       <div class="sb-footer">
         <button class="sb-logout" onclick="doLogout()">
-          <span>🚪</span> Log Out
+          <span class="sb-logout-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span> Log Out
         </button>
       </div>
     </aside>
@@ -444,23 +406,23 @@ tr:hover td{background:#fafbfc}
       <div class="section active" id="sec-dashboard">
         <div class="page-heading"><h1>Dashboard Overview</h1><p>Welcome back! Current status of UTM Campus Event Finder.</p></div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon red">📅</div><div><div class="stat-num" id="dTotalEvents">–</div><div class="stat-lbl">Total Events</div><div class="stat-sub">All categories</div></div></div>
-          <div class="stat-card"><div class="stat-icon gold">⏳</div><div><div class="stat-num" id="dPending">–</div><div class="stat-lbl">Pending Approval</div><div class="stat-sub">Requires review</div></div></div>
-          <div class="stat-card"><div class="stat-icon green">✅</div><div><div class="stat-num" id="dApproved">–</div><div class="stat-lbl">Approved Events</div><div class="stat-sub">Active on platform</div></div></div>
-          <div class="stat-card"><div class="stat-icon blue">💬</div><div><div class="stat-num" id="dFeedback">–</div><div class="stat-lbl">Feedback</div><div class="stat-sub">From students</div></div></div>
+          <div class="stat-card"><div class="stat-icon red"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="stat-num" id="dTotalEvents">–</div><div class="stat-lbl">Total Events</div><div class="stat-sub">All categories</div></div></div>
+          <div class="stat-card"><div class="stat-icon gold"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg></div><div><div class="stat-num" id="dPending">–</div><div class="stat-lbl">Pending Approval</div><div class="stat-sub">Requires review</div></div></div>
+          <div class="stat-card"><div class="stat-icon green"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="9 12 11 14 15 10"/></svg></div><div><div class="stat-num" id="dApproved">–</div><div class="stat-lbl">Approved Events</div><div class="stat-sub">Active on platform</div></div></div>
+          <div class="stat-card"><div class="stat-icon blue"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg></div><div><div class="stat-num" id="dFeedback">–</div><div class="stat-lbl">Feedback</div><div class="stat-sub">From students</div></div></div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon green">👥</div><div><div class="stat-num" id="dRegistrations">–</div><div class="stat-lbl">Total Registrations</div></div></div>
-          <div class="stat-card"><div class="stat-icon gold">😊</div><div><div class="stat-num" id="dPosSentiment">–</div><div class="stat-lbl">Positive Sentiment</div></div></div>
-          <div class="stat-card"><div class="stat-icon red">🎟</div><div><div class="stat-num" id="dSlotsLeft">–</div><div class="stat-lbl">Slots Available</div></div></div>
+          <div class="stat-card"><div class="stat-icon green"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg></div><div><div class="stat-num" id="dRegistrations">–</div><div class="stat-lbl">Total Registrations</div></div></div>
+          <div class="stat-card"><div class="stat-icon gold"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div><div><div class="stat-num" id="dPosSentiment">–</div><div class="stat-lbl">Positive Sentiment</div></div></div>
+          <div class="stat-card"><div class="stat-icon red"><svg viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"/></svg></div><div><div class="stat-num" id="dSlotsLeft">–</div><div class="stat-lbl">Slots Available</div></div></div>
           <div class="stat-card" style="cursor:pointer" onclick="showSection('compliance',null)">
-            <div class="stat-icon orange">⚠️</div><div><div class="stat-num" id="dComplianceIssues">–</div><div class="stat-lbl">Compliance Issues</div><div class="stat-sub">Click to review</div></div>
+            <div class="stat-icon orange"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div><div class="stat-num" id="dComplianceIssues">–</div><div class="stat-lbl">Compliance Issues</div><div class="stat-sub">Click to review</div></div>
           </div>
         </div>
         <div class="dash-grid">
           <div class="card">
             <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">Pending Approval</span></div><button class="btn btn-view btn-sm" onclick="showSection('pending',null)">View All →</button></div>
-            <div class="card-body" id="dashPendingList"><div class="empty-state"><div class="empty-state-icon">⏳</div><h3>Loading...</h3></div></div>
+            <div class="card-body" id="dashPendingList"><div class="empty-state"><div class="empty-state-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg></div><h3>Loading...</h3></div></div>
           </div>
           <div class="card">
             <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">AI Sentiment Analysis</span></div></div>
@@ -484,7 +446,7 @@ tr:hover td{background:#fafbfc}
         <div class="card">
           <div class="filter-bar">
             <span style="font-size:13px;color:var(--muted)">Events awaiting review</span>
-            <div class="filter-search">🔍<input type="text" id="pendingSearch" placeholder="Search events..." oninput="filterPending()"/></div>
+            <div class="filter-search"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#aaa;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="pendingSearch" placeholder="Search events..." oninput="filterPending()"/></div>
           </div>
           <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Category</th><th>Organizer</th><th>Date</th><th>Slots</th><th>Compliance</th><th>Submitted</th><th>Actions</th></tr></thead><tbody id="pendingTbody"></tbody></table></div></div>
         </div>
@@ -499,7 +461,7 @@ tr:hover td{background:#fafbfc}
             <button class="filter-tab" onclick="filterAllEvents('approved',this)">Approved</button>
             <button class="filter-tab" onclick="filterAllEvents('pending',this)">Pending</button>
             <button class="filter-tab" onclick="filterAllEvents('rejected',this)">Rejected</button>
-            <div class="filter-search">🔍<input type="text" id="allEventsSearch" placeholder="Search events..." oninput="filterAllEventsSearch()"/></div>
+            <div class="filter-search"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#aaa;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="allEventsSearch" placeholder="Search events..." oninput="filterAllEventsSearch()"/></div>
           </div>
           <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Category</th><th>Date</th><th>Venue</th><th>Slots</th><th>Registrations</th><th>Status</th><th>Actions</th></tr></thead><tbody id="allEventsTbody"></tbody></table></div></div>
         </div>
@@ -510,26 +472,26 @@ tr:hover td{background:#fafbfc}
         <div class="page-heading"><h1>Student Affairs Compliance Review</h1><p>Review based on <strong>UTM Student Activity Guidebook (2013)</strong>.</p></div>
         <div class="comp-stat-row" id="compStatRow"></div>
         <div class="card" style="margin-bottom:14px">
-          <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">📖 Reference: UTM Student Activity Guidebook (2013)</span></div></div>
+          <div class="card-head"><div class="card-head-left"><div class="card-bar"></div><span class="card-title">Reference: UTM Student Activity Guidebook (2013)</span></div></div>
           <div class="card-body">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
               <div style="background:#fef2f2;border-radius:8px;padding:12px 14px;border-left:3px solid #dc2626">
-                <div style="font-size:11px;font-weight:600;color:#991b1b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">🚫 Absolute Blockers (CANNOT Be Approved)</div>
+                <div style="font-size:11px;font-weight:600;color:#991b1b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Absolute Blockers (CANNOT Be Approved)</div>
                 <div style="font-size:12px;color:#7f1d1d;line-height:2">
-                  <div>❌ <strong>Sec. 3.2.4(b)</strong> — No approval from Advisor/Principal</div>
-                  <div>❌ <strong>Sec. 3.2.4(d)</strong> — Non-multiracial participation</div>
-                  <div>❌ <strong>Sec. 3.1.5</strong> — Less than 14 working days notice</div>
-                  <div>❌ <strong>Sec. 3.4.4</strong> — Previous activity report not submitted</div>
+                  <div><strong>Sec. 3.2.4(b)</strong> — No approval from Advisor/Principal</div>
+                  <div><strong>Sec. 3.2.4(d)</strong> — Non-multiracial participation</div>
+                  <div><strong>Sec. 3.1.5</strong> — Less than 14 working days notice</div>
+                  <div><strong>Sec. 3.4.4</strong> — Previous activity report not submitted</div>
                 </div>
               </div>
               <div style="background:#fffbf0;border-radius:8px;padding:12px 14px;border-left:3px solid #f59e0b">
-                <div style="font-size:11px;font-weight:600;color:#7c4f00;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">⚠️ Requires Special Action</div>
+                <div style="font-size:11px;font-weight:600;color:#7c4f00;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Requires Special Action</div>
                 <div style="font-size:12px;color:#92400e;line-height:2">
-                  <div>⚠️ <strong>Sec. 3.1.6</strong> — External sponsorship → 30 working days</div>
-                  <div>⚠️ <strong>Sec. 3.1.9</strong> — Exceeds 4 activities/semester</div>
-                  <div>⚠️ <strong>Sec. 3.2.5</strong> — During revision/exam week</div>
-                  <div>⚠️ <strong>Sec. 3.2.10</strong> — Activity past midnight</div>
-                  <div>⚠️ <strong>Sec. 3.2.6</strong> — External invitation/sponsorship → VC approval</div>
+                  <div><strong>Sec. 3.1.6</strong> — External sponsorship → 30 working days</div>
+                  <div><strong>Sec. 3.1.9</strong> — Exceeds 4 activities/semester</div>
+                  <div><strong>Sec. 3.2.5</strong> — During revision/exam week</div>
+                  <div><strong>Sec. 3.2.10</strong> — Activity past midnight</div>
+                  <div><strong>Sec. 3.2.6</strong> — External invitation/sponsorship → VC approval</div>
                 </div>
               </div>
             </div>
@@ -538,10 +500,10 @@ tr:hover td{background:#fafbfc}
         <div class="card">
           <div class="filter-bar">
             <button class="filter-tab active" onclick="filterCompliance('all',this)">All</button>
-            <button class="filter-tab" onclick="filterCompliance('blocker',this)">🚫 Blockers</button>
-            <button class="filter-tab" onclick="filterCompliance('warn',this)">⚠️ Requires Action</button>
-            <button class="filter-tab" onclick="filterCompliance('clear',this)">✅ Can Approve</button>
-            <div class="filter-search">🔍<input type="text" id="complianceSearch" placeholder="Search..." oninput="renderComplianceTable()"/></div>
+            <button class="filter-tab" onclick="filterCompliance('blocker',this)"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="9"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg> Blockers</button>
+            <button class="filter-tab" onclick="filterCompliance('warn',this)"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Requires Action</button>
+            <button class="filter-tab" onclick="filterCompliance('clear',this)"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="9"/><polyline points="9 12 11 14 15 10"/></svg> Can Approve</button>
+            <div class="filter-search"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#aaa;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="complianceSearch" placeholder="Search..." oninput="renderComplianceTable()"/></div>
           </div>
           <div class="card-body no-pad"><div class="tbl-wrap"><table>
             <thead><tr><th>Activity / Organizer</th><th>Advisor</th><th>Multiracial</th><th>Notice Period</th><th>Prev. Report</th><th>Act. Limit</th><th>Status &amp; Action</th></tr></thead>
@@ -564,7 +526,7 @@ tr:hover td{background:#fafbfc}
             <button class="filter-tab active" onclick="filterUsers('all',this)">All</button>
             <button class="filter-tab" onclick="filterUsers('student',this)">Student</button>
             <button class="filter-tab" onclick="filterUsers('organizer',this)">Organizer</button>
-            <div class="filter-search">🔍<input type="text" id="usersSearch" placeholder="Search users..." oninput="renderUsersTable()"/></div>
+            <div class="filter-search"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#aaa;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="usersSearch" placeholder="Search users..." oninput="renderUsersTable()"/></div>
           </div>
           <div class="card-body no-pad"><div class="tbl-wrap"><table><thead><tr><th>User</th><th>Matrix / Email</th><th>Faculty</th><th>Role</th><th>Status</th><th>Registered</th></tr></thead><tbody id="usersTbody"></tbody></table></div></div>
         </div>
@@ -577,7 +539,7 @@ tr:hover td{background:#fafbfc}
 <!-- EVENT REVIEW MODAL -->
 <div class="overlay" id="eventOverlay" onclick="handleOverlay(event)">
   <div class="modal">
-    <div class="modal-head"><span class="modal-head-title">Event Review — Compliance Check</span><button class="modal-close" onclick="closeEventModal()">✕</button></div>
+    <div class="modal-head"><span class="modal-head-title">Event Review — Compliance Check</span><button class="modal-close" onclick="closeEventModal()">×</button></div>
     <div class="modal-body">
       <div style="margin-bottom:10px"><span class="badge" id="mCatBadge"></span><span class="badge" id="mStatusBadge" style="margin-left:6px"></span></div>
       <div style="font-size:17px;font-weight:600;color:var(--text);margin-bottom:14px;line-height:1.3" id="mTitle"></div>
@@ -590,9 +552,9 @@ tr:hover td{background:#fafbfc}
         <div class="modal-info-cell"><div class="mic-label">Capacity</div><div class="mic-val" id="mSlots"></div></div>
       </div>
       <div class="modal-desc" id="mDesc"></div>
-      <div class="modal-section-title">📋 Compliance Check — UTM Student Activity Guidebook</div>
+      <div class="modal-section-title">Compliance Check — UTM Student Activity Guidebook</div>
       <div id="mComplianceOutput"></div>
-      <div class="modal-section-title">🔄 Approval Flow (Sec. 3.1.7)</div>
+      <div class="modal-section-title">Approval Flow (Sec. 3.1.7)</div>
       <div style="background:#f8fafc;border-radius:8px;padding:13px;margin-bottom:14px">
         <div class="approval-flow" id="mApprovalFlow"></div>
         <div style="font-size:11.5px;color:var(--muted);margin-top:8px" id="mApprovalNote"></div>
@@ -609,7 +571,7 @@ tr:hover td{background:#fafbfc}
 <!-- WAIVER MODAL -->
 <div class="overlay" id="waiverOverlay" onclick="handleWaiverOverlay(event)">
   <div class="modal" style="max-width:460px">
-    <div class="modal-head" style="background:#8B6914"><span class="modal-head-title" id="waiverModalTitle">Record Special Permission</span><button class="modal-close" onclick="closeWaiverModal()">✕</button></div>
+    <div class="modal-head" style="background:#8B6914"><span class="modal-head-title" id="waiverModalTitle">Record Special Permission</span><button class="modal-close" onclick="closeWaiverModal()">×</button></div>
     <div style="padding:20px">
       <div style="background:#fef9ec;border:1px solid #f59e0b;border-radius:8px;padding:11px;margin-bottom:14px;font-size:12.5px;color:#7c4f00" id="waiverContext"></div>
       <div class="waiver-form-row">
@@ -636,7 +598,7 @@ tr:hover td{background:#fafbfc}
         <textarea id="waiverNote" placeholder="Additional information..."></textarea>
       </div>
       <div style="display:flex;gap:9px">
-        <button style="flex:1;background:var(--gold);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:13.5px;font-weight:500;padding:10px;border-radius:7px;cursor:pointer" onclick="saveWaiver()">💾 Save Record</button>
+        <button style="flex:1;background:var(--gold);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:13.5px;font-weight:500;padding:10px;border-radius:7px;cursor:pointer" onclick="saveWaiver()">Save Record</button>
         <button style="background:none;border:1px solid var(--border);color:var(--muted);font-family:'Roboto',sans-serif;font-size:13.5px;padding:10px 15px;border-radius:7px;cursor:pointer" onclick="closeWaiverModal()">Cancel</button>
       </div>
     </div>
@@ -742,29 +704,29 @@ function renderModalComplianceOutput(ev) {
   const { blockers, warnings, isAllClear, hasBlocker } = runComplianceChecks(ev);
   let html = '';
   if (isAllClear) {
-    html = `<div class="clear-box"><div class="clear-box-icon">✅</div><div><div class="clear-box-text">All compliance checks passed</div><div class="clear-box-sub">This activity meets all UTM Student Activity Guidebook requirements.</div></div></div>`;
+    html = `<div class="clear-box"><div class="clear-box-icon" style="display:flex;align-items:center"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="9"/><polyline points="9 12 11 14 15 10"/></svg></div><div><div class="clear-box-text">All compliance checks passed</div><div class="clear-box-sub">This activity meets all UTM Student Activity Guidebook requirements.</div></div></div>`;
   } else {
     if (blockers.length > 0) {
-      html += `<div class="hard-block-box"><div class="hard-block-title">🚫 ABSOLUTE BLOCKERS — Cannot Be Approved</div>
-        ${blockers.map(b => `<div class="hard-block-item"><div class="hb-icon">❌</div><div class="hb-body">
+      html += `<div class="hard-block-box"><div class="hard-block-title"><strong>BLOCKERS</strong> — Cannot Be Approved</div>
+        ${blockers.map(b => `<div class="hard-block-item"><div class="hb-icon" style="color:#dc2626;font-weight:700;font-size:14px">✗</div><div class="hb-body">
           <div class="hb-rule">${b.rule}</div><div class="hb-detail">${b.detail}</div>
-          <div style="margin-top:5px"><span class="hb-ref">📖 ${b.section}</span></div>
-          <div class="hb-action">📌 ${b.action}</div>
+          <div style="margin-top:5px"><span class="hb-ref">${b.section}</span></div>
+          <div class="hb-action">${b.action}</div>
           <div style="margin-top:5px;font-size:11px;color:#991b1b"><strong>Authority:</strong> ${b.authority}</div>
-          <div style="margin-top:7px"><button class="btn-waiver" onclick="openWaiverModal(${ev.id},'${b.id}','${b.rule.replace(/'/g,"\\'")}','${b.authority}')">📝 Record Permission Received</button></div>
+          <div style="margin-top:7px"><button class="btn-waiver" onclick="openWaiverModal(${ev.id},'${b.id}','${b.rule.replace(/'/g,"\\'")}','${b.authority}')">Record Permission</button></div>
         </div></div>`).join('')}
       </div>`;
     }
     if (warnings.length > 0) {
-      html += `<div class="warn-box" style="margin-top:10px"><div class="warn-box-title">⚠️ REQUIRES SPECIAL ACTION</div>
-        ${warnings.map(w => `<div class="warn-item"><div class="warn-icon">⚠️</div><div class="warn-body">
+      html += `<div class="warn-box" style="margin-top:10px"><div class="warn-box-title">REQUIRES SPECIAL ACTION</div>
+        ${warnings.map(w => `<div class="warn-item"><div class="warn-icon" style="color:#f59e0b;font-weight:700;font-size:14px">!</div><div class="warn-body">
           <div class="warn-rule">${w.rule}</div><div class="warn-detail">${w.detail}</div>
-          <div style="margin-top:3px"><span class="warn-ref">📖 ${w.section}</span></div>
-          <div style="margin-top:5px;font-size:12px;font-weight:500;color:#7c4f00;background:rgba(245,158,11,.1);padding:5px 8px;border-radius:5px;border-left:3px solid #f59e0b">📌 ${w.action}</div>
+          <div style="margin-top:3px"><span class="warn-ref">${w.section}</span></div>
+          <div style="margin-top:5px;font-size:12px;font-weight:500;color:#7c4f00;background:rgba(245,158,11,.1);padding:5px 8px;border-radius:5px;border-left:3px solid #f59e0b">${w.action}</div>
           <div style="margin-top:3px;font-size:11px;color:#92400e"><strong>Authority:</strong> ${w.authority}</div>
           ${w.id !== 'W2_NEAR' ? `<div style="margin-top:7px">
-            <button class="btn-waiver" onclick="openWaiverModal(${ev.id},'${w.id}','${w.rule.replace(/'/g,"\\'")}','${w.authority}')">📝 Record Permission Received</button>
-            ${WAIVERS[ev.id+'_'+w.id] ? `<span style="font-size:11px;color:var(--green);font-weight:600;margin-left:8px">✅ Recorded</span>` : ''}
+            <button class="btn-waiver" onclick="openWaiverModal(${ev.id},'${w.id}','${w.rule.replace(/'/g,"\\'")}','${w.authority}')">Record Permission</button>
+            ${WAIVERS[ev.id+'_'+w.id] ? `<span style="font-size:11px;color:var(--green);font-weight:600;margin-left:8px">Recorded</span>` : ''}
           </div>` : ''}
         </div></div>`).join('')}
       </div>`;
@@ -776,9 +738,9 @@ function renderModalComplianceOutput(ev) {
 
 function renderApprovalFlow(ev) {
   const steps = [
-    { icon:'👤', label:'Society\nPresident', status:'done' },
-    { icon:'📝', label:'Advisor /\nPrincipal', status: ev.advisor_approved === true ? 'done' : ev.advisor_approved === false ? 'rejected' : 'current' },
-    { icon:'🏛️', label:'Student\nAffairs / HEMA', status: ev.status === 'approved' ? 'done' : ev.status === 'rejected' ? 'rejected' : 'waiting' }
+    { icon:'U', label:'Society\nPresident', status:'done' },
+    { icon:'A', label:'Advisor /\nPrincipal', status: ev.advisor_approved === true ? 'done' : ev.advisor_approved === false ? 'rejected' : 'current' },
+    { icon:'H', label:'Student\nAffairs / HEMA', status: ev.status === 'approved' ? 'done' : ev.status === 'rejected' ? 'rejected' : 'waiting' }
   ];
   const statusLabel = { done:'Approved', current:'Pending', waiting:'Awaiting', rejected:'Rejected' };
   document.getElementById('mApprovalFlow').innerHTML = steps.map((s, i) => `
@@ -789,14 +751,14 @@ function renderApprovalFlow(ev) {
       <div style="font-size:10px;color:var(--muted);margin-top:2px">${statusLabel[s.status]}</div>
     </div>`).join('');
   document.getElementById('mApprovalNote').textContent =
-    ev.status === 'approved' ? '✅ All approval stages completed.' :
-    ev.status === 'rejected' ? '❌ Application has been rejected.' :
-    '⏳ Awaiting review at: Student Affairs / HEMA.';
+    ev.status === 'approved' ? 'All approval stages completed.' :
+    ev.status === 'rejected' ? 'Application has been rejected.' :
+    'Awaiting review at: Student Affairs / HEMA.';
 }
 
 function openWaiverModal(eventId, ruleId, ruleName, authority) {
   waiverEventId = eventId; waiverRuleId = ruleId;
-  document.getElementById('waiverModalTitle').textContent = 'Record Permission — ' + ruleId;
+  document.getElementById('waiverModalTitle').textContent = 'Permission: ' + ruleId;
   document.getElementById('waiverContext').innerHTML = `<strong>Rule:</strong> ${ruleName}<br><strong>Authority:</strong> ${authority}`;
   document.getElementById('waiverType').value = '';
   document.getElementById('waiverRef').value  = '';
@@ -813,7 +775,7 @@ function saveWaiver() {
   if (!type || !ref) { alert('Please fill in permission type and reference number.'); return; }
   WAIVERS[`${waiverEventId}_${waiverRuleId}`] = { type, ref, date: document.getElementById('waiverDate').value, note: document.getElementById('waiverNote').value.trim(), savedAt: new Date().toISOString() };
   closeWaiverModal();
-  showToast('✅ Permission recorded for ' + waiverRuleId, 'success');
+  showToast('Permission recorded for ' + waiverRuleId, 'success');
   if (currentEventModal) { const hasBlocker = renderModalComplianceOutput(currentEventModal); const btn = document.querySelector('.btn-modal-approve'); if (btn) btn.disabled = hasBlocker; }
   renderComplianceTable(); renderDashboard();
 }
@@ -842,11 +804,11 @@ async function loadFeedback() {
 async function approveEvent(id) {
   const ev = EVENTS.find(e => e.id === id);
   const { hasBlocker } = runComplianceChecks(ev);
-  if (hasBlocker) { showToast('🚫 Compliance blockers must be resolved first.', 'error'); return; }
+  if (hasBlocker) { showToast('Compliance blockers must be resolved first.', 'error'); return; }
   const { error } = await sb.from('events').update({ status: 'approved' }).eq('id', id);
   if (error) { showToast('Failed to approve.', 'error'); return; }
   closeEventModal(); await loadEvents(); refreshAllTables();
-  showToast('✓ "' + (ev?.title || 'Activity') + '" approved and published.', 'success');
+  showToast(('Approved: ' + (ev?.title || 'Activity') + '" approved and published.', 'success'));
 }
 
 async function confirmReject(id) {
@@ -855,7 +817,7 @@ async function confirmReject(id) {
   const { error } = await sb.from('events').update({ status: 'rejected', reject_reason: reason }).eq('id', id);
   if (error) { showToast('Failed to reject.', 'error'); return; }
   closeEventModal(); await loadEvents(); refreshAllTables();
-  showToast('✕ Activity has been rejected.', 'error');
+  showToast('Activity has been rejected.', 'error');
 }
 
 function renderDashboard() {
@@ -898,20 +860,20 @@ function renderDashboard() {
 
   const pendingEvs = EVENTS.filter(e => e.status === 'pending');
   const pl = document.getElementById('dashPendingList');
-  if (!pendingEvs.length) { pl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div><h3>No pending activities</h3><p>All events reviewed.</p></div>'; }
+  if (!pendingEvs.length) { pl.innerHTML = '<div class="empty-state"><div class="empty-state-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="9 12 11 14 15 10"/></svg></div><h3>No pending activities</h3><p>All events reviewed.</p></div>'; }
   else {
     pl.innerHTML = pendingEvs.map(e => {
       const { hasBlocker, blockers, warnings } = runComplianceChecks(e);
-      const tag = hasBlocker ? `<span style="color:#dc2626;font-weight:600;font-size:10.5px">🚫 ${blockers.length} blockers</span>` : warnings.length > 0 ? `<span style="color:#92400e;font-weight:600;font-size:10.5px">⚠️ ${warnings.length} actions needed</span>` : `<span style="color:var(--green);font-weight:600;font-size:10.5px">✅ Ready to approve</span>`;
-      return `<div class="event-mini"><div class="event-mini-emoji">${e.emoji||'📅'}</div><div class="event-mini-body"><div class="event-mini-title">${e.title}</div><div class="event-mini-meta">📅 ${e.date||'–'} &nbsp;·&nbsp; ${tag}</div></div><div class="event-mini-status"><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">Review</button></div></div>`;
+      const tag = hasBlocker ? `<span style="color:#dc2626;font-weight:600;font-size:10.5px>${blockers.length} blockers</span>` : warnings.length > 0 ? `<span style="color:#92400e;font-weight:600;font-size:10.5px>${warnings.length} actions needed</span>` : `<span style="color:var(--green);font-weight:600;font-size:10.5px>Ready to approve</span>`;
+      return `<div class="event-mini"><div class="event-mini-body"><div class="event-mini-title">${e.title}</div><div class="event-mini-meta">${e.date||'–'} &nbsp;·&nbsp; ${tag}</div></div><div class="event-mini-status"><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">Review</button></div></div>`;
     }).join('');
   }
 
   const chartData = EVENTS.filter(e => (e.slots||0)-(e.slots_left||0) > 0).sort((a,b) => ((b.slots||0)-(b.slots_left||0))-((a.slots||0)-(a.slots_left||0))).slice(0,6);
   const maxReg = Math.max(...chartData.map(e => (e.slots||0)-(e.slots_left||0)), 1);
   const chartEl = document.getElementById('dashRegChart');
-  if (!chartData.length) { chartEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><h3>No registrations yet</h3></div>'; }
-  else { chartEl.innerHTML = chartData.map(e => { const reg = (e.slots||0)-(e.slots_left||0); const label = (e.title||'').length > 28 ? e.title.slice(0,28)+'…' : (e.title||'–'); return `<div class="chart-bar-row"><div class="chart-bar-lbl">${e.emoji||'📅'} ${label}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${(reg/maxReg)*100}%;background:var(--red)"></div></div><div class="chart-bar-pct">${reg}</div></div>`; }).join(''); }
+  if (!chartData.length) { chartEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><h3>No registrations yet</h3></div>'; }
+  else { chartEl.innerHTML = chartData.map(e => { const reg = (e.slots||0)-(e.slots_left||0); const label = (e.title||'').length > 28 ? e.title.slice(0,28)+'…' : (e.title||'–'); return `<div class="chart-bar-row"><div class="chart-bar-lbl">${e.emoji||''} ${label}</div><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${(reg/maxReg)*100}%;background:var(--red)"></div></div><div class="chart-bar-pct">${reg}</div></div>`; }).join(''); }
 }
 
 function renderPendingTable() {
@@ -919,11 +881,11 @@ function renderPendingTable() {
   const q = (document.getElementById('pendingSearch')?.value || '').toLowerCase();
   const filtered = q ? rows.filter(e => (e.title||'').toLowerCase().includes(q) || (e.organizer_name||'').toLowerCase().includes(q)) : rows;
   const tbody = document.getElementById('pendingTbody');
-  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>No pending activities</h3></div></td></tr>`; return; }
+  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="9 12 11 14 15 10"/></svg></div><h3>No pending activities</h3></div></td></tr>`; return; }
   tbody.innerHTML = filtered.map(e => {
     const { blockers, warnings, hasBlocker } = runComplianceChecks(e);
-    let compCell = hasBlocker ? `<div><span class="cf-chip fail">🚫 ${blockers.length} blockers</span><br>${blockers.slice(0,2).map(b=>`<span style="font-size:10px;color:#991b1b">• ${b.section}</span>`).join('<br>')}</div>` : warnings.length > 0 ? `<span class="cf-chip warn">⚠️ ${warnings.length} actions</span>` : `<span class="cf-chip ok">✅ Passed</span>`;
-    return `<tr style="${hasBlocker?'background:#fff8f8':''}"><td><strong>${e.emoji||'📅'} ${e.title||'–'}</strong></td><td><span class="badge badge-${e.category}">${cap(e.category)}</span></td><td>${e.organizer_name||'–'}</td><td>${e.date||'–'}</td><td>${e.slots||'–'}</td><td>${compCell}</td><td>${(e.created_at||'').slice(0,10)||'–'}</td><td style="display:flex;gap:5px;flex-wrap:wrap"><button class="btn btn-approve btn-sm" onclick="approveEvent(${e.id})" ${hasBlocker?'disabled style="opacity:.4;cursor:not-allowed"':''}>✓ Approve</button><button class="btn btn-reject btn-sm" onclick="openEventModal(${e.id})">✕ Reject</button><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">View</button></td></tr>`;
+    let compCell = hasBlocker ? `<div><span class="cf-chip fail>${blockers.length} blockers</span><br>${blockers.slice(0,2).map(b=>`<span style="font-size:10px;color:#991b1b">• ${b.section}</span>`).join('<br>')}</div>` : warnings.length > 0 ? `<span class="cf-chip warn">⚠️ ${warnings.length} actions</span>` : `<span class="cf-chip ok">✅ Passed</span>`;
+    return `<tr style="${hasBlocker?'background:#fff8f8':''}"><td><strong>${e.emoji||''} ${e.title||'–'}</strong></td><td><span class="badge badge-${e.category}">${cap(e.category)}</span></td><td>${e.organizer_name||'–'}</td><td>${e.date||'–'}</td><td>${e.slots||'–'}</td><td>${compCell}</td><td>${(e.created_at||'').slice(0,10)||'–'}</td><td style="display:flex;gap:5px;flex-wrap:wrap"><button class="btn btn-approve btn-sm" onclick="approveEvent(${e.id})" ${hasBlocker?'disabled style="opacity:.4;cursor:not-allowed"':''}>Approve</button><button class="btn btn-reject btn-sm" onclick="openEventModal(${e.id})">Reject</button><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">View</button></td></tr>`;
   }).join('');
 }
 function filterPending() { renderPendingTable(); }
@@ -933,8 +895,8 @@ function renderAllEventsTable() {
   let rows = allEventsFilter === 'all' ? EVENTS : EVENTS.filter(e => e.status === allEventsFilter);
   if (q) rows = rows.filter(e => (e.title||'').toLowerCase().includes(q) || (e.location||'').toLowerCase().includes(q));
   const tbody = document.getElementById('allEventsTbody');
-  if (!rows.length) { tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">📋</div><h3>No events found</h3></div></td></tr>`; return; }
-  tbody.innerHTML = rows.map(e => { const reg = (e.slots||0)-(e.slots_left||0); return `<tr><td><strong>${e.emoji||'📅'} ${e.title||'–'}</strong><div style="font-size:11.5px;color:var(--muted);margin-top:1px">${e.organizer_name||'–'}</div></td><td><span class="badge badge-${e.category}">${cap(e.category)}</span></td><td>${e.date||'–'}</td><td style="font-size:12.5px">${(e.location||'–').split(',')[0]}</td><td>${e.slots||'–'}</td><td><strong>${reg}</strong><div style="font-size:11px;color:var(--muted)">${e.slots_left||0} remaining</div></td><td><span class="badge badge-${e.status}">${cap(e.status)}</span></td><td><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">View</button></td></tr>`; }).join('');
+  if (!rows.length) { tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon"><svg viewBox="0 0 24 24"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1" fill="currentColor" stroke="none"/></svg></div><h3>No events found</h3></div></td></tr>`; return; }
+  tbody.innerHTML = rows.map(e => { const reg = (e.slots||0)-(e.slots_left||0); return `<tr><td><strong>${e.emoji||''} ${e.title||'–'}</strong><div style="font-size:11.5px;color:var(--muted);margin-top:1px">${e.organizer_name||'–'}</div></td><td><span class="badge badge-${e.category}">${cap(e.category)}</span></td><td>${e.date||'–'}</td><td style="font-size:12.5px">${(e.location||'–').split(',')[0]}</td><td>${e.slots||'–'}</td><td><strong>${reg}</strong><div style="font-size:11px;color:var(--muted)">${e.slots_left||0} remaining</div></td><td><span class="badge badge-${e.status}">${cap(e.status)}</span></td><td><button class="btn btn-view btn-sm" onclick="openEventModal(${e.id})">View</button></td></tr>`; }).join('');
 }
 function filterAllEvents(status, btn) { allEventsFilter = status; document.querySelectorAll('#sec-all-events .filter-tab').forEach(b => b.classList.remove('active')); if (btn) btn.classList.add('active'); renderAllEventsTable(); }
 function filterAllEventsSearch() { renderAllEventsTable(); }
@@ -953,19 +915,19 @@ function renderComplianceTable() {
   const clearCount   = allPending.filter(e => runComplianceChecks(e).isAllClear).length;
 
   document.getElementById('compStatRow').innerHTML = `
-    <div class="comp-stat"><div class="comp-stat-icon" style="background:#fff0f0">📋</div><div><div class="stat-num" style="font-size:20px">${allPending.length}</div><div class="stat-lbl">Total Pending</div></div></div>
-    <div class="comp-stat"><div class="comp-stat-icon" style="background:#fef2f2">🚫</div><div><div class="stat-num" style="font-size:20px;color:#dc2626">${blockerCount}</div><div class="stat-lbl">Absolute Blockers</div></div></div>
-    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--gold-light)">⚠️</div><div><div class="stat-num" style="font-size:20px;color:var(--gold)">${warnCount}</div><div class="stat-lbl">Requires Action</div></div></div>
-    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--green-light)">✅</div><div><div class="stat-num" style="font-size:20px;color:var(--green)">${clearCount}</div><div class="stat-lbl">Can Be Approved</div></div></div>`;
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:#fff0f0"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1" fill="currentColor" stroke="none"/></svg></div><div><div class="stat-num" style="font-size:20px">${allPending.length}</div><div class="stat-lbl">Total Pending</div></div></div>
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:#fef2f2"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="9"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div><div><div class="stat-num" style="font-size:20px;color:#dc2626">${blockerCount}</div><div class="stat-lbl">Absolute Blockers</div></div></div>
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--gold-light)"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div><div class="stat-num" style="font-size:20px;color:var(--gold)">${warnCount}</div><div class="stat-lbl">Requires Action</div></div></div>
+    <div class="comp-stat"><div class="comp-stat-icon" style="background:var(--green-light)"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="9"/><polyline points="9 12 11 14 15 10"/></svg></div><div><div class="stat-num" style="font-size:20px;color:var(--green)">${clearCount}</div><div class="stat-lbl">Can Be Approved</div></div></div>`;
 
   const cb = document.getElementById('complianceBadge');
   cb.textContent = blockerCount; cb.style.display = blockerCount > 0 ? 'inline-flex' : 'none';
   document.getElementById('dComplianceIssues').textContent = blockerCount;
 
   const tbody = document.getElementById('complianceTbody');
-  if (!rows.length) { tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">✅</div><h3>No records found</h3></div></td></tr>`; return; }
+  if (!rows.length) { tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="9 12 11 14 15 10"/></svg></div><h3>No records found</h3></div></td></tr>`; return; }
 
-  const checkIcon  = { pass:'✅', fail:'❌', warn:'⚠️', na:'➖', unknown:'❓' };
+  const checkIcon  = { pass:'✓', fail:'✗', warn:'!', na:'–', unknown:'?' };
   const checkColor = { pass:'var(--green)', fail:'#dc2626', warn:'#f59e0b', na:'#888', unknown:'#888' };
 
   tbody.innerHTML = rows.map(ev => {
@@ -983,13 +945,13 @@ function renderComplianceTable() {
     const lim  = sc >= 4 ? 'warn' : 'pass';
     const col  = (status, title) => `<td title="${title}" style="color:${checkColor[status]};font-size:16px;text-align:center">${checkIcon[status]}</td>`;
     return `<tr style="${hasBlocker?'background:#fff8f8':''}">
-      <td><div style="font-weight:500">${ev.emoji||'📅'} ${ev.title||'–'}</div><div style="font-size:11.5px;color:var(--muted)">${ev.organizer_name||'–'}</div>${hasBlocker?`<div style="margin-top:3px"><span style="font-size:10px;background:#fef2f2;color:#dc2626;padding:2px 6px;border-radius:3px;font-weight:600">${blockers.length} blockers</span></div>`:''}</td>
+      <td><div style="font-weight:500">${ev.title||'–'}</div><div style="font-size:11.5px;color:var(--muted)">${ev.organizer_name||'–'}</div>${hasBlocker?`<div style="margin-top:3px"><span style="font-size:10px;background:#fef2f2;color:#dc2626;padding:2px 6px;border-radius:3px;font-weight:600">${blockers.length} blockers</span></div>`:''}</td>
       ${col(adv, adv==='fail'?'No advisor approval (Sec. 3.2.4(b))':'Advisor approval')}
       ${col(multi, multi==='fail'?'Not multiracial (Sec. 3.2.4(d))':multi==='na'?'Exempted (religious)':'Multiracial')}
       ${col(notice, `${noticeDays} working days (required ≥${minD})`)}
       ${col(rep, rep==='fail'?'Previous report not submitted (Sec. 3.4.4)':'No outstanding reports')}
       ${col(lim, `${sc}/4 activities this semester`)}
-      <td>${hasBlocker?`<span class="badge badge-rejected" style="font-size:10px">🚫 ${blockers.length} Blockers</span>`:warnings.length>0?`<span class="badge badge-pending" style="font-size:10px">⚠️ ${warnings.length} Actions</span>`:`<span class="badge badge-approved" style="font-size:10px">✅ Ready</span>`}
+      <td>${hasBlocker?`<span class="badge badge-rejected" style="font-size:10px>${blockers.length} Blockers</span>`:warnings.length>0?`<span class="badge badge-pending" style="font-size:10px>${warnings.length} Actions</span>`:`<span class="badge badge-approved" style="font-size:10px">✅ Ready</span>`}
         <button class="btn btn-view btn-sm" style="margin-top:4px;display:block" onclick="openEventModal(${ev.id})">Review</button>
       </td></tr>`;
   }).join('');
@@ -998,7 +960,7 @@ function filterCompliance(filter, btn) { complianceFilter = filter; document.que
 
 function renderFeedbackCards() {
   const el = document.getElementById('feedbackCards');
-  if (!FEEDBACK.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><h3>No feedback yet</h3><p>Student feedback will appear here.</p></div>'; return; }
+  if (!FEEDBACK.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg></div><h3>No feedback yet</h3><p>Student feedback will appear here.</p></div>'; return; }
   const grouped = {};
   FEEDBACK.forEach(f => { const eid = f.event_id || 'unknown'; if (!grouped[eid]) grouped[eid] = []; grouped[eid].push(f); });
   el.innerHTML = Object.entries(grouped).map(([eid, fbs]) => {
@@ -1021,7 +983,7 @@ function renderUsersTable() {
   const q    = (document.getElementById('usersSearch')?.value || '').toLowerCase();
   const filtered = q ? rows.filter(u => (u.name||'').toLowerCase().includes(q) || (u.email||'').toLowerCase().includes(q) || (u.matrix||'').toLowerCase().includes(q)) : rows;
   const tbody = document.getElementById('usersTbody');
-  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">👥</div><h3>No users found</h3></div></td></tr>`; return; }
+  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>No users found</h3></div></td></tr>`; return; }
   tbody.innerHTML = filtered.map(u => {
     const initials = (u.name||u.email||'?').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
     const avColor  = u.role === 'admin' ? '' : u.role === 'organizer' ? 'green' : 'blue';
@@ -1054,29 +1016,19 @@ function openEventModal(id) {
   document.getElementById('rejectReason').value = '';
   const actions = document.getElementById('mActions');
   if (ev.status === 'pending') {
-    actions.innerHTML = `<button class="btn-modal-approve" onclick="approveEvent(${ev.id})" ${hasBlocker?'disabled':''}>${hasBlocker?'🚫 Cannot Be Approved':'✓ Approve Activity'}</button><button class="btn-modal-reject" onclick="showRejectBox(${ev.id})">✕ Reject</button><button class="btn-modal-close" onclick="closeEventModal()">Close</button>`;
+    actions.innerHTML = `<button class="btn-modal-approve" onclick="approveEvent(${ev.id})" ${hasBlocker?'disabled':''}>${hasBlocker?'Cannot Be Approved':'Approve Activity'}</button><button class="btn-modal-reject" onclick="showRejectBox(${ev.id})">Reject</button><button class="btn-modal-close" onclick="closeEventModal()">Close</button>`;
   } else { actions.innerHTML = `<button class="btn-modal-close" style="width:100%" onclick="closeEventModal()">Close</button>`; }
   document.getElementById('eventOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 function showRejectBox(id) {
   document.getElementById('rejectReasonBox').classList.add('show');
-  document.getElementById('mActions').innerHTML = `<button class="btn-modal-approve" onclick="approveEvent(${id})">✓ Approve</button><button class="btn-modal-reject" onclick="confirmReject(${id})">✕ Confirm Reject</button><button class="btn-modal-close" onclick="closeEventModal()">Cancel</button>`;
+  document.getElementById('mActions').innerHTML = `<button class="btn-modal-approve" onclick="approveEvent(${id})">Approve</button><button class="btn-modal-reject" onclick="confirmReject(${id})">Confirm Reject</button><button class="btn-modal-close" onclick="closeEventModal()">Cancel</button>`;
 }
 function closeEventModal() { document.getElementById('eventOverlay').classList.remove('open'); document.body.style.overflow = ''; currentEventModal = null; }
 function handleOverlay(e) { if (e.target === document.getElementById('eventOverlay')) closeEventModal(); }
 
-function updateQiCounts() {
-  const total   = EVENTS.length;
-  const pending = EVENTS.filter(e => e.status === 'pending').length;
-  const blockers= EVENTS.filter(e => e.status === 'pending' && runComplianceChecks(e).hasBlocker).length;
-  document.getElementById('qiTotal').textContent     = total + ' total';
-  document.getElementById('qiPending').textContent   = pending + ' events';
-  document.getElementById('qiAll').textContent       = total + ' events';
-  document.getElementById('qiCompliance').textContent= blockers + ' issues';
-  document.getElementById('qiFeedback').textContent  = FEEDBACK.length + ' received';
-  document.getElementById('qiUsers').textContent     = USERS.length + ' users';
-}
+function updateQiCounts() { /* qi-strip removed */ }
 
 function refreshAllTables() { renderDashboard(); renderPendingTable(); renderAllEventsTable(); renderComplianceTable(); updatePendingBadge(); updateQiCounts(); }
 function updatePendingBadge() { const count = EVENTS.filter(e => e.status === 'pending').length; const badge = document.getElementById('pendingBadge'); badge.textContent = count; badge.style.display = count > 0 ? 'inline-flex' : 'none'; }
@@ -1091,8 +1043,7 @@ function showSection(id, btn) {
     const map = { 'dashboard':'Dashboard','pending':'Pending Approval','all-events':'All Events','compliance':'Compliance Review','feedback':'Feedback & AI','users':'Users' };
     document.querySelectorAll('.sb-item').forEach(b => { if (b.querySelector('.sb-item-label')?.textContent.trim() === map[id]) b.classList.add('active'); });
   }
-  const qiMap = { 'dashboard':'qi-dashboard','pending':'qi-pending','all-events':'qi-all','compliance':'qi-compliance','feedback':'qi-feedback','users':'qi-users' };
-  if (qiMap[id]) { const qi = document.getElementById(qiMap[id]); if (qi) qi.classList.add('active'); }
+  /* qi-strip removed */
 }
 
 function showToast(msg, type='info') { const t = document.getElementById('toast'); t.textContent = msg; t.className = `toast ${type} show`; setTimeout(() => t.classList.remove('show'), 3500); }
