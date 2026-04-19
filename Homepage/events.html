@@ -140,8 +140,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .state-box h3{font-size:16px;color:var(--text);margin-bottom:6px}
 .spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.ai-rec-outer{background:#fff;border-bottom:1px solid var(--border)}
-.ai-rec-wrap{max-width:1320px;margin:0 auto;padding:20px 24px 22px}
 .ai-rec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .ai-rec-title{display:flex;align-items:center;gap:10px}
 .ai-rec-title-icon{width:30px;height:30px;background:linear-gradient(135deg,#8B0000,#c0392b);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
@@ -353,26 +351,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
   <button class="ct-btn archived-btn" id="archTabBtn" onclick="switchToArchived()">📜 Archived <span class="arch-count" id="archCountBadge">0</span></button>
 </div>
 
-<div class="ai-rec-outer" id="aiRecOuter" style="display:none">
-  <div class="ai-rec-wrap">
-    <div class="ai-rec-header">
-      <div class="ai-rec-title">
-        <div class="ai-rec-title-icon">🤖</div>
-        <div><h3>Recommended For You</h3><p id="aiRecSubtitle">Personalised picks based on your interests</p></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px">
-        <button class="ai-rec-edit" onclick="openPrefModal()">✏️ Edit interests</button>
-        <span class="ai-rec-badge">AI Picks</span>
-      </div>
-    </div>
-    <div class="ai-rec-scroll" id="aiRecScroll">
-      <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
-      <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
-      <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
-    </div>
-  </div>
-</div>
-
 <div class="wrap">
   <aside class="sidebar">
     <div class="sb-card">
@@ -399,8 +377,29 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
     <div class="ar-sb"><div class="ar-sb-title">📱 AR Event Map</div><div class="ar-sb-text">Scan the UTM campus map marker using your mobile device to explore event locations in 3D Augmented Reality.</div><button class="ar-sb-btn">Launch AR Viewer</button></div>
     <a class="back-link" href="../Homepage/homepage.html">← Back to myUTM Portal</a>
   </aside>
-  <div class="events-area">
-    <div class="ev-toolbar"><div class="ev-toolbar-left"><h2 id="evTitle">Upcoming Events</h2><p id="evMeta">Loading events from Supabase...</p></div><span class="ev-toolbar-badge live" id="evBadge">● Live</span></div>
+<div class="events-area">
+
+    <!-- AI RECOMMENDATIONS — sekarang dalam events-area, bukan luar wrap -->
+    <div id="aiRecOuter" style="display:none; background:#fff; border:1px solid var(--border); border-radius:4px; padding:16px 18px 20px; margin-bottom:20px;">
+      <div class="ai-rec-header">
+        <div class="ai-rec-title">
+          <div class="ai-rec-title-icon">🤖</div>
+          <div><h3>Recommended For You</h3><p id="aiRecSubtitle">Personalised picks based on your interests</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <button class="ai-rec-edit" onclick="openPrefModal()">✏️ Edit interests</button>
+          <span class="ai-rec-badge">AI Picks</span>
+        </div>
+      </div>
+      <div class="ai-rec-scroll" id="aiRecScroll">
+        <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
+        <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
+        <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
+      </div>
+    </div>
+
+    <div class="ev-toolbar">
+    <div class="ev-toolbar-left"><h2 id="evTitle">Upcoming Events</h2><p id="evMeta">Loading events from Supabase...</p></div><span class="ev-toolbar-badge live" id="evBadge">● Live</span></div>
     <div class="ev-grid" id="evGrid"><div class="state-box"><div class="spinner"></div><p>Connecting to database...</p></div></div>
   </div>
 </div>
