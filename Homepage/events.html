@@ -838,7 +838,7 @@ function openModal(id){
   var overlay=document.getElementById('overlay');if(overlay)overlay.classList.add('open');
   document.body.style.overflow='hidden';
 }
-function goRegister(id){var ev=(window.EVENTS||[]).find(function(e){return e.id===id});if(!ev)return;window.location.href='register.html?'+new URLSearchParams({id:ev.id,title:ev.title,date:ev.date,location:ev.location,time:ev.time})}
+function goRegister(id){var ev=(window.EVENTS||[]).find(function(e){return e.id===id});if(!ev)return;window.location.href='../Login/register.html?'+new URLSearchParams({id:ev.id,title:ev.title,date:ev.date,location:ev.location,time:ev.time})}
 function viewTicket(id){goRegister(id)}
 function closeModal(){var overlay=document.getElementById('overlay');if(overlay)overlay.classList.remove('open');document.body.style.overflow=''}
 function handleOv(e){if(e.target===document.getElementById('overlay'))closeModal()}
