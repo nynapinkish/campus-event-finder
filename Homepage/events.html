@@ -660,7 +660,7 @@ async function init(){
     var initials=(currentUser.name||'').split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase()||'?';
     setText('headerAvatar',initials);
     setText('sbAvatar',initials);
-    setText('headerName',currentUser.matrix||currentUser.name||sess.data.session.user.email);
+    setText('headerName',currentUser.name||currentUser.matrix||sess.data.session.user.email);
     setText('sbName',currentUser.name||'Student');
     setText('sbMatrix',currentUser.matrix||currentUser.faculty||'UTM');
   }
