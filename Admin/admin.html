@@ -31,22 +31,46 @@
 html,body{height:100%;font-family:'Roboto',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
 
 /* ══════════════════════════════════════════
-   GREEN TOP BAND — same as homepage
+   PAGE TOP BACKGROUND IMAGE
+   — campus photo at top of page only
+   ══════════════════════════════════════════ */
+body::before{
+  content:'';
+  position:fixed;
+  top:0;left:0;right:0;
+  height:320px;
+  z-index:0;
+  background:
+    url("https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=1600&auto=format&fit=crop&q=80") center top/cover no-repeat;
+}
+body::after{
+  content:'';
+  position:fixed;
+  top:0;left:0;right:0;
+  height:320px;
+  z-index:0;
+  background:
+    linear-gradient(to bottom,
+      rgba(10,28,10,0.35) 0%,
+      rgba(10,28,10,0.55) 40%,
+      rgba(10,28,10,0.88) 70%,
+      rgba(10,28,10,1) 100%
+    ),
+    linear-gradient(150deg,rgba(45,90,39,0.3) 0%,rgba(26,61,26,0.25) 35%,rgba(13,43,13,0.3) 65%,rgba(26,53,32,0.25) 100%);
+  pointer-events:none;
+}
+
+/* ══════════════════════════════════════════
+   TOP BAND — now semi-transparent so image
+   shows through from page background
    ══════════════════════════════════════════ */
 .top-band{
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.18) 60%, rgba(10,28,10,0.95) 100%),
-    url("https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=1600&auto=format&fit=crop&q=80") center top/cover no-repeat;
+  background:linear-gradient(to bottom, rgba(10,28,10,0.4) 0%, rgba(10,28,10,0.65) 100%);
   position:relative;
   flex-shrink:0;
   z-index:300;
-}
-.top-band::before{
-  content:'';position:absolute;inset:0;z-index:0;
-  background:
-    linear-gradient(to bottom,rgba(0,0,0,.24) 0%,rgba(0,0,0,.14) 60%,rgba(10,28,10,1) 100%),
-    linear-gradient(150deg,#2d5a27 0%,#1a3d1a 35%,#0d2b0d 65%,#1a3520 100%);
-  opacity:.55;
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
 }
 .top-band > *{position:relative;z-index:1;}
 
@@ -58,6 +82,8 @@ html,body{height:100%;font-family:'Roboto',sans-serif;background:var(--bg);color
   flex-direction:column;
   height:100vh;
   overflow:hidden;
+  position:relative;
+  z-index:1;
 }
 
 /* ── NAVBAR ── */
@@ -186,6 +212,23 @@ body:not(.sb-open) .nav-toggle .bar3{transform:rotate(0) translate(0,0)}
   overflow-y:auto;
   min-width:0;
   padding:14px 12px 36px;
+  position:relative;
+}
+
+/* ══════════════════════════════════════════
+   CONTENT FADE — smooth transition from
+   the image top into the solid bg area
+   ══════════════════════════════════════════ */
+.content-area::before{
+  content:'';
+  position:sticky;
+  top:0;
+  left:0;right:0;
+  height:30px;
+  display:block;
+  background:linear-gradient(to bottom, rgba(10,28,10,0.15), transparent);
+  z-index:5;
+  pointer-events:none;
 }
 
 /* ── STATUS BAR ── */
@@ -394,7 +437,7 @@ tr:hover td{background:#fafbfc}
 
 <div class="layout-shell">
 
-  <!-- GREEN TOP BAND — same style as homepage -->
+  <!-- TOP BAND — semi-transparent, no image -->
   <div class="top-band">
     <nav class="navbar">
       <div class="nav-left">
@@ -714,9 +757,6 @@ let currentEventModal = null;
 let waiverEventId = null, waiverRuleId = null;
 const WAIVERS = {};
 
-/* ══════════════════════════════════════════
-   SIDEBAR TOGGLE
-   ══════════════════════════════════════════ */
 function isMobile() { return window.innerWidth <= 768; }
 function toggleSidebar() {
   if (isMobile()) {
@@ -764,9 +804,6 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && isMobile() && document.body.classList.contains('sb-open')) closeSidebar();
 });
 
-/* ══════════════════════════════════════════
-   COMPLIANCE ENGINE
-   ══════════════════════════════════════════ */
 function workingDaysBetween(d1Str, d2Str) {
   try { let d1 = new Date(d1Str), d2 = new Date(d2Str); if (isNaN(d1) || isNaN(d2)) return null; let count = 0, cur = new Date(d1); while (cur < d2) { const day = cur.getDay(); if (day !== 0 && day !== 6) count++; cur.setDate(cur.getDate() + 1); } return count; } catch(e) { return null; }
 }
@@ -854,9 +891,6 @@ function saveWaiver() {
   renderComplianceTable(); renderDashboard();
 }
 
-/* ══════════════════════════════════════════
-   DATA LOADING
-   ══════════════════════════════════════════ */
 async function initAdmin() {
   const isAdmin = sessionStorage.getItem('utm_admin');
   if (!isAdmin) { window.location.href = '/Login/login.html'; return; }
@@ -870,9 +904,6 @@ async function loadEvents() { const { data, error } = await sb.from('events').se
 async function loadUsers() { const { data, error } = await sb.from('users').select('*').order('created_at', { ascending: false }); if (!error && data) USERS = data; }
 async function loadFeedback() { try { const { data, error } = await sb.from('feedback').select('*').order('created_at', { ascending: false }); if (!error && data) FEEDBACK = data; } catch(e) { FEEDBACK = []; } }
 
-/* ══════════════════════════════════════════
-   ACTIONS
-   ══════════════════════════════════════════ */
 async function approveEvent(id) {
   const ev = EVENTS.find(e => e.id === id);
   const { hasBlocker } = runComplianceChecks(ev);
@@ -891,9 +922,6 @@ async function confirmReject(id) {
   showToast('Activity has been rejected.', 'error');
 }
 
-/* ══════════════════════════════════════════
-   RENDER FUNCTIONS
-   ══════════════════════════════════════════ */
 function renderDashboard() {
   const total = EVENTS.length, pending = EVENTS.filter(e => e.status === 'pending').length, approved = EVENTS.filter(e => e.status === 'approved').length;
   const totalReg = EVENTS.reduce((a, e) => a + ((e.slots||0)-(e.slots_left||0)), 0);
@@ -1026,9 +1054,6 @@ function renderUsersTable() {
 }
 function filterUsers(role, btn) { usersFilter = role; document.querySelectorAll('#sec-users .filter-tab').forEach(b => b.classList.remove('active')); if (btn) btn.classList.add('active'); renderUsersTable(); }
 
-/* ══════════════════════════════════════════
-   MODAL
-   ══════════════════════════════════════════ */
 function openEventModal(id) {
   const ev = EVENTS.find(e => e.id === id); if (!ev) return;
   currentEventModal = ev;
@@ -1061,9 +1086,6 @@ function showRejectBox(id) {
 function closeEventModal() { document.getElementById('eventOverlay').classList.remove('open'); document.body.style.overflow = ''; currentEventModal = null; }
 function handleOverlay(e) { if (e.target === document.getElementById('eventOverlay')) closeEventModal(); }
 
-/* ══════════════════════════════════════════
-   HELPERS
-   ══════════════════════════════════════════ */
 function refreshAllTables() { renderDashboard(); renderPendingTable(); renderAllEventsTable(); renderComplianceTable(); updatePendingBadge(); }
 function updatePendingBadge() { const count = EVENTS.filter(e => e.status === 'pending').length; const badge = document.getElementById('pendingBadge'); badge.textContent = count; badge.style.display = count > 0 ? 'inline-flex' : 'none'; }
 function showToast(msg, type='info') { const t = document.getElementById('toast'); t.textContent = msg; t.className = `toast ${type} show`; setTimeout(() => t.classList.remove('show'), 3500); }
