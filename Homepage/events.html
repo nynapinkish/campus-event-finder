@@ -579,6 +579,9 @@ var catEmojis={academic:'📚',sports:'⚽',cultural:'🎭',career:'💼',volunt
 var curCat='all',curQ='',currentUser=null,userPrefs=null;
 var upcomingEvents=[],archivedEvents=[],viewMode='upcoming';
 
+// ── Helper: safe set textContent (fixes null element errors) ──
+function setText(id,val){var el=document.getElementById(id);if(el)el.textContent=val;}
+
 function isMobile(){return window.innerWidth<=768}
 function toggleSidebar(){
   if(isMobile()){
@@ -655,11 +658,11 @@ async function init(){
   currentUser=userRes.data;
   if(currentUser){
     var initials=(currentUser.name||'').split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase()||'?';
-    document.getElementById('headerAvatar').textContent=initials;
-    document.getElementById('sbAvatar').textContent=initials;
-    document.getElementById('headerName').textContent=currentUser.matrix||currentUser.name||sess.data.session.user.email;
-    document.getElementById('sbName').textContent=currentUser.name||'Student';
-    document.getElementById('sbMatrix').textContent=currentUser.matrix||currentUser.faculty||'UTM';
+    setText('headerAvatar',initials);
+    setText('sbAvatar',initials);
+    setText('headerName',currentUser.matrix||currentUser.name||sess.data.session.user.email);
+    setText('sbName',currentUser.name||'Student');
+    setText('sbMatrix',currentUser.matrix||currentUser.faculty||'UTM');
   }
   var myEventIds=new Set();
   if(currentUser&&currentUser.matrix){
@@ -675,9 +678,10 @@ async function init(){
   upcomingEvents=evRes.data.map(function(e){return Object.assign({},e,{registered:myEventIds.has(e.id)})});
   var archRes=await sb.from('events').select('*',{count:'exact',head:true}).eq('status','approved').lt('date',today);
   var archCount=archRes.count||0;
-  document.getElementById('archCountBadge').textContent=archCount;
-  document.getElementById('archCountSb').textContent=archCount;
-  document.getElementById('statArchived').textContent=archCount;
+  // Use safe setText helper — these elements may not exist in all layouts
+  setText('archCountBadge',archCount);
+  setText('archCountSb',archCount);
+  setText('statArchived',archCount);
   window.EVENTS=upcomingEvents;
   boot();
   if(!userPrefs)setTimeout(function(){openPrefModal()},600);
@@ -687,9 +691,10 @@ async function init(){
 
 function boot(){
   var evs=upcomingEvents,total=evs.length,open=evs.filter(function(e){return e.slots_left>0}).length,slots=evs.reduce(function(a,e){return a+(e.slots_left||0)},0);
-  document.getElementById('statTotal').textContent=total;
-  document.getElementById('statOpen').textContent=open;
-  document.getElementById('statSlots').textContent=slots>=1000?(slots/1000).toFixed(1)+'k':slots;
+  // Use safe setText helper — stat elements may not exist in all layouts
+  setText('statTotal',total);
+  setText('statOpen',open);
+  setText('statSlots',slots>=1000?(slots/1000).toFixed(1)+'k':slots);
   ['all','academic','sports','cultural','career','volunteer'].forEach(function(c){
     var el=document.getElementById('fc-'+c);
     if(el)el.textContent=c==='all'?total:evs.filter(function(e){return nc(e.category)===c}).length;
@@ -704,10 +709,11 @@ function switchMode(mode,btn){
   else document.querySelector('.ct-btn').classList.add('active');
   document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
   document.querySelector('.sb-item').classList.add('active');
-  document.getElementById('evTitle').textContent='Upcoming Events';
-  document.getElementById('evBadge').className='ev-toolbar-badge live';
-  document.getElementById('evBadge').innerHTML='● Live';
-  document.getElementById('aiRecOuter').style.display='';
+  setText('evTitle','Upcoming Events');
+  var badge=document.getElementById('evBadge');
+  if(badge){badge.className='ev-toolbar-badge live';badge.innerHTML='● Live';}
+  var aiRec=document.getElementById('aiRecOuter');
+  if(aiRec)aiRec.style.display='';
   render();
 }
 function switchToArchived(){
@@ -715,10 +721,11 @@ function switchToArchived(){
   document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});
   document.getElementById('archTabBtn').classList.add('active');
   document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
-  document.getElementById('evTitle').textContent='Past / Archived Events';
-  document.getElementById('evBadge').className='ev-toolbar-badge';
-  document.getElementById('evBadge').innerHTML='📜 Archived';
-  document.getElementById('aiRecOuter').style.display='none';
+  setText('evTitle','Past / Archived Events');
+  var badge=document.getElementById('evBadge');
+  if(badge){badge.className='ev-toolbar-badge';badge.innerHTML='📜 Archived';}
+  var aiRec=document.getElementById('aiRecOuter');
+  if(aiRec)aiRec.style.display='none';
   if(!archivedEvents.length){
     document.getElementById('evGrid').innerHTML='<div class="state-box"><div class="spinner"></div><p>Loading archived events...</p></div>';
     sb.from('events').select('*').eq('status','approved').lt('date',todayStr()).order('date',{ascending:false}).then(function(res){
@@ -739,31 +746,45 @@ async function loadAIRecommendations(user,myEventIds){
   if(prefCats.length>0){
     var filtered=evs.filter(function(e){return prefCats.indexOf(nc(e.category))!==-1&&e.slots_left>0&&!myEventIds.has(e.id);});
     if(prefKeys.length>0){var kwLower=prefKeys.map(function(k){return k.toLowerCase()});filtered.sort(function(a,b){var aText=((a.title||'')+' '+(a.description||'')).toLowerCase();var bText=((b.title||'')+' '+(b.description||'')).toLowerCase();var aMatch=kwLower.some(function(k){return aText.indexOf(k)!==-1})?1:0;var bMatch=kwLower.some(function(k){return bText.indexOf(k)!==-1})?1:0;return bMatch-aMatch;});}
-    if(filtered.length===0){document.getElementById('aiRecOuter').style.display='block';document.getElementById('aiRecSubtitle').textContent='No matching events right now — check back soon!';document.getElementById('aiRecScroll').innerHTML='<div style="flex:0 0 100%;text-align:center;padding:24px;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🎯</div><div style="font-size:13px">No '+prefCats.map(cap).join(', ')+' events available yet.</div></div>';return;}
+    if(filtered.length===0){
+      var aiRec=document.getElementById('aiRecOuter');if(aiRec)aiRec.style.display='block';
+      setText('aiRecSubtitle','No matching events right now — check back soon!');
+      var scroll=document.getElementById('aiRecScroll');
+      if(scroll)scroll.innerHTML='<div style="flex:0 0 100%;text-align:center;padding:24px;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🎯</div><div style="font-size:13px">No '+prefCats.map(cap).join(', ')+' events available yet.</div></div>';
+      return;
+    }
     var catLabels=prefCats.map(cap).join(', ');
-    document.getElementById('aiRecOuter').style.display='block';
-    document.getElementById('aiRecSubtitle').textContent='Showing only '+catLabels+' events you selected';
+    var aiRec=document.getElementById('aiRecOuter');if(aiRec)aiRec.style.display='block';
+    setText('aiRecSubtitle','Showing only '+catLabels+' events you selected');
     var eventSummaries=filtered.slice(0,10).map(function(e){return{id:e.id,title:e.title,category:nc(e.category),faculty:e.faculty||'Open to all',date:e.date,slots:e.slots_left,description:(e.description||'').substring(0,100)};});
     var prompt='You are a university event recommender for UTM.\n\nStudent interests: '+catLabels+'\nKeywords: '+(prefKeys.length?prefKeys.join(', '):'None')+'\nFaculty: '+(user?user.faculty:'Unknown')+'\nFrequency: '+prefFreq+'\nPast categories: '+(userPastCats.length?userPastCats.join(', '):'None')+'\n\nAvailable events (ALL are from the student\'s preferred categories):\n'+JSON.stringify(eventSummaries,null,2)+'\n\nPick up to 4 events. Rank by relevance to the student.\nFor each, write a reason (max 12 words) explaining why it fits.\nNEVER pick events outside the listed categories.\n\nRespond ONLY with JSON array. No markdown.\n[{ "id": <number>, "reason": "Short reason" }, ...]';
-    try{var res=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt})});if(!res.ok)throw new Error('AI error '+res.status);var data=await res.json();var raw=(data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'[]';var clean=raw.replace(/```json|```/g,'').trim();var picks=JSON.parse(clean);var safePicks=picks.filter(function(pick){var ev=evs.find(function(e){return e.id===pick.id});if(!ev)return false;if(prefCats.indexOf(nc(ev.category))===-1){console.warn('AI returned wrong category "'+ev.category+'" — blocked.');return false;}return true;});renderRecommendations(safePicks,evs,prefCats);}catch(err){console.warn('AI recommendation failed:',err);document.getElementById('aiRecOuter').style.display='none';}
+    try{var res=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt})});if(!res.ok)throw new Error('AI error '+res.status);var data=await res.json();var raw=(data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'[]';var clean=raw.replace(/```json|```/g,'').trim();var picks=JSON.parse(clean);var safePicks=picks.filter(function(pick){var ev=evs.find(function(e){return e.id===pick.id});if(!ev)return false;if(prefCats.indexOf(nc(ev.category))===-1){console.warn('AI returned wrong category "'+ev.category+'" — blocked.');return false;}return true;});renderRecommendations(safePicks,evs,prefCats);}catch(err){console.warn('AI recommendation failed:',err);var aiRec=document.getElementById('aiRecOuter');if(aiRec)aiRec.style.display='none';}
   }else{
     var eventSummaries=evs.filter(function(e){return e.slots_left>0&&!myEventIds.has(e.id)}).slice(0,30).map(function(e){return{id:e.id,title:e.title,category:nc(e.category),faculty:e.faculty||'Open to all',date:e.date,slots:e.slots_left};});
-    if(!eventSummaries.length){document.getElementById('aiRecOuter').style.display='block';document.getElementById('aiRecSubtitle').textContent='No open events at the moment';document.getElementById('aiRecScroll').innerHTML='<div style="flex:0 0 100%;text-align:center;padding:24px;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">📭</div><div style="font-size:13px">No events with open slots right now.</div></div>';return;}
-    document.getElementById('aiRecOuter').style.display='block';document.getElementById('aiRecSubtitle').textContent='Explore and discover new events';
+    if(!eventSummaries.length){
+      var aiRec=document.getElementById('aiRecOuter');if(aiRec)aiRec.style.display='block';
+      setText('aiRecSubtitle','No open events at the moment');
+      var scroll=document.getElementById('aiRecScroll');
+      if(scroll)scroll.innerHTML='<div style="flex:0 0 100%;text-align:center;padding:24px;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">📭</div><div style="font-size:13px">No events with open slots right now.</div></div>';
+      return;
+    }
+    var aiRec=document.getElementById('aiRecOuter');if(aiRec)aiRec.style.display='block';
+    setText('aiRecSubtitle','Explore and discover new events');
     var prompt='You are a university event recommender for UTM.\n\nStudent has NO preferred categories set.\nFaculty: '+(user?user.faculty:'Unknown')+'\n\nPick 4 events from DIFFERENT categories for variety.\nDo not pick more than 1 from the same category.\n\nAvailable events:\n'+JSON.stringify(eventSummaries,null,2)+'\n\nRespond ONLY with JSON array. No markdown.\n[{ "id": <number>, "reason": "Short reason" }, ...]';
-    try{var res=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt})});if(!res.ok)throw new Error('AI error '+res.status);var data=await res.json();var raw=(data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'[]';var clean=raw.replace(/```json|```/g,'').trim();var picks=JSON.parse(clean);renderRecommendations(picks,evs,[]);}catch(err){console.warn('AI recommendation failed:',err);document.getElementById('aiRecOuter').style.display='none';}
+    try{var res=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt})});if(!res.ok)throw new Error('AI error '+res.status);var data=await res.json();var raw=(data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'[]';var clean=raw.replace(/```json|```/g,'').trim();var picks=JSON.parse(clean);renderRecommendations(picks,evs,[]);}catch(err){console.warn('AI recommendation failed:',err);var aiRec=document.getElementById('aiRecOuter');if(aiRec)aiRec.style.display='none';}
   }
 }
 
 function renderRecommendations(picks,evs,prefCats){
-  if(!picks||!picks.length){document.getElementById('aiRecOuter').style.display='block';document.getElementById('aiRecScroll').innerHTML='<div style="flex:0 0 100%;text-align:center;padding:24px;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🤔</div><div style="font-size:13px">Couldn\'t generate recommendations. Try again later.</div></div>';return;}
-  document.getElementById('aiRecScroll').innerHTML=picks.map(function(pick,i){var ev=evs.find(function(e){return e.id===pick.id});if(!ev)return '';var cat=nc(ev.category);return '<div class="rec-card cat-'+cat+'" onclick="openModal('+ev.id+')" style="animation:fadeUp .3s ease '+(i*.08)+'s both"><div class="rec-card-body"><div class="rec-card-top"><span class="ev-badge '+(badgeClass[cat]||'badge-academic')+'">'+cap(cat)+'</span><div class="rec-matched">✓ Match</div><span style="font-size:22px;line-height:1">'+(ev.emoji||'📌')+'</span></div><div class="rec-ai-reason"><span style="flex-shrink:0;margin-top:1px;font-size:11px">✦</span><span>'+pick.reason+'</span></div><div class="rec-title">'+(ev.title||'Untitled Event')+'</div><div class="rec-meta-row"><span style="opacity:.6;font-size:11px;width:13px;text-align:center">📅</span>'+(ev.date||'–')+'</div><div class="rec-meta-row"><span style="opacity:.6;font-size:11px;width:13px;text-align:center">📍</span>'+(ev.location||'–')+'</div></div><div class="rec-foot"><span class="rec-slots"><b>'+ev.slots_left+'</b> slots left</span><button class="rec-btn" onclick="event.stopPropagation();goRegister('+ev.id+')">Register</button></div></div>';}).join('');
+  var scroll=document.getElementById('aiRecScroll');if(!scroll)return;
+  if(!picks||!picks.length){var aiRec=document.getElementById('aiRecOuter');if(aiRec)aiRec.style.display='block';scroll.innerHTML='<div style="flex:0 0 100%;text-align:center;padding:24px;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🤔</div><div style="font-size:13px">Couldn\'t generate recommendations. Try again later.</div></div>';return;}
+  scroll.innerHTML=picks.map(function(pick,i){var ev=evs.find(function(e){return e.id===pick.id});if(!ev)return '';var cat=nc(ev.category);return '<div class="rec-card cat-'+cat+'" onclick="openModal('+ev.id+')" style="animation:fadeUp .3s ease '+(i*.08)+'s both"><div class="rec-card-body"><div class="rec-card-top"><span class="ev-badge '+(badgeClass[cat]||'badge-academic')+'">'+cap(cat)+'</span><div class="rec-matched">✓ Match</div><span style="font-size:22px;line-height:1">'+(ev.emoji||'📌')+'</span></div><div class="rec-ai-reason"><span style="flex-shrink:0;margin-top:1px;font-size:11px">✦</span><span>'+pick.reason+'</span></div><div class="rec-title">'+(ev.title||'Untitled Event')+'</div><div class="rec-meta-row"><span style="opacity:.6;font-size:11px;width:13px;text-align:center">📅</span>'+(ev.date||'–')+'</div><div class="rec-meta-row"><span style="opacity:.6;font-size:11px;width:13px;text-align:center">📍</span>'+(ev.location||'–')+'</div></div><div class="rec-foot"><span class="rec-slots"><b>'+ev.slots_left+'</b> slots left</span><button class="rec-btn" onclick="event.stopPropagation();goRegister('+ev.id+')">Register</button></div></div>';}).join('');
 }
 
 function render(){
   var evs=window.EVENTS||[],isArch=(viewMode==='archived');
   var list=evs.filter(function(e){var mc=curCat==='all'||nc(e.category)===curCat;var ms=!curQ||(e.title||'').toLowerCase().indexOf(curQ)!==-1||(e.location||'').toLowerCase().indexOf(curQ)!==-1||(e.faculty||'').toLowerCase().indexOf(curQ)!==-1;return mc&&ms;});
-  document.getElementById('evMeta').textContent=list.length+' '+(isArch?'archived':'upcoming')+' event'+(list.length!==1?'s':'')+' found'+(isArch?'':' · Live from Supabase');
+  setText('evMeta',list.length+' '+(isArch?'archived':'upcoming')+' event'+(list.length!==1?'s':'')+' found'+(isArch?'':' · Live from Supabase'));
   if(!list.length){document.getElementById('evGrid').innerHTML='<div class="state-box"><h3>'+(isArch?'No archived events':'No events found')+'</h3><p>'+(isArch?'Past events will appear here.':'Try a different filter.')+'</p></div>';return;}
   document.getElementById('evGrid').innerHTML=list.map(function(ev,i){
     var cat=nc(ev.category);
@@ -802,28 +823,30 @@ function openModal(id){
   if(!ev)return;
   var cat=nc(ev.category);
   var isReg=!!ev.registered,expired=isExpired(ev);
-  document.getElementById('mBadge').textContent=cap(cat);
-  document.getElementById('mBadge').className='m-cat-badge ev-badge '+(badgeClass[cat]||'badge-academic');
-  document.getElementById('mTitle').textContent=ev.title||'–';
-  document.getElementById('mDate').textContent=ev.date||'–';
-  document.getElementById('mTime').textContent=ev.time||'–';
-  document.getElementById('mLoc').textContent=ev.location||'–';
-  document.getElementById('mFac').textContent=ev.faculty||'–';
-  document.getElementById('mSlots').textContent=expired?'Event has passed':(ev.slots_left>0?ev.slots_left+' slots remaining':'Registration Full');
-  document.getElementById('mOrg').textContent=ev.organizer_name||'–';
-  document.getElementById('mDesc').textContent=ev.description||'–';
-  document.getElementById('mRegisteredNote').classList.toggle('show',isReg);
-  var fb=document.getElementById('mFeedback');fb.style.display=isReg?'block':'none';fb.onclick=function(){closeModal();window.location.href='../Feedback/feedback_form.html?id='+id};
-  var btn=document.getElementById('mReg');btn.style.background='';
-  if(expired){btn.textContent='Event Has Passed';btn.className='m-btn-reg';btn.disabled=true;btn.onclick=null;btn.style.background='#999'}
-  else if(isReg){btn.textContent='🎟 View My Ticket';btn.className='m-btn-reg registered';btn.disabled=false;btn.onclick=function(){closeModal();viewTicket(ev.id)}}
-  else if(ev.slots_left<=0){btn.textContent='Registration Closed';btn.className='m-btn-reg';btn.disabled=true;btn.onclick=null}
-  else{btn.textContent='Register Now';btn.className='m-btn-reg';btn.disabled=false;btn.onclick=function(){goRegister(ev.id)}}
-  document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden';
+  var badge=document.getElementById('mBadge');
+  if(badge){badge.textContent=cap(cat);badge.className='m-cat-badge ev-badge '+(badgeClass[cat]||'badge-academic');}
+  setText('mTitle',ev.title||'–');
+  setText('mDate',ev.date||'–');
+  setText('mTime',ev.time||'–');
+  setText('mLoc',ev.location||'–');
+  setText('mFac',ev.faculty||'–');
+  setText('mSlots',expired?'Event has passed':(ev.slots_left>0?ev.slots_left+' slots remaining':'Registration Full'));
+  setText('mOrg',ev.organizer_name||'–');
+  setText('mDesc',ev.description||'–');
+  var regNote=document.getElementById('mRegisteredNote');if(regNote)regNote.classList.toggle('show',isReg);
+  var fb=document.getElementById('mFeedback');if(fb){fb.style.display=isReg?'block':'none';fb.onclick=function(){closeModal();window.location.href='../Feedback/feedback_form.html?id='+id};}
+  var btn=document.getElementById('mReg');if(btn){btn.style.background='';
+    if(expired){btn.textContent='Event Has Passed';btn.className='m-btn-reg';btn.disabled=true;btn.onclick=null;btn.style.background='#999'}
+    else if(isReg){btn.textContent='🎟 View My Ticket';btn.className='m-btn-reg registered';btn.disabled=false;btn.onclick=function(){closeModal();viewTicket(ev.id)}}
+    else if(ev.slots_left<=0){btn.textContent='Registration Closed';btn.className='m-btn-reg';btn.disabled=true;btn.onclick=null}
+    else{btn.textContent='Register Now';btn.className='m-btn-reg';btn.disabled=false;btn.onclick=function(){goRegister(ev.id)}}
+  }
+  var overlay=document.getElementById('overlay');if(overlay)overlay.classList.add('open');
+  document.body.style.overflow='hidden';
 }
 function goRegister(id){var ev=(window.EVENTS||[]).find(function(e){return e.id===id});if(!ev)return;window.location.href='register.html?'+new URLSearchParams({id:ev.id,title:ev.title,date:ev.date,location:ev.location,time:ev.time})}
 function viewTicket(id){goRegister(id)}
-function closeModal(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow=''}
+function closeModal(){var overlay=document.getElementById('overlay');if(overlay)overlay.classList.remove('open');document.body.style.overflow=''}
 function handleOv(e){if(e.target===document.getElementById('overlay'))closeModal()}
 
 init();
