@@ -109,7 +109,33 @@ body:not(.sb-open) .nav-toggle .bar3{transform:rotate(0) translate(0,0)}
 .sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--white);border-right:1px solid #d0d0d0;display:flex;flex-direction:column;overflow-y:auto;height:100%;transition:transform var(--sidebar-transition), width var(--sidebar-transition), opacity var(--sidebar-transition);z-index:200;box-shadow:2px 0 12px rgba(0,0,0,0.08);}
 @media(min-width:769px){body.sb-collapsed .sidebar{transform:translateX(calc(-1 * var(--sidebar-w)));width:0;border-right:none;opacity:0;overflow:hidden;}}
 @media(max-width:768px){.sidebar{position:fixed;left:0;top:var(--navbar-h);bottom:0;transform:translateX(calc(-1 * var(--sidebar-w)));box-shadow:none;transition:transform var(--sidebar-transition), box-shadow var(--sidebar-transition);}body.sb-open .sidebar{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.2);}body.sb-collapsed .sidebar{transform:translateX(calc(-1 * var(--sidebar-w)));}}
-.sb-head{padding:13px 15px 10px;border-bottom:1px solid #e0e0e0;flex-shrink:0}
+.sb-head{
+  background:var(--dark);
+  padding:22px 15px 18px;
+  flex-shrink:0;
+  text-align:center;
+  border-bottom:none;
+}
+.sb-avatar-wrap{
+  width:56px;height:56px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--orange));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:18px;font-weight:700;
+  margin:0 auto 10px;
+  border:2.5px solid rgba(255,255,255,.2);
+  box-shadow:0 4px 12px rgba(0,0,0,.25);
+}
+.sb-profile-name{
+  font-size:15px;font-weight:600;color:#fff;
+  margin-bottom:3px;letter-spacing:-0.2px;
+}
+.sb-profile-role{
+  font-size:9px;font-weight:700;
+  color:var(--orange);
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
 .sb-title{font-size:13.5px;font-weight:700;color:#000}
 .sb-sub{font-size:11px;color:#555;margin-top:1px}
 .sb-nav{flex:1;padding-bottom:4px}
@@ -361,8 +387,13 @@ tr:hover td{background:#fafbfc}
 
   <div class="body-row">
     <aside class="sidebar" id="sidebar">
-      <div class="sb-head"><div class="sb-title">Navigation</div><div class="sb-sub">Admin Controls</div></div>
-      <div class="sb-nav">
+<div class="sb-head">
+  <div class="sb-avatar-wrap">AD</div>
+  <div class="sb-profile-name">Administrator</div>
+  <div class="sb-profile-role">Admin Dashboard</div>
+</div>
+
+<div class="sb-nav">
         <div class="sb-section-lbl">Main</div>
         <button class="sb-item active" data-section="dashboard" onclick="showSection('dashboard',this)">
           <span class="sb-item-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
