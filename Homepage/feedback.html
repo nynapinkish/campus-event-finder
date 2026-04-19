@@ -10,80 +10,121 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
 :root{
-  --red:#8B0000;
-  --red2:#6d0000;
-  --red-light:#fdf5f5;
-  --white:#fff;
-  --bg:#f5f5f5;
-  --border:#e0e0e0;
-  --text:#222;
-  --muted:#666;
-  --light:#999;
-  --green:#1a5c38;
-  --green-light:#e8f5ed;
-  --gold:#c8982a;
-  --gold-light:#fef9ec;
+  --red:#8B0000;--red2:#6d0000;--red-light:#fdf5f5;
+  --white:#fff;--bg:#f5f5f5;--border:#e0e0e0;
+  --text:#222;--muted:#666;--light:#999;
+  --green:#1a5c38;--green-light:#e8f5ed;
+  --orange:#F5A623;--gold:#c8982a;--gold-light:#fef9ec;
+  --navbar-h:56px;
+  --sidebar-w:235px;
+  --sidebar-transition:0.3s cubic-bezier(0.4,0,0.2,1);
 }
 
-body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;display:flex;flex-direction:column}
+html,body{height:100%;font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
 
-.topbar{background:var(--red);height:38px;display:flex;align-items:center;justify-content:flex-end;padding:0 24px;gap:20px}
-.topbar a{color:rgba(255,255,255,.8);font-size:12.5px;text-decoration:none}
-.topbar a:hover{color:#fff}
-.topbar-sep{color:rgba(255,255,255,.3);font-size:11px}
+/* ── TOP BACKGROUND ── */
+body::before{content:'';position:fixed;top:0;left:0;right:0;height:260px;z-index:0;background:url("https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=1600&auto=format&fit=crop&q=80") center top/cover no-repeat;}
+body::after{content:'';position:fixed;top:0;left:0;right:0;height:260px;z-index:0;background:linear-gradient(to bottom,rgba(10,28,10,0.35) 0%,rgba(10,28,10,0.55) 40%,rgba(10,28,10,0.88) 70%,rgba(10,28,10,1) 100%);pointer-events:none;}
 
-.header{background:#fff;border-bottom:4px solid var(--red);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:80px}
-.header-logo{display:flex;align-items:center;gap:16px;text-decoration:none}
-.logo-img{width:60px;height:60px;border-radius:50%;background:var(--red);border:2px solid #c8982a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px}
-.logo-img-utm{color:#fff;font-size:16px;font-weight:700;line-height:1}
-.logo-img-star{color:#c8982a;font-size:8px;letter-spacing:2px}
-.logo-utm{font-size:28px;font-weight:700;color:var(--red);line-height:1}
-.logo-full{font-size:11px;color:var(--muted);letter-spacing:.3px;margin-top:1px}
-.header-nav{display:flex;gap:0}
-.hn-item{padding:0 16px;height:80px;display:flex;align-items:center;font-size:13.5px;font-weight:500;color:var(--text);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-4px;transition:color .15s,border-color .15s}
-.hn-item:hover{color:var(--red)}
-.hn-item.active{color:var(--red);border-bottom-color:var(--red)}
-.hn-item .arr{font-size:9px;margin-left:3px;opacity:.5}
-.header-right{display:flex;align-items:center;gap:10px}
-.user-pill{display:flex;align-items:center;gap:8px;background:#f5f5f5;border:1px solid var(--border);border-radius:20px;padding:5px 14px 5px 5px;font-size:13px;color:var(--muted);cursor:pointer}
-.user-av{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+/* ── LAYOUT SHELL ── */
+.layout-shell{display:flex;flex-direction:column;height:100vh;overflow:hidden;position:relative;z-index:1;}
 
-.section-nav{background:#1f1f1f;padding:0 24px;display:flex;gap:0}
-.sn-item{color:rgba(255,255,255,.6);font-size:13px;padding:10px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+/* ── TOP BAND ── */
+.top-band{background:linear-gradient(to bottom,rgba(10,28,10,0.4) 0%,rgba(10,28,10,0.65) 100%);position:relative;flex-shrink:0;z-index:300;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}
+.top-band>*{position:relative;z-index:1;}
+
+/* ── NAVBAR ── */
+.navbar{height:var(--navbar-h);display:flex;align-items:center;justify-content:space-between;padding:0 20px;}
+.nav-left{display:flex;align-items:center;gap:12px}
+.nav-toggle{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:7px;cursor:pointer;transition:all .2s;flex-shrink:0;}
+.nav-toggle:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.25)}
+.nav-toggle svg{width:18px;height:18px;stroke:rgba(255,255,255,.75);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.nav-logo{display:flex;flex-direction:column}
+.logo-row{display:flex;align-items:baseline;line-height:1}
+.l-my{color:var(--orange);font-size:19px;font-weight:300;font-style:italic}
+.l-utm{color:#fff;font-size:19px;font-weight:700}
+.l-portal{color:var(--orange);font-size:19px;font-weight:400}
+.l-tag{color:rgba(200,152,42,.65);font-size:8px;letter-spacing:2.5px;display:block;margin-top:1px}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-icon-btn{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.78);font-size:12px;cursor:pointer;padding:5px 10px;border-radius:6px;font-family:'Open Sans',sans-serif;transition:all .15s;}
+.nav-icon-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+.user-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 12px 4px 4px;font-size:13px;color:rgba(255,255,255,.85);cursor:pointer}
+.user-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+
+/* ── SIDEBAR BACKDROP ── */
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:199;opacity:0;transition:opacity var(--sidebar-transition);}
+.sidebar-backdrop.visible{display:block;opacity:1}
+
+/* ── BODY ROW ── */
+.body-row{display:flex;flex:1;overflow:hidden;min-height:0;}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--white);border-right:1px solid #d0d0d0;display:flex;flex-direction:column;overflow-y:auto;height:100%;transition:transform var(--sidebar-transition),width var(--sidebar-transition),opacity var(--sidebar-transition);z-index:200;box-shadow:2px 0 12px rgba(0,0,0,.08);}
+@media(min-width:769px){body.sb-collapsed .sidebar{transform:translateX(calc(-1 * var(--sidebar-w)));width:0;border-right:none;opacity:0;overflow:hidden;}}
+@media(max-width:768px){.sidebar{position:fixed;left:0;top:var(--navbar-h);bottom:0;transform:translateX(calc(-1 * var(--sidebar-w)));box-shadow:none;transition:transform var(--sidebar-transition),box-shadow var(--sidebar-transition);}body.sb-open .sidebar{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.2);}body.sb-collapsed .sidebar{transform:translateX(calc(-1 * var(--sidebar-w)));}}
+.sb-head{background:linear-gradient(160deg,#1a4d2e 0%,#0d2b15 40%,#132e1a 100%);padding:22px 15px 18px;flex-shrink:0;text-align:center;position:relative;overflow:hidden;}
+.sb-head::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:rgba(200,152,42,.08);border-radius:50%;}
+.sb-head::after{content:'';position:absolute;bottom:-15px;left:-15px;width:60px;height:60px;background:rgba(200,152,42,.06);border-radius:50%;}
+.sb-avatar-wrap{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:700;margin:0 auto 10px;border:2.5px solid rgba(255,255,255,.2);box-shadow:0 4px 12px rgba(0,0,0,.25);}
+.sb-profile-name{font-size:14px;font-weight:600;color:#fff;margin-bottom:3px;}
+.sb-profile-role{font-size:9px;font-weight:700;color:var(--orange);letter-spacing:2px;text-transform:uppercase;}
+.sb-nav{flex:1;padding-bottom:4px}
+.sb-section-lbl{padding:10px 15px 3px;font-size:9px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:1.6px;}
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 15px;font-size:12.5px;font-weight:500;color:#222;cursor:pointer;transition:all .12s;border:none;background:none;width:100%;text-align:left;font-family:'Open Sans',sans-serif;border-left:3px solid transparent;}
+.sb-item:hover{color:var(--red);background:#fff5f5;}
+.sb-item.active{color:var(--red);background:#fff0f0;font-weight:700;border-left-color:var(--red);}
+.sb-item-icon{width:18px;height:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.sb-item-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.sb-item-label{flex:1}
+.sb-footer{flex-shrink:0;padding:8px 0 6px;border-top:1px solid #e0e0e0;}
+.sb-logout{display:flex;align-items:center;gap:9px;color:#222;font-size:12.5px;font-weight:500;cursor:pointer;transition:all .15s;border:none;background:none;font-family:'Open Sans',sans-serif;width:100%;text-align:left;padding:8px 15px;}
+.sb-logout svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.sb-logout:hover{color:#e53935}
+
+/* ── CONTENT AREA ── */
+.content-area{flex:1;overflow-y:auto;min-width:0;padding:0;}
+
+/* ── PAGE TITLE BAND ── */
+.page-title-band{background:transparent;padding:18px 24px 14px;position:relative;z-index:2;}
+.ptb-title{font-size:22px;font-weight:700;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.35);}
+.ptb-sub{font-size:13px;color:rgba(255,255,255,.7);margin-top:2px}
+.ptb-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.ptb-breadcrumb a{color:rgba(255,255,255,.6);text-decoration:none;cursor:pointer}
+.ptb-breadcrumb a:hover{color:#fff}
+.ptb-breadcrumb span{color:rgba(255,255,255,.35)}
+
+/* ── SECTION NAV ── */
+.section-nav{display:flex;gap:0;background:rgba(10,40,10,0.5);padding:0 24px;}
+.sn-item{color:rgba(255,255,255,.6);font-size:13px;padding:9px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
 .sn-item:hover{color:#fff}
-.sn-item.active{color:#fff;border-bottom-color:#c8982a}
+.sn-item.active{color:#fff;border-bottom-color:var(--gold)}
 
-.page-title-bar{background:#fff;border-bottom:1px solid var(--border);padding:18px 24px}
-.ptb-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--light);margin-bottom:5px}
-.ptb-breadcrumb a{color:var(--muted);text-decoration:none;cursor:pointer}
-.ptb-breadcrumb a:hover{color:var(--red)}
-.ptb-breadcrumb span{color:var(--light)}
-.ptb-title{font-size:20px;font-weight:700;color:var(--text)}
+/* ── MAIN CONTENT ── */
+.main-content{padding:20px 24px 60px;background:var(--bg);min-height:calc(100vh - var(--navbar-h) - 90px);}
 
-.wrap{max-width:1100px;margin:0 auto;padding:28px 24px 60px;display:grid;grid-template-columns:1fr 300px;gap:22px;align-items:start;flex:1}
+/* ── FEEDBACK LAYOUT ── */
+.fb-layout{display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start;}
+@media(max-width:900px){.fb-layout{grid-template-columns:1fr}}
 
-.form-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+/* ── FORM CARD ── */
+.form-card{background:#fff;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:14px;}
 .form-card.hide{display:none}
-.form-card-head{background:var(--red);padding:14px 20px;display:flex;align-items:center;gap:10px}
-.form-card-head-icon{font-size:16px}
+.form-card-head{background:var(--red);padding:14px 20px;display:flex;align-items:center;gap:10px;}
 .form-card-head-title{font-size:14px;font-weight:700;color:#fff}
 .form-card-head-sub{font-size:12px;color:rgba(255,255,255,.65);margin-left:auto}
 .form-body{padding:24px}
-
-.form-section{margin-bottom:26px}
+.form-section{margin-bottom:28px}
 .form-section:last-child{margin-bottom:0}
-.form-section-title{font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.8px;padding-bottom:9px;border-bottom:1px solid var(--border);margin-bottom:18px;display:flex;align-items:center;gap:7px}
-.form-section-title span{font-size:15px}
-
+.form-section-title{font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.8px;padding-bottom:9px;border-bottom:1px solid var(--border);margin-bottom:18px;display:flex;align-items:center;gap:7px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 .form-row.full{grid-template-columns:1fr}
 .form-group{display:flex;flex-direction:column;gap:5px}
-.form-label{font-size:12.5px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:4px}
+.form-label{font-size:12.5px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:4px;}
 .req{color:var(--red);font-size:13px}
-.form-input,.form-select,.form-textarea{width:100%;border:1px solid var(--border);border-radius:3px;padding:9px 12px;font-family:'Open Sans',sans-serif;font-size:13.5px;color:var(--text);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
-.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(139,0,0,.08)}
+.form-input,.form-select,.form-textarea{width:100%;border:1px solid var(--border);border-radius:4px;padding:9px 12px;font-family:'Open Sans',sans-serif;font-size:13.5px;color:var(--text);background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(139,0,0,.08);}
 .form-input::placeholder,.form-textarea::placeholder{color:#bbb}
-.form-input.readonly{background:#f9f9f9;color:var(--muted);cursor:not-allowed}
+.form-input.readonly{background:#f0f0f0;color:var(--muted);cursor:not-allowed;border-color:#ddd;}
 .form-textarea{resize:vertical;min-height:100px;line-height:1.6}
 .form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
 .form-hint{font-size:11.5px;color:var(--light);margin-top:2px}
@@ -91,9 +132,9 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .form-input.error,.form-select.error,.form-textarea.error{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.08)}
 .form-error.show{display:block}
 
+/* ── STAR RATING ── */
 .star-section{margin-bottom:16px}
 .star-label{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:8px;display:block}
-.star-label .req{color:var(--red)}
 .star-row{display:flex;align-items:center;gap:6px}
 .star-btn{background:none;border:none;font-size:30px;cursor:pointer;color:#ddd;transition:color .1s,transform .1s;padding:2px;line-height:1}
 .star-btn:hover,.star-btn.active{color:#c8982a;transform:scale(1.15)}
@@ -101,46 +142,56 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .star-error{font-size:11.5px;color:#c0392b;margin-top:6px;display:none}
 .star-error.show{display:block}
 
+/* ── ASPECT GRID ── */
 .aspect-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
 .aspect-lbl{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:6px;display:block}
 .aspect-stars{display:flex;gap:4px}
 .aspect-star{background:none;border:none;font-size:20px;cursor:pointer;color:#ddd;transition:color .1s,transform .1s;padding:1px;line-height:1}
 .aspect-star:hover,.aspect-star.active{color:#c8982a;transform:scale(1.1)}
 
+/* ── RECOMMEND ── */
 .recommend-row{display:flex;gap:10px;margin-top:4px;flex-wrap:wrap}
-.rec-btn{padding:8px 20px;font-size:13px;font-weight:600;border:1.5px solid var(--border);border-radius:3px;background:#fff;color:var(--muted);cursor:pointer;font-family:'Open Sans',sans-serif;transition:all .15s;}
+.rec-btn{padding:8px 20px;font-size:13px;font-weight:600;border:1.5px solid var(--border);border-radius:4px;background:#fff;color:var(--muted);cursor:pointer;font-family:'Open Sans',sans-serif;transition:all .15s;}
 .rec-btn:hover{border-color:var(--red);color:var(--red)}
 .rec-btn.active-yes{background:var(--green);border-color:var(--green);color:#fff}
 .rec-btn.active-no{background:#c0392b;border-color:#c0392b;color:#fff}
 .rec-btn.active-maybe{background:var(--gold);border-color:var(--gold);color:#fff}
 
+/* ── CHAR COUNTER ── */
 .textarea-wrap{position:relative}
 .char-counter{position:absolute;bottom:8px;right:10px;font-size:11px;color:var(--light)}
 .char-counter.warn{color:#e67e22}
 .char-counter.over{color:#c0392b}
 
+/* ── AI BADGE on section title ── */
+.ai-label{font-size:10px;font-weight:400;color:var(--gold);text-transform:none;letter-spacing:0;margin-left:4px}
+
+/* ── FORM ACTIONS ── */
 .form-actions{display:flex;align-items:center;gap:12px;padding-top:4px}
-.btn-submit{background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px 32px;border-radius:3px;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:8px}
+.btn-submit{background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px 32px;border-radius:4px;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:8px;}
 .btn-submit:hover{background:var(--red2)}
-.btn-cancel{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 20px;border-radius:3px;cursor:pointer;transition:all .15s}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
+.btn-cancel{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 20px;border-radius:4px;cursor:pointer;transition:all .15s}
 .btn-cancel:hover{border-color:var(--red);color:var(--red)}
 .form-actions-note{font-size:12px;color:var(--light);margin-left:auto}
 
-/* Loading state */
-.loading-box{background:#fff;border:1px solid var(--border);border-radius:4px;padding:60px 20px;text-align:center;color:var(--muted)}
-.spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px}
+/* ── LOADING ── */
+.loading-box{background:#fff;border:1px solid var(--border);border-radius:6px;padding:40px;text-align:center;color:var(--muted)}
+.spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px;}
 @keyframes spin{to{transform:rotate(360deg)}}
+.not-found-box{background:#fff;border:1px solid var(--border);border-radius:6px;padding:60px 20px;text-align:center;color:var(--muted);display:none}
+.not-found-box h3{font-size:16px;color:var(--text);margin-bottom:8px}
 
-.success-screen{display:none;background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;text-align:center}
+/* ── SUCCESS SCREEN ── */
+.success-screen{display:none;background:#fff;border:1px solid var(--border);border-radius:6px;overflow:hidden;text-align:center;}
 .success-screen.show{display:block}
-
 .success-head{background:var(--green);padding:24px 20px;display:flex;flex-direction:column;align-items:center;gap:8px}
-.success-icon{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:28px}
+.success-icon{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:28px;}
 .success-head-title{font-size:17px;font-weight:700;color:#fff}
 .success-head-sub{font-size:13px;color:rgba(255,255,255,.75)}
-
 .success-body{padding:28px 24px}
 
+/* ── SENTIMENT RESULT ── */
 .sentiment-result{border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:22px}
 .sr-head{background:#f5f5f5;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
 .sr-head-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
@@ -148,13 +199,11 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .badge-positive{background:#e8f5ed;color:var(--green)}
 .badge-neutral{background:#f5f5f5;color:var(--muted)}
 .badge-negative{background:#fef2f2;color:#c0392b}
-
 .sr-body{padding:14px 16px}
 .sr-sentiment-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .sr-emoji{font-size:32px}
 .sr-sentiment-label{font-size:15px;font-weight:700;color:var(--text)}
 .sr-sentiment-desc{font-size:12.5px;color:var(--muted);margin-top:2px}
-
 .sr-bars{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
 .sr-bar-row{display:flex;align-items:center;gap:10px}
 .sr-bar-lbl{font-size:12px;color:var(--muted);width:70px;text-align:right;flex-shrink:0}
@@ -164,7 +213,6 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .fill-neu{background:#aaa}
 .fill-neg{background:#c0392b}
 .sr-bar-pct{font-size:12px;font-weight:700;width:36px;flex-shrink:0}
-
 .sr-keywords{margin-top:10px}
 .sr-kw-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:8px}
 .sr-kw-tags{display:flex;flex-wrap:wrap;gap:6px}
@@ -172,23 +220,25 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .kw-tag.pos{background:var(--green-light);color:var(--green);border-color:rgba(26,92,56,.2)}
 .kw-tag.neg{background:#fef2f2;color:#c0392b;border-color:rgba(192,57,43,.2)}
 
+/* ── SUCCESS SUMMARY ── */
 .success-summary{text-align:left;margin-bottom:20px}
 .ss-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:10px}
 .ss-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
 .ss-row:last-child{border-bottom:none}
 .ss-label{color:var(--muted)}
 .ss-val{font-weight:600;color:var(--text)}
-
-.success-note{font-size:12.5px;color:var(--muted);line-height:1.6;background:#f9f9f9;border-radius:3px;padding:12px 14px;margin-bottom:22px;text-align:left}
+.success-note{font-size:12.5px;color:var(--muted);line-height:1.6;background:#f9f9f9;border-radius:4px;padding:12px 14px;margin-bottom:22px;text-align:left}
 .success-actions{display:flex;gap:10px}
-.btn-back{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:3px;cursor:pointer;transition:background .15s}
+.btn-back{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:4px;cursor:pointer;transition:background .15s}
 .btn-back:hover{background:var(--red2)}
-.btn-another{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 16px;border-radius:3px;cursor:pointer;transition:all .15s}
+.btn-another{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 16px;border-radius:4px;cursor:pointer;transition:all .15s}
 .btn-another:hover{border-color:var(--red);color:var(--red)}
 
-.right-panel{display:flex;flex-direction:column;gap:14px}
+/* ── RIGHT PANEL ── */
+.right-panel{display:flex;flex-direction:column;gap:14px;position:sticky;top:16px;align-self:start}
 
-.event-summary{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;border-top:3px solid var(--red)}
+/* ── EVENT SUMMARY ── */
+.event-summary{background:#fff;border:1px solid var(--border);border-radius:6px;overflow:hidden;border-top:3px solid var(--red);}
 .es-head{padding:14px 16px 12px;border-bottom:1px solid var(--border)}
 .es-head-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--light);margin-bottom:6px}
 .es-title{font-size:15px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:8px}
@@ -204,7 +254,8 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .es-ic{width:15px;text-align:center;flex-shrink:0;opacity:.6;margin-top:1px}
 .es-val{color:var(--text);font-weight:500}
 
-.ai-box{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;border-top:3px solid var(--gold)}
+/* ── AI BOX ── */
+.ai-box{background:#fff;border:1px solid var(--border);border-radius:6px;overflow:hidden;border-top:3px solid var(--gold);}
 .ai-box-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
 .ai-box-icon{font-size:15px}
 .ai-box-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
@@ -214,469 +265,475 @@ body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);f
 .ai-step{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--muted)}
 .ai-step-num{width:18px;height:18px;border-radius:50%;background:var(--gold);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
 
-.info-box{background:#fff;border:1px solid var(--border);border-radius:4px;padding:14px 16px}
+/* ── INFO BOX ── */
+.info-box{background:#fff;border:1px solid var(--border);border-radius:6px;padding:14px 16px}
 .info-box-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:10px}
 .info-list{display:flex;flex-direction:column;gap:7px}
 .info-list-item{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:var(--muted);line-height:1.45}
-.info-list-ic{flex-shrink:0;margin-top:1px}
 
-/* Event not found */
-.not-found-box{background:#fff;border:1px solid var(--border);border-radius:4px;padding:60px 20px;text-align:center;color:var(--muted)}
-.not-found-box h3{font-size:16px;color:var(--text);margin-bottom:8px}
-
-.footer{background:#1f1f1f;padding:36px 24px 28px;margin-top:auto}
-.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px}
-.fi-brand-utm{font-size:22px;font-weight:700;color:#fff;line-height:1;margin-bottom:6px}
-.fi-brand-full{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.3px;margin-bottom:12px}
-.fi-brand-text{font-size:12.5px;color:rgba(255,255,255,.45);line-height:1.6}
-.fi-head{font-size:12px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
-.fi-links{display:flex;flex-direction:column;gap:8px}
-.fi-links a{font-size:12.5px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .15s}
-.fi-links a:hover{color:#fff}
-.footer-bottom{max-width:1100px;margin:0 auto;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+/* ── FOOTER ── */
+.footer{background:#1f1f1f;padding:28px 24px}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,.1);padding-top:20px}
 .footer-copy{font-size:12px;color:rgba(255,255,255,.3)}
-.footer-bottom-links{display:flex;gap:16px}
-.footer-bottom-links a{font-size:12px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s}
-.footer-bottom-links a:hover{color:rgba(255,255,255,.7)}
+
+@media(max-width:768px){
+  .main-content{padding:16px 14px 50px}
+  .form-row{grid-template-columns:1fr}
+  .aspect-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
-<body>
+<body class="sb-collapsed">
 
-<div class="topbar">
-  <a href="#">UTM Kuala Lumpur</a>
-  <span class="topbar-sep">|</span>
-  <a href="#">UTM Pagoh</a>
-  <span class="topbar-sep">|</span>
-  <a href="#">Contact Us</a>
+<div class="layout-shell">
+
+  <!-- TOP BAND -->
+  <div class="top-band">
+    <nav class="navbar">
+      <div class="nav-left">
+        <button class="nav-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
+          <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a class="nav-logo" href="../Homepage/homepage.html" style="text-decoration:none">
+          <div class="logo-row"><span class="l-my">my</span><span class="l-utm">UTM</span><span class="l-portal">Portal</span></div>
+          <span class="l-tag">CAMPUS EVENT FINDER</span>
+        </a>
+      </div>
+      <div class="nav-right">
+        <button class="nav-icon-btn" onclick="window.location.href='../Homepage/events.html'">← Events</button>
+        <div class="user-pill"><div class="user-av" id="headerAvatar">?</div><span id="headerName">—</span></div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
+
+  <div class="body-row">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-head">
+        <div class="sb-avatar-wrap" id="sbAvatar">?</div>
+        <div class="sb-profile-name" id="sbName">Student</div>
+        <div class="sb-profile-role" id="sbMatrix">UTM</div>
+      </div>
+      <div class="sb-nav">
+        <div class="sb-section-lbl">Navigation</div>
+        <button class="sb-item" onclick="window.location.href='../Homepage/homepage.html'">
+          <span class="sb-item-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+          <span class="sb-item-label">Home</span>
+        </button>
+        <button class="sb-item" onclick="window.location.href='../Homepage/events.html'">
+          <span class="sb-item-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+          <span class="sb-item-label">Events</span>
+        </button>
+        <button class="sb-item" onclick="window.location.href='../Registration/register.html'">
+          <span class="sb-item-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+          <span class="sb-item-label">Registration</span>
+        </button>
+        <button class="sb-item active">
+          <span class="sb-item-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          <span class="sb-item-label">Feedback</span>
+        </button>
+      </div>
+      <div class="sb-footer">
+        <button class="sb-logout" onclick="doLogout()">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Log Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="content-area">
+
+      <!-- PAGE TITLE BAND -->
+      <div class="page-title-band">
+        <div class="ptb-breadcrumb">
+          <a href="../Homepage/homepage.html">Home</a>
+          <span>›</span>
+          <a href="../Homepage/events.html">Campus Events</a>
+          <span>›</span>
+          <span id="dynPageTitle">Event Feedback</span>
+        </div>
+        <div class="ptb-title">Post-Event Feedback</div>
+        <div class="ptb-sub">Share your experience and help improve future events</div>
+      </div>
+
+      <!-- SECTION NAV -->
+      <div class="section-nav">
+        <div class="sn-item active">Campus Events</div>
+        <div class="sn-item">Student Life</div>
+        <div class="sn-item">Academic Calendar</div>
+        <div class="sn-item">HEP</div>
+        <div class="sn-item">Facilities</div>
+      </div>
+
+      <!-- MAIN INNER -->
+      <div class="main-content">
+        <div class="fb-layout">
+
+          <!-- LEFT: FORM -->
+          <div>
+
+            <!-- Loading -->
+            <div class="loading-box" id="loadingBox">
+              <div class="spinner"></div>
+              <p>Loading event details...</p>
+            </div>
+
+            <!-- Event not found -->
+            <div class="not-found-box" id="notFoundBox">
+              <h3>⚠️ Event Not Found</h3>
+              <p>The event you are looking for does not exist.</p>
+              <br>
+              <a href="../Homepage/events.html" style="color:var(--red)">← Back to Events</a>
+            </div>
+
+            <!-- SUCCESS SCREEN -->
+            <div class="success-screen" id="successScreen">
+              <div class="success-head">
+                <div class="success-icon">✓</div>
+                <div class="success-head-title">Feedback Submitted!</div>
+                <div class="success-head-sub">Thank you. Your feedback has been recorded and analysed.</div>
+              </div>
+              <div class="success-body">
+                <div class="sentiment-result">
+                  <div class="sr-head">
+                    <span class="sr-head-label">🤖 AI Analysis Result</span>
+                    <span class="sr-head-badge" id="sentimentBadge"></span>
+                  </div>
+                  <div class="sr-body">
+                    <div class="sr-sentiment-row">
+                      <span class="sr-emoji" id="sentimentEmoji"></span>
+                      <div>
+                        <div class="sr-sentiment-label" id="sentimentLabel"></div>
+                        <div class="sr-sentiment-desc" id="sentimentDesc"></div>
+                      </div>
+                    </div>
+                    <div class="sr-bars">
+                      <div class="sr-bar-row">
+                        <span class="sr-bar-lbl">Positive</span>
+                        <div class="sr-bar-track"><div class="sr-bar-fill fill-pos" id="barPos" style="width:0%"></div></div>
+                        <span class="sr-bar-pct" id="pctPos"></span>
+                      </div>
+                      <div class="sr-bar-row">
+                        <span class="sr-bar-lbl">Neutral</span>
+                        <div class="sr-bar-track"><div class="sr-bar-fill fill-neu" id="barNeu" style="width:0%"></div></div>
+                        <span class="sr-bar-pct" id="pctNeu"></span>
+                      </div>
+                      <div class="sr-bar-row">
+                        <span class="sr-bar-lbl">Negative</span>
+                        <div class="sr-bar-track"><div class="sr-bar-fill fill-neg" id="barNeg" style="width:0%"></div></div>
+                        <span class="sr-bar-pct" id="pctNeg"></span>
+                      </div>
+                    </div>
+                    <div class="sr-keywords">
+                      <div class="sr-kw-label">Extracted Keywords</div>
+                      <div class="sr-kw-tags" id="kwTags"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="success-summary">
+                  <div class="ss-title">Feedback Summary</div>
+                  <div class="ss-row"><span class="ss-label">Name</span><span class="ss-val" id="sName">—</span></div>
+                  <div class="ss-row"><span class="ss-label">Matrix No.</span><span class="ss-val" id="sMatrix">—</span></div>
+                  <div class="ss-row"><span class="ss-label">Event</span><span class="ss-val" id="sEvent">—</span></div>
+                  <div class="ss-row"><span class="ss-label">Overall Rating</span><span class="ss-val" id="sRating">—</span></div>
+                  <div class="ss-row"><span class="ss-label">Recommendation</span><span class="ss-val" id="sRecommend">—</span></div>
+                </div>
+                <div class="success-note">Your feedback has been saved to Supabase and will be reviewed by the event organiser.</div>
+                <div class="success-actions">
+                  <button class="btn-back" onclick="window.location.href='../Homepage/events.html'">← Back to Event Finder</button>
+                  <button class="btn-another" onclick="resetForm()">Submit Another Feedback</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- FEEDBACK FORM -->
+            <div class="form-card" id="formCard" style="display:none">
+              <div class="form-card-head">
+                <span style="font-size:16px">💬</span>
+                <span class="form-card-head-title">Post-Event Feedback Form</span>
+                <span class="form-card-head-sub">Fields marked * are required</span>
+              </div>
+              <div class="form-body">
+
+                <!-- SECTION 1: Attendee Info -->
+                <div class="form-section">
+                  <div class="form-section-title"><span>👤</span> Attendee Information</div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Full Name <span class="req">*</span></label>
+                      <input class="form-input" id="fullName" type="text" placeholder="e.g. Nur Husnina binti Azizan"/>
+                      <span class="form-error" id="err-fullName">Please enter your full name.</span>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Matrix Number <span class="req">*</span></label>
+                      <input class="form-input" id="matrix" type="text" placeholder="e.g. B23CS0068"/>
+                      <span class="form-error" id="err-matrix">Please enter your matrix number.</span>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">UTM Email Address <span class="req">*</span></label>
+                      <input class="form-input" id="email" type="email" placeholder="e.g. husnina@graduate.utm.my"/>
+                      <span class="form-error" id="err-email">Please enter a valid email address.</span>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Faculty</label>
+                      <select class="form-select" id="faculty">
+                        <option value="">— Select Faculty —</option>
+                        <option>Faculty of Computing</option>
+                        <option>Faculty of Civil Engineering</option>
+                        <option>Faculty of Electrical Engineering</option>
+                        <option>Faculty of Mechanical Engineering</option>
+                        <option>Faculty of Chemical & Energy Engineering</option>
+                        <option>Faculty of Science</option>
+                        <option>Faculty of Management</option>
+                        <option>Faculty of Social Sciences & Humanities</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Event Attended <span class="req">*</span></label>
+                      <input class="form-input readonly" id="eventName" type="text" readonly/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Date Attended</label>
+                      <input class="form-input readonly" id="eventDate" type="text" readonly/>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SECTION 2: Overall Rating -->
+                <div class="form-section">
+                  <div class="form-section-title"><span>⭐</span> Overall Event Rating</div>
+                  <div class="star-section">
+                    <span class="star-label">How would you rate this event overall? <span class="req">*</span></span>
+                    <div class="star-row">
+                      <button class="star-btn" data-val="1" onclick="setRating(1)" title="Poor">★</button>
+                      <button class="star-btn" data-val="2" onclick="setRating(2)" title="Fair">★</button>
+                      <button class="star-btn" data-val="3" onclick="setRating(3)" title="Good">★</button>
+                      <button class="star-btn" data-val="4" onclick="setRating(4)" title="Very Good">★</button>
+                      <button class="star-btn" data-val="5" onclick="setRating(5)" title="Excellent">★</button>
+                      <span class="star-desc" id="starDesc">Tap a star to rate</span>
+                    </div>
+                    <span class="star-error" id="err-rating">Please select an overall rating.</span>
+                  </div>
+                </div>
+
+                <!-- SECTION 3: Aspect Ratings -->
+                <div class="form-section">
+                  <div class="form-section-title"><span>📊</span> Rate Specific Aspects</div>
+                  <div class="aspect-grid">
+                    <div class="aspect-item">
+                      <span class="aspect-lbl">Event Organisation</span>
+                      <div class="aspect-stars" id="aspect-organisation">
+                        <button class="aspect-star" data-aspect="organisation" data-val="1" onclick="setAspect('organisation',1)">★</button>
+                        <button class="aspect-star" data-aspect="organisation" data-val="2" onclick="setAspect('organisation',2)">★</button>
+                        <button class="aspect-star" data-aspect="organisation" data-val="3" onclick="setAspect('organisation',3)">★</button>
+                        <button class="aspect-star" data-aspect="organisation" data-val="4" onclick="setAspect('organisation',4)">★</button>
+                        <button class="aspect-star" data-aspect="organisation" data-val="5" onclick="setAspect('organisation',5)">★</button>
+                      </div>
+                    </div>
+                    <div class="aspect-item">
+                      <span class="aspect-lbl">Content & Programme</span>
+                      <div class="aspect-stars" id="aspect-content">
+                        <button class="aspect-star" data-aspect="content" data-val="1" onclick="setAspect('content',1)">★</button>
+                        <button class="aspect-star" data-aspect="content" data-val="2" onclick="setAspect('content',2)">★</button>
+                        <button class="aspect-star" data-aspect="content" data-val="3" onclick="setAspect('content',3)">★</button>
+                        <button class="aspect-star" data-aspect="content" data-val="4" onclick="setAspect('content',4)">★</button>
+                        <button class="aspect-star" data-aspect="content" data-val="5" onclick="setAspect('content',5)">★</button>
+                      </div>
+                    </div>
+                    <div class="aspect-item">
+                      <span class="aspect-lbl">Venue & Facilities</span>
+                      <div class="aspect-stars" id="aspect-venue">
+                        <button class="aspect-star" data-aspect="venue" data-val="1" onclick="setAspect('venue',1)">★</button>
+                        <button class="aspect-star" data-aspect="venue" data-val="2" onclick="setAspect('venue',2)">★</button>
+                        <button class="aspect-star" data-aspect="venue" data-val="3" onclick="setAspect('venue',3)">★</button>
+                        <button class="aspect-star" data-aspect="venue" data-val="4" onclick="setAspect('venue',4)">★</button>
+                        <button class="aspect-star" data-aspect="venue" data-val="5" onclick="setAspect('venue',5)">★</button>
+                      </div>
+                    </div>
+                    <div class="aspect-item">
+                      <span class="aspect-lbl">Speakers / Facilitators</span>
+                      <div class="aspect-stars" id="aspect-speaker">
+                        <button class="aspect-star" data-aspect="speaker" data-val="1" onclick="setAspect('speaker',1)">★</button>
+                        <button class="aspect-star" data-aspect="speaker" data-val="2" onclick="setAspect('speaker',2)">★</button>
+                        <button class="aspect-star" data-aspect="speaker" data-val="3" onclick="setAspect('speaker',3)">★</button>
+                        <button class="aspect-star" data-aspect="speaker" data-val="4" onclick="setAspect('speaker',4)">★</button>
+                        <button class="aspect-star" data-aspect="speaker" data-val="5" onclick="setAspect('speaker',5)">★</button>
+                      </div>
+                    </div>
+                    <div class="aspect-item">
+                      <span class="aspect-lbl">Time Management</span>
+                      <div class="aspect-stars" id="aspect-time">
+                        <button class="aspect-star" data-aspect="time" data-val="1" onclick="setAspect('time',1)">★</button>
+                        <button class="aspect-star" data-aspect="time" data-val="2" onclick="setAspect('time',2)">★</button>
+                        <button class="aspect-star" data-aspect="time" data-val="3" onclick="setAspect('time',3)">★</button>
+                        <button class="aspect-star" data-aspect="time" data-val="4" onclick="setAspect('time',4)">★</button>
+                        <button class="aspect-star" data-aspect="time" data-val="5" onclick="setAspect('time',5)">★</button>
+                      </div>
+                    </div>
+                    <div class="aspect-item">
+                      <span class="aspect-lbl">Registration Process</span>
+                      <div class="aspect-stars" id="aspect-registration">
+                        <button class="aspect-star" data-aspect="registration" data-val="1" onclick="setAspect('registration',1)">★</button>
+                        <button class="aspect-star" data-aspect="registration" data-val="2" onclick="setAspect('registration',2)">★</button>
+                        <button class="aspect-star" data-aspect="registration" data-val="3" onclick="setAspect('registration',3)">★</button>
+                        <button class="aspect-star" data-aspect="registration" data-val="4" onclick="setAspect('registration',4)">★</button>
+                        <button class="aspect-star" data-aspect="registration" data-val="5" onclick="setAspect('registration',5)">★</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SECTION 4: Written Feedback -->
+                <div class="form-section">
+                  <div class="form-section-title">
+                    <span>🤖</span> Written Feedback
+                    <span class="ai-label">— Analysed by AI</span>
+                  </div>
+                  <div class="form-row full">
+                    <div class="form-group">
+                      <label class="form-label">What did you like most about this event? <span class="req">*</span></label>
+                      <div class="textarea-wrap">
+                        <textarea class="form-textarea" id="liked" placeholder="e.g. The speakers were very knowledgeable..." oninput="countChars('liked','likedCount',300)"></textarea>
+                        <span class="char-counter" id="likedCount">0 / 300</span>
+                      </div>
+                      <span class="form-error" id="err-liked">Please share what you liked about the event.</span>
+                    </div>
+                  </div>
+                  <div class="form-row full">
+                    <div class="form-group">
+                      <label class="form-label">What could be improved for future events?</label>
+                      <div class="textarea-wrap">
+                        <textarea class="form-textarea" id="improve" placeholder="e.g. The session ran a bit over time..." oninput="countChars('improve','improveCount',300)"></textarea>
+                        <span class="char-counter" id="improveCount">0 / 300</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row full">
+                    <div class="form-group">
+                      <label class="form-label">Any additional comments or suggestions?</label>
+                      <div class="textarea-wrap">
+                        <textarea class="form-textarea" id="additional" placeholder="Share any other thoughts..." oninput="countChars('additional','additionalCount',300)" style="min-height:80px"></textarea>
+                        <span class="char-counter" id="additionalCount">0 / 300</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SECTION 5: Recommendation -->
+                <div class="form-section">
+                  <div class="form-section-title"><span>📢</span> Recommendation</div>
+                  <div class="form-row full">
+                    <div class="form-group">
+                      <label class="form-label">Would you recommend this event to other UTM students? <span class="req">*</span></label>
+                      <div class="recommend-row">
+                        <button class="rec-btn" id="rec-yes"   onclick="setRecommend('yes')">👍 Yes, definitely</button>
+                        <button class="rec-btn" id="rec-maybe" onclick="setRecommend('maybe')">🤔 Maybe</button>
+                        <button class="rec-btn" id="rec-no"    onclick="setRecommend('no')">👎 No</button>
+                      </div>
+                      <span class="form-error" id="err-recommend">Please select an option.</span>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label class="form-label">Would you attend this event again?</label>
+                      <select class="form-select" id="attendAgain">
+                        <option value="">— Select —</option>
+                        <option>Yes, definitely</option>
+                        <option>Possibly</option>
+                        <option>No</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">How did you find out about this event?</label>
+                      <select class="form-select" id="heardFrom">
+                        <option value="">— Select —</option>
+                        <option>Campus Event Finder (this system)</option>
+                        <option>WhatsApp / Telegram</option>
+                        <option>Poster / Banner</option>
+                        <option>Friend / Classmate</option>
+                        <option>Lecturer</option>
+                        <option>Social Media</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button class="btn-submit" id="submitBtn" onclick="submitFeedback()">Submit Feedback →</button>
+                  <button class="btn-cancel" onclick="window.location.href='../Homepage/events.html'">Cancel</button>
+                  <span class="form-actions-note">Feedback is analysed by AI to improve future events.</span>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT PANEL -->
+          <div class="right-panel">
+            <div class="event-summary">
+              <div class="es-head">
+                <div class="es-head-label">Feedback for</div>
+                <div class="es-title" id="esTitle">Loading...</div>
+                <span class="es-badge" id="esBadge"></span>
+              </div>
+              <div class="es-body">
+                <div class="es-row"><span class="es-ic">📅</span><span class="es-val" id="esDate">—</span></div>
+                <div class="es-row"><span class="es-ic">🕐</span><span class="es-val" id="esTime">—</span></div>
+                <div class="es-row"><span class="es-ic">📍</span><span class="es-val" id="esLocation">—</span></div>
+                <div class="es-row"><span class="es-ic">🏛️</span><span class="es-val" id="esFaculty">—</span></div>
+              </div>
+            </div>
+
+            <div class="ai-box">
+              <div class="ai-box-head">
+                <span class="ai-box-icon">🤖</span>
+                <span class="ai-box-title">How AI Analyses Your Feedback</span>
+              </div>
+              <div class="ai-box-body">
+                <div class="ai-box-text">Your written feedback is processed using NLP to:</div>
+                <div class="ai-steps">
+                  <div class="ai-step"><div class="ai-step-num">1</div>Classify sentiment as Positive, Neutral, or Negative</div>
+                  <div class="ai-step"><div class="ai-step-num">2</div>Extract relevant keywords from your comments</div>
+                  <div class="ai-step"><div class="ai-step-num">3</div>Store results in Supabase for organiser review</div>
+                  <div class="ai-step"><div class="ai-step-num">4</div>Help improve future events through data-driven insights</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-box">
+              <div class="info-box-title">Tips for Better Feedback</div>
+              <div class="info-list">
+                <div class="info-list-item"><span>✏️</span>Be specific — mention particular sessions or speakers.</div>
+                <div class="info-list-item"><span>⚖️</span>Be balanced — share both positives and areas to improve.</div>
+                <div class="info-list-item"><span>🎯</span>Be constructive — suggest practical improvements.</div>
+                <div class="info-list-item"><span>🔒</span>Your feedback is confidential.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="footer">
+        <div class="footer-bottom">
+          <div class="footer-copy">© 2025 Universiti Teknologi Malaysia. All Rights Reserved.</div>
+        </div>
+      </footer>
+
+    </main>
+  </div>
 </div>
-
-<header class="header">
-  <a class="header-logo" href="#">
-    <div class="logo-img">
-      <div class="logo-img-utm">UTM</div>
-      <div class="logo-img-star">✦✦✦</div>
-    </div>
-    <div>
-      <div class="logo-utm">UTM</div>
-      <div class="logo-full">Universiti Teknologi Malaysia</div>
-    </div>
-  </a>
-  <nav class="header-nav">
-    <div class="hn-item">Corporate Information <span class="arr">▾</span></div>
-    <div class="hn-item">Administration <span class="arr">▾</span></div>
-    <div class="hn-item">Achievements <span class="arr">▾</span></div>
-    <div class="hn-item">Publications <span class="arr">▾</span></div>
-    <div class="hn-item active">Faculties</div>
-    <div class="hn-item">Partnership</div>
-    <div class="hn-item">UTM Cares</div>
-  </nav>
-  <div class="header-right">
-    <div class="user-pill">
-      <div class="user-av" id="headerAvatar">?</div>
-      <span id="headerName">—</span>
-    </div>
-  </div>
-</header>
-
-<div class="section-nav">
-  <div class="sn-item active">Campus Events</div>
-  <div class="sn-item">Student Life</div>
-  <div class="sn-item">Academic Calendar</div>
-  <div class="sn-item">HEP</div>
-  <div class="sn-item">Facilities</div>
-</div>
-
-<div class="page-title-bar">
-  <div class="ptb-breadcrumb">
-    <a href="campus_events_utm_v3.html">Home</a>
-    <span>›</span>
-    <a href="campus_events_utm_v3.html">Student Affairs</a>
-    <span>›</span>
-    <a href="campus_events_utm_v3.html">Campus Event Finder</a>
-    <span>›</span>
-    <span>Event Feedback</span>
-  </div>
-  <div class="ptb-title" id="dynPageTitle">Event Feedback</div>
-</div>
-
-<div class="wrap">
-  <div>
-    <!-- Loading -->
-    <div class="loading-box" id="loadingBox">
-      <div class="spinner"></div>
-      <p>Loading event details...</p>
-    </div>
-
-    <!-- Event not found -->
-    <div class="not-found-box" id="notFoundBox" style="display:none">
-      <h3>⚠️ Event Not Found</h3>
-      <p>The event you are looking for does not exist.</p>
-      <br>
-      <a href="campus_events_utm_v3.html" style="color:var(--red)">← Back to Events</a>
-    </div>
-
-    <!-- FEEDBACK FORM -->
-    <div class="form-card" id="formCard" style="display:none">
-      <div class="form-card-head">
-        <span class="form-card-head-icon">💬</span>
-        <span class="form-card-head-title">Post-Event Feedback Form</span>
-        <span class="form-card-head-sub">All fields marked * are required</span>
-      </div>
-      <div class="form-body">
-
-        <div class="form-section">
-          <div class="form-section-title"><span>👤</span> Attendee Information</div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Full Name <span class="req">*</span></label>
-              <input class="form-input" id="fullName" type="text" placeholder="e.g. Nur Husnina binti Azizan"/>
-              <span class="form-error" id="err-fullName">Please enter your full name.</span>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Matrix Number <span class="req">*</span></label>
-              <input class="form-input" id="matrix" type="text" placeholder="e.g. B23CS0068"/>
-              <span class="form-error" id="err-matrix">Please enter your matrix number.</span>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">UTM Email Address <span class="req">*</span></label>
-              <input class="form-input" id="email" type="email" placeholder="e.g. husnina@graduate.utm.my"/>
-              <span class="form-error" id="err-email">Please enter a valid email address.</span>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Faculty</label>
-              <select class="form-select" id="faculty">
-                <option value="">— Select Faculty —</option>
-                <option selected>Faculty of Computing</option>
-                <option>Faculty of Civil Engineering</option>
-                <option>Faculty of Electrical Engineering</option>
-                <option>Faculty of Mechanical Engineering</option>
-                <option>Faculty of Chemical & Energy Engineering</option>
-                <option>Faculty of Science</option>
-                <option>Faculty of Management</option>
-                <option>Faculty of Social Sciences & Humanities</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Event Attended <span class="req">*</span></label>
-              <input class="form-input readonly" id="eventName" type="text" readonly/>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Date Attended</label>
-              <input class="form-input readonly" id="eventDate" type="text" readonly/>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-section">
-          <div class="form-section-title"><span>⭐</span> Overall Event Rating</div>
-          <div class="star-section">
-            <span class="star-label">How would you rate this event overall? <span class="req">*</span></span>
-            <div class="star-row">
-              <button class="star-btn" data-val="1" onclick="setRating(1)" title="Poor">★</button>
-              <button class="star-btn" data-val="2" onclick="setRating(2)" title="Fair">★</button>
-              <button class="star-btn" data-val="3" onclick="setRating(3)" title="Good">★</button>
-              <button class="star-btn" data-val="4" onclick="setRating(4)" title="Very Good">★</button>
-              <button class="star-btn" data-val="5" onclick="setRating(5)" title="Excellent">★</button>
-              <span class="star-desc" id="starDesc">Tap a star to rate</span>
-            </div>
-            <span class="star-error" id="err-rating">Please select an overall rating.</span>
-          </div>
-        </div>
-
-        <div class="form-section">
-          <div class="form-section-title"><span>📊</span> Rate Specific Aspects</div>
-          <div class="aspect-grid">
-            <div class="aspect-item">
-              <span class="aspect-lbl">Event Organisation</span>
-              <div class="aspect-stars" id="aspect-organisation">
-                <button class="aspect-star" data-aspect="organisation" data-val="1" onclick="setAspect('organisation',1)">★</button>
-                <button class="aspect-star" data-aspect="organisation" data-val="2" onclick="setAspect('organisation',2)">★</button>
-                <button class="aspect-star" data-aspect="organisation" data-val="3" onclick="setAspect('organisation',3)">★</button>
-                <button class="aspect-star" data-aspect="organisation" data-val="4" onclick="setAspect('organisation',4)">★</button>
-                <button class="aspect-star" data-aspect="organisation" data-val="5" onclick="setAspect('organisation',5)">★</button>
-              </div>
-            </div>
-            <div class="aspect-item">
-              <span class="aspect-lbl">Content & Programme</span>
-              <div class="aspect-stars" id="aspect-content">
-                <button class="aspect-star" data-aspect="content" data-val="1" onclick="setAspect('content',1)">★</button>
-                <button class="aspect-star" data-aspect="content" data-val="2" onclick="setAspect('content',2)">★</button>
-                <button class="aspect-star" data-aspect="content" data-val="3" onclick="setAspect('content',3)">★</button>
-                <button class="aspect-star" data-aspect="content" data-val="4" onclick="setAspect('content',4)">★</button>
-                <button class="aspect-star" data-aspect="content" data-val="5" onclick="setAspect('content',5)">★</button>
-              </div>
-            </div>
-            <div class="aspect-item">
-              <span class="aspect-lbl">Venue & Facilities</span>
-              <div class="aspect-stars" id="aspect-venue">
-                <button class="aspect-star" data-aspect="venue" data-val="1" onclick="setAspect('venue',1)">★</button>
-                <button class="aspect-star" data-aspect="venue" data-val="2" onclick="setAspect('venue',2)">★</button>
-                <button class="aspect-star" data-aspect="venue" data-val="3" onclick="setAspect('venue',3)">★</button>
-                <button class="aspect-star" data-aspect="venue" data-val="4" onclick="setAspect('venue',4)">★</button>
-                <button class="aspect-star" data-aspect="venue" data-val="5" onclick="setAspect('venue',5)">★</button>
-              </div>
-            </div>
-            <div class="aspect-item">
-              <span class="aspect-lbl">Speakers / Facilitators</span>
-              <div class="aspect-stars" id="aspect-speaker">
-                <button class="aspect-star" data-aspect="speaker" data-val="1" onclick="setAspect('speaker',1)">★</button>
-                <button class="aspect-star" data-aspect="speaker" data-val="2" onclick="setAspect('speaker',2)">★</button>
-                <button class="aspect-star" data-aspect="speaker" data-val="3" onclick="setAspect('speaker',3)">★</button>
-                <button class="aspect-star" data-aspect="speaker" data-val="4" onclick="setAspect('speaker',4)">★</button>
-                <button class="aspect-star" data-aspect="speaker" data-val="5" onclick="setAspect('speaker',5)">★</button>
-              </div>
-            </div>
-            <div class="aspect-item">
-              <span class="aspect-lbl">Time Management</span>
-              <div class="aspect-stars" id="aspect-time">
-                <button class="aspect-star" data-aspect="time" data-val="1" onclick="setAspect('time',1)">★</button>
-                <button class="aspect-star" data-aspect="time" data-val="2" onclick="setAspect('time',2)">★</button>
-                <button class="aspect-star" data-aspect="time" data-val="3" onclick="setAspect('time',3)">★</button>
-                <button class="aspect-star" data-aspect="time" data-val="4" onclick="setAspect('time',4)">★</button>
-                <button class="aspect-star" data-aspect="time" data-val="5" onclick="setAspect('time',5)">★</button>
-              </div>
-            </div>
-            <div class="aspect-item">
-              <span class="aspect-lbl">Registration Process</span>
-              <div class="aspect-stars" id="aspect-registration">
-                <button class="aspect-star" data-aspect="registration" data-val="1" onclick="setAspect('registration',1)">★</button>
-                <button class="aspect-star" data-aspect="registration" data-val="2" onclick="setAspect('registration',2)">★</button>
-                <button class="aspect-star" data-aspect="registration" data-val="3" onclick="setAspect('registration',3)">★</button>
-                <button class="aspect-star" data-aspect="registration" data-val="4" onclick="setAspect('registration',4)">★</button>
-                <button class="aspect-star" data-aspect="registration" data-val="5" onclick="setAspect('registration',5)">★</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-section">
-          <div class="form-section-title"><span>🤖</span> Written Feedback <span style="font-size:10px;font-weight:400;color:var(--gold);text-transform:none;letter-spacing:0">— Analysed by AI</span></div>
-          <div class="form-row full">
-            <div class="form-group">
-              <label class="form-label">What did you like most about this event? <span class="req">*</span></label>
-              <div class="textarea-wrap">
-                <textarea class="form-textarea" id="liked" placeholder="e.g. The speakers were very knowledgeable..." oninput="countChars('liked','likedCount',300)"></textarea>
-                <span class="char-counter" id="likedCount">0 / 300</span>
-              </div>
-              <span class="form-error" id="err-liked">Please share what you liked about the event.</span>
-            </div>
-          </div>
-          <div class="form-row full">
-            <div class="form-group">
-              <label class="form-label">What could be improved for future events?</label>
-              <div class="textarea-wrap">
-                <textarea class="form-textarea" id="improve" placeholder="e.g. The session ran a bit over time..." oninput="countChars('improve','improveCount',300)"></textarea>
-                <span class="char-counter" id="improveCount">0 / 300</span>
-              </div>
-            </div>
-          </div>
-          <div class="form-row full">
-            <div class="form-group">
-              <label class="form-label">Any additional comments or suggestions?</label>
-              <div class="textarea-wrap">
-                <textarea class="form-textarea" id="additional" placeholder="Share any other thoughts..." oninput="countChars('additional','additionalCount',300)" style="min-height:80px"></textarea>
-                <span class="char-counter" id="additionalCount">0 / 300</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-section">
-          <div class="form-section-title"><span>📢</span> Recommendation</div>
-          <div class="form-row full">
-            <div class="form-group">
-              <label class="form-label">Would you recommend this event to other UTM students? <span class="req">*</span></label>
-              <div class="recommend-row">
-                <button class="rec-btn" id="rec-yes"   onclick="setRecommend('yes')">👍 Yes, definitely</button>
-                <button class="rec-btn" id="rec-maybe" onclick="setRecommend('maybe')">🤔 Maybe</button>
-                <button class="rec-btn" id="rec-no"    onclick="setRecommend('no')">👎 No</button>
-              </div>
-              <span class="form-error" id="err-recommend">Please select an option.</span>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Would you attend this event again?</label>
-              <select class="form-select" id="attendAgain">
-                <option value="">— Select —</option>
-                <option>Yes, definitely</option>
-                <option>Possibly</option>
-                <option>No</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">How did you find out about this event?</label>
-              <select class="form-select" id="heardFrom">
-                <option value="">— Select —</option>
-                <option>Campus Event Finder (this system)</option>
-                <option>WhatsApp / Telegram</option>
-                <option>Poster / Banner</option>
-                <option>Friend / Classmate</option>
-                <option>Lecturer</option>
-                <option>Social Media</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button class="btn-submit" onclick="submitFeedback()">Submit Feedback →</button>
-          <button class="btn-cancel" onclick="window.location.href='campus_events_utm_v3.html'">Cancel</button>
-          <span class="form-actions-note">Feedback is analysed by AI to improve future events.</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- SUCCESS SCREEN -->
-    <div class="success-screen" id="successScreen">
-      <div class="success-head">
-        <div class="success-icon">✓</div>
-        <div class="success-head-title">Feedback Submitted!</div>
-        <div class="success-head-sub">Thank you. Your feedback has been recorded and analysed.</div>
-      </div>
-      <div class="success-body">
-        <div class="sentiment-result">
-          <div class="sr-head">
-            <span class="sr-head-label">🤖 AI Analysis Result</span>
-            <span class="sr-head-badge" id="sentimentBadge"></span>
-          </div>
-          <div class="sr-body">
-            <div class="sr-sentiment-row">
-              <span class="sr-emoji" id="sentimentEmoji"></span>
-              <div>
-                <div class="sr-sentiment-label" id="sentimentLabel"></div>
-                <div class="sr-sentiment-desc" id="sentimentDesc"></div>
-              </div>
-            </div>
-            <div class="sr-bars">
-              <div class="sr-bar-row">
-                <span class="sr-bar-lbl">Positive</span>
-                <div class="sr-bar-track"><div class="sr-bar-fill fill-pos" id="barPos" style="width:0%"></div></div>
-                <span class="sr-bar-pct" id="pctPos"></span>
-              </div>
-              <div class="sr-bar-row">
-                <span class="sr-bar-lbl">Neutral</span>
-                <div class="sr-bar-track"><div class="sr-bar-fill fill-neu" id="barNeu" style="width:0%"></div></div>
-                <span class="sr-bar-pct" id="pctNeu"></span>
-              </div>
-              <div class="sr-bar-row">
-                <span class="sr-bar-lbl">Negative</span>
-                <div class="sr-bar-track"><div class="sr-bar-fill fill-neg" id="barNeg" style="width:0%"></div></div>
-                <span class="sr-bar-pct" id="pctNeg"></span>
-              </div>
-            </div>
-            <div class="sr-keywords">
-              <div class="sr-kw-label">Extracted Keywords</div>
-              <div class="sr-kw-tags" id="kwTags"></div>
-            </div>
-          </div>
-        </div>
-        <div class="success-summary">
-          <div class="ss-title">Feedback Summary</div>
-          <div class="ss-row"><span class="ss-label">Name</span><span class="ss-val" id="sName">—</span></div>
-          <div class="ss-row"><span class="ss-label">Matrix No.</span><span class="ss-val" id="sMatrix">—</span></div>
-          <div class="ss-row"><span class="ss-label">Event</span><span class="ss-val" id="sEvent">—</span></div>
-          <div class="ss-row"><span class="ss-label">Overall Rating</span><span class="ss-val" id="sRating">—</span></div>
-          <div class="ss-row"><span class="ss-label">Recommendation</span><span class="ss-val" id="sRecommend">—</span></div>
-        </div>
-        <div class="success-note">Your feedback has been saved to Supabase and will be reviewed by the event organiser.</div>
-        <div class="success-actions">
-          <button class="btn-back" onclick="window.location.href='campus_events_utm_v3.html'">← Back to Event Finder</button>
-          <button class="btn-another" onclick="resetForm()">Submit Another Feedback</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RIGHT PANEL -->
-  <div class="right-panel">
-    <div class="event-summary">
-      <div class="es-head">
-        <div class="es-head-label">Feedback for</div>
-        <div class="es-title" id="esTitle">Loading...</div>
-        <span class="es-badge" id="esBadge"></span>
-      </div>
-      <div class="es-body">
-        <div class="es-row"><span class="es-ic">📅</span><span class="es-val" id="esDate">—</span></div>
-        <div class="es-row"><span class="es-ic">🕐</span><span class="es-val" id="esTime">—</span></div>
-        <div class="es-row"><span class="es-ic">📍</span><span class="es-val" id="esLocation">—</span></div>
-        <div class="es-row"><span class="es-ic">🏛️</span><span class="es-val" id="esFaculty">—</span></div>
-      </div>
-    </div>
-    <div class="ai-box">
-      <div class="ai-box-head">
-        <span class="ai-box-icon">🤖</span>
-        <span class="ai-box-title">How AI Analyses Your Feedback</span>
-      </div>
-      <div class="ai-box-body">
-        <div class="ai-box-text">Your written feedback is processed using NLP to:</div>
-        <div class="ai-steps">
-          <div class="ai-step"><div class="ai-step-num">1</div>Classify sentiment as Positive, Neutral, or Negative</div>
-          <div class="ai-step"><div class="ai-step-num">2</div>Extract relevant keywords from your comments</div>
-          <div class="ai-step"><div class="ai-step-num">3</div>Store results in Supabase for organiser review</div>
-          <div class="ai-step"><div class="ai-step-num">4</div>Help improve future events through data-driven insights</div>
-        </div>
-      </div>
-    </div>
-    <div class="info-box">
-      <div class="info-box-title">Tips for Better Feedback</div>
-      <div class="info-list">
-        <div class="info-list-item"><span class="info-list-ic">✏️</span>Be specific — mention particular sessions or speakers.</div>
-        <div class="info-list-item"><span class="info-list-ic">⚖️</span>Be balanced — share both positives and areas to improve.</div>
-        <div class="info-list-item"><span class="info-list-ic">🎯</span>Be constructive — suggest practical improvements.</div>
-        <div class="info-list-item"><span class="info-list-ic">🔒</span>Your feedback is confidential.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer class="footer">
-  <div class="footer-inner">
-    <div>
-      <div class="fi-brand-utm">UTM</div>
-      <div class="fi-brand-full">Universiti Teknologi Malaysia</div>
-      <div class="fi-brand-text">AI-Driven Campus Event Finder for UTM Students.</div>
-    </div>
-    <div>
-      <div class="fi-head">Quicklinks</div>
-      <div class="fi-links">
-        <a href="#">myUTM Portal</a>
-        <a href="#">Staff Directory</a>
-        <a href="#">Career@UTM</a>
-        <a href="#">UTM Alumni</a>
-      </div>
-    </div>
-    <div>
-      <div class="fi-head">Contact Us</div>
-      <div class="fi-links">
-        <a href="#">UTM Skudai, Johor</a>
-        <a href="#">utm.my</a>
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-      </div>
-    </div>
-    <div>
-      <div class="fi-head">Legal</div>
-      <div class="fi-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Disclaimer</a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2025 Universiti Teknologi Malaysia. All Rights Reserved.</div>
-    <div class="footer-bottom-links">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Use</a>
-    </div>
-  </div>
-</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -693,77 +750,67 @@ let recommendVal  = '';
 let currentEvent  = null;
 const aspectRatings = {organisation:0,content:0,venue:0,speaker:0,time:0,registration:0};
 
-/* ── INIT: load session + event from Supabase ── */
-async function init() {
-  // Check session
-  const { data: { session } } = await sb.auth.getSession();
-  if (!session) {
-    window.location.href = '/Login/login.html';
-    return;
-  }
+/* ── SIDEBAR ── */
+function isMobile(){return window.innerWidth<=768}
+function toggleSidebar(){
+  if(isMobile()){document.body.classList.toggle('sb-open');document.body.classList.toggle('sb-collapsed');document.getElementById('sidebarBackdrop').classList.toggle('visible',document.body.classList.contains('sb-open'));}
+  else{document.body.classList.toggle('sb-open');document.body.classList.toggle('sb-collapsed');}
+}
+function closeSidebar(){document.body.classList.remove('sb-open');document.body.classList.add('sb-collapsed');document.getElementById('sidebarBackdrop').classList.remove('visible');}
+async function doLogout(){await sb.auth.signOut();window.location.href='../Login/login.html';}
 
-  // Get user info
-  const { data: user } = await sb.from('users')
-    .select('*')
-    .eq('email', session.user.email)
-    .single();
+function setText(id,val){var el=document.getElementById(id);if(el)el.textContent=val;}
+
+/* ── INIT ── */
+async function init() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = '/Login/login.html'; return; }
+
+  const { data: user } = await sb.from('users').select('*').eq('email', session.user.email).single();
 
   if (user) {
-    const avatar = (user.name || '').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
-    document.getElementById('headerAvatar').textContent = avatar || '?';
-    document.getElementById('headerName').textContent   = user.matrix || user.name || session.user.email;
-
-    // Prefill attendee fields from user profile
+    const initials = (user.name||'').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()||'?';
+    setText('headerAvatar', initials); setText('sbAvatar', initials);
+    setText('headerName', user.matrix||user.name||session.user.email);
+    setText('sbName', user.name||user.matrix||'Student');
+    setText('sbMatrix', user.matrix||user.faculty||'UTM');
     if (user.name)   document.getElementById('fullName').value = user.name;
     if (user.matrix) document.getElementById('matrix').value   = user.matrix;
     if (user.email)  document.getElementById('email').value    = session.user.email;
+    const fac = document.getElementById('faculty');
+    if (user.faculty) { for(const o of fac.options){if(o.value===user.faculty||o.text===user.faculty){fac.value=o.value;break;}} }
   }
 
-  // Get event_id from URL
+  if (!isMobile()) { document.body.classList.add('sb-open'); document.body.classList.remove('sb-collapsed'); }
+
   const eventId = new URLSearchParams(window.location.search).get('id');
-
   if (!eventId) {
-    document.getElementById('loadingBox').style.display   = 'none';
-    document.getElementById('notFoundBox').style.display  = 'block';
-    return;
-  }
-
-  // ── FETCH EVENT FROM SUPABASE ── (no more hardcoded array)
-  const { data: ev, error } = await sb
-    .from('events')
-    .select('*')
-    .eq('id', eventId)
-    .single();
-
-  document.getElementById('loadingBox').style.display = 'none';
-
-  if (error || !ev) {
+    document.getElementById('loadingBox').style.display = 'none';
     document.getElementById('notFoundBox').style.display = 'block';
     return;
   }
 
+  const { data: ev, error } = await sb.from('events').select('*').eq('id', eventId).single();
+  document.getElementById('loadingBox').style.display = 'none';
+
+  if (error || !ev) { document.getElementById('notFoundBox').style.display = 'block'; return; }
+
   currentEvent = ev;
-
-  // Populate page title & breadcrumb
-  document.getElementById('dynPageTitle').textContent = 'Feedback — ' + ev.title;
-
-  // Populate form readonly fields
+  document.getElementById('dynPageTitle').textContent = ev.title;
   document.getElementById('eventName').value = ev.title || '';
   document.getElementById('eventDate').value = ev.date  || '';
 
-  // Populate right panel event summary
-  document.getElementById('esTitle').textContent    = ev.title    || '–';
-  document.getElementById('esBadge').textContent    = cap(ev.category);
-  document.getElementById('esBadge').className      = 'es-badge ' + (badgeClass[ev.category] || '');
-  document.getElementById('esDate').textContent     = ev.date     || '–';
-  document.getElementById('esTime').textContent     = ev.time     || '–';
-  document.getElementById('esLocation').textContent = ev.location || '–';
-  document.getElementById('esFaculty').textContent  = ev.faculty  || '–';
+  setText('esTitle', ev.title||'–');
+  const badge = document.getElementById('esBadge');
+  badge.textContent = cap(ev.category);
+  badge.className   = 'es-badge ' + (badgeClass[ev.category]||'');
+  setText('esDate',     ev.date    ||'–');
+  setText('esTime',     ev.time    ||'–');
+  setText('esLocation', ev.location||'–');
+  setText('esFaculty',  ev.faculty ||'–');
 
-  // Show form
   document.getElementById('formCard').style.display = 'block';
 
-  // Blur validation
   document.querySelectorAll('.form-input:not(.readonly),.form-textarea').forEach(el => {
     el.addEventListener('blur', () => {
       if (el.value.trim()) {
@@ -777,25 +824,18 @@ async function init() {
 
 /* ── STAR RATING ── */
 const starDescs = ['','Poor — Needs significant improvement','Fair — Below expectations','Good — Met expectations','Very Good — Exceeded expectations','Excellent — Outstanding event!'];
-
 function setRating(val) {
   overallRating = val;
-  document.querySelectorAll('.star-btn').forEach(b => {
-    b.classList.toggle('active', parseInt(b.dataset.val) <= val);
-  });
+  document.querySelectorAll('.star-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.val) <= val));
   document.getElementById('starDesc').textContent = starDescs[val];
   document.getElementById('err-rating').classList.remove('show');
 }
 
-/* ── ASPECT STARS ── */
 function setAspect(aspect, val) {
   aspectRatings[aspect] = val;
-  document.querySelectorAll(`[data-aspect="${aspect}"]`).forEach(b => {
-    b.classList.toggle('active', parseInt(b.dataset.val) <= val);
-  });
+  document.querySelectorAll(`[data-aspect="${aspect}"]`).forEach(b => b.classList.toggle('active', parseInt(b.dataset.val) <= val));
 }
 
-/* ── CHAR COUNTER ── */
 function countChars(id, counterId, max) {
   const len = document.getElementById(id).value.length;
   const el  = document.getElementById(counterId);
@@ -803,16 +843,15 @@ function countChars(id, counterId, max) {
   el.className   = 'char-counter' + (len > max * 0.9 ? ' warn' : '') + (len >= max ? ' over' : '');
 }
 
-/* ── RECOMMEND ── */
 function setRecommend(val) {
   recommendVal = val;
-  document.getElementById('rec-yes').className   = 'rec-btn' + (val === 'yes'   ? ' active-yes'   : '');
-  document.getElementById('rec-maybe').className = 'rec-btn' + (val === 'maybe' ? ' active-maybe' : '');
-  document.getElementById('rec-no').className    = 'rec-btn' + (val === 'no'    ? ' active-no'    : '');
+  document.getElementById('rec-yes').className   = 'rec-btn' + (val==='yes'   ? ' active-yes'   : '');
+  document.getElementById('rec-maybe').className = 'rec-btn' + (val==='maybe' ? ' active-maybe' : '');
+  document.getElementById('rec-no').className    = 'rec-btn' + (val==='no'    ? ' active-no'    : '');
   document.getElementById('err-recommend').classList.remove('show');
 }
 
-/* ── AI SENTIMENT (local NLP simulation) ── */
+/* ── AI SENTIMENT ── */
 async function analyseSentiment() {
   const liked      = document.getElementById('liked').value.trim();
   const improve    = document.getElementById('improve').value.trim();
@@ -820,55 +859,37 @@ async function analyseSentiment() {
   const combined   = [liked, improve, additional].filter(Boolean).join('. ');
 
   try {
-    const { data, error } = await sb.functions.invoke('analyse-sentiment', {
-      body: { text: combined }
-    });
-
+    const { data, error } = await sb.functions.invoke('analyse-sentiment', { body: { text: combined } });
     if (error) throw error;
-
     const scores = Array.isArray(data[0]) ? data[0] : data;
     const posObj = scores.find(s => s.label === 'POSITIVE');
-    const negObj   = scores.find(s => s.label === 'NEGATIVE');
+    const negObj = scores.find(s => s.label === 'NEGATIVE');
     let posP = Math.round((posObj ? posObj.score : 0.5) * 100);
     let negP = Math.round((negObj ? negObj.score : 0.5) * 100);
     let neuP = 0;
-
-    if (posP > 20 && posP < 80) {
-      neuP = Math.round(Math.min(posP, negP) * 0.4);
-      posP = posP - Math.round(neuP * 0.6);
-      negP = 100 - posP - neuP;
-    }
-
+    if (posP > 20 && posP < 80) { neuP = Math.round(Math.min(posP, negP) * 0.4); posP = posP - Math.round(neuP * 0.6); negP = 100 - posP - neuP; }
     if (overallRating >= 4) { posP = Math.min(100, posP + 10); negP = Math.max(0, negP - 10); }
     if (overallRating <= 2) { negP = Math.min(100, negP + 10); posP = Math.max(0, posP - 10); }
     neuP = Math.max(0, 100 - posP - negP);
-
-    let sentiment, emoji, desc, badgeCls;
-    if (posP >= 55) {
-      sentiment = 'positive'; emoji = '😊'; badgeCls = 'badge-positive';
-      desc = 'The student expressed a generally positive experience.';
-    } else if (negP >= 40) {
-      sentiment = 'negative'; emoji = '😔'; badgeCls = 'badge-negative';
-      desc = 'The student raised concerns that need attention.';
-    } else {
-      sentiment = 'neutral'; emoji = '😐'; badgeCls = 'badge-neutral';
-      desc = 'The student had a mixed or balanced experience.';
-    }
-
-    const stopwords = new Set(['the','a','an','is','it','was','and','or','but','in','on','at','to','for','of','with','this','that','are','i','we','very','so']);
-    const words = combined.toLowerCase().split(/\W+/).filter(w => w.length > 3 && !stopwords.has(w));
-    const freq  = {};
-    words.forEach(w => freq[w] = (freq[w]||0)+1);
-    const sorted = Object.keys(freq).sort((a,b) => freq[b]-freq[a]);
-    const allPositiveKw = sentiment !== 'negative' ? sorted.slice(0,4) : sorted.slice(0,2);
-    const allNegativeKw = sentiment === 'negative'  ? sorted.slice(0,3) : [];
-
-    return { posP, neuP, negP, sentiment, emoji, desc, badgeCls, allPositiveKw, allNegativeKw };
-
+    return buildSentimentResult(posP, neuP, negP, combined);
   } catch (err) {
-    console.warn('Edge function failed, using fallback:', err);
     return analyseSentimentFallback(combined);
   }
+}
+
+function buildSentimentResult(posP, neuP, negP, combined) {
+  let sentiment, emoji, desc, badgeCls;
+  if (posP >= 55)      { sentiment='positive'; emoji='😊'; badgeCls='badge-positive'; desc='The student expressed a generally positive experience.'; }
+  else if (negP >= 40) { sentiment='negative'; emoji='😔'; badgeCls='badge-negative'; desc='The student raised concerns that need attention.'; }
+  else                 { sentiment='neutral';  emoji='😐'; badgeCls='badge-neutral';  desc='The student had a mixed or balanced experience.'; }
+  const stopwords = new Set(['the','a','an','is','it','was','and','or','but','in','on','at','to','for','of','with','this','that','are','i','we','very','so']);
+  const words = combined.toLowerCase().split(/\W+/).filter(w => w.length > 3 && !stopwords.has(w));
+  const freq  = {};
+  words.forEach(w => freq[w] = (freq[w]||0)+1);
+  const sorted = Object.keys(freq).sort((a,b) => freq[b]-freq[a]);
+  const allPositiveKw = sentiment !== 'negative' ? sorted.slice(0,4) : sorted.slice(0,2);
+  const allNegativeKw = sentiment === 'negative'  ? sorted.slice(0,3) : [];
+  return { posP, neuP, negP, sentiment, emoji, desc, badgeCls, allPositiveKw, allNegativeKw };
 }
 
 function analyseSentimentFallback(combined) {
@@ -877,120 +898,87 @@ function analyseSentimentFallback(combined) {
   let posScore = 0, negScore = 0;
   posWords.forEach(w => { if (combined.toLowerCase().includes(w)) posScore++; });
   negWords.forEach(w => { if (combined.toLowerCase().includes(w)) negScore++; });
-  if (overallRating >= 4) posScore += 2;
-  else if (overallRating <= 2) negScore += 2;
+  if (overallRating >= 4) posScore += 2; else if (overallRating <= 2) negScore += 2;
   const total = Math.max(posScore + negScore, 1);
   let posP = Math.round((posScore / total) * 100);
   let negP = Math.round((negScore / total) * 100);
   let neuP = Math.max(0, 100 - posP - negP);
-  let sentiment, emoji, desc, badgeCls;
-  if (posP >= 55)      { sentiment='positive'; emoji='😊'; desc='Positive experience detected.';  badgeCls='badge-positive'; }
-  else if (negP >= 40) { sentiment='negative'; emoji='😔'; desc='Concerns raised.';               badgeCls='badge-negative'; }
-  else                 { sentiment='neutral';  emoji='😐'; desc='Mixed or neutral experience.';   badgeCls='badge-neutral';  }
   const allPositiveKw = posWords.filter(w => combined.toLowerCase().includes(w)).slice(0,4);
   const allNegativeKw = negWords.filter(w => combined.toLowerCase().includes(w)).slice(0,3);
-  return { posP, neuP, negP, sentiment, emoji, desc, badgeCls, allPositiveKw, allNegativeKw };
+  return buildSentimentResult(posP, neuP, negP, combined);
 }
 
 /* ── VALIDATE ── */
 function validate() {
   let ok = true;
-  const required = [
-    { id:'fullName', err:'err-fullName' },
-    { id:'matrix',   err:'err-matrix'   },
-    { id:'email',    err:'err-email'    },
-    { id:'liked',    err:'err-liked'    },
-  ];
-  required.forEach(({ id, err }) => {
-    const el = document.getElementById(id);
-    const er = document.getElementById(err);
+  [{id:'fullName',err:'err-fullName'},{id:'matrix',err:'err-matrix'},{id:'email',err:'err-email'},{id:'liked',err:'err-liked'}].forEach(({id,err}) => {
+    const el = document.getElementById(id), er = document.getElementById(err);
     if (!el.value.trim()) { el.classList.add('error'); er.classList.add('show'); ok = false; }
-    else                  { el.classList.remove('error'); er.classList.remove('show'); }
+    else { el.classList.remove('error'); er.classList.remove('show'); }
   });
-  if (!overallRating) { document.getElementById('err-rating').classList.add('show');    ok = false; }
+  if (!overallRating) { document.getElementById('err-rating').classList.add('show'); ok = false; }
   if (!recommendVal)  { document.getElementById('err-recommend').classList.add('show'); ok = false; }
   return ok;
 }
 
-/* ── SUBMIT — SAVE TO SUPABASE ── */
+/* ── SUBMIT ── */
 async function submitFeedback() {
   if (!validate()) return;
-
-const btn = document.querySelector('.btn-submit');
-btn.innerHTML = '⏳ Analysing...';
-btn.disabled = true;
-
-const ai = await analyseSentiment();
-
-btn.innerHTML = 'Submit Feedback →';
-btn.disabled = false;
+  const btn = document.getElementById('submitBtn');
+  btn.innerHTML = '⏳ Analysing...'; btn.disabled = true;
+  const ai = await analyseSentiment();
+  btn.innerHTML = 'Submit Feedback →'; btn.disabled = false;
 
   const feedbackData = {
-    event_id:            currentEvent?.id   || null,
-    event_title:         document.getElementById('eventName').value,
-    full_name:           document.getElementById('fullName').value.trim(),
-    matrix_number:       document.getElementById('matrix').value.trim().toUpperCase(),
-    email:               document.getElementById('email').value.trim(),
-    faculty:             document.getElementById('faculty').value,
-    overall_rating:      overallRating,
-    aspect_organisation: aspectRatings.organisation || null,
-    aspect_content:      aspectRatings.content      || null,
-    aspect_venue:        aspectRatings.venue         || null,
-    aspect_speaker:      aspectRatings.speaker       || null,
-    aspect_time:         aspectRatings.time          || null,
-    aspect_registration: aspectRatings.registration  || null,
-    comment_liked:       document.getElementById('liked').value.trim(),
-    comment_improve:     document.getElementById('improve').value.trim(),
-    comment_additional:  document.getElementById('additional').value.trim(),
-    recommend:           recommendVal,
-    attend_again:        document.getElementById('attendAgain').value || null,
-    heard_from:          document.getElementById('heardFrom').value   || null,
-    sentiment:           ai.sentiment,
-    sentiment_positive:  ai.posP,
-    sentiment_neutral:   ai.neuP,
-    sentiment_negative:  ai.negP,
-    keywords:            [...ai.allPositiveKw, ...ai.allNegativeKw],
+    event_id: currentEvent?.id||null, event_title: document.getElementById('eventName').value,
+    full_name: document.getElementById('fullName').value.trim(),
+    matrix_number: document.getElementById('matrix').value.trim().toUpperCase(),
+    email: document.getElementById('email').value.trim(),
+    faculty: document.getElementById('faculty').value,
+    overall_rating: overallRating,
+    aspect_organisation: aspectRatings.organisation||null, aspect_content: aspectRatings.content||null,
+    aspect_venue: aspectRatings.venue||null, aspect_speaker: aspectRatings.speaker||null,
+    aspect_time: aspectRatings.time||null, aspect_registration: aspectRatings.registration||null,
+    comment_liked: document.getElementById('liked').value.trim(),
+    comment_improve: document.getElementById('improve').value.trim(),
+    comment_additional: document.getElementById('additional').value.trim(),
+    recommend: recommendVal,
+    attend_again: document.getElementById('attendAgain').value||null,
+    heard_from: document.getElementById('heardFrom').value||null,
+    sentiment: ai.sentiment, sentiment_positive: ai.posP,
+    sentiment_neutral: ai.neuP, sentiment_negative: ai.negP,
+    keywords: [...ai.allPositiveKw, ...ai.allNegativeKw],
   };
 
   const { error } = await sb.from('feedback').insert([feedbackData]);
+  if (error) { alert('Failed to submit feedback. Please try again.\n\n' + error.message); return; }
 
-  if (error) {
-    alert('Failed to submit feedback. Please try again.\n\n' + error.message);
-    return;
-  }
+  setText('sName',      feedbackData.full_name);
+  setText('sMatrix',    feedbackData.matrix_number);
+  setText('sEvent',     feedbackData.event_title);
+  setText('sRating',    '★'.repeat(overallRating) + '☆'.repeat(5-overallRating) + ' (' + overallRating + '/5)');
+  setText('sRecommend', recommendVal==='yes'?'Yes, definitely':recommendVal==='maybe'?'Maybe':'No');
 
-  // Populate success screen
-  document.getElementById('sName').textContent    = feedbackData.full_name;
-  document.getElementById('sMatrix').textContent  = feedbackData.matrix_number;
-  document.getElementById('sEvent').textContent   = feedbackData.event_title;
-  document.getElementById('sRating').textContent  = '★'.repeat(overallRating) + '☆'.repeat(5 - overallRating) + ' (' + overallRating + '/5)';
-  document.getElementById('sRecommend').textContent = recommendVal === 'yes' ? 'Yes, definitely' : recommendVal === 'maybe' ? 'Maybe' : 'No';
-
-  // AI result
-  document.getElementById('sentimentBadge').textContent = cap(ai.sentiment);
-  document.getElementById('sentimentBadge').className   = 'sr-head-badge ' + ai.badgeCls;
-  document.getElementById('sentimentEmoji').textContent = ai.emoji;
-  document.getElementById('sentimentLabel').textContent = cap(ai.sentiment) + ' Sentiment';
-  document.getElementById('sentimentDesc').textContent  = ai.desc;
+  setText('sentimentBadge', cap(ai.sentiment));
+  document.getElementById('sentimentBadge').className = 'sr-head-badge ' + ai.badgeCls;
+  setText('sentimentEmoji', ai.emoji);
+  setText('sentimentLabel', cap(ai.sentiment) + ' Sentiment');
+  setText('sentimentDesc',  ai.desc);
 
   setTimeout(() => {
-    document.getElementById('barPos').style.width = ai.posP + '%';
-    document.getElementById('barNeu').style.width = ai.neuP + '%';
-    document.getElementById('barNeg').style.width = ai.negP + '%';
-    document.getElementById('pctPos').textContent = ai.posP + '%';
-    document.getElementById('pctNeu').textContent = ai.neuP + '%';
-    document.getElementById('pctNeg').textContent = ai.negP + '%';
+    document.getElementById('barPos').style.width = ai.posP + '%'; setText('pctPos', ai.posP + '%');
+    document.getElementById('barNeu').style.width = ai.neuP + '%'; setText('pctNeu', ai.neuP + '%');
+    document.getElementById('barNeg').style.width = ai.negP + '%'; setText('pctNeg', ai.negP + '%');
   }, 200);
 
-  const kwContainer = document.getElementById('kwTags');
-  kwContainer.innerHTML = '';
-  ai.allPositiveKw.forEach(w => { const t = document.createElement('span'); t.className = 'kw-tag pos'; t.textContent = w; kwContainer.appendChild(t); });
-  ai.allNegativeKw.forEach(w => { const t = document.createElement('span'); t.className = 'kw-tag neg'; t.textContent = w; kwContainer.appendChild(t); });
-  if (!kwContainer.children.length) { const t = document.createElement('span'); t.className = 'kw-tag'; t.textContent = 'general feedback'; kwContainer.appendChild(t); }
+  const kwContainer = document.getElementById('kwTags'); kwContainer.innerHTML = '';
+  ai.allPositiveKw.forEach(w => { const t = document.createElement('span'); t.className='kw-tag pos'; t.textContent=w; kwContainer.appendChild(t); });
+  ai.allNegativeKw.forEach(w => { const t = document.createElement('span'); t.className='kw-tag neg'; t.textContent=w; kwContainer.appendChild(t); });
+  if (!kwContainer.children.length) { const t = document.createElement('span'); t.className='kw-tag'; t.textContent='general feedback'; kwContainer.appendChild(t); }
 
   document.getElementById('formCard').classList.add('hide');
   document.getElementById('successScreen').classList.add('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top:0, behavior:'smooth' });
 }
 
 /* ── RESET ── */
@@ -1001,14 +989,14 @@ function resetForm() {
   document.querySelectorAll('.rec-btn').forEach(b => b.className = 'rec-btn');
   document.getElementById('starDesc').textContent = 'Tap a star to rate';
   document.querySelectorAll('.form-input:not(.readonly),.form-select,.form-textarea').forEach(el => {
-    if (!el.readOnly) { if (el.tagName === 'SELECT') el.selectedIndex = 0; else el.value = ''; }
+    if (!el.readOnly) { if (el.tagName==='SELECT') el.selectedIndex=0; else el.value=''; }
     el.classList.remove('error');
   });
   document.querySelectorAll('.form-error').forEach(e => e.classList.remove('show'));
-  ['likedCount','improveCount','additionalCount'].forEach(id => { document.getElementById(id).textContent = '0 / 300'; });
+  ['likedCount','improveCount','additionalCount'].forEach(id => { setText(id, '0 / 300'); });
   document.getElementById('formCard').classList.remove('hide');
   document.getElementById('successScreen').classList.remove('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top:0, behavior:'smooth' });
 }
 
 function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
