@@ -657,11 +657,11 @@ async function init(){
   var userRes=await sb.from('users').select('*').eq('email',sess.data.session.user.email).single();
   currentUser=userRes.data;
   if(currentUser){
-    var initials=(currentUser.name||'').split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase()||'?';
+    var initials=(currentUser.full_name||currentUser.matrix||'').split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase()||'?';
     setText('headerAvatar',initials);
     setText('sbAvatar',initials);
-    setText('headerName',currentUser.name||currentUser.matrix||sess.data.session.user.email);
-    setText('sbName',currentUser.name||'Student');
+    setText('headerName',currentUser.full_name||currentUser.matrix||sess.data.session.user.email);
+    setText('sbName',currentUser.full_name||currentUser.matrix||'Student');
     setText('sbMatrix',currentUser.matrix||currentUser.faculty||'UTM');
   }
   var myEventIds=new Set();
