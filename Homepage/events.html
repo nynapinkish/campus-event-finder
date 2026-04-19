@@ -5,165 +5,98 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Campus Event Finder — UTM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --orange:#F5A623;--red:#8B0000;--red2:#6d0000;--red-badge:#e53935;--red-light:#fdf5f5;
-  --dark:#1c1c2e;--white:#fff;--bg:#eef0f3;--border:#e0e0e0;
-  --text:#000;--muted:#444;--light:#777;
+  --red:#8B0000;--red2:#6d0000;--red-light:#fdf5f5;
+  --white:#fff;--bg:#f5f5f5;--border:#e0e0e0;
+  --text:#222;--muted:#666;--light:#999;
   --green:#1a5c38;--green-light:#e8f5ed;
-  --gold:#c8982a;--gold-light:#fef9ec;
-  --blue:#1d4ed8;--blue-light:#eff6ff;
-  --orange-c:#b35900;--orange-light:#fef4e8;
-  --purple:#5b2b91;--purple-light:#f2ecf9;
-  --radius:12px;--shadow:0 2px 8px rgba(0,0,0,0.10);--shadow-md:0 4px 16px rgba(0,0,0,0.12);
-  --navbar-h:56px;--sidebar-w:235px;
-  --sidebar-transition:0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-html,body{height:100%;font-family:'Roboto',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
-
-body::before{content:'';position:fixed;top:0;left:0;right:0;height:320px;z-index:0;background:url("https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=1600&auto=format&fit=crop&q=80") center top/cover no-repeat}
-body::after{content:'';position:fixed;top:0;left:0;right:0;height:320px;z-index:0;background:linear-gradient(to bottom,rgba(10,28,10,0.35) 0%,rgba(10,28,10,0.55) 40%,rgba(10,28,10,0.88) 70%,rgba(10,28,10,1) 100%),linear-gradient(150deg,rgba(45,90,39,0.3) 0%,rgba(26,61,26,0.25) 35%,rgba(13,43,13,0.3) 65%,rgba(26,53,32,0.25) 100%);pointer-events:none}
-
-.layout-shell{display:flex;flex-direction:column;height:100vh;overflow:hidden;position:relative;z-index:1}
-
-/* ═══ TOP BAND ═══ */
-.top-band{background:linear-gradient(to bottom,rgba(10,28,10,0.4) 0%,rgba(10,28,10,0.65) 100%);position:relative;flex-shrink:0;z-index:300;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
-.top-band > *{position:relative;z-index:1}
-.navbar{height:var(--navbar-h);display:flex;align-items:center;justify-content:space-between;padding:0 20px}
-.nav-left{display:flex;align-items:center;gap:12px}
-.nav-toggle{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:7px;cursor:pointer;transition:all .2s;flex-shrink:0}
-.nav-toggle:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.25)}
-.nav-toggle svg{width:18px;height:18px;stroke:rgba(255,255,255,.75);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--sidebar-transition)}
-body.sb-open .nav-toggle .bar1{transform:rotate(45deg) translate(4px,4px)}
-body.sb-open .nav-toggle .bar2{opacity:0}
-body.sb-open .nav-toggle .bar3{transform:rotate(-45deg) translate(4px,-4px)}
-body:not(.sb-open) .nav-toggle .bar1{transform:rotate(0) translate(0,0)}
-body:not(.sb-open) .nav-toggle .bar2{opacity:1}
-body:not(.sb-open) .nav-toggle .bar3{transform:rotate(0) translate(0,0)}
-.nav-logo{display:flex;flex-direction:column}
-.logo-row{display:flex;align-items:baseline;line-height:1}
-.l-my{color:var(--orange);font-size:19px;font-weight:300;font-style:italic}
-.l-utm{color:#fff;font-size:19px;font-weight:700}
-.l-portal{color:var(--orange);font-size:19px;font-weight:400}
-.l-tag{color:rgba(200,152,42,.65);font-size:8px;letter-spacing:2.5px;display:block;margin-top:1px}
-.nav-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px;pointer-events:none}
-.nav-ticker-badge{background:rgba(139,0,0,.22);border:1px solid rgba(139,0,0,.38);color:var(--red);font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase}
-.nav-center-text{color:rgba(255,255,255,.6);font-size:12px;white-space:nowrap}
-.nav-right{display:flex;align-items:center;gap:10px}
-.nav-icon-btn{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.78);font-size:12px;cursor:pointer;padding:5px 10px;border-radius:6px;font-family:'Roboto',sans-serif;transition:all .15s}
-.nav-icon-btn:hover{background:rgba(255,255,255,.2);color:#fff}
-.nav-icon-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:3px}
-.nav-uname{color:rgba(255,255,255,.78);font-size:13px;font-weight:500}
-.nav-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--red),#c0392b);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,.28)}
-
-/* ═══ SUB NAV ═══ */
-.sub-nav{background:rgba(255,255,255,.97);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:0;flex-shrink:0;position:relative;z-index:10}
-.sub-nav-item{color:var(--muted);font-size:13px;padding:10px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
-.sub-nav-item:hover{color:var(--text)}
-.sub-nav-item.active{color:var(--red);border-bottom-color:var(--red);font-weight:500}
-
-/* ═══ SIDEBAR BACKDROP ═══ */
-.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:199;opacity:0;transition:opacity var(--sidebar-transition)}
-.sidebar-backdrop.visible{display:block;opacity:1}
-
-/* ═══ BODY ROW ═══ */
-.body-row{display:flex;flex:1;overflow:hidden;min-height:0}
-
-/* ═══ SIDEBAR ═══ */
-.sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--white);border-right:1px solid #d0d0d0;display:flex;flex-direction:column;overflow-y:auto;height:100%;transition:transform var(--sidebar-transition),width var(--sidebar-transition),opacity var(--sidebar-transition);z-index:200;box-shadow:2px 0 12px rgba(0,0,0,0.08)}
-@media(min-width:769px){body.sb-collapsed .sidebar{transform:translateX(calc(-1 * var(--sidebar-w)));width:0;border-right:none;opacity:0;overflow:hidden}}
-@media(max-width:768px){.sidebar{position:fixed;left:0;top:calc(var(--navbar-h) + 39px);bottom:0;transform:translateX(calc(-1 * var(--sidebar-w)));box-shadow:none;transition:transform var(--sidebar-transition),box-shadow var(--sidebar-transition)}body.sb-open .sidebar{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.2)}body.sb-collapsed .sidebar{transform:translateX(calc(-1 * var(--sidebar-w)))}}
-.sb-head{background:linear-gradient(160deg,#5c1a1a 0%,#2b0d0d 40%,#2e1313 100%);padding:22px 15px 18px;flex-shrink:0;text-align:center;position:relative;overflow:hidden}
-.sb-head::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:rgba(200,152,42,0.08);border-radius:50%}
-.sb-head::after{content:'';position:absolute;bottom:-15px;left:-15px;width:60px;height:60px;background:rgba(200,152,42,0.06);border-radius:50%}
-.sb-avatar-wrap{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--red),#c0392b);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;margin:0 auto 10px;border:2.5px solid rgba(255,255,255,.2);box-shadow:0 4px 12px rgba(0,0,0,.25)}
-.sb-profile-name{font-size:15px;font-weight:600;color:#fff;margin-bottom:3px;letter-spacing:-0.2px}
-.sb-profile-role{font-size:9px;font-weight:700;color:var(--orange);letter-spacing:2px;text-transform:uppercase}
-.sb-nav{flex:1;padding-bottom:4px}
-.sb-section-lbl{padding:10px 15px 3px;font-size:9px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:1.6px}
-.sb-item{display:flex;align-items:center;gap:9px;padding:7px 15px;margin:0;font-size:12.5px;font-weight:500;color:#222;cursor:pointer;transition:all .12s;border:none;background:none;width:100%;text-align:left;font-family:'Roboto',sans-serif;position:relative;border-left:3px solid transparent}
-.sb-item:hover{color:var(--red);background:#fff5f5}
-.sb-item.active{color:var(--red);background:var(--red-light);font-weight:700;border-left-color:var(--red)}
-.sb-item-icon{width:18px;height:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.sb-item-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.sb-item-label{flex:1}
-.sb-badge{font-size:9px;font-weight:700;background:var(--red);color:#fff;padding:1px 6px;border-radius:9px;min-width:18px;text-align:center}
-.sb-divider{height:1px;background:#e0e0e0;margin:5px 0}
-.sb-footer{flex-shrink:0;padding:8px 0 6px;border-top:1px solid #e0e0e0}
-.sb-logout{display:flex;align-items:center;gap:9px;color:#222;font-size:12.5px;font-weight:500;cursor:pointer;transition:all .15s;border:none;background:none;font-family:'Roboto',sans-serif;width:100%;text-align:left;padding:7px 15px}
-.sb-logout-icon{width:15px;height:15px;flex-shrink:0;display:flex}
-.sb-logout-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.sb-logout:hover{color:var(--red-badge)}
-
-/* ═══ SIDEBAR FILTER CARD ═══ */
-.sb-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:0 0 0}
-.sb-card-head{background:var(--red);padding:10px 14px;font-size:12px;font-weight:700;color:#fff;letter-spacing:.5px;text-transform:uppercase;border-radius:var(--radius) var(--radius) 0 0}
-.sb-search{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--border)}
-.sb-search input{flex:1;border:none;outline:none;font-family:'Roboto',sans-serif;font-size:13px;color:var(--text);background:transparent}
-.sb-search input::placeholder{color:#bbb}
-.sb-filter-item{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;font-size:13px;color:var(--muted);cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:'Roboto',sans-serif;border-bottom:1px solid #fafafa;transition:all .15s}
-.sb-filter-item:last-child{border-bottom:none}
-.sb-filter-item:hover{background:#fff5f5;color:var(--red)}
-.sb-filter-item.active{color:var(--red);background:var(--red-light);font-weight:600}
-.sb-filter-left{display:flex;align-items:center;gap:9px}
-.sb-dot{width:7px;height:7px;border-radius:50%;background:#ddd;flex-shrink:0;transition:background .15s}
-.sb-filter-item.active .sb-dot{background:var(--red)}
-.sb-cnt{font-size:11px;font-weight:700;background:#eee;color:var(--muted);padding:1px 8px;border-radius:10px}
-.sb-filter-item.active .sb-cnt{background:rgba(139,0,0,.1);color:var(--red)}
-.sb-stats{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border)}
-.sb-stat{padding:12px;text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
-.sb-stat:nth-child(2n){border-right:none}
-.sb-stat:nth-child(3),.sb-stat:nth-child(4){border-bottom:none}
-.sb-stat-num{font-size:22px;font-weight:700;color:var(--red);line-height:1}
-.sb-stat-lbl{font-size:10.5px;color:var(--light);margin-top:2px;text-transform:uppercase;letter-spacing:.4px}
-.sb-pref-btn{display:flex;align-items:center;gap:8px;background:var(--white);border:1px dashed rgba(139,0,0,.4);border-radius:var(--radius);padding:10px 14px;font-size:12.5px;color:var(--red);cursor:pointer;text-align:left;font-family:'Roboto',sans-serif;transition:all .15s;width:100%;margin-bottom:0}
-.sb-pref-btn:hover{background:var(--red-light);border-color:var(--red)}
-.sb-archived-btn{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;font-size:12.5px;color:var(--light);cursor:pointer;text-align:left;font-family:'Roboto',sans-serif;transition:all .15s;width:100%}
-.sb-archived-btn:hover{border-color:#aaa;color:var(--muted)}
-.ar-sb{background:var(--red);border-radius:var(--radius);padding:16px}
-.ar-sb-title{font-size:13.5px;font-weight:700;color:#fff;margin-bottom:6px}
-.ar-sb-text{font-size:12px;color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:12px}
-.ar-sb-btn{width:100%;background:#fff;color:var(--red);border:none;font-family:'Roboto',sans-serif;font-size:13px;font-weight:700;padding:9px;border-radius:7px;cursor:pointer;transition:opacity .15s}
-.ar-sb-btn:hover{opacity:.9}
-.back-link{display:flex;align-items:center;gap:7px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:9px 14px;font-size:13px;color:var(--muted);text-decoration:none;transition:all .15s}
-.back-link:hover{color:var(--red);border-color:rgba(139,0,0,.3)}
-
-/* ═══ CONTENT AREA ═══ */
-.content-area{flex:1;overflow-y:auto;min-width:0;padding:0;position:relative}
-.content-area::before{content:'';position:sticky;top:0;left:0;right:0;height:30px;display:block;background:linear-gradient(to bottom,rgba(10,28,10,0.15),transparent);z-index:5;pointer-events:none}
-.events-inner{padding:0 12px 60px;max-width:1200px;margin:0 auto}
-
-/* ═══ PAGE HEADING ═══ */
-.page-heading{margin-bottom:0;padding:14px 24px 12px}
-.page-heading h1{font-size:24px;font-weight:700;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.35);margin-bottom:3px;letter-spacing:-0.3px}
-.page-heading p{font-size:13px;color:rgba(255,255,255,.7);text-shadow:0 1px 3px rgba(0,0,0,.3)}
-.ptb-tags{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
-.ptb-tag{font-size:11px;font-weight:600;background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:3px 10px}
-
-/* ═══ CAT TABS ═══ */
-.cat-tabs{background:var(--white);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;align-items:stretch;flex-shrink:0}
+body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+.topbar{background:var(--red);height:38px;display:flex;align-items:center;justify-content:flex-end;padding:0 24px;gap:20px}
+.topbar a{color:rgba(255,255,255,.8);font-size:12.5px;text-decoration:none}
+.topbar a:hover{color:#fff}
+.topbar-sep{color:rgba(255,255,255,.3);font-size:11px}
+.header{background:#fff;border-bottom:4px solid var(--red);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:80px}
+.header-logo{display:flex;align-items:center;gap:16px;text-decoration:none}
+.logo-img{width:60px;height:60px;border-radius:50%;background:var(--red);border:2px solid #c8982a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px}
+.logo-img-utm{color:#fff;font-size:16px;font-weight:700;line-height:1}
+.logo-img-star{color:#c8982a;font-size:8px;letter-spacing:2px}
+.logo-utm{font-size:28px;font-weight:700;color:var(--red);line-height:1}
+.logo-full{font-size:11px;color:var(--muted);letter-spacing:.3px;margin-top:1px}
+.header-nav{display:flex;gap:0}
+.hn-item{padding:0 16px;height:80px;display:flex;align-items:center;font-size:13.5px;font-weight:500;color:var(--text);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-4px;transition:color .15s,border-color .15s}
+.hn-item:hover{color:var(--red)}
+.hn-item.active{color:var(--red);border-bottom-color:var(--red)}
+.hn-item .arr{font-size:9px;margin-left:3px;opacity:.5}
+.header-right{display:flex;align-items:center;gap:10px}
+.user-pill{display:flex;align-items:center;gap:8px;background:#f5f5f5;border:1px solid var(--border);border-radius:20px;padding:5px 14px 5px 5px;font-size:13px;color:var(--muted);cursor:pointer}
+.user-av{width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.section-nav{background:#1f1f1f;padding:0 24px;display:flex;gap:0}
+.sn-item{color:rgba(255,255,255,.6);font-size:13px;padding:10px 16px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.sn-item:hover{color:#fff}
+.sn-item.active{color:#fff;border-bottom-color:#c8982a}
+.page-title-bar{background:#fff;border-bottom:1px solid var(--border);padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+.ptb-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--light);margin-bottom:5px}
+.ptb-breadcrumb a{color:var(--muted);text-decoration:none}
+.ptb-breadcrumb a:hover{color:var(--red)}
+.ptb-title{font-size:20px;font-weight:700;color:var(--text)}
+.ptb-right{display:flex;gap:8px;align-items:center}
+.ptb-tag{font-size:11.5px;font-weight:600;background:var(--red-light);color:var(--red);border:1px solid rgba(139,0,0,.15);border-radius:3px;padding:4px 11px}
+.cat-tabs{background:#fff;border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;align-items:stretch}
 .cat-tabs::-webkit-scrollbar{display:none}
-.ct-btn{padding:11px 18px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:none;font-family:'Roboto',sans-serif;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+.ct-btn{padding:11px 18px;font-size:13.5px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:none;font-family:'Open Sans',sans-serif;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
 .ct-btn:hover{color:var(--text)}
 .ct-btn.active{color:var(--red);border-bottom-color:var(--red);font-weight:600}
 .ct-sep{width:1px;background:var(--border);margin:10px 4px;flex-shrink:0}
 .ct-btn.archived-btn{color:var(--light);font-style:italic}
 .ct-btn.archived-btn.active{color:#888;border-bottom-color:#888;font-style:normal;font-weight:500}
 .ct-btn.archived-btn .arch-count{display:inline-block;background:#eee;color:var(--muted);font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;margin-left:4px}
-
-/* ═══ EVENT TOOLBAR ═══ */
-.ev-toolbar{display:flex;align-items:center;justify-content:space-between;margin:16px 0}
+.wrap{max-width:1320px;margin:0 auto;padding:24px 24px 60px;display:grid;grid-template-columns:230px 1fr;gap:20px;align-items:start}
+.sidebar{display:flex;flex-direction:column;gap:14px}
+.sb-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.sb-card-head{background:var(--red);padding:10px 14px;font-size:12px;font-weight:700;color:#fff;letter-spacing:.5px;text-transform:uppercase}
+.sb-search{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--border)}
+.sb-search input{flex:1;border:none;outline:none;font-family:'Open Sans',sans-serif;font-size:13px;color:var(--text);background:transparent}
+.sb-search input::placeholder{color:#bbb}
+.sb-item{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;font-size:13px;color:var(--muted);cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:'Open Sans',sans-serif;border-bottom:1px solid #fafafa;transition:all .15s}
+.sb-item:last-child{border-bottom:none}
+.sb-item:hover{background:#fdf5f5;color:var(--red)}
+.sb-item.active{color:var(--red);background:var(--red-light);font-weight:600}
+.sb-item-left{display:flex;align-items:center;gap:9px}
+.sb-dot{width:7px;height:7px;border-radius:50%;background:#ddd;flex-shrink:0;transition:background .15s}
+.sb-item.active .sb-dot{background:var(--red)}
+.sb-cnt{font-size:11px;font-weight:700;background:#eee;color:var(--muted);padding:1px 8px;border-radius:10px}
+.sb-item.active .sb-cnt{background:rgba(139,0,0,.1);color:var(--red)}
+.sb-stats{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border)}
+.sb-stat{padding:12px;text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.sb-stat:nth-child(2n){border-right:none}
+.sb-stat:nth-child(3),.sb-stat:nth-child(4){border-bottom:none}
+.sb-stat-num{font-size:22px;font-weight:700;color:var(--red);line-height:1}
+.sb-stat-lbl{font-size:10.5px;color:var(--light);margin-top:2px;text-transform:uppercase;letter-spacing:.4px}
+.ar-sb{background:var(--red);border-radius:4px;padding:16px}
+.ar-sb-title{font-size:13.5px;font-weight:700;color:#fff;margin-bottom:6px}
+.ar-sb-text{font-size:12px;color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:12px}
+.ar-sb-btn{width:100%;background:#fff;color:var(--red);border:none;font-family:'Open Sans',sans-serif;font-size:13px;font-weight:700;padding:9px;border-radius:3px;cursor:pointer;transition:opacity .15s}
+.ar-sb-btn:hover{opacity:.9}
+.back-link{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--border);border-radius:4px;padding:9px 14px;font-size:13px;color:var(--muted);text-decoration:none;transition:all .15s}
+.back-link:hover{color:var(--red);border-color:rgba(139,0,0,.3)}
+.sb-pref-btn{display:flex;align-items:center;gap:8px;background:#fff;border:1px dashed rgba(139,0,0,.4);border-radius:4px;padding:10px 14px;font-size:12.5px;color:var(--red);cursor:pointer;text-align:left;font-family:'Open Sans',sans-serif;transition:all .15s;width:100%}
+.sb-pref-btn:hover{background:var(--red-light);border-color:var(--red)}
+.sb-pref-btn span{font-size:14px}
+.sb-archived-btn{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:4px;padding:10px 14px;font-size:12.5px;color:var(--light);cursor:pointer;text-align:left;font-family:'Open Sans',sans-serif;transition:all .15s;width:100%}
+.sb-archived-btn:hover{border-color:#aaa;color:var(--muted)}
+.sb-archived-btn span{font-size:14px}
+.ev-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .ev-toolbar-left h2{font-size:16px;font-weight:700;color:var(--text)}
 .ev-toolbar-left p{font-size:12.5px;color:var(--muted);margin-top:2px}
-.ev-toolbar-badge{display:inline-flex;align-items:center;gap:5px;background:#f0f0f0;color:var(--muted);font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;margin-left:10px}
-.ev-toolbar-badge.live{background:var(--green-light);color:var(--green)}
-
-/* ═══ EVENT GRID ═══ */
-.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.ev-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .2s;animation:fadeUp .3s ease both}
-.ev-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.ev-toolbar-badge{display:inline-flex;align-items:center;gap:5px;background:#f0f0f0;color:var(--muted);font-size:11px;font-weight:600;padding:3px 10px;border-radius:3px;margin-left:10px}
+.ev-toolbar-badge.live{background:#e8f5ed;color:var(--green)}
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.ev-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .2s;animation:fadeUp .3s ease both}
+.ev-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);transform:translateY(-2px)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .ev-card.cat-academic{border-top:3px solid #003087}
 .ev-card.cat-sports{border-top:3px solid #1a5c38}
@@ -171,14 +104,19 @@ body:not(.sb-open) .nav-toggle .bar3{transform:rotate(0) translate(0,0)}
 .ev-card.cat-career{border-top:3px solid #b35900}
 .ev-card.cat-volunteer{border-top:3px solid #5b2b91}
 .ev-card.is-registered{border-color:#b7dfca;background:#fafffe}
+.ev-card.is-registered .ev-card-body{position:relative}
 .ev-card.is-expired{opacity:.65}
-.expired-ribbon,.registered-ribbon{position:absolute;top:0;right:0;color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 0 4px;z-index:2}
-.expired-ribbon{background:#999}
-.registered-ribbon{background:var(--green)}
+.ev-card.is-expired .ev-card-body{position:relative}
+.expired-ribbon{position:absolute;top:0;right:0;background:#999;color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 0 4px}
+.registered-ribbon{position:absolute;top:0;right:0;background:var(--green);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:0 0 0 4px}
 .ev-card-body{padding:16px;position:relative}
 .ev-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
-.ev-badge{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:4px}
-.badge-academic{background:#e8eef8;color:#003087}.badge-sports{background:var(--green-light);color:#1a5c38}.badge-cultural{background:var(--red-light);color:var(--red)}.badge-career{background:var(--orange-light);color:#b35900}.badge-volunteer{background:var(--purple-light);color:#5b2b91}
+.ev-badge{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:3px}
+.badge-academic{background:#e8eef8;color:#003087}
+.badge-sports{background:#e8f5ed;color:#1a5c38}
+.badge-cultural{background:var(--red-light);color:var(--red)}
+.badge-career{background:#fef4e8;color:#b35900}
+.badge-volunteer{background:#f2ecf9;color:#5b2b91}
 .ev-emoji{font-size:26px;line-height:1}
 .ev-title{font-size:15px;font-weight:600;color:var(--text);line-height:1.35;margin-bottom:12px}
 .ev-meta{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
@@ -191,37 +129,39 @@ body:not(.sb-open) .nav-toggle .bar3{transform:rotate(0) translate(0,0)}
 .ev-slots-txt.ok b{color:#1a5c38}
 .ev-bar{height:3px;background:#eee;border-radius:2px;overflow:hidden}
 .ev-bar-fill{height:100%;border-radius:2px;transition:width .7s}
-.ev-btn{background:var(--red);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:12.5px;font-weight:600;padding:7px 16px;border-radius:7px;cursor:pointer;white-space:nowrap;transition:all .15s}
+.ev-btn{background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:12.5px;font-weight:600;padding:7px 16px;border-radius:3px;cursor:pointer;white-space:nowrap;transition:all .15s}
 .ev-btn:hover{background:var(--red2)}
 .ev-btn.outline{background:none;color:var(--red);border:1px solid rgba(139,0,0,.4)}
 .ev-btn.outline:hover{background:var(--red);color:#fff}
-.ev-btn.registered{background:var(--green-light);color:var(--green);border:1.5px solid #b7dfca;font-weight:700;cursor:pointer}
-.ev-btn.registered:hover{background:var(--green);color:#fff;border-color:var(--green)}
-.full-tag{font-size:11px;font-weight:700;color:#c0392b;background:#fef2f2;padding:3px 8px;border-radius:4px;border:1px solid #fca5a5}
+.ev-btn.registered{background:#e8f5ed;color:var(--green);border:1.5px solid #b7dfca;font-weight:700;cursor:pointer}
+.ev-btn.reg istered:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.full-tag{font-size:11px;font-weight:700;color:#c0392b;background:#fef2f2;padding:3px 8px;border-radius:3px;border:1px solid #fca5a5}
 .state-box{grid-column:1/-1;text-align:center;padding:64px 20px;color:var(--muted)}
 .state-box h3{font-size:16px;color:var(--text);margin-bottom:6px}
 .spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* ═══ AI RECOMMENDATIONS ═══ */
-.ai-rec-outer{display:none;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px 20px;margin-bottom:20px}
-.ai-rec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.ai-rec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .ai-rec-title{display:flex;align-items:center;gap:10px}
 .ai-rec-title-icon{width:30px;height:30px;background:linear-gradient(135deg,#8B0000,#c0392b);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .ai-rec-title h3{font-size:15px;font-weight:700;color:var(--text)}
 .ai-rec-title p{font-size:11.5px;color:var(--muted);margin-top:1px}
 .ai-rec-badge{font-size:10px;font-weight:700;letter-spacing:.6px;background:linear-gradient(90deg,#8B0000,#c0392b);color:#fff;padding:3px 10px;border-radius:20px;text-transform:uppercase;flex-shrink:0}
-.ai-rec-edit{font-size:11.5px;color:var(--red);cursor:pointer;background:none;border:none;font-family:'Roboto',sans-serif;text-decoration:underline;text-underline-offset:2px;transition:opacity .15s;white-space:nowrap}
+.ai-rec-edit{font-size:11.5px;color:var(--red);cursor:pointer;background:none;border:none;font-family:'Open Sans',sans-serif;text-decoration:underline;text-underline-offset:2px;transition:opacity .15s;white-space:nowrap}
 .ai-rec-edit:hover{opacity:.7}
 .ai-rec-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .ai-rec-scroll::-webkit-scrollbar{height:4px}
+.ai-rec-scroll::-webkit-scrollbar-track{background:transparent}
 .ai-rec-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.rec-card{flex:0 0 250px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .2s;position:relative}
-.rec-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
-.rec-card.cat-academic{border-top:3px solid #003087}.rec-card.cat-sports{border-top:3px solid #1a5c38}.rec-card.cat-cultural{border-top:3px solid var(--red)}.rec-card.cat-career{border-top:3px solid #b35900}.rec-card.cat-volunteer{border-top:3px solid #5b2b91}
+.rec-card{flex:0 0 260px;background:#fff;border:1px solid var(--border);border-radius:6px;overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .2s;position:relative}
+.rec-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);transform:translateY(-2px)}
+.rec-card.cat-academic{border-top:3px solid #003087}
+.rec-card.cat-sports{border-top:3px solid #1a5c38}
+.rec-card.cat-cultural{border-top:3px solid var(--red)}
+.rec-card.cat-career{border-top:3px solid #b35900}
+.rec-card.cat-volunteer{border-top:3px solid #5b2b91}
 .rec-card-body{padding:13px 14px 14px}
 .rec-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
-.rec-ai-reason{font-size:10.5px;color:#8B0000;background:var(--red-light);border:1px solid rgba(139,0,0,.15);border-radius:4px;padding:3px 8px;margin-bottom:8px;line-height:1.4;display:flex;align-items:flex-start;gap:5px}
+.rec-ai-reason{font-size:10.5px;color:#8B0000;background:var(--red-light);border:1px solid rgba(139,0,0,.15);border-radius:3px;padding:3px 8px;margin-bottom:8px;line-height:1.4;display:flex;align-items:flex-start;gap:5px}
 .rec-ai-reason-icon{flex-shrink:0;margin-top:1px;font-size:11px}
 .rec-title{font-size:13.5px;font-weight:600;color:var(--text);line-height:1.35;margin-bottom:8px}
 .rec-meta-row{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-bottom:3px}
@@ -229,47 +169,57 @@ body:not(.sb-open) .nav-toggle .bar3{transform:rotate(0) translate(0,0)}
 .rec-foot{border-top:1px solid var(--border);padding:9px 14px;display:flex;align-items:center;justify-content:space-between}
 .rec-slots{font-size:11.5px;color:var(--muted)}
 .rec-slots b{color:#1a5c38}
-.rec-btn{background:var(--red);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:11.5px;font-weight:600;padding:5px 13px;border-radius:7px;cursor:pointer;transition:background .15s}
+.rec-btn{background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:11.5px;font-weight:600;padding:5px 13px;border-radius:3px;cursor:pointer;transition:background .15s}
 .rec-btn:hover{background:var(--red2)}
-.rec-matched{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;background:var(--green-light);color:#1a5c38;padding:2px 7px;border-radius:4px}
-.rec-skeleton{flex:0 0 250px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);border-top:3px solid #eee;padding:13px 14px 14px;overflow:hidden}
+.rec-skeleton{flex:0 0 260px;background:#fff;border:1px solid var(--border);border-radius:6px;border-top:3px solid #eee;padding:13px 14px 14px;overflow:hidden}
 .skel-line{background:#f0f0f0;border-radius:3px;margin-bottom:8px;animation:shimmer 1.4s ease infinite;background-size:200% 100%;background-image:linear-gradient(90deg,#f0f0f0 25%,#e4e4e4 50%,#f0f0f0 75%)}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
-/* ═══ MODAL ═══ */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)}
+.rec-matched{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;background:#e8f5ed;color:#1a5c38;padding:2px 7px;border-radius:3px}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;align-items:center;justify-content:center;padding:20px}
 .overlay.open{display:flex}
-.modal{background:#fff;border-radius:14px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.2);animation:mIn .2s ease}
-@keyframes mIn{from{opacity:0;transform:scale(.97) translateY(8px)}to{opacity:1;transform:none}}
-.m-nav{background:var(--dark);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-radius:14px 14px 0 0}
-.m-nav-title{color:#fff;font-size:14px;font-weight:500}
-.m-nav-close{background:rgba(255,255,255,.12);border:none;color:#fff;width:26px;height:26px;border-radius:6px;font-size:13px;cursor:pointer;transition:background .15s}
-.m-nav-close:hover{background:rgba(255,255,255,.25)}
+.modal{background:#fff;border-radius:4px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.2);animation:mIn .2s ease}
+@keyframes mIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.m-nav{background:var(--red);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-radius:4px 4px 0 0}
+.m-nav-title{color:#fff;font-size:13.5px;font-weight:700}
+.m-nav-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:3px;font-size:13px;cursor:pointer;transition:background .15s}
+.m-nav-close:hover{background:rgba(255,255,255,.3)}
 .m-body{padding:20px}
 .m-cat-badge{display:inline-block;margin-bottom:10px}
 .m-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:16px;line-height:1.3}
-.m-registered-note{background:var(--green-light);border:1px solid #b7dfca;border-radius:7px;padding:10px 14px;font-size:12.5px;color:var(--green);margin-bottom:14px;display:none;align-items:center;gap:8px;font-weight:500}
-.m-registered-note.show{display:flex}
 .m-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.m-info-cell{background:#f8fafc;border:1px solid var(--border);border-radius:7px;padding:9px 12px}
-.m-info-lbl{font-size:10px;color:var(--light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
-.m-info-val{font-size:13px;font-weight:500;color:var(--text)}
+.m-info-cell{background:#f8f8f8;border:1px solid var(--border);border-radius:3px;padding:9px 12px}
+.m-info-lbl{font-size:10.5px;color:var(--light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.m-info-val{font-size:13px;font-weight:600;color:var(--text)}
 .m-desc-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--light);margin-bottom:7px}
-.m-desc-body{font-size:13.5px;line-height:1.7;color:var(--muted);background:#f8fafc;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 7px 7px 0;margin-bottom:18px}
+.m-desc-body{font-size:13.5px;line-height:1.7;color:var(--muted);background:#f8f8f8;border-left:3px solid var(--red);padding:12px 14px;border-radius:0 3px 3px 0;margin-bottom:18px}
 .m-footer{display:flex;gap:10px}
-.m-btn-reg{flex:1;background:var(--red);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:7px;cursor:pointer;transition:background .15s}
+.m-btn-reg{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:3px;cursor:pointer;transition:background .15s}
 .m-btn-reg:hover{background:var(--red2)}
 .m-btn-reg:disabled{opacity:.4;cursor:not-allowed}
 .m-btn-reg.registered{background:var(--green);opacity:1;cursor:pointer}
 .m-btn-reg.registered:hover{background:#134a2c}
-.m-btn-close{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Roboto',sans-serif;font-size:14px;padding:12px 18px;border-radius:7px;cursor:pointer;transition:all .15s}
+.m-registered-note{background:var(--green-light);border:1px solid #b7dfca;border-radius:3px;padding:10px 14px;font-size:12.5px;color:var(--green);margin-bottom:14px;display:none;align-items:center;gap:8px;font-weight:500}
+.m-registered-note.show{display:flex}
+.m-btn-close{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 18px;border-radius:3px;cursor:pointer;transition:all .15s}
 .m-btn-close:hover{border-color:var(--red);color:var(--red)}
-
-/* ═══ PREFERENCES MODAL ═══ */
+.footer{background:#1f1f1f;padding:36px 24px 28px;margin-top:auto}
+.footer-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px}
+.fi-brand-utm{font-size:22px;font-weight:700;color:#fff;line-height:1;margin-bottom:6px}
+.fi-brand-full{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.3px;margin-bottom:12px}
+.fi-brand-text{font-size:12.5px;color:rgba(255,255,255,.45);line-height:1.6}
+.fi-head{font-size:12px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.fi-links{display:flex;flex-direction:column;gap:8px}
+.fi-links a{font-size:12.5px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .15s}
+.fi-links a:hover{color:#fff}
+.footer-bottom{max-width:1320px;margin:0 auto;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.3)}
+.footer-bottom-links{display:flex;gap:16px}
+.footer-bottom-links a{font-size:12px;color:rgba(255,255,255,.35);text-decoration:none;transition:color .15s}
+.footer-bottom-links a:hover{color:rgba(255,255,255,.7)}
 .pref-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;align-items:center;justify-content:center;padding:20px}
 .pref-overlay.open{display:flex}
-.pref-modal{background:#fff;border-radius:14px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:mIn .25s ease}
-.pref-head{background:linear-gradient(135deg,#8B0000,#a50000);padding:22px 24px 18px;border-radius:14px 14px 0 0;text-align:center}
+.pref-modal{background:#fff;border-radius:8px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:mIn .25s ease}
+.pref-head{background:linear-gradient(135deg,#8B0000,#a50000);padding:22px 24px 18px;border-radius:8px 8px 0 0;text-align:center}
 .pref-head-icon{font-size:32px;margin-bottom:8px}
 .pref-head h2{color:#fff;font-size:18px;font-weight:700;margin-bottom:4px}
 .pref-head p{color:rgba(255,255,255,.7);font-size:13px;line-height:1.4}
@@ -278,7 +228,7 @@ body:not(.sb-open) .nav-toggle .bar3{transform:rotate(0) translate(0,0)}
 .pref-section:last-child{margin-bottom:0}
 .pref-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--light);margin-bottom:10px}
 .pref-cats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pref-cat-card{display:flex;align-items:center;gap:10px;padding:12px 14px;border:2px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;background:#fff;user-select:none}
+.pref-cat-card{display:flex;align-items:center;gap:10px;padding:12px 14px;border:2px solid var(--border);border-radius:6px;cursor:pointer;transition:all .15s;background:#fff;user-select:none}
 .pref-cat-card:hover{border-color:rgba(139,0,0,.3);background:#fefbfb}
 .pref-cat-card.selected{border-color:var(--red);background:var(--red-light)}
 .pref-cat-icon{font-size:22px;line-height:1;flex-shrink:0}
@@ -296,18 +246,16 @@ body:not(.sb-open) .nav-toggle .bar3{transform:rotate(0) translate(0,0)}
 .pref-tag-x{cursor:pointer;font-size:13px;opacity:.6;transition:opacity .15s;line-height:1}
 .pref-tag-x:hover{opacity:1}
 .pref-input-row{display:flex;gap:8px}
-.pref-input{flex:1;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;font-family:'Roboto',sans-serif;outline:none;color:var(--text);transition:border-color .15s}
+.pref-input{flex:1;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;font-family:'Open Sans',sans-serif;outline:none;color:var(--text);transition:border-color .15s}
 .pref-input:focus{border-color:#8B0000}
 .pref-input::placeholder{color:#bbb}
-.pref-add-btn{background:none;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;color:var(--muted);cursor:pointer;font-family:'Roboto',sans-serif;transition:all .15s;white-space:nowrap}
+.pref-add-btn{background:none;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:13px;color:var(--muted);cursor:pointer;font-family:'Open Sans',sans-serif;transition:all .15s;white-space:nowrap}
 .pref-add-btn:hover{border-color:var(--red);color:var(--red)}
 .pref-foot{display:flex;gap:10px;padding:0 24px 22px}
-.pref-btn-save{flex:1;background:var(--red);color:#fff;border:none;font-family:'Roboto',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:7px;cursor:pointer;transition:background .15s}
+.pref-btn-save{flex:1;background:var(--red);color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:12px;border-radius:4px;cursor:pointer;transition:background .15s}
 .pref-btn-save:hover{background:var(--red2)}
-.pref-btn-skip{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Roboto',sans-serif;font-size:14px;padding:12px 20px;border-radius:7px;cursor:pointer;transition:all .15s}
+.pref-btn-skip{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Open Sans',sans-serif;font-size:14px;padding:12px 20px;border-radius:4px;cursor:pointer;transition:all .15s}
 .pref-btn-skip:hover{border-color:var(--red);color:var(--red)}
-
-/* ═══ CHAT WIDGET ═══ */
 #utm-chat-fab{position:fixed;bottom:28px;right:28px;z-index:9999;width:56px;height:56px;border-radius:50%;background:#8B0000;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(139,0,0,.45);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s}
 #utm-chat-fab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(139,0,0,.55)}
 #utm-chat-fab svg{width:26px;height:26px;fill:#fff;transition:opacity .2s}
@@ -317,9 +265,9 @@ body:not(.sb-open) .nav-toggle .bar3{transform:rotate(0) translate(0,0)}
 #utm-chat-fab::before{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(139,0,0,.35);animation:chatPulse 2.4s ease-out infinite}
 @keyframes chatPulse{0%{transform:scale(1);opacity:.8}70%{transform:scale(1.35);opacity:0}100%{opacity:0}}
 #utm-chat-fab.open::before{display:none}
-#chat-badge{position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:#c8982a;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Roboto',sans-serif;border:2px solid #fff}
+#chat-badge{position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:#c8982a;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Open Sans',sans-serif;border:2px solid #fff}
 #chat-badge.hidden{display:none}
-#utm-chat-win{position:fixed;bottom:96px;right:28px;z-index:9998;width:360px;max-height:520px;background:#fff;border-radius:14px;box-shadow:0 12px 48px rgba(0,0,0,.18);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(12px) scale(.97);pointer-events:none;transition:opacity .22s ease,transform .22s ease;font-family:'Roboto',sans-serif}
+#utm-chat-win{position:fixed;bottom:96px;right:28px;z-index:9998;width:360px;max-height:520px;background:#fff;border-radius:12px;box-shadow:0 12px 48px rgba(0,0,0,.18);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(12px) scale(.97);pointer-events:none;transition:opacity .22s ease,transform .22s ease;font-family:'Open Sans',sans-serif}
 #utm-chat-win.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
 .cw-head{background:#8B0000;padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}
 .cw-av{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
@@ -346,10 +294,10 @@ body:not(.sb-open) .nav-toggle .bar3{transform:rotate(0) translate(0,0)}
 .typing-dots span:nth-child(3){animation-delay:.4s}
 @keyframes typDot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
 .cw-quick{padding:8px 14px 4px;display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0}
-.qr-btn{font-size:11.5px;font-family:'Roboto',sans-serif;border:1px solid rgba(139,0,0,.3);color:#8B0000;background:var(--red-light);border-radius:16px;padding:5px 11px;cursor:pointer;white-space:nowrap;transition:all .15s}
+.qr-btn{font-size:11.5px;font-family:'Open Sans',sans-serif;border:1px solid rgba(139,0,0,.3);color:#8B0000;background:#fdf5f5;border-radius:16px;padding:5px 11px;cursor:pointer;white-space:nowrap;transition:all .15s}
 .qr-btn:hover{background:#8B0000;color:#fff;border-color:#8B0000}
 .cw-input-row{padding:10px 12px;border-top:1px solid #eee;display:flex;gap:8px;align-items:center;flex-shrink:0}
-.cw-input{flex:1;border:1px solid #e0e0e0;border-radius:20px;padding:8px 14px;font-size:13px;font-family:'Roboto',sans-serif;outline:none;color:#222;transition:border-color .15s}
+.cw-input{flex:1;border:1px solid #e0e0e0;border-radius:20px;padding:8px 14px;font-size:13px;font-family:'Open Sans',sans-serif;outline:none;color:#222;transition:border-color .15s}
 .cw-input:focus{border-color:#8B0000}
 .cw-input::placeholder{color:#bbb}
 .cw-send{width:34px;height:34px;border-radius:50%;background:#8B0000;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,transform .15s;flex-shrink:0}
@@ -357,158 +305,118 @@ body:not(.sb-open) .nav-toggle .bar3{transform:rotate(0) translate(0,0)}
 .cw-send:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .cw-send svg{width:15px;height:15px;fill:#fff}
 .cw-powered{text-align:center;font-size:10px;color:#bbb;padding:6px 0 8px;flex-shrink:0}
-
-/* ═══ TOAST ═══ */
-.toast{position:fixed;bottom:24px;right:24px;z-index:500;background:#1c1c2e;color:#fff;padding:12px 20px;border-radius:9px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(80px);opacity:0;transition:all .3s ease;pointer-events:none}
-.toast.show{transform:translateY(0);opacity:1}
-.toast.success{border-left:4px solid var(--green)}
-.toast.error{border-left:4px solid #ef4444}
-
-/* ═══ RESPONSIVE ═══ */
-@media(max-width:1100px){.ev-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}}
-@media(max-width:768px){
-  .nav-center{display:none}.nav-uname{display:none}
-  .sub-nav{padding:0 12px;overflow-x:auto}
-  .cat-tabs{padding:0 12px}
-  .page-heading{padding:10px 12px 8px}.page-heading h1{font-size:20px}
-  .events-inner{padding:0 8px 40px}
-  .ev-grid{grid-template-columns:1fr}
-  .modal{margin:10px;max-height:95vh}
-  .m-info-grid{grid-template-columns:1fr}
-  .pref-cats{grid-template-columns:1fr}
-  .ai-rec-header{flex-direction:column;align-items:flex-start}
-}
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:#f0f0f0}
-::-webkit-scrollbar-thumb{background:#ddd;border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:#bbb}
 </style>
 </head>
-<body class="sb-collapsed">
+<body>
 
-<div class="layout-shell">
+<div class="topbar"><a href="#">UTM Skudai</a><span class="topbar-sep">|</span><a href="#">Contact Us</a><span class="topbar-sep">|</span><a href="#" onclick="doLogout()">Logout</a></div>
 
-  <div class="top-band">
-    <nav class="navbar">
-      <div class="nav-left">
-        <button class="nav-toggle" id="sidebarToggle" onclick="toggleSidebar()" title="Toggle sidebar">
-          <svg viewBox="0 0 24 24"><line class="bar1" x1="3" y1="6" x2="21" y2="6"/><line class="bar2" x1="3" y1="12" x2="21" y2="12"/><line class="bar3" x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-        <div class="nav-logo">
-          <div class="logo-row"><span class="l-my">my</span><span class="l-utm">UTM</span><span class="l-portal">Portal</span></div>
-          <span class="l-tag">CAMPUS EVENT FINDER</span>
-        </div>
-      </div>
-      <div class="nav-center">
-        <span class="nav-ticker-badge">Events</span>
-        <span class="nav-center-text">Universiti Teknologi Malaysia &middot; AI-Powered Campus Event Finder</span>
-      </div>
-      <div class="nav-right">
-        <button class="nav-icon-btn" onclick="window.location.href='../Homepage/homepage.html'"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:4px"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a15.3 15.3 0 0 1 4 9 15.3 15.3 0 0 1-4 9 15.3 15.3 0 0 1-4-9 15.3 15.3 0 0 1 4-9z"/></svg>Home</button>
-        <span class="nav-uname" id="navUname">—</span>
-        <div class="nav-avatar" id="navAvatar">?</div>
-      </div>
-    </nav>
+<header class="header">
+  <a class="header-logo" href="../Homepage/homepage.html">
+    <div class="logo-img"><div class="logo-img-utm">UTM</div><div class="logo-img-star">✦✦✦</div></div>
+    <div><div class="logo-utm">UTM</div><div class="logo-full">Universiti Teknologi Malaysia</div></div>
+  </a>
+  <nav class="header-nav">
+    <div class="hn-item">Corporate Information <span class="arr">▾</span></div>
+    <div class="hn-item">Administration <span class="arr">▾</span></div>
+    <div class="hn-item">Achievements <span class="arr">▾</span></div>
+    <div class="hn-item">Publications <span class="arr">▾</span></div>
+    <div class="hn-item active">Faculties</div>
+    <div class="hn-item">Partnership</div>
+    <div class="hn-item">UTM Cares</div>
+  </nav>
+  <div class="header-right"><div class="user-pill"><div class="user-av" id="headerAvatar">?</div><span id="headerName">—</span></div></div>
+</header>
+
+<div class="section-nav">
+  <div class="sn-item active">Campus Events</div><div class="sn-item">Student Life</div><div class="sn-item">Academic Calendar</div><div class="sn-item">HEP</div><div class="sn-item">Facilities</div>
+</div>
+
+<div class="page-title-bar">
+  <div class="ptb-left">
+    <div class="ptb-breadcrumb"><a href="../Homepage/homepage.html">Home</a><span>›</span><a href="#">Student Affairs</a><span>›</span><span>Campus Event Finder</span></div>
+    <div class="ptb-title">Campus Event Finder</div>
   </div>
+  <div class="ptb-right"><span class="ptb-tag">🤖 AI-Powered</span><span class="ptb-tag">📱 AR Navigation</span></div>
+</div>
 
-  <div class="sub-nav">
-    <div class="sub-nav-item active">Campus Events</div><div class="sub-nav-item">Student Life</div><div class="sub-nav-item">Academic Calendar</div><div class="sub-nav-item">HEP</div><div class="sub-nav-item">Facilities</div>
-  </div>
+<div class="cat-tabs">
+  <button class="ct-btn active" onclick="switchMode('upcoming',this)">All Events</button>
+  <button class="ct-btn" onclick="setCat('academic',this)">Academic</button>
+  <button class="ct-btn" onclick="setCat('sports',this)">Sports</button>
+  <button class="ct-btn" onclick="setCat('cultural',this)">Cultural</button>
+  <button class="ct-btn" onclick="setCat('career',this)">Career</button>
+  <button class="ct-btn" onclick="setCat('volunteer',this)">Volunteer</button>
+  <div class="ct-sep"></div>
+  <button class="ct-btn archived-btn" id="archTabBtn" onclick="switchToArchived()">📜 Archived <span class="arch-count" id="archCountBadge">0</span></button>
+</div>
 
-  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
-
-  <div class="body-row">
-    <aside class="sidebar" id="sidebar">
-      <div class="sb-head">
-        <div class="sb-avatar-wrap" id="sbAvatar">?</div>
-        <div class="sb-profile-name" id="sbName">Student</div>
-        <div class="sb-profile-role">UTM Student</div>
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="sb-card">
+      <div class="sb-card-head">Filter Events</div>
+      <div class="sb-search"><span style="color:#bbb;font-size:14px">🔍</span><input type="text" id="searchInput" placeholder="Search events..." oninput="filterEvents()"/></div>
+      <button class="sb-item active" onclick="setCatSb('all',this)"><div class="sb-item-left"><div class="sb-dot"></div>All Events</div><span class="sb-cnt" id="fc-all">–</span></button>
+      <button class="sb-item" onclick="setCatSb('academic',this)"><div class="sb-item-left"><div class="sb-dot"></div>Academic</div><span class="sb-cnt" id="fc-academic">–</span></button>
+      <button class="sb-item" onclick="setCatSb('sports',this)"><div class="sb-item-left"><div class="sb-dot"></div>Sports</div><span class="sb-cnt" id="fc-sports">–</span></button>
+      <button class="sb-item" onclick="setCatSb('cultural',this)"><div class="sb-item-left"><div class="sb-dot"></div>Cultural</div><span class="sb-cnt" id="fc-cultural">–</span></button>
+      <button class="sb-item" onclick="setCatSb('career',this)"><div class="sb-item-left"><div class="sb-dot"></div>Career</div><span class="sb-cnt" id="fc-career">–</span></button>
+      <button class="sb-item" onclick="setCatSb('volunteer',this)"><div class="sb-item-left"><div class="sb-dot"></div>Volunteer</div><span class="sb-cnt" id="fc-volunteer">–</span></button>
+    </div>
+    <div class="sb-card">
+      <div class="sb-card-head">Overview</div>
+      <div class="sb-stats">
+        <div class="sb-stat"><div class="sb-stat-num" id="statTotal">–</div><div class="sb-stat-lbl">Upcoming</div></div>
+        <div class="sb-stat"><div class="sb-stat-num" id="statOpen">–</div><div class="sb-stat-lbl">Open</div></div>
+        <div class="sb-stat"><div class="sb-stat-num" id="statSlots">–</div><div class="sb-stat-lbl">Slots</div></div>
+        <div class="sb-stat"><div class="sb-stat-num" id="statArchived" style="color:#999">–</div><div class="sb-stat-lbl">Archived</div></div>
       </div>
-      <div class="sb-nav">
-        <div class="sb-section-lbl">Filter Events</div>
-        <div class="sb-search"><span style="color:#bbb;font-size:14px">🔍</span><input type="text" id="searchInput" placeholder="Search events..." oninput="filterEvents()"/></div>
-        <button class="sb-filter-item active" onclick="setCatSb('all',this)"><div class="sb-filter-left"><div class="sb-dot"></div>All Events</div><span class="sb-cnt" id="fc-all">–</span></button>
-        <button class="sb-filter-item" onclick="setCatSb('academic',this)"><div class="sb-filter-left"><div class="sb-dot"></div>Academic</div><span class="sb-cnt" id="fc-academic">–</span></button>
-        <button class="sb-filter-item" onclick="setCatSb('sports',this)"><div class="sb-filter-left"><div class="sb-dot"></div>Sports</div><span class="sb-cnt" id="fc-sports">–</span></button>
-        <button class="sb-filter-item" onclick="setCatSb('cultural',this)"><div class="sb-filter-left"><div class="sb-dot"></div>Cultural</div><span class="sb-cnt" id="fc-cultural">–</span></button>
-        <button class="sb-filter-item" onclick="setCatSb('career',this)"><div class="sb-filter-left"><div class="sb-dot"></div>Career</div><span class="sb-cnt" id="fc-career">–</span></button>
-        <button class="sb-filter-item" onclick="setCatSb('volunteer',this)"><div class="sb-filter-left"><div class="sb-dot"></div>Volunteer</div><span class="sb-cnt" id="fc-volunteer">–</span></button>
-        <div class="sb-divider"></div>
-        <div class="sb-section-lbl">Overview</div>
-        <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
-          <div class="sb-stats">
-            <div class="sb-stat"><div class="sb-stat-num" id="statTotal">–</div><div class="sb-stat-lbl">Upcoming</div></div>
-            <div class="sb-stat"><div class="sb-stat-num" id="statOpen">–</div><div class="sb-stat-lbl">Open</div></div>
-            <div class="sb-stat"><div class="sb-stat-num" id="statSlots">–</div><div class="sb-stat-lbl">Slots</div></div>
-            <div class="sb-stat"><div class="sb-stat-num" id="statArchived" style="color:#999">–</div><div class="sb-stat-lbl">Archived</div></div>
-          </div>
+    </div>
+    <button class="sb-pref-btn" onclick="openPrefModal()"><span>🎯</span><div><div style="font-weight:600">My Interests</div><div id="sbPrefSummary" style="font-size:11px;color:var(--light);margin-top:1px">Not set yet</div></div></button>
+    <button class="sb-archived-btn" onclick="switchToArchived()"><span>📜</span><div><div style="font-weight:500;color:var(--muted)">Past / Archived Events</div><div id="sbArchSummary" style="font-size:11px;color:var(--light);margin-top:1px">Click to view</div></div></button>
+    <div class="ar-sb"><div class="ar-sb-title">📱 AR Event Map</div><div class="ar-sb-text">Scan the UTM campus map marker using your mobile device to explore event locations in 3D Augmented Reality.</div><button class="ar-sb-btn">Launch AR Viewer</button></div>
+    <a class="back-link" href="../Homepage/homepage.html">← Back to myUTM Portal</a>
+  </aside>
+<div class="events-area">
+
+    <!-- AI RECOMMENDATIONS — sekarang dalam events-area, bukan luar wrap -->
+    <div id="aiRecOuter" style="display:none; background:#fff; border:1px solid var(--border); border-radius:4px; padding:16px 18px 20px; margin-bottom:20px;">
+      <div class="ai-rec-header">
+        <div class="ai-rec-title">
+          <div class="ai-rec-title-icon">🤖</div>
+          <div><h3>Recommended For You</h3><p id="aiRecSubtitle">Personalised picks based on your interests</p></div>
         </div>
-        <div class="sb-divider"></div>
-        <button class="sb-pref-btn" onclick="openPrefModal()"><span style="font-size:14px">🎯</span><div><div style="font-weight:600">My Interests</div><div id="sbPrefSummary" style="font-size:11px;color:var(--light);margin-top:1px">Not set yet</div></div></button>
-        <button class="sb-archived-btn" onclick="switchToArchived()"><span style="font-size:14px">📜</span><div><div style="font-weight:500;color:var(--muted)">Past / Archived Events</div><div id="sbArchSummary" style="font-size:11px;color:var(--light);margin-top:1px">Click to view</div></div></button>
-        <div class="ar-sb"><div class="ar-sb-title">📱 AR Event Map</div><div class="ar-sb-text">Scan the UTM campus map marker using your mobile device to explore event locations in 3D Augmented Reality.</div><button class="ar-sb-btn">Launch AR Viewer</button></div>
-        <div class="sb-divider"></div>
-        <a class="back-link" href="../Homepage/homepage.html">← Back to myUTM Portal</a>
+        <div style="display:flex;align-items:center;gap:12px">
+          <button class="ai-rec-edit" onclick="openPrefModal()">✏️ Edit interests</button>
+          <span class="ai-rec-badge">AI Picks</span>
+        </div>
       </div>
-      <div class="sb-footer">
-        <button class="sb-logout" onclick="doLogout()">
-          <span class="sb-logout-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span> Log Out
-        </button>
+      <div class="ai-rec-scroll" id="aiRecScroll">
+        <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
+        <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
+        <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
       </div>
-    </aside>
+    </div>
 
-    <main class="content-area">
-      <div class="events-inner">
-        <div class="page-heading">
-          <h1>Campus Event Finder</h1>
-          <p>Discover and register for upcoming events at Universiti Teknologi Malaysia.</p>
-          <div class="ptb-tags"><span class="ptb-tag">🤖 AI-Powered</span><span class="ptb-tag">📱 AR Navigation</span></div>
-        </div>
-
-        <div class="cat-tabs">
-          <button class="ct-btn active" onclick="switchMode('upcoming',this)">All Events</button>
-          <button class="ct-btn" onclick="setCat('academic',this)">Academic</button>
-          <button class="ct-btn" onclick="setCat('sports',this)">Sports</button>
-          <button class="ct-btn" onclick="setCat('cultural',this)">Cultural</button>
-          <button class="ct-btn" onclick="setCat('career',this)">Career</button>
-          <button class="ct-btn" onclick="setCat('volunteer',this)">Volunteer</button>
-          <div class="ct-sep"></div>
-          <button class="ct-btn archived-btn" id="archTabBtn" onclick="switchToArchived()">📜 Archived <span class="arch-count" id="archCountBadge">0</span></button>
-        </div>
-
-        <div id="aiRecOuter" class="ai-rec-outer">
-          <div class="ai-rec-header">
-            <div class="ai-rec-title">
-              <div class="ai-rec-title-icon">🤖</div>
-              <div><h3>Recommended For You</h3><p id="aiRecSubtitle">Personalised picks based on your interests</p></div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px">
-              <button class="ai-rec-edit" onclick="openPrefModal()">✏️ Edit interests</button>
-              <span class="ai-rec-badge">AI Picks</span>
-            </div>
-          </div>
-          <div class="ai-rec-scroll" id="aiRecScroll">
-            <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
-            <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
-            <div class="rec-skeleton"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skel-line" style="width:70px;height:18px"></div><div class="skel-line" style="width:28px;height:28px;border-radius:4px"></div></div><div class="skel-line" style="width:90%;height:12px"></div><div class="skel-line" style="width:80%;height:16px;margin-bottom:12px"></div><div class="skel-line" style="width:60%;height:12px"></div></div>
-          </div>
-        </div>
-
-        <div class="ev-toolbar">
-          <div class="ev-toolbar-left"><h2 id="evTitle">Upcoming Events</h2><p id="evMeta">Loading events from Supabase...</p></div>
-          <span class="ev-toolbar-badge live" id="evBadge">● Live</span>
-        </div>
-        <div class="ev-grid" id="evGrid"><div class="state-box"><div class="spinner"></div><p>Connecting to database...</p></div></div>
-
-        <div style="text-align:center;padding:32px 0 8px;font-size:11.5px;color:var(--light)">© 2025 Universiti Teknologi Malaysia. All Rights Reserved.</div>
-      </div>
-    </main>
+    <div class="ev-toolbar">
+    <div class="ev-toolbar-left"><h2 id="evTitle">Upcoming Events</h2><p id="evMeta">Loading events from Supabase...</p></div><span class="ev-toolbar-badge live" id="evBadge">● Live</span></div>
+    <div class="ev-grid" id="evGrid"><div class="state-box"><div class="spinner"></div><p>Connecting to database...</p></div></div>
   </div>
 </div>
 
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="fi-brand-utm">UTM</div><div class="fi-brand-full">Universiti Teknologi Malaysia</div><div class="fi-brand-text">AI-Driven Campus Event Finder for UTM Students with Augmented Reality.</div></div>
+    <div><div class="fi-head">Quicklinks</div><div class="fi-links"><a href="../Homepage/homepage.html">myUTM Portal</a><a href="#">Staff Directory</a><a href="#">Career@UTM</a><a href="#">UTM Alumni</a></div></div>
+    <div><div class="fi-head">Contact Us</div><div class="fi-links"><a href="#">UTM Skudai, Johor</a><a href="#">utm.my</a><a href="#">Facebook</a><a href="#">Instagram</a></div></div>
+    <div><div class="fi-head">Legal</div><div class="fi-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Disclaimer</a></div></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2025 Universiti Teknologi Malaysia. All Rights Reserved.</div><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div></div>
+</footer>
+
 <div class="overlay" id="overlay" onclick="handleOv(event)">
   <div class="modal">
-    <div class="m-nav"><span class="m-nav-title">Event Details</span><button class="m-nav-close" onclick="closeModal()">×</button></div>
+    <div class="m-nav"><span class="m-nav-title">Event Details</span><button class="m-nav-close" onclick="closeModal()">✕</button></div>
     <div class="m-body">
       <span class="m-cat-badge ev-badge" id="mBadge"></span>
       <div class="m-title" id="mTitle"></div>
@@ -583,8 +491,6 @@ body:not(.sb-open) .nav-toggle .bar3{transform:rotate(0) translate(0,0)}
   <div class="cw-powered">UTM Campus Event Finder · AI by Groq (Llama 3)</div>
 </div>
 
-<div class="toast" id="toast"></div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 var SUPABASE_URL='https://wqpkguilunzhzkeciujv.supabase.co';
@@ -596,27 +502,20 @@ var catEmojis={academic:'📚',sports:'⚽',cultural:'🎭',career:'💼',volunt
 var curCat='all',curQ='',currentUser=null,userPrefs=null;
 var upcomingEvents=[],archivedEvents=[],viewMode='upcoming';
 
+/* ═════════════ SAFE CATEGORY HELPER ═════════════ */
+/* ALWAYS normalize category to lowercase before any comparison or lookup */
 function nc(c){return(c||'').toLowerCase().trim()}
+
 function todayStr(){return new Date().toISOString().split('T')[0]}
 function isExpired(ev){return ev.date&&ev.date<todayStr()}
 function cap(s){return s?s[0].toUpperCase()+s.slice(1):''}
 function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
-/* ═══ SIDEBAR TOGGLE — same as admin ═══ */
-function isMobile(){return window.innerWidth<=768}
-function toggleSidebar(){
-  if(isMobile()){document.body.classList.toggle('sb-open');document.body.classList.toggle('sb-collapsed');document.getElementById('sidebarBackdrop').classList.toggle('visible',document.body.classList.contains('sb-open'))}
-  else{document.body.classList.toggle('sb-open');document.body.classList.toggle('sb-collapsed')}
-}
-function closeSidebar(){document.body.classList.remove('sb-open');document.body.classList.add('sb-collapsed');document.getElementById('sidebarBackdrop').classList.remove('visible')}
-window.addEventListener('resize',function(){if(!isMobile()){document.getElementById('sidebarBackdrop').classList.remove('visible');if(!document.body.classList.contains('sb-collapsed')){document.body.classList.add('sb-open');document.body.classList.remove('sb-collapsed')}}});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&isMobile()&&document.body.classList.contains('sb-open'))closeSidebar();if(e.key==='Escape'){closeModal();closePrefModal()}});
-
-/* ═══ PREFERENCES ═══ */
+/* ═════════════ PREFERENCES ═════════════ */
 var PREF_KEY='utm_event_prefs';
 function loadPrefs(){try{var r=localStorage.getItem(PREF_KEY);userPrefs=r?JSON.parse(r):null}catch(e){userPrefs=null}updatePrefUI()}
 function savePrefsToStorage(d){userPrefs=d;localStorage.setItem(PREF_KEY,JSON.stringify(d));updatePrefUI()}
-function updatePrefUI(){var el=document.getElementById('sbPrefSummary');if(!el)return;if(!userPrefs||(!userPrefs.categories.length&&!userPrefs.keywords.length)){el.textContent='Not set yet';return}var p=[];if(userPrefs.categories.length)p.push(userPrefs.categories.map(function(c){return catEmojis[c]||''}).join(' '));if(userPrefs.keywords.length){p.push(userPrefs.keywords.slice(0,3).join(', '));if(userPrefs.keywords.length>3)p.push('+'+(userPrefs.keywords.length-3))}el.textContent=p.join(' · ')||'Not set yet'}
+function updatePrefUI(){var el=document.getElementById('sbPrefSummary');if(!el)return;if(!userPrefs||(!userPrefs.categories.length&&!userPrefs.keywords.length)){el.textContent='Not set yet';return}var p=[];if(userPrefs.categories.length)p.push(userPrefs.categories.map(function(c){return catEmojis[c]||''}).join(' '));if(userPrefs.keywords.length){p.push(userPrefs.keywords.slice(0,3).join(', '));if(userPrefs.keywords.length>3)p.push('+' +(userPrefs.keywords.length-3))}el.textContent=p.join(' · ')||'Not set yet'}
 function openPrefModal(){document.getElementById('prefOverlay').classList.add('open');document.body.style.overflow='hidden';var cats=(userPrefs&&userPrefs.categories)||[],freq=(userPrefs&&userPrefs.frequency)||'',tags=(userPrefs&&userPrefs.keywords)||[];document.querySelectorAll('.pref-cat-card').forEach(function(c){c.classList.toggle('selected',cats.indexOf(c.dataset.cat)!==-1)});document.querySelectorAll('.pref-freq-pill').forEach(function(p){p.classList.toggle('selected',p.dataset.freq===freq)});renderPrefTags(tags)}
 function closePrefModal(){document.getElementById('prefOverlay').classList.remove('open');document.body.style.overflow=''}
 function togglePrefCat(c){c.classList.toggle('selected')}
@@ -626,16 +525,33 @@ function renderPrefTags(t){tempTags=t||[];document.getElementById('prefTagsWrap'
 function addPrefTag(){var inp=document.getElementById('prefTagInput'),v=inp.value.trim().toLowerCase();if(!v||tempTags.indexOf(v)!==-1||tempTags.length>=8){inp.value='';return}tempTags.push(v);renderPrefTags(tempTags);inp.value='';inp.focus()}
 function removePrefTag(i){tempTags.splice(i,1);renderPrefTags(tempTags)}
 function savePreferences(){
-  var cats=[];document.querySelectorAll('.pref-cat-card.selected').forEach(function(c){cats.push(c.dataset.cat)});
+  var cats=[];
+  document.querySelectorAll('.pref-cat-card.selected').forEach(function(c){cats.push(c.dataset.cat)});
   var fe=document.querySelector('.pref-freq-pill.selected');
   savePrefsToStorage({categories:cats,frequency:fe?fe.dataset.freq:'occasionally',keywords:tempTags.slice(),savedAt:new Date().toISOString()});
-  closePrefModal();render();
-  var myIds=new Set();upcomingEvents.forEach(function(e){if(e.registered)myIds.add(e.id)});
+  closePrefModal();
+  render();
+  var myIds=new Set();
+  upcomingEvents.forEach(function(e){if(e.registered)myIds.add(e.id)});
   loadAIRecommendations(currentUser,myIds);
+  var evs=window.EVENTS||[];
+  var filtered=evs.filter(function(e){
+    var mc=curCat==='all'||nc(e.category)===curCat;
+    var ms=!curQ||(e.title||'').toLowerCase().indexOf(curQ)!==-1||(e.location||'').toLowerCase().indexOf(curQ)!==-1;
+    return mc&&ms;
+  });
+  if(filtered.length===0&&curCat!=='all'){
+    document.getElementById('evGrid').innerHTML=
+      '<div class="state-box">'+
+        '<h3>No '+cap(curCat)+' events available yet</h3>'+
+        '<p style="margin-bottom:14px">We\'ll notify you when new '+cap(curCat)+' events are added. You selected this as your interest — great choice! 🎯</p>'+
+        '<button class="ev-btn outline" onclick="switchMode(\'upcoming\',document.querySelector(\'.ct-btn\'))" style="font-size:13px;padding:9px 20px">← Browse All Events</button>'+
+      '</div>';
+  }
 }
 function skipPreferences(){savePrefsToStorage({categories:[],frequency:'occasionally',keywords:[],savedAt:new Date().toISOString(),skipped:true});closePrefModal()}
 
-/* ═══ INIT ═══ */
+/* ═════════════ INIT ═════════════ */
 async function init(){
   loadPrefs();
   var sess=await sb.auth.getSession();
@@ -643,123 +559,306 @@ async function init(){
   var userRes=await sb.from('users').select('*').eq('email',sess.data.session.user.email).single();
   currentUser=userRes.data;
   if(currentUser){
-    var initials=(currentUser.name||'').split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase();
-    document.getElementById('navAvatar').textContent=initials;
-    document.getElementById('navUname').textContent=currentUser.matrix||currentUser.name||sess.data.session.user.email;
-    document.getElementById('sbAvatar').textContent=initials;
-    document.getElementById('sbName').textContent=currentUser.name||'Student';
+    document.getElementById('headerAvatar').textContent=(currentUser.name||'').split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase();
+    document.getElementById('headerName').textContent=currentUser.matrix||currentUser.name||sess.data.session.user.email;
   }
   var myEventIds=new Set();
-  if(currentUser&&currentUser.matrix){var regRes=await sb.from('registrations').select('event_id').ilike('matric_no',currentUser.matrix);if(regRes.data)regRes.data.forEach(function(r){myEventIds.add(r.event_id)})}
+  if(currentUser&&currentUser.matrix){
+    var regRes=await sb.from('registrations').select('event_id').ilike('matric_no',currentUser.matrix);
+    if(regRes.data)regRes.data.forEach(function(r){myEventIds.add(r.event_id)});
+  }
   var today=todayStr();
   var evRes=await sb.from('events').select('*').eq('status','approved').gte('date',today).order('date',{ascending:true});
-  if(evRes.error||!evRes.data){document.getElementById('evGrid').innerHTML='<div class="state-box"><h3>⚠️ Failed to load events</h3><p>Check your internet connection.</p></div>';return}
+  if(evRes.error||!evRes.data){
+    document.getElementById('evGrid').innerHTML='<div class="state-box"><h3>⚠️ Failed to load events</h3><p>Check your internet connection.</p></div>';
+    return;
+  }
   upcomingEvents=evRes.data.map(function(e){return Object.assign({},e,{registered:myEventIds.has(e.id)})});
   var archRes=await sb.from('events').select('*',{count:'exact',head:true}).eq('status','approved').lt('date',today);
   document.getElementById('archCountBadge').textContent=archRes.count||0;
   document.getElementById('statArchived').textContent=archRes.count||0;
   document.getElementById('sbArchSummary').textContent=(archRes.count||0)+' past event'+((archRes.count||0)!==1?'s':'')+' available';
-  window.EVENTS=upcomingEvents;boot();
+  window.EVENTS=upcomingEvents;
+  boot();
   if(!userPrefs)setTimeout(function(){openPrefModal()},600);
   loadAIRecommendations(currentUser,myEventIds);
 }
 
 function boot(){
   var evs=upcomingEvents,total=evs.length,open=evs.filter(function(e){return e.slots_left>0}).length,slots=evs.reduce(function(a,e){return a+(e.slots_left||0)},0);
-  document.getElementById('statTotal').textContent=total;document.getElementById('statOpen').textContent=open;
+  document.getElementById('statTotal').textContent=total;
+  document.getElementById('statOpen').textContent=open;
   document.getElementById('statSlots').textContent=slots>=1000?(slots/1000).toFixed(1)+'k':slots;
-  ['all','academic','sports','cultural','career','volunteer'].forEach(function(c){var el=document.getElementById('fc-'+c);if(el)el.textContent=c==='all'?total:evs.filter(function(e){return nc(e.category)===c}).length});
+  ['all','academic','sports','cultural','career','volunteer'].forEach(function(c){
+    var el=document.getElementById('fc-'+c);
+    if(el)el.textContent=c==='all'?total:evs.filter(function(e){return nc(e.category)===c}).length;
+  });
   render();
 }
 
-/* ═══ VIEW MODE ═══ */
+/* ═════════════ VIEW MODE ═════════════ */
 function switchMode(mode,btn){
   viewMode='upcoming';curCat='all';window.EVENTS=upcomingEvents;
-  document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});if(btn)btn.classList.add('active');
-  document.querySelectorAll('.sb-filter-item').forEach(function(b){b.classList.remove('active')});document.querySelector('.sb-filter-item').classList.add('active');
-  document.getElementById('evTitle').textContent='Upcoming Events';document.getElementById('evBadge').className='ev-toolbar-badge live';document.getElementById('evBadge').innerHTML='● Live';
-  document.getElementById('aiRecOuter').style.display='';render();
+  document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});
+  if(btn)btn.classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
+  document.querySelector('.sb-item').classList.add('active');
+  document.getElementById('evTitle').textContent='Upcoming Events';
+  document.getElementById('evBadge').className='ev-toolbar-badge live';
+  document.getElementById('evBadge').innerHTML='● Live';
+  document.getElementById('aiRecOuter').style.display='';
+  render();
 }
 function switchToArchived(){
   viewMode='archived';curCat='all';
-  document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});document.getElementById('archTabBtn').classList.add('active');
-  document.querySelectorAll('.sb-filter-item').forEach(function(b){b.classList.remove('active')});document.querySelector('.sb-filter-item').classList.add('active');
-  document.getElementById('evTitle').textContent='Past / Archived Events';document.getElementById('evBadge').className='ev-toolbar-badge';document.getElementById('evBadge').innerHTML='📜 Archived';
+  document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('archTabBtn').classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
+  document.querySelector('.sb-item').classList.add('active');
+  document.getElementById('evTitle').textContent='Past / Archived Events';
+  document.getElementById('evBadge').className='ev-toolbar-badge';
+  document.getElementById('evBadge').innerHTML='📜 Archived';
   document.getElementById('aiRecOuter').style.display='none';
   if(!archivedEvents.length){
     document.getElementById('evGrid').innerHTML='<div class="state-box"><div class="spinner"></div><p>Loading archived events...</p></div>';
     sb.from('events').select('*').eq('status','approved').lt('date',todayStr()).order('date',{ascending:false}).then(function(res){
-      var myIds=new Set();upcomingEvents.forEach(function(e){if(e.registered)myIds.add(e.id)});
-      archivedEvents=(res.data||[]).map(function(e){return Object.assign({},e,{registered:myIds.has(e.id)})});window.EVENTS=archivedEvents;render();
+      var myIds=new Set();
+      upcomingEvents.forEach(function(e){if(e.registered)myIds.add(e.id)});
+      archivedEvents=(res.data||[]).map(function(e){return Object.assign({},e,{registered:myIds.has(e.id)})});
+      window.EVENTS=archivedEvents;
+      render();
     });
-  }else{window.EVENTS=archivedEvents;render()}
+  }else{
+    window.EVENTS=archivedEvents;
+    render();
+  }
 }
 
-/* ═══ AI RECOMMENDATIONS ═══ */
+/* ═════════════ AI RECOMMENDATIONS ═════════════ */
 async function loadAIRecommendations(user,myEventIds){
-  var evs=upcomingEvents;if(!evs.length)return;
+  var evs=upcomingEvents;
+  if(!evs.length)return;
   var prefCats=(userPrefs&&userPrefs.categories&&userPrefs.categories.length)?userPrefs.categories:[];
   var prefKeys=(userPrefs&&userPrefs.keywords)?userPrefs.keywords:[];
   var prefFreq=(userPrefs&&userPrefs.frequency)?userPrefs.frequency:'unknown';
   var userPastCats=evs.filter(function(e){return myEventIds.has(e.id)}).map(function(e){return nc(e.category)}).filter(Boolean);
+
   if(prefCats.length>0){
-    var filtered=evs.filter(function(e){return prefCats.indexOf(nc(e.category))!==-1&&e.slots_left>0&&!myEventIds.has(e.id)});
-    if(prefKeys.length>0){var kwLower=prefKeys.map(function(k){return k.toLowerCase()});filtered.sort(function(a,b){var aT=((a.title||'')+' '+(a.description||'')).toLowerCase();var bT=((b.title||'')+' '+(b.description||'')).toLowerCase();return(kwLower.some(function(k){return bT.indexOf(k)!==-1})?1:0)-(kwLower.some(function(k){return aT.indexOf(k)!==-1})?1:0)})}
-    if(!filtered.length){document.getElementById('aiRecOuter').style.display='block';document.getElementById('aiRecSubtitle').textContent='No matching events right now — check back soon!';document.getElementById('aiRecScroll').innerHTML='<div style="flex:0 0 100%;text-align:center;padding:24px;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🎯</div><div style="font-size:13px">No '+prefCats.map(cap).join(', ')+' events available yet.</div></div>';return}
-    document.getElementById('aiRecOuter').style.display='block';document.getElementById('aiRecSubtitle').textContent='Showing only '+prefCats.map(cap).join(', ')+' events you selected';
-    var summaries=filtered.slice(0,10).map(function(e){return{id:e.id,title:e.title,category:nc(e.category),faculty:e.faculty||'Open to all',date:e.date,slots:e.slots_left,description:(e.description||'').substring(0,100)}});
-    var prompt='You are a university event recommender for UTM.\n\nStudent interests: '+prefCats.map(cap).join(', ')+'\nKeywords: '+(prefKeys.length?prefKeys.join(', '):'None')+'\nFaculty: '+(user?user.faculty:'Unknown')+'\nFrequency: '+prefFreq+'\nPast categories: '+(userPastCats.length?userPastCats.join(', '):'None')+'\n\nAvailable events (ALL from preferred categories):\n'+JSON.stringify(summaries,null,2)+'\n\nPick up to 4. Rank by relevance. For each, write a reason (max 12 words).\nNEVER pick events outside listed categories.\nRespond ONLY with JSON array. No markdown.\n[{ "id": <number>, "reason": "Short reason" }, ...]';
-    try{var res=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt})});if(!res.ok)throw new Error('AI error '+res.status);var data=await res.json();var raw=(data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'[]';var clean=raw.replace(/```json|```/g,'').trim();var picks=JSON.parse(clean);var safePicks=picks.filter(function(pick){var ev=evs.find(function(e){return e.id===pick.id});if(!ev)return false;if(prefCats.indexOf(nc(ev.category))===-1)return false;return true});renderRecommendations(safePicks,evs)}catch(err){console.warn('AI recommendation failed:',err);document.getElementById('aiRecOuter').style.display='none'}
+    var filtered=evs.filter(function(e){
+      return prefCats.indexOf(nc(e.category))!==-1&&e.slots_left>0&&!myEventIds.has(e.id);
+    });
+    if(prefKeys.length>0){
+      var kwLower=prefKeys.map(function(k){return k.toLowerCase()});
+      filtered.sort(function(a,b){
+        var aText=((a.title||'')+' '+(a.description||'')).toLowerCase();
+        var bText=((b.title||'')+' '+(b.description||'')).toLowerCase();
+        var aMatch=kwLower.some(function(k){return aText.indexOf(k)!==-1})?1:0;
+        var bMatch=kwLower.some(function(k){return bText.indexOf(k)!==-1})?1:0;
+        return bMatch-aMatch;
+      });
+    }
+    if(filtered.length===0){
+      document.getElementById('aiRecOuter').style.display='block';
+      document.getElementById('aiRecSubtitle').textContent='No matching events right now — check back soon!';
+      document.getElementById('aiRecScroll').innerHTML=
+        '<div style="flex:0 0 100%;text-align:center;padding:24px;color:var(--muted)">'+
+          '<div style="font-size:28px;margin-bottom:8px">🎯</div>'+
+          '<div style="font-size:13px">No '+prefCats.map(cap).join(', ')+' events available yet.</div>'+
+          '<div style="font-size:11.5px;margin-top:4px;color:var(--light)">We\'ll recommend them as soon as they\'re added!</div>'+
+        '</div>';
+      return;
+    }
+    var catLabels=prefCats.map(cap).join(', ');
+    document.getElementById('aiRecOuter').style.display='block';
+    document.getElementById('aiRecSubtitle').textContent='Showing only '+catLabels+' events you selected';
+    var eventSummaries=filtered.slice(0,10).map(function(e){
+      return{id:e.id,title:e.title,category:nc(e.category),faculty:e.faculty||'Open to all',date:e.date,slots:e.slots_left,description:(e.description||'').substring(0,100)};
+    });
+    var prompt=
+      'You are a university event recommender for UTM.\n\n'+
+      'Student interests: '+catLabels+'\n'+
+      'Keywords: '+(prefKeys.length?prefKeys.join(', '):'None')+'\n'+
+      'Faculty: '+(user?user.faculty:'Unknown')+'\n'+
+      'Frequency: '+prefFreq+'\n'+
+      'Past categories: '+(userPastCats.length?userPastCats.join(', '):'None')+'\n\n'+
+      'Available events (ALL are from the student\'s preferred categories):\n'+
+      JSON.stringify(eventSummaries,null,2)+'\n\n'+
+      'Pick up to 4 events. Rank by relevance to the student.\n'+
+      'For each, write a reason (max 12 words) explaining why it fits.\n'+
+      'NEVER pick events outside the listed categories.\n\n'+
+      'Respond ONLY with JSON array. No markdown.\n'+
+      '[{ "id": <number>, "reason": "Short reason" }, ...]';
+    try{
+      var res=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{
+        method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},
+        body:JSON.stringify({prompt:prompt})
+      });
+      if(!res.ok)throw new Error('AI error '+res.status);
+      var data=await res.json();
+      var raw=(data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'[]';
+      var clean=raw.replace(/```json|```/g,'').trim();
+      var picks=JSON.parse(clean);
+      var safePicks=picks.filter(function(pick){
+        var ev=evs.find(function(e){return e.id===pick.id});
+        if(!ev)return false;
+        if(prefCats.indexOf(nc(ev.category))===-1){
+          console.warn('AI returned wrong category "'+ev.category+'" — blocked.');
+          return false;
+        }
+        return true;
+      });
+      renderRecommendations(safePicks,evs,prefCats);
+    }catch(err){
+      console.warn('AI recommendation failed:',err);
+      document.getElementById('aiRecOuter').style.display='none';
+    }
   }else{
-    var summaries=evs.filter(function(e){return e.slots_left>0&&!myEventIds.has(e.id)}).slice(0,30).map(function(e){return{id:e.id,title:e.title,category:nc(e.category),faculty:e.faculty||'Open to all',date:e.date,slots:e.slots_left}});
-    if(!summaries.length){document.getElementById('aiRecOuter').style.display='block';document.getElementById('aiRecSubtitle').textContent='No open events at the moment';document.getElementById('aiRecScroll').innerHTML='<div style="flex:0 0 100%;text-align:center;padding:24px;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">📭</div><div style="font-size:13px">No events with open slots right now.</div></div>';return}
-    document.getElementById('aiRecOuter').style.display='block';document.getElementById('aiRecSubtitle').textContent='Explore and discover new events';
-    var prompt='You are a university event recommender for UTM.\n\nStudent has NO preferred categories set.\nFaculty: '+(user?user.faculty:'Unknown')+'\n\nPick 4 events from DIFFERENT categories. Do not pick more than 1 from the same category.\n\nAvailable events:\n'+JSON.stringify(summaries,null,2)+'\n\nRespond ONLY with JSON array. No markdown.\n[{ "id": <number>, "reason": "Short reason" }, ...]';
-    try{var res=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt})});if(!res.ok)throw new Error('AI error '+res.status);var data=await res.json();var raw=(data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'[]';var clean=raw.replace(/```json|```/g,'').trim();var picks=JSON.parse(clean);renderRecommendations(picks,evs)}catch(err){console.warn('AI recommendation failed:',err);document.getElementById('aiRecOuter').style.display='none'}
+    var eventSummaries=evs.filter(function(e){return e.slots_left>0&&!myEventIds.has(e.id)}).slice(0,30).map(function(e){
+      return{id:e.id,title:e.title,category:nc(e.category),faculty:e.faculty||'Open to all',date:e.date,slots:e.slots_left};
+    });
+    if(!eventSummaries.length){
+      document.getElementById('aiRecOuter').style.display='block';
+      document.getElementById('aiRecSubtitle').textContent='No open events at the moment';
+      document.getElementById('aiRecScroll').innerHTML=
+        '<div style="flex:0 0 100%;text-align:center;padding:24px;color:var(--muted)">'+
+          '<div style="font-size:28px;margin-bottom:8px">📭</div>'+
+          '<div style="font-size:13px">No events with open slots right now.</div>'+
+        '</div>';
+      return;
+    }
+    document.getElementById('aiRecOuter').style.display='block';
+    document.getElementById('aiRecSubtitle').textContent='Explore and discover new events';
+    var prompt=
+      'You are a university event recommender for UTM.\n\n'+
+      'Student has NO preferred categories set.\n'+
+      'Faculty: '+(user?user.faculty:'Unknown')+'\n\n'+
+      'Pick 4 events from DIFFERENT categories for variety.\n'+
+      'Do not pick more than 1 from the same category.\n\n'+
+      'Available events:\n'+JSON.stringify(eventSummaries,null,2)+'\n\n'+
+      'Respond ONLY with JSON array. No markdown.\n'+
+      '[{ "id": <number>, "reason": "Short reason" }, ...]';
+    try{
+      var res=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{
+        method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},
+        body:JSON.stringify({prompt:prompt})
+      });
+      if(!res.ok)throw new Error('AI error '+res.status);
+      var data=await res.json();
+      var raw=(data&&data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text)||'[]';
+      var clean=raw.replace(/```json|```/g,'').trim();
+      var picks=JSON.parse(clean);
+      renderRecommendations(picks,evs,[]);
+    }catch(err){
+      console.warn('AI recommendation failed:',err);
+      document.getElementById('aiRecOuter').style.display='none';
+    }
   }
 }
 
-function renderRecommendations(picks,evs){
-  if(!picks||!picks.length){document.getElementById('aiRecOuter').style.display='block';document.getElementById('aiRecScroll').innerHTML='<div style="flex:0 0 100%;text-align:center;padding:24px;color:var(--muted)"><div style="font-size:28px;margin-bottom:8px">🤔</div><div style="font-size:13px">Couldn\'t generate recommendations. Try again later.</div></div>';return}
-  document.getElementById('aiRecScroll').innerHTML=picks.map(function(pick,i){var ev=evs.find(function(e){return e.id===pick.id});if(!ev)return '';var cat=nc(ev.category);return '<div class="rec-card cat-'+cat+'" onclick="openModal('+ev.id+')" style="animation:fadeUp .3s ease '+(i*.08)+'s both"><div class="rec-card-body"><div class="rec-card-top"><span class="ev-badge '+(badgeClass[cat]||'badge-academic')+'">'+cap(cat)+'</span><div class="rec-matched">✓ Match</div><span style="font-size:22px;line-height:1">'+(ev.emoji||'📌')+'</span></div><div class="rec-ai-reason"><span class="rec-ai-reason-icon">✦</span><span>'+pick.reason+'</span></div><div class="rec-title">'+(ev.title||'Untitled Event')+'</div><div class="rec-meta-row"><span class="rec-meta-ic">📅</span>'+(ev.date||'–')+'</div><div class="rec-meta-row"><span class="rec-meta-ic">📍</span>'+(ev.location||'–')+'</div></div><div class="rec-foot"><span class="rec-slots"><b>'+ev.slots_left+'</b> slots left</span><button class="rec-btn" onclick="event.stopPropagation();goRegister('+ev.id+')">Register</button></div></div>'}).join('');
+function renderRecommendations(picks,evs,prefCats){
+  if(!picks||!picks.length){
+    document.getElementById('aiRecOuter').style.display='block';
+    document.getElementById('aiRecScroll').innerHTML=
+      '<div style="flex:0 0 100%;text-align:center;padding:24px;color:var(--muted)">'+
+        '<div style="font-size:28px;margin-bottom:8px">🤔</div>'+
+        '<div style="font-size:13px">Couldn\'t generate recommendations. Try again later.</div>'+
+      '</div>';
+    return;
+  }
+  document.getElementById('aiRecScroll').innerHTML=picks.map(function(pick,i){
+    var ev=evs.find(function(e){return e.id===pick.id});
+    if(!ev)return '';
+    var cat=nc(ev.category);
+    return '<div class="rec-card cat-'+cat+'" onclick="openModal('+ev.id+')" style="animation:fadeUp .3s ease '+(i*.08)+'s both">'+
+      '<div class="rec-card-body">'+
+        '<div class="rec-card-top"><span class="ev-badge '+(badgeClass[cat]||'badge-academic')+'">'+cap(cat)+'</span>'+
+        '<div class="rec-matched">✓ Match</div>'+
+        '<span style="font-size:22px;line-height:1">'+(ev.emoji||'📌')+'</span></div>'+
+        '<div class="rec-ai-reason"><span class="rec-ai-reason-icon">✦</span><span>'+pick.reason+'</span></div>'+
+        '<div class="rec-title">'+(ev.title||'Untitled Event')+'</div>'+
+        '<div class="rec-meta-row"><span class="rec-meta-ic">📅</span>'+(ev.date||'–')+'</div>'+
+        '<div class="rec-meta-row"><span class="rec-meta-ic">📍</span>'+(ev.location||'–')+'</div>'+
+      '</div>'+
+      '<div class="rec-foot"><span class="rec-slots"><b>'+ev.slots_left+'</b> slots left</span>'+
+        '<button class="rec-btn" onclick="event.stopPropagation();goRegister('+ev.id+')">Register</button></div></div>';
+  }).join('');
 }
 
-/* ═══ RENDER GRID ═══ */
+/* ═════════════ RENDER GRID ═════════════ */
 function render(){
   var evs=window.EVENTS||[],isArch=(viewMode==='archived');
-  var list=evs.filter(function(e){var mc=curCat==='all'||nc(e.category)===curCat;var ms=!curQ||(e.title||'').toLowerCase().indexOf(curQ)!==-1||(e.location||'').toLowerCase().indexOf(curQ)!==-1||(e.faculty||'').toLowerCase().indexOf(curQ)!==-1;return mc&&ms});
+  var list=evs.filter(function(e){
+    var mc=curCat==='all'||nc(e.category)===curCat;
+    var ms=!curQ||(e.title||'').toLowerCase().indexOf(curQ)!==-1||(e.location||'').toLowerCase().indexOf(curQ)!==-1||(e.faculty||'').toLowerCase().indexOf(curQ)!==-1;
+    return mc&&ms;
+  });
   document.getElementById('evMeta').textContent=list.length+' '+(isArch?'archived':'upcoming')+' event'+(list.length!==1?'s':'')+' found'+(isArch?'':' · Live from Supabase');
   if(!list.length){
-    if(curCat!=='all'){document.getElementById('evGrid').innerHTML='<div class="state-box"><h3>No '+cap(curCat)+' events '+(isArch?'in archive':'available yet')+'</h3><p style="margin-bottom:14px">'+(isArch?'No past events in this category.':'We\'ll notify you when new '+cap(curCat)+' events are added!')+'</p><button class="ev-btn outline" onclick="switchMode(\'upcoming\',document.querySelector(\'.ct-btn\'))" style="font-size:13px;padding:9px 20px">← Browse All Events</button></div>'}
-    else{document.getElementById('evGrid').innerHTML='<div class="state-box"><h3>'+(isArch?'No archived events':'No events found')+'</h3><p>'+(isArch?'Past events will appear here.':'Try a different filter.')+'</p></div>'}
+    if(curCat!=='all'){
+      document.getElementById('evGrid').innerHTML=
+        '<div class="state-box">'+
+          '<h3>No '+cap(curCat)+' events '+(isArch?'in archive':'available yet')+'</h3>'+
+          '<p style="margin-bottom:14px">'+(isArch?'No past events in this category.':'We\'ll notify you when new '+cap(curCat)+' events are added!')+'</p>'+
+          '<button class="ev-btn outline" onclick="switchMode(\'upcoming\',document.querySelector(\'.ct-btn\'))" style="font-size:13px;padding:9px 20px">← Browse All Events</button>'+
+        '</div>';
+    }else{
+      document.getElementById('evGrid').innerHTML='<div class="state-box"><h3>'+(isArch?'No archived events':'No events found')+'</h3><p>'+(isArch?'Past events will appear here.':'Try a different filter.')+'</p></div>';
+    }
     return;
   }
   document.getElementById('evGrid').innerHTML=list.map(function(ev,i){
-    var cat=nc(ev.category),pct=ev.slots>0?Math.round((ev.slots_left/ev.slots)*100):0,full=parseInt(ev.slots_left)<=0,low=!full&&pct<=20,fc=full?'#dc2626':low?'#e67e22':'#1a5c38',emoji=ev.emoji||'📌',isReg=!!ev.registered;
+    var cat=nc(ev.category);
+    var pct=ev.slots>0?Math.round((ev.slots_left/ev.slots)*100):0,full=parseInt(ev.slots_left)<=0,low=!full&&pct<=20,fc=full?'#dc2626':low?'#e67e22':'#1a5c38',emoji=ev.emoji||'📌',isReg=!!ev.registered;
     var extra='',ribbon='',foot='';
     if(isArch){extra=' is-expired';ribbon='<div class="expired-ribbon">Expired</div>';foot='<span class="full-tag" style="color:#888;background:#f5f5f5;border-color:#ddd">Event has passed</span>'}
     else if(isReg){extra=' is-registered';ribbon='<div class="registered-ribbon">✓ Registered</div>';foot='<div class="ev-slots"><div class="ev-slots-txt ok"><b>You\'re in!</b></div><div class="ev-bar"><div class="ev-bar-fill" style="width:'+pct+'%;background:'+fc+'"></div></div></div><button class="ev-btn registered" onclick="event.stopPropagation();viewTicket('+ev.id+')">🎟 View Ticket</button>'}
     else if(full){foot='<span class="full-tag">Registration Full</span><button class="ev-btn outline" onclick="event.stopPropagation();openModal('+ev.id+')">View Details</button>'}
     else{foot='<div class="ev-slots"><div class="ev-slots-txt '+(low?'':'ok')+'"><b>'+ev.slots_left+'</b> slots remaining</div><div class="ev-bar"><div class="ev-bar-fill" style="width:'+pct+'%;background:'+fc+'"></div></div></div><button class="ev-btn" onclick="event.stopPropagation();goRegister('+ev.id+')">Register</button>'}
-    return '<div class="ev-card cat-'+cat+extra+'" style="animation-delay:'+(i*.04)+'s" onclick="openModal('+ev.id+')"><div class="ev-card-body">'+ribbon+'<div class="ev-card-top"><span class="ev-badge '+(badgeClass[cat]||'badge-academic')+'">'+cap(cat)+'</span><span class="ev-emoji">'+emoji+'</span></div><div class="ev-title">'+(ev.title||'Untitled Event')+'</div><div class="ev-meta"><div class="ev-meta-row"><span class="ev-meta-ic">📅</span>'+(ev.date||'–')+'</div><div class="ev-meta-row"><span class="ev-meta-ic">🕐</span>'+(ev.time||'–')+'</div><div class="ev-meta-row"><span class="ev-meta-ic">📍</span>'+(ev.location||'–')+'</div></div><div class="ev-card-foot">'+foot+'</div></div></div>';
+    return '<div class="ev-card cat-'+cat+extra+'" style="animation-delay:'+(i*.04)+'s" onclick="openModal('+ev.id+')"><div class="ev-card-body">'+ribbon+
+      '<div class="ev-card-top"><span class="ev-badge '+(badgeClass[cat]||'badge-academic')+'">'+cap(cat)+'</span><span class="ev-emoji">'+emoji+'</span></div>'+
+      '<div class="ev-title">'+(ev.title||'Untitled Event')+'</div>'+
+      '<div class="ev-meta"><div class="ev-meta-row"><span class="ev-meta-ic">📅</span>'+(ev.date||'–')+'</div><div class="ev-meta-row"><span class="ev-meta-ic">🕐</span>'+(ev.time||'–')+'</div><div class="ev-meta-row"><span class="ev-meta-ic">📍</span>'+(ev.location||'–')+'</div></div>'+
+      '<div class="ev-card-foot">'+foot+'</div></div></div>';
   }).join('');
 }
 
-/* ═══ FILTERS ═══ */
-function setCat(c,btn){if(viewMode!=='archived'){viewMode='upcoming';window.EVENTS=upcomingEvents}curCat=c;document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});if(btn)btn.classList.add('active');render()}
-function setCatSb(c,btn){curCat=c;document.querySelectorAll('.sb-filter-item').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');document.querySelectorAll('.ct-btn:not(.archived-btn)').forEach(function(b){var t=b.textContent.trim().toLowerCase();b.classList.toggle('active',viewMode==='archived'?false:(c==='all'?t==='all events':t===c))});render()}
+/* ═════════════ FILTERS ═════════════ */
+function setCat(c,btn){
+  if(viewMode!=='archived'){viewMode='upcoming';window.EVENTS=upcomingEvents}
+  curCat=c;
+  document.querySelectorAll('.ct-btn').forEach(function(b){b.classList.remove('active')});
+  if(btn)btn.classList.add('active');
+  render();
+}
+function setCatSb(c,btn){
+  curCat=c;
+  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  document.querySelectorAll('.ct-btn:not(.archived-btn)').forEach(function(b){
+    var t=b.textContent.trim().toLowerCase();
+    b.classList.toggle('active',viewMode==='archived'?false:(c==='all'?t==='all events':t===c));
+  });
+  render();
+}
 function filterEvents(){curQ=document.getElementById('searchInput').value.toLowerCase().trim();render()}
 async function doLogout(){await sb.auth.signOut();window.location.href='/Login/login.html'}
 
-/* ═══ MODAL ═══ */
+/* ═════════════ MODAL ═════════════ */
 function openModal(id){
-  var ev=upcomingEvents.find(function(e){return e.id===id})||archivedEvents.find(function(e){return e.id===id});if(!ev)return;
-  var cat=nc(ev.category),isReg=!!ev.registered,expired=isExpired(ev);
-  document.getElementById('mBadge').textContent=cap(cat);document.getElementById('mBadge').className='m-cat-badge ev-badge '+(badgeClass[cat]||'badge-academic');
-  document.getElementById('mTitle').textContent=ev.title||'–';document.getElementById('mDate').textContent=ev.date||'–';document.getElementById('mTime').textContent=ev.time||'–';
-  document.getElementById('mLoc').textContent=ev.location||'–';document.getElementById('mFac').textContent=ev.faculty||'–';
+  var ev=upcomingEvents.find(function(e){return e.id===id})||archivedEvents.find(function(e){return e.id===id});
+  if(!ev)return;
+  var cat=nc(ev.category);
+  var isReg=!!ev.registered,expired=isExpired(ev);
+  document.getElementById('mBadge').textContent=cap(cat);
+  document.getElementById('mBadge').className='m-cat-badge ev-badge '+(badgeClass[cat]||'badge-academic');
+  document.getElementById('mTitle').textContent=ev.title||'–';
+  document.getElementById('mDate').textContent=ev.date||'–';
+  document.getElementById('mTime').textContent=ev.time||'–';
+  document.getElementById('mLoc').textContent=ev.location||'–';
+  document.getElementById('mFac').textContent=ev.faculty||'–';
   document.getElementById('mSlots').textContent=expired?'Event has passed':(ev.slots_left>0?ev.slots_left+' slots remaining':'Registration Full');
-  document.getElementById('mOrg').textContent=ev.organizer_name||'–';document.getElementById('mDesc').textContent=ev.description||'–';
+  document.getElementById('mOrg').textContent=ev.organizer_name||'–';
+  document.getElementById('mDesc').textContent=ev.description||'–';
   document.getElementById('mRegisteredNote').classList.toggle('show',isReg);
   var fb=document.getElementById('mFeedback');fb.style.display=isReg?'block':'none';fb.onclick=function(){closeModal();window.location.href='../Feedback/feedback_form.html?id='+id};
   var btn=document.getElementById('mReg');btn.style.background='';
@@ -782,17 +881,34 @@ init();
   var chatOpen=false,chatHistory=[],eventsCtx='',firstOpen=true;
   function buildCtx(){var e=window.EVENTS||[];if(!e.length)return'No events loaded.';return e.slice(0,20).map(function(e){return'['+nc(e.category).toUpperCase()+'] '+e.title+' | '+e.date+' '+(e.time||'')+' | '+(e.location||'–')+' | Slots: '+e.slots_left}).join('\n')}
   window.toggleChat=function(){
-    chatOpen=!chatOpen;document.getElementById('utm-chat-fab').classList.toggle('open',chatOpen);document.getElementById('utm-chat-win').classList.toggle('open',chatOpen);document.getElementById('chat-badge').classList.add('hidden');
-    if(chatOpen&&firstOpen){firstOpen=false;eventsCtx=buildCtx();addBot("Hi! I'm the UTM AI Assistant 👋\n\nI can help you find events, check available slots, or answer anything about the Campus Event Finder.\n\nWhat would you like to know?");document.getElementById('cwInput').focus()}
+    chatOpen=!chatOpen;
+    document.getElementById('utm-chat-fab').classList.toggle('open',chatOpen);
+    document.getElementById('utm-chat-win').classList.toggle('open',chatOpen);
+    document.getElementById('chat-badge').classList.add('hidden');
+    if(chatOpen&&firstOpen){
+      firstOpen=false;eventsCtx=buildCtx();
+      addBot("Hi! I'm the UTM AI Assistant 👋\n\nI can help you find events, check available slots, or answer anything about the Campus Event Finder.\n\nWhat would you like to know?");
+      document.getElementById('cwInput').focus();
+    }
   };
   window.sendQuick=function(t){document.getElementById('cwInput').value=t;sendMsg()};
   window.sendMsg=async function(){
-    var inp=document.getElementById('cwInput'),t=inp.value.trim();if(!t)return;inp.value='';document.getElementById('cwQuick').style.display='none';
-    addUsr(t);chatHistory.push({role:'user',content:t});var tid=addTyp();document.getElementById('cwSend').disabled=true;
-    try{var sys='You are UTM AI Assistant for Campus Event Finder.\n\nCurrent events:\n'+(eventsCtx||buildCtx())+'\n\nRules:\n- Answer in English.\n- Reference data accurately.\n- Keep concise (max 3-4 sentences).\n- Never make up events.';
-    var r=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},body:JSON.stringify({prompt:'SYSTEM: '+sys+'\n\n'+chatHistory.map(function(m){return(m.role==='user'?'Student':'Assistant')+': '+m.content}).join('\n')+'\nAssistant:'})});
-    rmTyp(tid);if(!r.ok)throw new Error(r.status);var d=await r.json();var rep=(d&&d.candidates&&d.candidates[0]&&d.candidates[0].content&&d.candidates[0].content.parts&&d.candidates[0].content.parts[0]&&d.candidates[0].content.parts[0].text)||"Sorry, I can't respond right now.";addBot(rep);chatHistory.push({role:'assistant',content:rep})}
-    catch(e){rmTyp(tid);addBot("Sorry, there's a technical issue. Please try again. 🙏")}
+    var inp=document.getElementById('cwInput'),t=inp.value.trim();
+    if(!t)return;inp.value='';
+    document.getElementById('cwQuick').style.display='none';
+    addUsr(t);chatHistory.push({role:'user',content:t});
+    var tid=addTyp();document.getElementById('cwSend').disabled=true;
+    try{
+      var sys='You are UTM AI Assistant for Campus Event Finder.\n\nCurrent events:\n'+(eventsCtx||buildCtx())+'\n\nRules:\n- Answer in English.\n- Reference data accurately.\n- Keep concise (max 3-4 sentences).\n- Never make up events.';
+      var r=await fetch(SUPABASE_URL+'/functions/v1/ai-recommend',{
+        method:'POST',headers:{'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json'},
+        body:JSON.stringify({prompt:'SYSTEM: '+sys+'\n\n'+chatHistory.map(function(m){return(m.role==='user'?'Student':'Assistant')+': '+m.content}).join('\n')+'\nAssistant:'})
+      });
+      rmTyp(tid);if(!r.ok)throw new Error(r.status);
+      var d=await r.json();
+      var rep=(d&&d.candidates&&d.candidates[0]&&d.candidates[0].content&&d.candidates[0].content.parts&&d.candidates[0].content.parts[0]&&d.candidates[0].content.parts[0].text)||"Sorry, I can't respond right now.";
+      addBot(rep);chatHistory.push({role:'assistant',content:rep});
+    }catch(e){rmTyp(tid);addBot("Sorry, there's a technical issue. Please try again. 🙏")}
     document.getElementById('cwSend').disabled=false;document.getElementById('cwInput').focus();
   };
   function now(){return new Date().toLocaleTimeString('en-MY',{hour:'2-digit',minute:'2-digit'})}
