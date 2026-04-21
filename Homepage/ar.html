@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+<title>AR Event Finder — UTM Campus Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Mind AR + A-Frame -->
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#8B0000;--red2:#6d0000;
+  --orange:#F5A623;--gold:#c8982a;
+  --white:#fff;--bg:#0a1a0a;
+  --green:#1a5c38;
+  --navbar-h:52px;
+}
+html,body{height:100%;width:100%;overflow:hidden;font-family:'Open Sans',sans-serif;background:var(--bg);color:#fff}
+
+/* ── NAVBAR ── */
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--navbar-h);z-index:9999;background:linear-gradient(to bottom,rgba(10,28,10,0.95),rgba(10,28,10,0.8));backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.1);}
+.nav-logo{display:flex;flex-direction:column}
+.logo-row{display:flex;align-items:baseline;line-height:1}
+.l-my{color:var(--orange);font-size:16px;font-weight:300;font-style:italic}
+.l-utm{color:#fff;font-size:16px;font-weight:700}
+.l-portal{color:var(--orange);font-size:16px;font-weight:400}
+.l-tag{color:rgba(200,152,42,.65);font-size:7px;letter-spacing:2px;display:block;margin-top:1px}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);font-size:11px;cursor:pointer;padding:5px 10px;border-radius:5px;font-family:'Open Sans',sans-serif;transition:all .15s}
+.nav-btn:hover{background:rgba(255,255,255,.2)}
+.ar-live-badge{display:flex;align-items:center;gap:5px;background:rgba(139,0,0,.3);border:1px solid rgba(139,0,0,.5);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:700;color:#ff6b6b;letter-spacing:.5px}
+.ar-live-dot{width:6px;height:6px;border-radius:50%;background:#ff4444;animation:pulse 1.5s ease infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+
+/* ── LOADING SCREEN ── */
+#loadScreen{position:fixed;inset:0;z-index:9998;background:linear-gradient(160deg,#0a1a0a 0%,#0d2b15 50%,#0a1a0a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:20px;transition:opacity .5s ease}
+#loadScreen.hide{opacity:0;pointer-events:none}
+.load-logo{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:10px}
+.load-logo-text{font-size:28px;font-weight:700;color:#fff;letter-spacing:-0.5px}
+.load-logo-text span{color:var(--orange)}
+.load-logo-sub{font-size:10px;letter-spacing:3px;color:rgba(200,152,42,.6);text-transform:uppercase}
+.load-spinner-wrap{position:relative;width:64px;height:64px}
+.load-spinner{width:64px;height:64px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-spinner-inner{position:absolute;inset:10px;border:2px solid rgba(255,255,255,.05);border-bottom-color:var(--orange);border-radius:50%;animation:spin .5s linear infinite reverse}
+.load-text{font-size:13px;color:rgba(255,255,255,.6);text-align:center;max-width:280px;line-height:1.5}
+.load-step{font-size:11px;color:rgba(200,152,42,.7);letter-spacing:.5px;animation:fadeStep .5s ease}
+@keyframes fadeStep{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SCAN OVERLAY (before scan) ── */
+#scanOverlay{position:fixed;inset:0;z-index:999;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.scan-guide{border:2px solid rgba(255,255,255,.3);border-radius:12px;width:280px;height:200px;position:relative;animation:scanPulse 2s ease infinite}
+@keyframes scanPulse{0%,100%{border-color:rgba(255,255,255,.3)}50%{border-color:rgba(200,152,42,.7)}}
+.scan-corner{position:absolute;width:24px;height:24px;border-color:var(--orange);border-style:solid}
+.sc-tl{top:-2px;left:-2px;border-width:3px 0 0 3px;border-radius:4px 0 0 0}
+.sc-tr{top:-2px;right:-2px;border-width:3px 3px 0 0;border-radius:0 4px 0 0}
+.sc-bl{bottom:-2px;left:-2px;border-width:0 0 3px 3px;border-radius:0 0 0 4px}
+.sc-br{bottom:-2px;right:-2px;border-width:0 3px 3px 0;border-radius:0 0 4px 0}
+.scan-line{position:absolute;left:10px;right:10px;height:2px;background:linear-gradient(90deg,transparent,var(--orange),transparent);animation:scanLine 2s ease infinite;top:0}
+@keyframes scanLine{0%{top:10px;opacity:1}90%{top:180px;opacity:1}100%{top:180px;opacity:0}}
+.scan-hint{margin-top:20px;background:rgba(10,28,10,.85);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:10px 20px;font-size:12px;color:rgba(255,255,255,.8);text-align:center;backdrop-filter:blur(8px)}
+.scan-hint b{color:var(--orange)}
+#scanOverlay.hidden{display:none}
+
+/* ── EVENT CARD (bottom sheet) ── */
+#eventCard{position:fixed;bottom:0;left:0;right:0;z-index:9000;background:linear-gradient(to bottom,rgba(10,28,10,0.0),rgba(10,28,10,0.98) 20px);padding:0 16px 24px;transform:translateY(100%);transition:transform .4s cubic-bezier(0.34,1.56,0.64,1);display:none}
+#eventCard.show{transform:translateY(0);display:block}
+.ec-handle{width:40px;height:4px;background:rgba(255,255,255,.3);border-radius:2px;margin:12px auto 16px}
+.ec-inner{background:rgba(20,40,20,.95);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:16px;backdrop-filter:blur(20px);box-shadow:0 -8px 40px rgba(0,0,0,.4)}
+.ec-cat-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ec-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 10px;border-radius:20px}
+.badge-academic{background:#1a2a5c;color:#7aabff}
+.badge-sports{background:#0d3322;color:#4ade80}
+.badge-cultural{background:#3b0d0d;color:#ff8080}
+.badge-career{background:#3b2200;color:#ffa040}
+.badge-volunteer{background:#2d0d4e;color:#c084fc}
+.ec-close{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.6);width:28px;height:28px;border-radius:50%;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.ec-close:hover{background:rgba(255,255,255,.2);color:#fff}
+.ec-emoji{font-size:32px;margin-bottom:8px}
+.ec-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:12px;line-height:1.3}
+.ec-meta{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.ec-meta-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:rgba(255,255,255,.7)}
+.ec-meta-ic{font-size:13px;width:18px;text-align:center;flex-shrink:0}
+.ec-slots-bar{height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-bottom:16px;overflow:hidden}
+.ec-slots-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--green),#4ade80);transition:width .8s ease}
+.ec-slots-txt{font-size:11.5px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.ec-slots-txt b{color:#4ade80}
+.ec-register-btn{width:100%;background:linear-gradient(135deg,var(--red2),var(--red));color:#fff;border:none;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:700;padding:14px;border-radius:8px;cursor:pointer;transition:all .2s;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:8px}
+.ec-register-btn:hover{background:linear-gradient(135deg,var(--red),#c0392b);transform:translateY(-1px);box-shadow:0 4px 20px rgba(139,0,0,.4)}
+.ec-register-btn.registered{background:linear-gradient(135deg,#0d3322,var(--green));cursor:default}
+.ec-register-btn.registered:hover{transform:none;box-shadow:none}
+
+/* ── PIN SELECTOR (top area, after scan) ── */
+#pinSelector{position:fixed;top:calc(var(--navbar-h) + 10px);left:0;right:0;z-index:9000;padding:0 16px;display:none}
+#pinSelector.show{display:block}
+.ps-label{font-size:11px;color:rgba(255,255,255,.6);text-align:center;margin-bottom:8px;letter-spacing:.5px}
+.ps-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.ps-scroll::-webkit-scrollbar{display:none}
+.ps-pin{flex:0 0 auto;background:rgba(10,28,10,.85);border:1.5px solid rgba(255,255,255,.2);border-radius:20px;padding:6px 14px;font-size:12px;color:rgba(255,255,255,.8);cursor:pointer;transition:all .2s;backdrop-filter:blur(8px);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.ps-pin:hover,.ps-pin.active{border-color:var(--orange);color:#fff;background:rgba(139,0,0,.5)}
+.ps-pin-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ── AR SCENE ── */
+a-scene{width:100vw;height:100vh;position:fixed;top:0;left:0;z-index:1}
+#arSceneWrap{position:fixed;inset:0;z-index:1}
+
+/* ── DETECTED BANNER ── */
+#detectedBanner{position:fixed;top:calc(var(--navbar-h) + 10px);left:50%;transform:translateX(-50%);z-index:9001;background:rgba(26,92,56,.9);border:1px solid rgba(74,222,128,.3);border-radius:20px;padding:6px 16px;font-size:12px;color:#4ade80;font-weight:600;backdrop-filter:blur(8px);display:none;align-items:center;gap:6px;white-space:nowrap}
+#detectedBanner.show{display:flex}
+
+/* ── NO EVENTS STATE ── */
+#noEventsMsg{position:fixed;inset:0;z-index:9990;background:rgba(10,28,10,.95);display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;text-align:center}
+#noEventsMsg.show{display:flex}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a class="nav-logo" href="../Homepage/events.html" style="text-decoration:none">
+    <div class="logo-row"><span class="l-my">my</span><span class="l-utm">UTM</span><span class="l-portal">Portal</span></div>
+    <span class="l-tag">AR EVENT FINDER</span>
+  </a>
+  <div class="nav-right">
+    <div class="ar-live-badge"><div class="ar-live-dot"></div>AR LIVE</div>
+    <button class="nav-btn" onclick="window.location.href='../Homepage/events.html'">← Events</button>
+  </div>
+</nav>
+
+<!-- LOADING SCREEN -->
+<div id="loadScreen">
+  <div class="load-logo">
+    <div class="load-logo-text">my<span>UTM</span>Portal</div>
+    <div class="load-logo-sub">AR Event Finder</div>
+  </div>
+  <div class="load-spinner-wrap">
+    <div class="load-spinner"></div>
+    <div class="load-spinner-inner"></div>
+  </div>
+  <div class="load-text">Loading AR camera & event data...</div>
+  <div class="load-step" id="loadStep">Connecting to database...</div>
+</div>
+
+<!-- SCAN GUIDE OVERLAY -->
+<div id="scanOverlay">
+  <div class="scan-guide">
+    <div class="scan-corner sc-tl"></div>
+    <div class="scan-corner sc-tr"></div>
+    <div class="scan-corner sc-bl"></div>
+    <div class="scan-corner sc-br"></div>
+    <div class="scan-line"></div>
+  </div>
+  <div class="scan-hint">Point camera at <b>UTM Campus Map</b><br>to reveal event pins 📍</div>
+</div>
+
+<!-- DETECTED BANNER -->
+<div id="detectedBanner">✓ Map detected — tap a pin to see events!</div>
+
+<!-- PIN SELECTOR (shown after map detected) -->
+<div id="pinSelector">
+  <div class="ps-label">TAP A LOCATION TO VIEW EVENTS</div>
+  <div class="ps-scroll" id="pinScroll"></div>
+</div>
+
+<!-- EVENT DETAIL CARD -->
+<div id="eventCard">
+  <div class="ec-handle"></div>
+  <div class="ec-inner">
+    <div class="ec-cat-row">
+      <span class="ec-badge" id="ecBadge"></span>
+      <button class="ec-close" onclick="closeEventCard()">✕</button>
+    </div>
+    <div class="ec-emoji" id="ecEmoji">📌</div>
+    <div class="ec-title" id="ecTitle">Loading...</div>
+    <div class="ec-meta">
+      <div class="ec-meta-row"><span class="ec-meta-ic">📅</span><span id="ecDate">—</span></div>
+      <div class="ec-meta-row"><span class="ec-meta-ic">🕐</span><span id="ecTime">—</span></div>
+      <div class="ec-meta-row"><span class="ec-meta-ic">📍</span><span id="ecLocation">—</span></div>
+      <div class="ec-meta-row"><span class="ec-meta-ic">🏫</span><span id="ecFaculty">—</span></div>
+    </div>
+    <div class="ec-slots-txt"><b id="ecSlotsNum">—</b> slots remaining</div>
+    <div class="ec-slots-bar"><div class="ec-slots-fill" id="ecSlotsBar" style="width:0%"></div></div>
+    <button class="ec-register-btn" id="ecRegBtn" onclick="handleRegister()">
+      <span>Register Now</span><span>→</span>
+    </button>
+  </div>
+</div>
+
+<!-- AR SCENE -->
+<div id="arSceneWrap">
+  <a-scene
+    id="arScene"
+    mindar-image="imageTargetSrc: targets.mind; autoStart: false; uiLoading: no; uiError: no; uiScanning: no;"
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false">
+
+    <a-assets></a-assets>
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <!-- 10 Event Pins on the UTM Map -->
+    <!-- Each pin is positioned relative to the map marker -->
+    <!-- Positions tuned for UTM campus map layout -->
+
+    <!-- Pin 1: Faculty of Computing area -->
+    <a-entity mindar-image-target="targetIndex: 0">
+      <a-entity id="pin1" class="event-pin" data-pin="0" position="-0.08 0.05 0" onclick="selectPin(0)">
+        <a-cylinder color="#8B0000" radius="0.015" height="0.06" position="0 0 0"></a-cylinder>
+        <a-sphere color="#ff4444" radius="0.025" position="0 0.04 0"></a-sphere>
+        <a-text value="FC" align="center" color="white" width="0.1" position="0 0.04 0.026" scale="0.5 0.5 0.5"></a-text>
+      </a-entity>
+
+      <!-- Pin 2: Library -->
+      <a-entity id="pin2" class="event-pin" data-pin="1" position="0.02 0.02 0" onclick="selectPin(1)">
+        <a-cylinder color="#003087" radius="0.015" height="0.06" position="0 0 0"></a-cylinder>
+        <a-sphere color="#4488ff" radius="0.025" position="0 0.04 0"></a-sphere>
+        <a-text value="LIB" align="center" color="white" width="0.1" position="0 0.04 0.026" scale="0.5 0.5 0.5"></a-text>
+      </a-entity>
+
+      <!-- Pin 3: Sports Complex -->
+      <a-entity id="pin3" class="event-pin" data-pin="2" position="-0.12 -0.06 0" onclick="selectPin(2)">
+        <a-cylinder color="#1a5c38" radius="0.015" height="0.06" position="0 0 0"></a-cylinder>
+        <a-sphere color="#4ade80" radius="0.025" position="0 0.04 0"></a-sphere>
+        <a-text value="SPT" align="center" color="white" width="0.1" position="0 0.04 0.026" scale="0.5 0.5 0.5"></a-text>
+      </a-entity>
+
+      <!-- Pin 4: DTC / Main Hall -->
+      <a-entity id="pin4" class="event-pin" data-pin="3" position="0.08 0.06 0" onclick="selectPin(3)">
+        <a-cylinder color="#b35900" radius="0.015" height="0.06" position="0 0 0"></a-cylinder>
+        <a-sphere color="#ffa040" radius="0.025" position="0 0.04 0"></a-sphere>
+        <a-text value="DTC" align="center" color="white" width="0.1" position="0 0.04 0.026" scale="0.5 0.5 0.5"></a-text>
+      </a-entity>
+
+      <!-- Pin 5: Faculty of Civil Engineering -->
+      <a-entity id="pin5" class="event-pin" data-pin="4" position="-0.04 0.10 0" onclick="selectPin(4)">
+        <a-cylinder color="#5b2b91" radius="0.015" height="0.06" position="0 0 0"></a-cylinder>
+        <a-sphere color="#c084fc" radius="0.025" position="0 0.04 0"></a-sphere>
+        <a-text value="FCE" align="center" color="white" width="0.1" position="0 0.04 0.026" scale="0.5 0.5 0.5"></a-text>
+      </a-entity>
+
+      <!-- Pin 6: Student Union -->
+      <a-entity id="pin6" class="event-pin" data-pin="5" position="0.14 -0.02 0" onclick="selectPin(5)">
+        <a-cylinder color="#8B0000" radius="0.015" height="0.06" position="0 0 0"></a-cylinder>
+        <a-sphere color="#ff6b6b" radius="0.025" position="0 0.04 0"></a-sphere>
+        <a-text value="MPH" align="center" color="white" width="0.1" position="0 0.04 0.026" scale="0.5 0.5 0.5"></a-text>
+      </a-entity>
+
+      <!-- Pin 7: Faculty of Science -->
+      <a-entity id="pin7" class="event-pin" data-pin="6" position="-0.16 0.04 0" onclick="selectPin(6)">
+        <a-cylinder color="#003087" radius="0.015" height="0.06" position="0 0 0"></a-cylinder>
+        <a-sphere color="#7aabff" radius="0.025" position="0 0.04 0"></a-sphere>
+        <a-text value="FS" align="center" color="white" width="0.1" position="0 0.04 0.026" scale="0.5 0.5 0.5"></a-text>
+      </a-entity>
+
+      <!-- Pin 8: Kolej 9/10 -->
+      <a-entity id="pin8" class="event-pin" data-pin="7" position="0.04 -0.12 0" onclick="selectPin(7)">
+        <a-cylinder color="#1a5c38" radius="0.015" height="0.06" position="0 0 0"></a-cylinder>
+        <a-sphere color="#4ade80" radius="0.025" position="0 0.04 0"></a-sphere>
+        <a-text value="K9" align="center" color="white" width="0.1" position="0 0.04 0.026" scale="0.5 0.5 0.5"></a-text>
+      </a-entity>
+
+      <!-- Pin 9: Mosque -->
+      <a-entity id="pin9" class="event-pin" data-pin="8" position="-0.06 -0.10 0" onclick="selectPin(8)">
+        <a-cylinder color="#b35900" radius="0.015" height="0.06" position="0 0 0"></a-cylinder>
+        <a-sphere color="#ffd700" radius="0.025" position="0 0.04 0"></a-sphere>
+        <a-text value="MSJ" align="center" color="white" width="0.1" position="0 0.04 0.026" scale="0.5 0.5 0.5"></a-text>
+      </a-entity>
+
+      <!-- Pin 10: UTM Main Gate area -->
+      <a-entity id="pin10" class="event-pin" data-pin="9" position="0.18 -0.10 0" onclick="selectPin(9)">
+        <a-cylinder color="#5b2b91" radius="0.015" height="0.06" position="0 0 0"></a-cylinder>
+        <a-sphere color="#e879f9" radius="0.025" position="0 0.04 0"></a-sphere>
+        <a-text value="GTW" align="center" color="white" width="0.1" position="0 0.04 0.026" scale="0.5 0.5 0.5"></a-text>
+      </a-entity>
+
+    </a-entity>
+  </a-scene>
+</div>
+
+<script>
+const SUPABASE_URL  = 'https://wqpkguilunzhzkeciujv.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxcGtndWlsdW56aHprZWNpdWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3NTQxMDEsImV4cCI6MjA5MTMzMDEwMX0.AErtUxJdXstAA-q039dJyj2T2b04YE_K5n0KrWd2YCg';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+// ── 10 Pin Location Definitions ──
+const PIN_LOCATIONS = [
+  { id: 0, label: 'Faculty of Computing', short: 'FC',   color: '#ff4444', category: 'academic' },
+  { id: 1, label: 'UTM Library',          short: 'LIB',  color: '#4488ff', category: 'academic' },
+  { id: 2, label: 'Sports Complex',       short: 'SPT',  color: '#4ade80', category: 'sports'   },
+  { id: 3, label: 'DTC / Main Hall',      short: 'DTC',  color: '#ffa040', category: 'career'   },
+  { id: 4, label: 'Fac. Civil Eng.',      short: 'FCE',  color: '#c084fc', category: 'volunteer'},
+  { id: 5, label: 'MPH / Dewan',          short: 'MPH',  color: '#ff6b6b', category: 'cultural' },
+  { id: 6, label: 'Faculty of Science',   short: 'FS',   color: '#7aabff', category: 'academic' },
+  { id: 7, label: 'Kolej 9/10',           short: 'K9',   color: '#4ade80', category: 'cultural' },
+  { id: 8, label: 'Masjid UTM',           short: 'MSJ',  color: '#ffd700', category: 'volunteer'},
+  { id: 9, label: 'UTM Entrance',         short: 'GTW',  color: '#e879f9', category: 'career'   },
+];
+
+const badgeClass = {
+  academic: 'badge-academic', sports: 'badge-sports',
+  cultural: 'badge-cultural', career: 'badge-career', volunteer: 'badge-volunteer'
+};
+
+let allEvents = [];
+let pinEvents = {}; // pinIndex -> array of events
+let currentPinIndex = null;
+let currentEventIndex = null;
+let mapDetected = false;
+let registeredEventIds = new Set();
+
+// ── Assign events to pins ──
+function assignEventsToPins(events) {
+  // Clear
+  PIN_LOCATIONS.forEach(p => { pinEvents[p.id] = []; });
+
+  // Match events to pins by category, cycling if more events than pins
+  const catPins = {};
+  PIN_LOCATIONS.forEach(p => {
+    if (!catPins[p.category]) catPins[p.category] = [];
+    catPins[p.category].push(p.id);
+  });
+
+  events.forEach((ev, i) => {
+    const cat = (ev.category || '').toLowerCase().trim();
+    const matchingPins = catPins[cat] || PIN_LOCATIONS.map(p => p.id);
+    const pinId = matchingPins[i % matchingPins.length];
+    if (pinId !== undefined) pinEvents[pinId].push(ev);
+  });
+
+  // Fill empty pins with random events
+  PIN_LOCATIONS.forEach(p => {
+    if (pinEvents[p.id].length === 0 && events.length > 0) {
+      pinEvents[p.id] = [events[p.id % events.length]];
+    }
+  });
+}
+
+// ── Build Pin Selector UI ──
+function buildPinSelector() {
+  const scroll = document.getElementById('pinScroll');
+  scroll.innerHTML = PIN_LOCATIONS.map(p => `
+    <div class="ps-pin" id="pspin-${p.id}" onclick="selectPin(${p.id})">
+      <div class="ps-pin-dot" style="background:${p.color}"></div>
+      ${p.label} <span style="opacity:.5;font-size:10px">(${pinEvents[p.id]?.length || 0})</span>
+    </div>
+  `).join('');
+}
+
+// ── Select Pin → Show Event Card ──
+function selectPin(pinId) {
+  currentPinIndex = pinId;
+  currentEventIndex = 0;
+
+  // Highlight selected pin button
+  document.querySelectorAll('.ps-pin').forEach(p => p.classList.remove('active'));
+  const btn = document.getElementById(`pspin-${pinId}`);
+  if (btn) btn.classList.add('active');
+
+  const events = pinEvents[pinId] || [];
+  if (!events.length) {
+    showEventCard({ title: 'No events at this location', emoji: '📍', category: '', date: '—', time: '—', location: PIN_LOCATIONS[pinId]?.label || '—', faculty: '—', slots_left: 0, slots: 0, id: null });
+    return;
+  }
+  showEventCard(events[0]);
+}
+
+// ── Show Event Card ──
+function showEventCard(ev) {
+  const cat = (ev.category || '').toLowerCase().trim();
+  const pct = ev.slots > 0 ? Math.round((ev.slots_left / ev.slots) * 100) : 0;
+  const isReg = registeredEventIds.has(ev.id);
+
+  document.getElementById('ecBadge').textContent = cap(cat) || 'Event';
+  document.getElementById('ecBadge').className = 'ec-badge ' + (badgeClass[cat] || '');
+  document.getElementById('ecEmoji').textContent = ev.emoji || '📌';
+  document.getElementById('ecTitle').textContent = ev.title || 'Event';
+  document.getElementById('ecDate').textContent = ev.date || '—';
+  document.getElementById('ecTime').textContent = ev.time || '—';
+  document.getElementById('ecLocation').textContent = ev.location || '—';
+  document.getElementById('ecFaculty').textContent = ev.faculty || 'Open to all';
+  document.getElementById('ecSlotsNum').textContent = ev.slots_left ?? '—';
+  document.getElementById('ecSlotsBar').style.width = pct + '%';
+
+  const btn = document.getElementById('ecRegBtn');
+  if (!ev.id) {
+    btn.innerHTML = '<span>No Events Here</span>';
+    btn.className = 'ec-register-btn registered';
+    btn.onclick = null;
+  } else if (isReg) {
+    btn.innerHTML = '<span>✓ Already Registered</span>';
+    btn.className = 'ec-register-btn registered';
+    btn.onclick = () => window.location.href = `../Login/register.html?id=${ev.id}`;
+  } else if (ev.slots_left <= 0) {
+    btn.innerHTML = '<span>Registration Full</span>';
+    btn.className = 'ec-register-btn registered';
+    btn.onclick = null;
+  } else {
+    btn.innerHTML = '<span>Register Now</span><span>→</span>';
+    btn.className = 'ec-register-btn';
+    btn.onclick = () => handleRegister();
+  }
+
+  const card = document.getElementById('eventCard');
+  card.style.display = 'block';
+  requestAnimationFrame(() => card.classList.add('show'));
+}
+
+function handleRegister() {
+  const events = pinEvents[currentPinIndex] || [];
+  const ev = events[currentEventIndex];
+  if (!ev || !ev.id) return;
+  window.location.href = `../Login/register.html?id=${ev.id}&title=${encodeURIComponent(ev.title)}&date=${ev.date}&location=${encodeURIComponent(ev.location || '')}&time=${encodeURIComponent(ev.time || '')}`;
+}
+
+function closeEventCard() {
+  const card = document.getElementById('eventCard');
+  card.classList.remove('show');
+  setTimeout(() => { card.style.display = 'none'; }, 400);
+  currentPinIndex = null;
+  document.querySelectorAll('.ps-pin').forEach(p => p.classList.remove('active'));
+}
+
+function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
+function setText(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
+
+// ── AR Scene Events ──
+function setupAREvents() {
+  const scene = document.getElementById('arScene');
+
+  scene.addEventListener('arReady', () => {
+    console.log('AR Ready');
+    hideLoading();
+  });
+
+  scene.addEventListener('arError', () => {
+    console.error('AR Error');
+    hideLoading();
+    document.getElementById('loadStep').textContent = '⚠️ AR Error. Make sure camera permission is allowed.';
+  });
+
+  // Target found (map detected)
+  const target = document.querySelector('[mindar-image-target]');
+  if (target) {
+    target.addEventListener('targetFound', () => {
+      mapDetected = true;
+      document.getElementById('scanOverlay').classList.add('hidden');
+      document.getElementById('detectedBanner').classList.add('show');
+      document.getElementById('pinSelector').classList.add('show');
+      setTimeout(() => {
+        document.getElementById('detectedBanner').classList.remove('show');
+      }, 3000);
+    });
+
+    target.addEventListener('targetLost', () => {
+      mapDetected = false;
+      document.getElementById('scanOverlay').classList.remove('hidden');
+      document.getElementById('detectedBanner').classList.remove('show');
+    });
+  }
+}
+
+function hideLoading() {
+  const ls = document.getElementById('loadScreen');
+  ls.classList.add('hide');
+  setTimeout(() => { ls.style.display = 'none'; }, 600);
+}
+
+// ── Init ──
+async function init() {
+  setText('loadStep', 'Checking session...');
+
+  // Auth check
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    window.location.href = '../Login/login.html';
+    return;
+  }
+
+  setText('loadStep', 'Loading events from database...');
+
+  // Load events
+  const today = new Date().toISOString().split('T')[0];
+  const { data: events, error } = await sb.from('events')
+    .select('*')
+    .eq('status', 'approved')
+    .gte('date', today)
+    .gt('slots_left', 0)
+    .order('date', { ascending: true })
+    .limit(30);
+
+  if (error || !events) {
+    setText('loadStep', '⚠️ Failed to load events. Check connection.');
+    setTimeout(hideLoading, 2000);
+    return;
+  }
+
+  allEvents = events;
+
+  // Load user registrations
+  const { data: userRec } = await sb.from('users').select('matrix').eq('email', session.user.email).single();
+  if (userRec?.matrix) {
+    const { data: regs } = await sb.from('registrations').select('event_id').ilike('matric_no', userRec.matrix);
+    if (regs) regs.forEach(r => registeredEventIds.add(r.event_id));
+  }
+
+  setText('loadStep', 'Assigning events to map pins...');
+  assignEventsToPins(allEvents);
+  buildPinSelector();
+
+  setText('loadStep', 'Starting AR camera...');
+  setupAREvents();
+
+  // Start AR
+  const sceneEl = document.getElementById('arScene');
+  sceneEl.addEventListener('loaded', () => {
+    const system = sceneEl.systems['mindar-image-system'];
+    if (system) system.start();
+  });
+}
+
+init();
+</script>
+</body>
+</html>
