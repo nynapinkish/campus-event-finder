@@ -301,7 +301,7 @@ body::after{content:'';position:fixed;top:0;left:0;right:0;height:260px;z-index:
       </div>
       <div class="nav-right">
         <button class="nav-icon-btn" onclick="window.location.href='../Homepage/events.html'">← Events</button>
-        <div class="user-pill"><div class="user-av" id="headerAvatar">?</div><span id="headerName">—</span></div>
+        <div class="user-pill" id="userPill"><div class="user-av" id="headerAvatar">?</div><span id="headerName">—</span></div>
       </div>
     </nav>
   </div>
@@ -337,9 +337,9 @@ body::after{content:'';position:fixed;top:0;left:0;right:0;height:260px;z-index:
         </button>
       </div>
       <div class="sb-footer">
-        <button class="sb-logout" onclick="doLogout()">
+        <button class="sb-logout" id="sbAuthBtn" onclick="doLogout()">
           <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          Log Out
+          <span id="sbAuthLabel">Log Out</span>
         </button>
       </div>
     </aside>
@@ -758,17 +758,31 @@ function toggleSidebar(){
 }
 function closeSidebar(){document.body.classList.remove('sb-open');document.body.classList.add('sb-collapsed');document.getElementById('sidebarBackdrop').classList.remove('visible');}
 async function doLogout(){await sb.auth.signOut();window.location.href='../Login/login.html';}
+function goLogin(){window.location.href='../Login/login.html';}
 
 function setText(id,val){var el=document.getElementById(id);if(el)el.textContent=val;}
 
+/* ── SCROLL HELPER (scroll container sebenar ialah .content-area, bukan window) ── */
+function scrollToTop(targetId) {
+  const el = document.getElementById(targetId);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const contentArea = document.querySelector('.content-area');
+  if (contentArea) contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 /* ── INIT ── */
 async function init() {
+  // ✅ CHANGED: login is now OPTIONAL — guests can submit feedback directly.
   const { data: { session } } = await sb.auth.getSession();
-  if (!session) { window.location.href = '/Login/login.html'; return; }
 
-  const { data: user } = await sb.from('users').select('*').eq('email', session.user.email).single();
+  let user = null;
+  if (session) {
+    const { data } = await sb.from('users').select('*').eq('email', session.user.email).single();
+    user = data;
+  }
 
-  if (user) {
+  if (session && user) {
+    // Logged-in: show profile + prefill like before
     const initials = (user.name||'').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()||'?';
     setText('headerAvatar', initials); setText('sbAvatar', initials);
     setText('headerName', user.matrix||user.name||session.user.email);
@@ -779,6 +793,19 @@ async function init() {
     if (user.email)  document.getElementById('email').value    = session.user.email;
     const fac = document.getElementById('faculty');
     if (user.faculty) { for(const o of fac.options){if(o.value===user.faculty||o.text===user.faculty){fac.value=o.value;break;}} }
+  } else {
+    // ✅ NEW: Guest mode — header pill becomes a Login button
+    setText('headerAvatar', '👤');
+    setText('headerName', 'Log In');
+    const pill = document.getElementById('userPill');
+    if (pill) pill.onclick = goLogin;
+    setText('sbAvatar', '👤');
+    setText('sbName', 'Guest');
+    setText('sbMatrix', 'Not logged in');
+    const authBtn = document.getElementById('sbAuthBtn');
+    const authLbl = document.getElementById('sbAuthLabel');
+    if (authBtn) authBtn.onclick = goLogin;
+    if (authLbl) authLbl.textContent = 'Log In';
   }
 
   if (!isMobile()) { document.body.classList.add('sb-open'); document.body.classList.remove('sb-collapsed'); }
@@ -978,7 +1005,8 @@ async function submitFeedback() {
 
   document.getElementById('formCard').classList.add('hide');
   document.getElementById('successScreen').classList.add('show');
-  window.scrollTo({ top:0, behavior:'smooth' });
+  // ✅ CHANGED: scroll ke success screen (scroll container sebenar, bukan window)
+  scrollToTop('successScreen');
 }
 
 /* ── RESET ── */
@@ -996,7 +1024,8 @@ function resetForm() {
   ['likedCount','improveCount','additionalCount'].forEach(id => { setText(id, '0 / 300'); });
   document.getElementById('formCard').classList.remove('hide');
   document.getElementById('successScreen').classList.remove('show');
-  window.scrollTo({ top:0, behavior:'smooth' });
+  // ✅ CHANGED: scroll balik ke atas form (scroll container sebenar, bukan window)
+  scrollToTop('formCard');
 }
 
 function cap(s) { return s ? s[0].toUpperCase() + s.slice(1) : ''; }
