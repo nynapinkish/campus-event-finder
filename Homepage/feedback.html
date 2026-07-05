@@ -395,45 +395,9 @@ body::after{content:'';position:fixed;top:0;left:0;right:0;height:260px;z-index:
               <div class="success-head">
                 <div class="success-icon">✓</div>
                 <div class="success-head-title">Feedback Submitted!</div>
-                <div class="success-head-sub">Thank you. Your feedback has been recorded and analysed.</div>
+                <div class="success-head-sub">Thank you for your feedback! It helps us improve future events.</div>
               </div>
               <div class="success-body">
-                <div class="sentiment-result">
-                  <div class="sr-head">
-                    <span class="sr-head-label">🤖 AI Analysis Result</span>
-                    <span class="sr-head-badge" id="sentimentBadge"></span>
-                  </div>
-                  <div class="sr-body">
-                    <div class="sr-sentiment-row">
-                      <span class="sr-emoji" id="sentimentEmoji"></span>
-                      <div>
-                        <div class="sr-sentiment-label" id="sentimentLabel"></div>
-                        <div class="sr-sentiment-desc" id="sentimentDesc"></div>
-                      </div>
-                    </div>
-                    <div class="sr-bars">
-                      <div class="sr-bar-row">
-                        <span class="sr-bar-lbl">Positive</span>
-                        <div class="sr-bar-track"><div class="sr-bar-fill fill-pos" id="barPos" style="width:0%"></div></div>
-                        <span class="sr-bar-pct" id="pctPos"></span>
-                      </div>
-                      <div class="sr-bar-row">
-                        <span class="sr-bar-lbl">Neutral</span>
-                        <div class="sr-bar-track"><div class="sr-bar-fill fill-neu" id="barNeu" style="width:0%"></div></div>
-                        <span class="sr-bar-pct" id="pctNeu"></span>
-                      </div>
-                      <div class="sr-bar-row">
-                        <span class="sr-bar-lbl">Negative</span>
-                        <div class="sr-bar-track"><div class="sr-bar-fill fill-neg" id="barNeg" style="width:0%"></div></div>
-                        <span class="sr-bar-pct" id="pctNeg"></span>
-                      </div>
-                    </div>
-                    <div class="sr-keywords">
-                      <div class="sr-kw-label">Extracted Keywords</div>
-                      <div class="sr-kw-tags" id="kwTags"></div>
-                    </div>
-                  </div>
-                </div>
                 <div class="success-summary">
                   <div class="ss-title">Feedback Summary</div>
                   <div class="ss-row"><span class="ss-label">Name</span><span class="ss-val" id="sName">—</span></div>
@@ -442,7 +406,7 @@ body::after{content:'';position:fixed;top:0;left:0;right:0;height:260px;z-index:
                   <div class="ss-row"><span class="ss-label">Overall Rating</span><span class="ss-val" id="sRating">—</span></div>
                   <div class="ss-row"><span class="ss-label">Recommendation</span><span class="ss-val" id="sRecommend">—</span></div>
                 </div>
-                <div class="success-note">Your feedback has been saved to Supabase and will be reviewed by the event organiser.</div>
+                <div class="success-note">Your feedback has been saved and will be reviewed by the event organiser to help improve future events.</div>
                 <div class="success-actions">
                   <button class="btn-back" onclick="window.location.href='../Homepage/events.html'">← Back to Event Finder</button>
                   <button class="btn-another" onclick="resetForm()">Submit Another Feedback</button>
@@ -969,23 +933,6 @@ async function submitFeedback() {
   setText('sEvent',     feedbackData.event_title);
   setText('sRating',    '★'.repeat(overallRating) + '☆'.repeat(5-overallRating) + ' (' + overallRating + '/5)');
   setText('sRecommend', recommendVal==='yes'?'Yes, definitely':recommendVal==='maybe'?'Maybe':'No');
-
-  setText('sentimentBadge', cap(ai.sentiment));
-  document.getElementById('sentimentBadge').className = 'sr-head-badge ' + ai.badgeCls;
-  setText('sentimentEmoji', ai.emoji);
-  setText('sentimentLabel', cap(ai.sentiment) + ' Sentiment');
-  setText('sentimentDesc',  ai.desc);
-
-  setTimeout(() => {
-    document.getElementById('barPos').style.width = ai.posP + '%'; setText('pctPos', ai.posP + '%');
-    document.getElementById('barNeu').style.width = ai.neuP + '%'; setText('pctNeu', ai.neuP + '%');
-    document.getElementById('barNeg').style.width = ai.negP + '%'; setText('pctNeg', ai.negP + '%');
-  }, 200);
-
-  const kwContainer = document.getElementById('kwTags'); kwContainer.innerHTML = '';
-  ai.allPositiveKw.forEach(w => { const t = document.createElement('span'); t.className='kw-tag pos'; t.textContent=w; kwContainer.appendChild(t); });
-  ai.allNegativeKw.forEach(w => { const t = document.createElement('span'); t.className='kw-tag neg'; t.textContent=w; kwContainer.appendChild(t); });
-  if (!kwContainer.children.length) { const t = document.createElement('span'); t.className='kw-tag'; t.textContent='general feedback'; kwContainer.appendChild(t); }
 
   document.getElementById('formCard').classList.add('hide');
   document.getElementById('successScreen').classList.add('show');

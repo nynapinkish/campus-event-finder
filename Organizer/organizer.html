@@ -641,7 +641,8 @@ async function initOrganizer(){
   addTentatif('','','');
   addBudgetRow('income','','');
   addBudgetRow('expense','','');
-  await Promise.all([loadMyEvents(),loadRegistrations(),loadFeedback()]);
+  await loadMyEvents();
+  await Promise.all([loadRegistrations(),loadFeedback()]);
   renderDashboard();renderMyEvents();renderRegistrations();renderFeedback();
   updatePendingBadge();
   showSection('dashboard',document.querySelector('[data-section="dashboard"]'));
