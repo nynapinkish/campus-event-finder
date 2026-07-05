@@ -894,8 +894,12 @@ function renderTicket(t) {
   document.getElementById('autofillBanner').style.display = 'none';
   document.getElementById('loadingBox').style.display = 'none';
   document.getElementById('successScreen').classList.add('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+
+  const successEl = document.getElementById('successScreen');
+  if (successEl) successEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const contentArea = document.querySelector('.content-area');
+  if (contentArea) contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
 function validate() {
   const required = [
