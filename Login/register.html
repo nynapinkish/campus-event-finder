@@ -262,7 +262,7 @@ body::after{content:'';position:fixed;top:0;left:0;right:0;height:260px;z-index:
       </div>
       <div class="nav-right">
         <button class="nav-icon-btn" onclick="window.location.href='../Homepage/events.html'">← Events</button>
-        <div class="user-pill"><div class="user-av" id="headerAvatar">?</div><span id="headerName">—</span></div>
+        <div class="user-pill" id="userPill"><div class="user-av" id="headerAvatar">?</div><span id="headerName">—</span></div>
       </div>
     </nav>
   </div>
@@ -294,9 +294,9 @@ body::after{content:'';position:fixed;top:0;left:0;right:0;height:260px;z-index:
         </button>
       </div>
       <div class="sb-footer">
-        <button class="sb-logout" onclick="doLogout()">
+        <button class="sb-logout" id="sbAuthBtn" onclick="doLogout()">
           <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          Log Out
+          <span id="sbAuthLabel">Log Out</span>
         </button>
       </div>
     </aside>
@@ -690,21 +690,41 @@ window.addEventListener('resize',function(){if(!isMobile())document.getElementBy
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&isMobile()&&document.body.classList.contains('sb-open'))closeSidebar();});
 
 async function doLogout(){await sb.auth.signOut();window.location.href='../Login/login.html'}
+function goLogin(){window.location.href='../Login/login.html'}
 
 async function init() {
+  // ✅ CHANGED: login is now OPTIONAL — guests can register directly.
   const { data: { session } } = await sb.auth.getSession();
-  if (!session) { window.location.href = '../Login/login.html'; return; }
 
-  const { data: user } = await sb.from('users').select('*').eq('email', session.user.email).single();
-  currentUser = user;
+  let user = null;
+  if (session) {
+    const { data } = await sb.from('users').select('*').eq('email', session.user.email).single();
+    user = data;
+    currentUser = user;
+  }
 
-  if (user) {
+  if (session && user) {
+    // Logged-in: show profile like before
     const initials = (user.full_name || user.matrix || '').split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase() || '?';
     setText('headerAvatar', initials);
     setText('sbAvatar', initials);
     setText('headerName', user.full_name || user.matrix || session.user.email);
     setText('sbName', user.full_name || user.matrix || 'Student');
     setText('sbMatrix', user.matrix || user.faculty || 'UTM');
+  } else {
+    // ✅ NEW: Guest mode — header pill becomes a Login button
+    setText('headerAvatar', '👤');
+    setText('headerName', 'Log In');
+    const pill = document.getElementById('userPill');
+    if (pill) pill.onclick = goLogin;
+    setText('sbAvatar', '👤');
+    setText('sbName', 'Guest');
+    setText('sbMatrix', 'Not logged in');
+    // Sidebar bottom button becomes "Log In" for guests
+    const authBtn = document.getElementById('sbAuthBtn');
+    const authLbl = document.getElementById('sbAuthLabel');
+    if (authBtn) authBtn.onclick = goLogin;
+    if (authLbl) authLbl.textContent = 'Log In';
   }
 
   if (!isMobile()) { document.body.classList.add('sb-open'); document.body.classList.remove('sb-collapsed'); }
@@ -714,7 +734,7 @@ async function init() {
     return;
   }
 
-  // Check if already registered
+  // Check if already registered (only possible when logged in)
   if (user?.matrix) {
     const { data: existing } = await sb.from('registrations').select('*').eq('event_id', eventId).ilike('matric_no', user.matrix).maybeSingle();
     if (existing) {
@@ -746,8 +766,8 @@ async function init() {
     document.getElementById('matrixLockBadge').style.display = 'inline-flex';
   }
 
-  // Prefill email from session
-  if (session.user.email) {
+  // Prefill email from session (only when logged in)
+  if (session?.user?.email) {
     const emailEl = document.getElementById('email');
     if (emailEl && !emailEl.value) { emailEl.value = session.user.email; emailEl.classList.add('autofilled'); }
   }
